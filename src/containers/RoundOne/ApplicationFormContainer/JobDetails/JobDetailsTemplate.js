@@ -31,6 +31,7 @@ import { getDocumentField, getPlaceOfPostingDetails } from "./MappedData";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
 
 const JobDetailsTemplate = ({
+  validateError,
   renderJobDetails,
   handleInputChange,
   configurableListQuery,
@@ -53,8 +54,6 @@ const JobDetailsTemplate = ({
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const { currentModule } = useGetCurrentUser();
-
-  console.log("currentModule", currentModule);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
   const containerStyle = isWebView
@@ -91,7 +90,9 @@ const JobDetailsTemplate = ({
             isMandatory
             value={renderJobDetails?.designation}
             onChangeText={(val) => handleInputChange("designation", val)}
-            customHandleBlur={(val) => handleBlur("designation", val)}
+            customHandleBlur={() => handleBlur("designation")}
+            isError={!!validateError?.designation}
+            errorMessage={validateError?.designation}
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -104,6 +105,9 @@ const JobDetailsTemplate = ({
               isRupee
               value={renderJobDetails?.compensation}
               onChangeText={(val) => handleInputChange("compensation", val)}
+              customHandleBlur={() => handleBlur("compensation")}
+              isError={!!validateError?.compensation}
+              errorMessage={validateError?.compensation}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -116,6 +120,9 @@ const JobDetailsTemplate = ({
               isRupee
               value={renderJobDetails?.starting_salary}
               onChangeText={(val) => handleInputChange("starting_salary", val)}
+              customHandleBlur={() => handleBlur("starting_salary")}
+              isError={!!validateError?.starting_salary}
+              errorMessage={validateError?.starting_salary}
             />
           </View>
           <CustomTextEditor
@@ -127,6 +134,8 @@ const JobDetailsTemplate = ({
             onChangeText={(val) =>
               handleInputChange("role_responsibility", val)
             }
+            customHandleBlur={() => handleBlur("role_responsibility")}
+            errorMessage={validateError?.role_responsibility}
           />
           <CustomTextInput
             customStyle={styles.ctcTextInputStyle}
@@ -139,7 +148,10 @@ const JobDetailsTemplate = ({
             isMandatory
             value={renderJobDetails?.ctc_details}
             onChangeText={(val) => handleInputChange("ctc_details", val)}
-          />{" "}
+            customHandleBlur={() => handleBlur("ctc_details")}
+            isError={!!validateError?.ctc_details}
+            errorMessage={validateError?.ctc_details}
+          />
           <View style={styles.overseasContainerStyles}>
             {currentModule === "overseas-chapters" && (
               <>

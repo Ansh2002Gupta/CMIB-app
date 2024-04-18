@@ -1,45 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View } from "@unthinkable/react-core-components";
 
 import commonStyles from "../../../../../theme/styles/commonStyles";
 import Chip from "../../../../../components/Chip";
 import CommonText from "../../../../../components/CommonText";
-import { mappedDataToUI } from "../mappedData";
 import { formatDate } from "../../../../../utils/util";
 import useIsWebView from "../../../../../hooks/useIsWebView";
-import styles from "../PaymentForm.style";
+import styles from "../BillingInfo.style";
 
-const apiData = {
-  gstin: 3,
-  tan: 3,
-  pan: 5,
-  po_number: 7,
-  address_for_hard_copy: "kjdfjkasdhjkf dasfjajsdf ",
-  total_tds_added: 23,
-  final_amount: 23,
-};
-
-const usePaymentForm = () => {
-  const [paymentDetails, setPaymentDetails] = useState();
-  const isEditProfile = true;
+const useBillingInfo = () => {
   const { isWebView } = useIsWebView();
-
-  useEffect(() => {
-    setPaymentDetails(mappedDataToUI(apiData));
-  }, []);
-
-  const handleInputChange = (fieldName, value) => {
-    setPaymentDetails((prevPaymentDetails) => {
-      return prevPaymentDetails.map((detail) => {
-        if (detail.label === fieldName) {
-          return { ...detail, value: value };
-        }
-        return detail;
-      });
-    });
-  };
-  const handleBlur = () => {};
-  const handleDownload = () => {};
 
   function getStatusStyle(status) {
     status = status.toLowerCase();
@@ -125,21 +95,17 @@ const usePaymentForm = () => {
       },
     ];
   };
+
   const handleSaveAndNext = () => {};
 
   return {
+    handleSaveAndNext,
     getStatusStyle,
     getColoumConfigs,
-    handleDownload,
-    handleBlur,
-    handleInputChange,
-    handleSaveAndNext,
-    isEditProfile,
-    paymentDetails,
   };
 };
 
-export default usePaymentForm;
+export default useBillingInfo;
 
 export const transactionList = [
   {

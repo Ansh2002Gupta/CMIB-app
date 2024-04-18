@@ -827,7 +827,6 @@ const locale = {
   "label.telephone_number": "Telephone Number",
   "label.enter_telephone_number": "Enter Telephone Number",
   "label.at_least_one_mandatory": "At least one mandatory",
-  "label.error.cannot_be_empty": "Cannot be empty!",
   "label.head_contacts": "Director/VP/HR Head Contacts",
   "label.mobile_country_code": "Mobile Country Code",
   "label.select_mobile_country_code": "Code",
@@ -844,6 +843,10 @@ const locale = {
   "label.enter_total_tds_number": "Enter total TDS number",
   "label.final_amount": "Final Amount",
   "label.select_final_amount": "Enter final amount",
+  "label.pay_amount": "Pay amount",
+  "label.downloadPerformaInvoice": "Download Performa Invoice",
+  "label.paymentHistory": "Payment History",
+  "label.billing_info": "Billing Info",
 };
 
 export default locale;

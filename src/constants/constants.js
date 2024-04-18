@@ -206,7 +206,7 @@ export const STEPPER_STATE = {
 };
 
 export const DOCUMENT_TYPE = [
-  { label: "Photocopies", value: "photocopies" },
+  { label: "Photocopies", value: "copy" },
   { label: "Original", value: "original" },
   {
     label: "Both",
@@ -333,6 +333,9 @@ export const APPLICATION_FORM_STEPPER_OPTIONS = [
     title: "label.centre_details",
   },
   {
+    title: "label.billing_info",
+  },
+  {
     title: "label.payment",
   },
 ];
@@ -383,6 +386,13 @@ export const SCHEDULE_LISTING = {
   type: "Interview Type",
   primary_interview_date: "Primary Interview Date",
   primary_interview_time: "Primary Interview Time",
+  status: "Status",
+};
+export const TRANSACTION_LIST_HEADING = {
+  transaction_id: "Transaction ID",
+  online_offline_transaction: "Offline/Online Transaction",
+  payment_mode: "Payment Mode",
+  date: "Date",
   status: "Status",
 };
 

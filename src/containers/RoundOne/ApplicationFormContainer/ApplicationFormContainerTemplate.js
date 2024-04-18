@@ -12,11 +12,9 @@ import PreInterviewPreferences from "./PreInterviewPreferences";
 import useNavigateScreen from "../../../services/hooks/useNavigateScreen";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-import images from "../../../images";
-import styles from "./ApplicationFormContainer.style";
-import CustomButton from "../../../components/CustomButton";
 import CustomScrollView from "../../../components/CustomScrollView";
 import PaymentForm from "./PaymentForm";
+import BillingInfo from "./BIllingInfo/BillingInfo";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const [sideBarState] = useContext(SideBarContext);
@@ -58,6 +56,9 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
     },
     {
       component: PreInterviewPreferences,
+    },
+    {
+      component: BillingInfo,
     },
     {
       component: PaymentForm,

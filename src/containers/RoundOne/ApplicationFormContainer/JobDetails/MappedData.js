@@ -177,6 +177,9 @@ export const mapDataToUI = (data) => {
     role_responsibility: data?.role_responsibility || "-",
     ctc_details: data?.ctc_details || "-",
     otherInfo: data?.other_details || "-",
+    job_type: data?.job_type || "-",
+    flexi_hours: data?.flexi_hours === "yes" ? 0 : 1 || "-",
+    work_exp_range_id: data?.work_exp_range_id || "-",
     monthly: [
       {
         key: "monthly_basic",
@@ -330,6 +333,11 @@ export const mapDocsToUI = (data) => {
   }
 
   const newDocsArray = data.map((docs, index) => {
+    const idObject = docs?.id
+      ? {
+          id: docs?.id,
+        }
+      : {};
     return [
       {
         cellID: index + 1,
@@ -340,7 +348,6 @@ export const mapDocsToUI = (data) => {
       },
       {
         cellID: index + 1,
-        id: 1,
         includeAllKeys: true,
         key: document_keys.DOCUMENT_TYPE,
         label: "label.document_type",
@@ -352,6 +359,7 @@ export const mapDocsToUI = (data) => {
         value: docs?.doc_type,
       },
       {
+        ...idObject,
         cellID: index + 1,
         key: document_keys.NUMBER_OF_COPIES,
         label: "label.no_of_copies",
@@ -381,7 +389,6 @@ export const getDocumentField = () => {
     },
     {
       cellID: 1,
-      id: 1,
       includeAllKeys: true,
       key: document_keys.DOCUMENT_TYPE,
       label: "label.document_type",
@@ -592,7 +599,15 @@ const mapPostingDetailsToPayload = (fieldsArray) => {
   return { posting_details: postingDetails };
 };
 
-export const mapDataToPayload = (data) => {
+export const mapDataToPayload = (data, currentModule) => {
+  const overSeasProps =
+    currentModule === "overseas"
+      ? {
+          job_type: data?.job_type,
+          flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",
+          work_exp_range_id: data?.work_exp_range_id,
+        }
+      : {};
   const payload = {
     designation: data?.designation,
     compensation: data?.compensation,
@@ -612,9 +627,7 @@ export const mapDataToPayload = (data) => {
     specific_performa_required:
       data?.specific_performa_required === 0 ? "yes" : "no",
     other_details: data?.otherInfo,
-    job_type: "WFH",
-    flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",
-    work_exp_range_id: "30",
+    ...overSeasProps,
   };
 
   // Map monthly data
@@ -641,11 +654,12 @@ export const mapDataToPayload = (data) => {
     } else if (item.key === "no_of_copies") {
       acc[cellID].no_of_photocopies = parseInt(item.value, 10);
     }
-    acc[cellID].id = cellID; // Assuming cellID is the document's ID
+    if (!!item.id) {
+      acc[cellID].id = item?.id;
+    }
     return acc;
   }, {});
 
-  // Convert the grouped data into an array of document objects
   payload.required_docs = Object.values(docsByCellID);
 
   return payload;
