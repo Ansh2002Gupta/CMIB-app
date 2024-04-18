@@ -731,3 +731,20 @@ export const convertMobileDonutChartData = (data, colors) => {
 
   return convertedArray;
 };
+
+export const convertMobileBarData = (data) => {
+  const chartData = {
+    labels: [],
+    datasets: [{ data: [] }],
+  };
+  const sumsByLabel = data.reduce((sums, entry) => {
+    sums[entry.label] = (sums[entry.label] || 0) + entry.value;
+    return sums;
+  }, {});
+  for (const [label, value] of Object.entries(sumsByLabel)) {
+    chartData.labels.push(label);
+    chartData.datasets[0].data.push(value);
+  }
+
+  return chartData;
+};
