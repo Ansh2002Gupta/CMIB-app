@@ -159,7 +159,7 @@ const CentralDetailsTemplate = ({
           options={mappedCentersList}
           menuOptions={menuOptions}
           setMenuOptions={setMenuOptions}
-          outerContainer={styles.configurableStyle}
+          customOuterContianer={styles.configurableStyle}
           componentContainer={styles.componentContainer}
         />
         <View style={styles.innerContainerStyle}>{renderRoundDetail()}</View>
