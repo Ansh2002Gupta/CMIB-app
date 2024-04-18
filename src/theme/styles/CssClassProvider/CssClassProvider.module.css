@@ -21,7 +21,6 @@
   --black: #000;
 }
 
-
 .account-dropdown__base:hover {
   background: var(--secondaryLightGrey) !important;
 }

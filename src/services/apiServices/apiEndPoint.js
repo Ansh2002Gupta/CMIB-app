@@ -7,6 +7,7 @@ export const CORE = "core";
 export const ADMIN = "admin";
 
 /* API Endpoints */
+export const CANDIDATES = "/candidates";
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password/confirm`;
 export const COMPANY_LOGIN = `${USER_TYPE_COMPANY}/login`;
 export const COMPANY_CHANGE_PASSWORD_OTP = `${USER_TYPE_COMPANY}/user/password`;
@@ -42,7 +43,6 @@ export const ACADEMICS = "/academics";
 export const ACTIVITIES = "/activities";
 export const APPLICANT = "/applicant";
 export const APPLICATION = "/application";
-export const CANDIDATES = "/candidates";
 export const FILTERS = "/filters";
 export const INTERVIEWS = "/interviews";
 export const INTERVIEW = "/interview";
@@ -134,3 +134,6 @@ export const CHANGE_STATUS = "/change-status";
 export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${APPLICANTS}${INTERVIEW}`;
 export const ACCEPTED = "/accepted";
 export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;
+
+//api endpoint: Round-1>NQCA Placements>Pre-Interview Placements
+export const PRE_INTERVIEW = `/pre-interview`;

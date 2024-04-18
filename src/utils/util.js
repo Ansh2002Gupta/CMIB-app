@@ -688,7 +688,6 @@ export const formateErrors = (errorResponse) => {
   if (typeof errorResponse === "string") {
     return errorResponse;
   }
-
   if (
     errorResponse &&
     typeof errorResponse === "object" &&
