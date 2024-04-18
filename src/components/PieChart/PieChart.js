@@ -53,10 +53,6 @@ const PieChart = ({
       }
       bottomSection={
         <VictoryPie
-          animate={{
-            duration: 2000,
-            onLoad: { duration: 1000 },
-          }}
           height={height}
           width={width}
           data={convertGraphData(data)}

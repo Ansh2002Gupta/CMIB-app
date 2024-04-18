@@ -6,6 +6,7 @@ import { TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
 import CAJobsMemberDashboard from "../CAJobsMemberDashboard";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -37,10 +38,12 @@ function DashboardView() {
         bottomSection={
           <View>
             {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
-              !isCompany ? (
+              isCompany ? (
                 <CAJobsDashboard />
               ) : (
-                <CAJobsMemberDashboard />
+                <View style={{ padding: 24 }}>
+                  <CAJobsMemberDashboard />
+                </View>
               )
             ) : null}
           </View>
