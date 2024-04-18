@@ -7,6 +7,7 @@ import { TwoRow } from "../../core/layouts";
 import CAJobsDashboard from "../CAJobsDashboard";
 import CAJobsMemberDashboard from "../MemberDashBoard/CAJobsMemberDashboard";
 import CarrerAscentMemeberDashboard from "../MemberDashBoard/CarrerAscentMemeberDashboard";
+import NQCACandidateDashboard from "../MemberDashBoard/NQCACandidateDashboard";
 import OverSeasMemberDashBoard from "../MemberDashBoard/OverSeasMemberDashBoard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -54,6 +55,8 @@ function DashboardView() {
                 {moduleKeys.OVERSEAS_CHAPTERS_KEY === selectedModule?.key && (
                   <OverSeasMemberDashBoard />
                 )}
+                {moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY ===
+                  selectedModule?.key && <NQCACandidateDashboard />}
               </View>
             )}
           </View>
