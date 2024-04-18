@@ -426,7 +426,7 @@ const NQCACompanyDashboard = () => {
           barWidth={7}
           height={200}
           label={intl.formatMessage({
-            id: "label.candidatesAcceptingOffersAreasWork",
+            id: "label.recruitmentHistory",
           })}
           legendData={legendData}
           toolTipLabel={({ datum }) => datum.y}

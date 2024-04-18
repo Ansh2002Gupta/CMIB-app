@@ -782,6 +782,7 @@ const locale = {
     "Centers Chosen by Candidates for Interview",
   "label.candidatesAcceptingOffersAreasWork":
     "Candidates Accepting Offers in Areas of Work",
+  "label.recruitmentHistory": "Recruitment History",
 };
 
 export default locale;
