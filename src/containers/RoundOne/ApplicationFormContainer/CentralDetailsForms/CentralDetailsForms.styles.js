@@ -129,6 +129,24 @@ const styles = StyleSheet.create({
   customToggleStyle: { marginTop: 12 },
   customLabelStyle: { color: colors.gray },
   toggleComponent: { marginBottom: 24 },
+  checkBoxStyle: { marginTop: 8 },
+  selectionProcessStyle: {
+    color: colors.black,
+    fontSize: 16,
+    paddingBottom: 16,
+  },
+  bottomMargin: {
+    marginBottom: 24,
+  },
+  roundDetailContainer: {
+  },
+  roundHeaderText: {
+    color: colors.black,
+    fontSize: 20,
+    lineHeight: 27,
+    fontWeight: "600",
+    marginTop: 24,
+  },
 });
 
 export default styles;

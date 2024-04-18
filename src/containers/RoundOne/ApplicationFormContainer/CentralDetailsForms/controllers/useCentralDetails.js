@@ -5,6 +5,7 @@ import {
   getFormattedData,
   interviewDetailsFields,
   keys,
+  selectionProcessFields,
 } from "./utils";
 import useFetch from "../../../../../hooks/useFetch";
 import { COUNTRY_CODE } from "../../../../../services/apiServices/apiEndPoint";
@@ -22,6 +23,8 @@ const useCentralDetails = () => {
     [keys.companyAvailableForInterview]: [],
   });
   const { id: roundId } = useParams();
+  const intl = useIntl();
+
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const [configurableListQuery, setConfigurableListQuery] = useState("");
@@ -36,8 +39,9 @@ const useCentralDetails = () => {
   const [requiredDocumentDetails, setRequiredDocumentDetails] = useState([]);
   const [designationDetatils, setDesignationDetatils] = useState([]);
   const [isCompanyPPt, setIsCompanyPPT] = useState(-1);
-
-  const intl = useIntl();
+  const [selectionProcess, setSelectionProcess] = useState([
+    ...selectionProcessFields(intl),
+  ]);
 
   const {
     data: countryData,
@@ -181,6 +185,16 @@ const useCentralDetails = () => {
     }
   };
 
+  const handleClickOnSelectionProcess = (key) => {
+    const updatedItems = selectionProcess?.map((item) => {
+      if (item.key === key) {
+        return { ...item, isSelected: !item.isSelected };
+      }
+      return item;
+    });
+    setSelectionProcess([...updatedItems]);
+  };
+
   const handleInterviewDetailChange = (field, value) => {
     const { key } = findFieldByKeyOrLabel(field, interviewDetailsTemplate);
     setInterviewDetailsState((prev) => ({ ...prev, [key]: value }));
@@ -232,8 +246,8 @@ const useCentralDetails = () => {
 
   const handlePress = (centerData) => {
     setIsAddNewJob(false);
-    setCurrentDesginationID(centerData?.id);
-    setSelectedOptions([centerData?.id]);
+    setCurrentDesginationID(centerData);
+    setSelectedOptions([centerData]);
 
     fetchRoundCenterDetails({
       overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}`,
@@ -375,6 +389,8 @@ const useCentralDetails = () => {
     isCompanyPPt,
     setIsCompanyPPT,
     desginationData,
+    selectionProcess,
+    handleClickOnSelectionProcess,
   };
 };
 

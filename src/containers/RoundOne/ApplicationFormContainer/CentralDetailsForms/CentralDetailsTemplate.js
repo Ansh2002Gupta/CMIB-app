@@ -13,10 +13,10 @@ import Spinner from "../../../../components/Spinner";
 import CardComponent from "../../../../components/CardComponent";
 import DetailComponent from "../../../../components/DetailComponent";
 import CustomToggleComponent from "../../../../components/CustomToggleComponent";
-import colors from "../../../../assets/colors";
 import UploadImage from "../../../../components/UploadImage";
 import AddBenefits from "../../../../components/AddBenfits";
 import AddDesignation from "../../../../components/AddDesignation";
+import CheckBox from "../../../../components/CheckBox";
 
 const CentralDetailsTemplate = ({
   handleContactDetailsChange,
@@ -64,6 +64,8 @@ const CentralDetailsTemplate = ({
   designationDetatils,
   setDesignationDetatils,
   desginationData,
+  handleClickOnSelectionProcess,
+  selectionProcess,
 }) => {
   const {
     fileUploadResult,
@@ -81,6 +83,24 @@ const CentralDetailsTemplate = ({
     : defaultUploadResult;
 
   const intl = useIntl();
+
+  const renderSelectionProcess = () => {
+    return (
+      <View style={styles.checkBoxStyle}>
+        {selectionProcess?.map((item, index) => (
+          <CheckBox
+            key={item.key}
+            id={item.key}
+            index={index}
+            title={item.label}
+            isSelected={item.isSelected}
+            handleCheckbox={handleClickOnSelectionProcess}
+            isFillSpace={true}
+          />
+        ))}
+      </View>
+    );
+  };
 
   const renderRoundDetail = () => {
     if (roundCenterDetailsLoading) {
@@ -103,7 +123,10 @@ const CentralDetailsTemplate = ({
 
     if (roundCenterDetails) {
       return (
-        <>
+        <View style={styles.roundDetailContainer}>
+          <CommonText customTextStyle={styles.roundHeaderText}>
+            {selectedOptions?.[0]?.name ?? ""}
+          </CommonText>
           <DetailCard
             details={contactDetails}
             headerId={intl.formatMessage({
@@ -124,7 +147,7 @@ const CentralDetailsTemplate = ({
           <DetailCard
             details={interviewDetails}
             headerId={intl.formatMessage({
-              id: "label.company_details",
+              id: "label.interview_details",
             })}
             customCardStyle={styles.customCardStyle}
             handleChange={(fieldName, value, codeValue) => {
@@ -135,12 +158,24 @@ const CentralDetailsTemplate = ({
             customContainerStyle={styles.customContainerStyle}
             handleMultiSelect={handleInterviewDetailMultiSelect}
           />
+          <View style={styles.bottomMargin}>
+            <CommonText
+              customContainerStyle={styles.selectionProcessTextStyle}
+              customTextStyle={styles.selectionProcessStyle}
+              fontWeight="600"
+            >
+              {intl.formatMessage({
+                id: "label.selection_process",
+              })}
+            </CommonText>
+            {renderSelectionProcess()}
+          </View>
           <AddDesignation
             options={desginationData}
             requiredDocumentDetails={designationDetatils}
             setRequiredDocumentDetails={setDesignationDetatils}
           />
-        </>
+        </View>
       );
     }
 
@@ -203,7 +238,9 @@ const CentralDetailsTemplate = ({
           title={intl.formatMessage({ id: "label.centers" })}
           searchQuery={configurableListQuery}
           setSearchQuery={setConfigurableListQuery}
-          selectedOptions={selectedOptions}
+          selectedOptions={selectedOptions.map((item) => {
+            return item?.id;
+          })}
           onDelete={handleDelete}
           handlePressCustom={handlePress}
           onAdd={handleAdd}

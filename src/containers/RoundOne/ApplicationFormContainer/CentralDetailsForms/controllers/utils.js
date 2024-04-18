@@ -36,6 +36,9 @@ export const keys = {
   countryCode: "countryCode",
   contactDetails: "contactDetails",
   interviewDetails: "interviewDetails",
+  groupDiscussion: "groupDiscussion",
+  psychometricWrittenTest: "psychometricWrittenTest",
+  personalInterview: "personalInterview",
 };
 
 export const contactDetailFields = (countryData, intl) => {
@@ -46,6 +49,13 @@ export const contactDetailFields = (countryData, intl) => {
         label: "label.contact_person",
         placeholder: "label.contact_person",
         isMandatory: true,
+        validate: (value) => {
+          if (!value) {
+            return intl.formatMessage({
+              id: "label.fill_mandatory",
+            });
+          }
+        },
       },
       {
         key: keys.emailId,
@@ -69,6 +79,13 @@ export const contactDetailFields = (countryData, intl) => {
         isMobileNumber: true,
         isNumeric: true,
         options: countryData,
+        validate: (value) => {
+          if (!value) {
+            return intl.formatMessage({
+              id: "label.fill_mandatory",
+            });
+          }
+        },
       },
       {
         key: keys.areaCode,
@@ -88,7 +105,7 @@ export const contactDetailFields = (countryData, intl) => {
   ];
 };
 
-export const interviewDetailsFields = (state, roundCenterDetails) => {
+export const interviewDetailsFields = (state, roundCenterDetails, intl) => {
   return [
     [
       {
@@ -111,6 +128,13 @@ export const interviewDetailsFields = (state, roundCenterDetails) => {
           )
         ),
         isSingleMutliSelect: true,
+        validate: (value) => {
+          if (!value) {
+            return intl.formatMessage({
+              id: "label.fill_mandatory",
+            });
+          }
+        },
       },
       {
         isDropdown: true,
@@ -226,49 +250,6 @@ export const createModuleOptions = (
   };
 };
 
-let dummyApplicatonData = {
-  contact_person_info: {
-    name: "Test",
-    email: "email@example.com",
-    mobile_country_code: "+91",
-    mobile_number: "9999999999",
-    std_country_code: "011",
-    telephone_number: "246822323",
-  },
-  interview_details: {
-    campus_dates: [1, 2, 3],
-    interview_type: "virtual",
-  },
-  designation_details: [
-    {
-      id: 1,
-      round_company_job_detail_id: 1,
-      no_of_vacancy: 30,
-    },
-    {
-      id: 2,
-      round_company_job_detail_id: 3,
-      no_of_vacancy: 30,
-    },
-  ],
-  other_details: {
-    company_ppt: "yes",
-    file_path: "<path.ext>",
-  },
-  other_benefits: [
-    {
-      id: 1,
-      name: "Meals and Snacks",
-      amount: 5000,
-    },
-    {
-      id: 2,
-      name: "Parental",
-      amount: 5000,
-    },
-  ],
-};
-
 export const getFormattedContactDetails = (contactDetail) => {
   return {
     [keys.personName]: contactDetail[""],
@@ -278,3 +259,24 @@ export const getFormattedContactDetails = (contactDetail) => {
     [keys.telephoneNumber]: contactDetail[""],
   };
 };
+
+export const selectionProcessFields = (intl) => [
+  {
+    label: intl.formatMessage({ id: "label.groupDiscussion" }),
+    value: intl.formatMessage({ id: "label.groupDiscussion" }),
+    key: keys.groupDiscussion,
+    isSelected: false,
+  },
+  {
+    label: intl.formatMessage({ id: "label.psychometricWrittenTest" }),
+    value: intl.formatMessage({ id: "label.psychometricWrittenTest" }),
+    key: keys.psychometricWrittenTest,
+    isSelected: false,
+  },
+  {
+    label: intl.formatMessage({ id: "label.personalInterview" }),
+    value: intl.formatMessage({ id: "label.personalInterview" }),
+    key: keys.personalInterview,
+    isSelected: false,
+  },
+];
