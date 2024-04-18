@@ -22,6 +22,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.black,
   },
+  legendContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  legendItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 4,
+    width: "50%",
+  },
+  legendDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginRight: 8,
+  },
+  legendText: {
+    fontSize: 12,
+    color: colors.black,
+  },
 });
 
 export default styles;

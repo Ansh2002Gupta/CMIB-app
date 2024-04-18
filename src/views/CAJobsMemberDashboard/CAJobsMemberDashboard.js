@@ -8,6 +8,7 @@ import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import PieChart from "../../components/PieChart/PieChart";
 import LoadingScreen from "../../components/LoadingScreen";
 import useFetch from "../../hooks/useFetch";
+import useIsWebView from "../../hooks/useIsWebView";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { CHART_DATA_TYPE } from "../../constants/constants";
 import {
@@ -19,6 +20,7 @@ import styles from "./CAJobsMemberDashboard.style";
 
 const CAJobsMemberDashboard = () => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
   const {
     data: interviewChartData,
     isLoading: isGettingInterview,
@@ -133,7 +135,7 @@ const CAJobsMemberDashboard = () => {
     !error && (
       <ScrollView style={{ gap: 24 }}>
         <View style={styles.pieChartContiner}>
-          <View style={{ flex: 1 }}>
+          <View style={isWebView && { flex: 1 }}>
             <DonutChart
               colorScale={[
                 colors.disabledGrey,
@@ -154,7 +156,7 @@ const CAJobsMemberDashboard = () => {
               labelColor={colors.white}
             />
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={isWebView && { flex: 1 }}>
             <PieChart
               colorScale={[
                 colors.greenBlue,
@@ -175,7 +177,7 @@ const CAJobsMemberDashboard = () => {
           </View>
         </View>
         <View style={styles.pieChartContiner}>
-          <View style={{ flex: 1 }}>
+          <View style={isWebView && { flex: 1 }}>
             <PieChart
               colorScale={[colors.errorRed, colors.grassGreen]}
               data={urgentChartData}
@@ -193,7 +195,7 @@ const CAJobsMemberDashboard = () => {
               onPopupClick={() => {}}
             />
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={isWebView && { flex: 1 }}>
             <PieChart
               colorScale={[
                 colors.mustardYellow,

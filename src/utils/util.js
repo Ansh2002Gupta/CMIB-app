@@ -716,3 +716,18 @@ export const convertDonutChartData = (data) => {
   }
   return convertedArray;
 };
+
+export const convertMobileDonutChartData = (data, colors) => {
+  let convertedArray = [];
+  const keys = Object.keys(data);
+  keys.forEach((key, index) => {
+    const colorIndex = index % colors.length;
+    convertedArray.push({
+      name: key,
+      value: data[key],
+      color: colors[colorIndex],
+    });
+  });
+
+  return convertedArray;
+};
