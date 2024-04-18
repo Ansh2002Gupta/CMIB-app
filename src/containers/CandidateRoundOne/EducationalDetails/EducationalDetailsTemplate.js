@@ -5,8 +5,9 @@ import CommonText from "../../../components/CommonText";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import Exams from "./Exams";
 import styles from "./EducationalDetails.style";
+import EdDetails from "./EdDetails";
 
-const EducationalDetailsTemplate = ({
+const   EducationalDetailsTemplate = ({
   educationalTabList,
   intl,
   isWebView,
@@ -15,6 +16,12 @@ const EducationalDetailsTemplate = ({
 }) => {
   const getEducationalDetailsTab = () => {
     switch (selectedTab.id) {
+      case 1:
+        return (
+          <ScrollView>
+            <EdDetails intl={intl} isWebView={isWebView} />
+          </ScrollView>
+        );
       case 2:
         return (
           <ScrollView>

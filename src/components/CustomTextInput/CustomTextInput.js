@@ -112,6 +112,8 @@ const CustomTextInput = (props) => {
     showMonthYearPicker,
     datePickerContainer,
     checkBoxTextStyle,
+    isViewMode = false,
+    viewText,
     ...remainingProps
   } = props;
 
@@ -501,29 +503,31 @@ const CustomTextInput = (props) => {
           )}
         </View>
       )}
+      {isViewMode ? <span>{viewText}</span> : <>
       {renderTextInput()}
-      {(isError || isMultiline) && (
-        <View
-          style={{
-            ...style.errorAndCountLimitBox,
-            ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
-          }}
-        >
-          {isError && (
-            <CommonText
-              customTextStyle={[style.errorMsg, customErrorStyle]}
-              fontWeight={customErrorStyle?.fontWeight || "600"}
-            >
-              {errorMessage}
-            </CommonText>
-          )}
-          {isMultiline && (
-            <CommonText
-              customTextStyle={style.limitStyle}
-            >{`${value?.length}/${maxLength}`}</CommonText>
-          )}
-        </View>
-      )}
+        {(isError || isMultiline) && (
+          <View
+            style={{
+              ...style.errorAndCountLimitBox,
+              ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
+            }}
+          >
+            {isError && (
+              <CommonText
+                customTextStyle={[style.errorMsg, customErrorStyle]}
+                fontWeight={customErrorStyle?.fontWeight || "600"}
+              >
+                {errorMessage}
+              </CommonText>
+            )}
+            {isMultiline && (
+              <CommonText
+                customTextStyle={style.limitStyle}
+              >{`${value?.length}/${maxLength}`}</CommonText>
+            )}
+          </View>
+        )}
+      </>}
     </View>
   );
 };
@@ -665,6 +669,8 @@ CustomTextInput.propTypes = {
   isTextInputWithChip: PropTypes.bool,
   showLabel: PropTypes.bool,
   onChipUpdate: PropTypes.func,
+  isViewMode: PropTypes.bool,
+  viewText: PropTypes.string,
 };
 
 export default CustomTextInput;
