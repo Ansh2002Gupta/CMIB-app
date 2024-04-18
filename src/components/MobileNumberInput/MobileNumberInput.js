@@ -136,7 +136,7 @@ const MobileNumberInput = ({
 
 MobileNumberInput.defaultProps = {
   codeError: "",
-  codeValue: "",
+  codeValue: Platform.OS === "web" ? "+91 (India)" : "+91",
   customHandleBlur: () => {},
   countryNameField: "name",
   labelField: "dial_code",

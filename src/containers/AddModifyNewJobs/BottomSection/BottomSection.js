@@ -21,7 +21,16 @@ const today = new Date();
 const tomorrow = new Date(today);
 tomorrow.setDate(tomorrow.getDate() + 1);
 const BottomSection = forwardRef(
-  ({ addNewJobData, isWebView, selectedJobType }, ref) => {
+  (
+    {
+      addNewJobData,
+      isWebView,
+      selectedJobType,
+      isStatusVisible = false,
+      isInstructionVisible = true,
+    },
+    ref
+  ) => {
     const getStyle = (style, styleColumn) => (isWebView ? style : styleColumn);
     const intl = useIntl();
     const [addJobs] = useContext(AddJobContext);
@@ -32,18 +41,19 @@ const BottomSection = forwardRef(
       jobOpeningDate: addNewJobData?.jobOpeningDate ?? today,
       jobClosingDate: addNewJobData?.jobClosingDate ?? tomorrow,
       numberOfVacancies: addNewJobData?.numberOfVacancies ?? 0,
-      vacanciesCountType: addNewJobData?.vacanciesCountType ?? 0,
+      vacanciesCountType: addNewJobData?.vacanciesCountType ?? -1,
       modeofWork: addNewJobData?.modeofWork ?? {},
-      flexiHours: addNewJobData?.flexiHours ?? 0,
-      fullTime: addNewJobData?.fullTime ?? 0,
+      flexiHours: addNewJobData?.flexiHours ?? -1,
+      fullTime: addNewJobData?.fullTime ?? -1,
       typeOfDisabilty: addNewJobData?.typeOfDisabilty ?? "",
       disabiltyPercentage: addNewJobData?.disabiltyPercentage ?? 0,
-      salaryNagotiable: addNewJobData?.salaryNagotiable ?? 0,
-      minimumSalary: addNewJobData?.minimumSalary ?? 0,
-      maximumSalary: addNewJobData?.maximumSalary ?? 0,
+      salaryNagotiable: addNewJobData?.salaryNagotiable ?? -1,
+      minimumSalary: addNewJobData?.minimumSalary ?? "",
+      maximumSalary: addNewJobData?.maximumSalary ?? "",
       contractYear: addNewJobData?.contractYear ?? 0,
       contractMonth: addNewJobData?.contractMonth ?? 0,
       contractDay: addNewJobData?.contractDay ?? 0,
+      status: addNewJobData?.status ?? -1,
     });
     const [error, setError] = useState({
       jobOpeningDate: "",
@@ -57,8 +67,11 @@ const BottomSection = forwardRef(
       contractYear: "",
       contractMonth: "",
       contractDay: "",
+      vacanciesCountType: "",
+      flexiHours: "",
+      salaryNagotiable: "",
+      fullTime: "",
     });
-
     const validateInput = (field) => {
       let hasError = false;
       const addError = (field, message) => {
@@ -71,12 +84,26 @@ const BottomSection = forwardRef(
             addError(field, "Should be greater than 0");
           }
           if (jobData.numberOfVacancies.length == 0) {
-            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
+          }
+          break;
+        case "vacanciesCountType":
+          if (jobData.vacanciesCountType === -1) {
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
+          }
+          break;
+        case "fullTime":
+          if (
+            jobData.fullTime === -1 &&
+            (selectedJobType?.label === jobType.REGULAR ||
+              selectedJobType?.label === jobType.RETIRED)
+          ) {
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
         case "modeofWork":
           if (Object.values(jobData.modeofWork).length === 0) {
-            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
         case "typeOfDisabilty":
@@ -84,7 +111,7 @@ const BottomSection = forwardRef(
             selectedJobType?.label === jobType.SPECIALLY_ABLE &&
             !jobData.typeOfDisabilty
           ) {
-            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
         case "disabiltyPercentage":
@@ -92,16 +119,30 @@ const BottomSection = forwardRef(
             selectedJobType?.label === jobType.SPECIALLY_ABLE &&
             !jobData.disabiltyPercentage
           ) {
-            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
         case "maximumSalary":
-          if (jobData.minimumSalary > jobData.maximumSalary) {
-            addError("maximumSalary", "Invalid Salary");
-            addError("minimumSalary", "Invalid Salary");
-          } else if (jobData.maximumSalary == 0 || jobData.maximumSalary == 0) {
-            addError("maximumSalary", "Invalid Salary");
-            addError("minimumSalary", "Invalid Salary");
+          if (
+            String(jobData.maximumSalary).length &&
+            String(jobData.minimumSalary).length &&
+            jobData.minimumSalary > jobData.maximumSalary
+          ) {
+            addError("maximumSalary", "Please fill valid Amount");
+            addError("minimumSalary", "Please fill valid Amount");
+          } else if (
+            String(jobData.maximumSalary).length &&
+            jobData.maximumSalary == 0
+          ) {
+            addError("maximumSalary", "Please fill valid Amount");
+          }
+          break;
+        case "minimumSalary":
+          if (
+            String(jobData.minimumSalary).length &&
+            jobData.minimumSalary == 0
+          ) {
+            addError("minimumSalary", "Please fill valid Amount");
           }
           break;
         case "contractYear":
@@ -186,6 +227,7 @@ const BottomSection = forwardRef(
             value={jobData.jobOpeningDate}
             isError={(error && error.jobOpeningDate && true) || false}
             errorMessage={(error && error.jobOpeningDate) || ""}
+            minDate={new Date()}
             onChangeValue={(val) => {
               const date1 = dayjs(val);
               const date2 = dayjs(jobData.jobClosingDate);
@@ -255,6 +297,18 @@ const BottomSection = forwardRef(
                 ? 0
                 : jobData.numberOfVacancies
             }"`}
+            options={[
+              `"${
+                jobData.numberOfVacancies.length === 0
+                  ? 0
+                  : jobData.numberOfVacancies
+              }"`,
+              `"${intl.formatMessage({ id: "label.more_than" })} ${
+                jobData.numberOfVacancies.length === 0
+                  ? 0
+                  : jobData.numberOfVacancies
+              }"`,
+            ]}
             toggleTitle2={`"${intl.formatMessage({ id: "label.more_than" })} ${
               jobData.numberOfVacancies.length === 0
                 ? 0
@@ -265,6 +319,7 @@ const BottomSection = forwardRef(
             onValueChange={(item) => {
               handleJobDetailsChange("vacanciesCountType", item);
             }}
+            errorMessage={(error && error.vacanciesCountType) || ""}
             containerStyle={getStyle(
               styles.toggleComponentContainerStyle,
               styles.toggleComponentContainerStyleColumn
@@ -334,6 +389,7 @@ const BottomSection = forwardRef(
               label={intl.formatMessage({ id: "label.fullorPartTime" })}
               isMandatory
               value={jobData.fullTime}
+              errorMessage={(error && error.fullTime) || ""}
               onValueChange={(item) => {
                 handleJobDetailsChange("fullTime", item);
               }}
@@ -347,11 +403,9 @@ const BottomSection = forwardRef(
           <View style={styles.contractualPeriodViewStyle}>
             <View>
               <CustomLabelView
-                label={`${intl.formatMessage({
-                  id: "label.contractual_period",
-                })} ${intl.formatMessage({
-                  id: "label.year_month_day",
-                })}`}
+                label={intl.formatMessage({
+                  id: "label.contractual_label_heading",
+                })}
                 isMandatory
               />
             </View>
@@ -495,13 +549,35 @@ const BottomSection = forwardRef(
               customStyle={styles.textInputStyleColumn}
             />
           </View>
-          <View>
-            <Text style={styles.noteTextStyle}>
-              {intl.formatMessage({
-                id: "label.job_instruction",
-              })}
-            </Text>
-          </View>
+          {isStatusVisible && (
+            <CustomToggleComponent
+              label={intl.formatMessage({ id: "label.job_status" })}
+              containerStyle={getStyle(
+                styles.toggleComponentContainerStyle,
+                styles.toggleComponentContainerStyleColumn
+              )}
+              value={jobData.status}
+              onValueChange={(item) => {
+                handleJobDetailsChange("status", item);
+              }}
+              options={[
+                intl.formatMessage({ id: "label.active" }),
+                intl.formatMessage({ id: "label.inactive" }),
+              ]}
+              customToggleStyle={{ marginTop: 16, marginBottom: 18 }}
+              customToggleButtonTextStyle={styles.fontSize14}
+              customLabelStyle={styles.labelStyle}
+            />
+          )}
+          {isInstructionVisible && (
+            <View>
+              <Text style={styles.noteTextStyle}>
+                {intl.formatMessage({
+                  id: "label.job_instruction",
+                })}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     );

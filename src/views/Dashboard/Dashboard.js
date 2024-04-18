@@ -1,23 +1,27 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
-import useIsWebView from "../../hooks/useIsWebView";
 
 import { TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
+import CAJobsMemberDashboard from "../CAJobsMemberDashboard";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import { moduleKeys } from "../../constants/sideBarHelpers";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import useIsWebView from "../../hooks/useIsWebView";
+import { moduleKeys } from "../../constants/sideBarHelpers";
 import styles from "./dashboard.style";
-import ViewInterviewDetails from "../../containers/ViewInterviewDetails";
-import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 
+// Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
   const [sideBarState] = useContext(SideBarContext);
+  const { isCompany } = useGetCurrentUser();
+
   const { selectedModule } = sideBarState;
+  const { isWebView } = useIsWebView();
+
   return (
     <View style={styles.container}>
       <TwoRow
@@ -32,16 +36,19 @@ function DashboardView() {
         }
         isBottomFillSpace
         bottomSection={
-          <>
+          <View>
             {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
-              <CAJobsDashboard />
+              isCompany ? (
+                <CAJobsDashboard />
+              ) : (
+                <View style={{ padding: 24 }}>
+                  <CAJobsMemberDashboard />
+                </View>
+              )
             ) : null}
-          </>
+          </View>
         }
-      />
-      {/*  uncomment this to see modals */}
-      {/* <ViewInterviewDetails /> */}
-      {/* <ScheduleInterviewModal /> */}
+      ></TwoRow>
     </View>
   );
 }

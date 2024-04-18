@@ -1,8 +1,10 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Platform, View } from "@unthinkable/react-core-components";
 import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
 
+import ActionPairButton from "../ActionPairButton";
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomImage from "../CustomImage";
@@ -18,16 +20,25 @@ const CustomModal = ({
   containerStyle,
   customHeaderStyle,
   customInnerContainerStyle,
+  customStyles,
+  handleButtonOnePress,
+  handleButtonTwoPress,
   headerText,
   headerTextStyle,
+  isButtonOneDisabled,
   isSuccess,
   isIconCross,
+  isLoading,
+  imageOnSuccess,
   maxWidth,
   onPress,
   onPressIconCross,
-  secondaryText,
   onBackdropPress,
+  secondaryText,
+  showActionButtonOnSuccess,
+  topLeftIcon,
 }) => {
+  const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
   const webProps = isWeb ? { maxWidth } : { onBackdropPress };
 
@@ -48,8 +59,8 @@ const CustomModal = ({
           <>
             <CustomImage
               alt={"Success Icon"}
-              source={images.iconSuccess}
-              Icon={images.iconSuccess}
+              source={images.iconSuccess || imageOnSuccess}
+              Icon={images.iconSuccess || imageOnSuccess}
               isSvg
               style={style.iconStyle}
             />
@@ -67,12 +78,44 @@ const CustomModal = ({
                 {secondaryText}
               </CommonText>
             )}
-            <CustomButton onPress={onPress} withGreenBackground>
-              {buttonTitle}
-            </CustomButton>
+            {showActionButtonOnSuccess ? (
+              <ActionPairButton
+                buttonOneText={intl.formatMessage({ id: "label.no_need_time" })}
+                buttonTwoText={intl.formatMessage({ id: "label.yes_pass_on" })}
+                isButtonTwoGreen
+                onPressButtonOne={handleButtonOnePress}
+                onPressButtonTwo={handleButtonTwoPress}
+                customStyles={customStyles}
+                displayLoader={isLoading}
+                isButtonOneDisabled={isLoading}
+              />
+            ) : (
+              <CustomButton onPress={onPress} withGreenBackground>
+                {buttonTitle}
+              </CustomButton>
+            )}
           </>
         ) : (
           <>
+            {!!topLeftIcon && (
+              <View style={style.topIconContianer}>
+                {isIconCross && (
+                  <TouchableImage
+                    isSvg={isWeb}
+                    source={topLeftIcon}
+                    style={{ height: 24, width: 24 }}
+                  />
+                )}
+                {isIconCross && (
+                  <TouchableImage
+                    isSvg={isWeb}
+                    onPress={onPressIconCross}
+                    source={isWeb ? images.iconCloseDark : images.iconCross}
+                    style={{ height: 24, width: 24 }}
+                  />
+                )}
+              </View>
+            )}
             <View style={{ ...style.headerStyle, ...customHeaderStyle }}>
               {!!headerText && (
                 <CommonText
@@ -82,7 +125,7 @@ const CustomModal = ({
                   {headerText}
                 </CommonText>
               )}
-              {isIconCross && (
+              {!topLeftIcon && isIconCross && (
                 <TouchableImage
                   isSvg={isWeb}
                   onPress={onPressIconCross}
@@ -105,15 +148,22 @@ CustomModal.defaultProps = {
   containerStyle: {},
   customHeaderStyle: {},
   customInnerContainerStyle: {},
+  customStyles: {},
+  handleButtonOnePress: () => {},
+  handleButtonTwoPress: () => {},
   headerText: "",
   headerTextStyle: {},
+  isButtonOneDisabled: false,
   isIconCross: false,
+  isLoading: false,
   isSuccess: false,
+  imageOnSuccess: "",
   maxWidth: "sm",
   onPress: () => {},
   onPressIconCross: () => {},
   onBackdropPress: () => {},
   secondaryText: "",
+  showActionButtonOnSuccess: false,
 };
 
 CustomModal.propTypes = {
@@ -122,15 +172,23 @@ CustomModal.propTypes = {
   containerStyle: PropTypes.object,
   customHeaderStyle: PropTypes.object,
   customInnerContainerStyle: PropTypes.object,
+  customStyles: PropTypes.object,
+  handleButtonOnePress: PropTypes.func,
+  handleButtonTwoPress: PropTypes.func,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.object,
+  isButtonOneDisabled: PropTypes.bool,
+  isIconCross: PropTypes.string,
+  isLoading: PropTypes.bool,
   isSuccess: PropTypes.bool,
   isIconCross: PropTypes.bool,
+  imageOnSuccess: PropTypes.string,
   maxWidth: PropTypes.string,
   onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,
   onBackdropPress: PropTypes.func,
   secondaryText: PropTypes.string,
+  showActionButtonOnSuccess: PropTypes.bool,
 };
 
 export default CustomModal;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
@@ -7,41 +7,34 @@ import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import SavedJobComponent from "../../components/SavedJobComponent";
-import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import SearchView from "../../components/SearchView";
 import Spinner from "../../components/Spinner";
+import QuestionaireModal from "../../components/QuestionaireModal";
 import useFetch from "../../hooks/useFetch";
-import { useDelete } from "../../hooks/useApiRequest";
 import useIsWebView from "../../hooks/useIsWebView";
-import {
-  MEMBER_JOB,
-  MEMBER_SAVED_JOBS,
-  SAVE,
-} from "../../services/apiServices/apiEndPoint";
-import images from "../../images";
+import { MEMBER_SAVED_JOBS } from "../../services/apiServices/apiEndPoint";
 import style from "./SavedJobs.style";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import CommonText from "../../components/CommonText";
+import { useNavigate } from "react-router";
+import { navigations } from "../../constants/routeNames";
 
 const SavedJobs = () => {
   const intl = useIntl();
+  const [applyJobModal, setApplyJobModal] = useState(false);
+  const [jobId, setJobId] = useState(null);
   const { isWebView } = useIsWebView();
+  const navigate = useNavigate();
+
   const {
     data: savedJobsList,
     isLoading: isGettingSavedJob,
     fetchData: fetchSavedJobList,
     error: errorWhileGettingSavedJob,
+    setData: setSavedJobsList,
   } = useFetch({
     url: `${MEMBER_SAVED_JOBS}`,
   });
-
-  const {
-    makeRequest: deleteJob,
-    isLoading: isDeletingJob,
-    isSuccess,
-    error: errorWhileDeletingJob,
-    setError: setErrorWhileDeletingJob,
-  } = useDelete({ url: MEMBER_JOB });
 
   const handleSearch = (val) => {
     fetchSavedJobList({
@@ -50,23 +43,38 @@ const SavedJobs = () => {
       },
     });
   };
-  const handleDismissToast = () => {
-    setErrorWhileDeletingJob("");
+
+  const handleCloseModal = () => {
+    setApplyJobModal(false);
   };
 
-  const handleRemove = (id) => {
-    deleteJob({ overrideUrl: MEMBER_JOB + `/${id}` + SAVE });
+  const handleOpenModal = (jobId) => {
+    setApplyJobModal(true);
+    setJobId(jobId);
+  };
+
+  const handleSuccessApply = (id) => {
+    setSavedJobsList((prevData) => {
+      return prevData.map((item) => {
+        if (item.id === id) {
+          return { ...item, is_applied: 1 };
+        }
+        return item;
+      });
+    });
+  };
+
+  const handleClickOnJobCard = (jobId) => {
+    navigate(`${navigations.CA_JOBS}/${navigations.JOB_DETAIL}/${jobId}`);
   };
 
   return (
     <>
-      {errorWhileDeletingJob && (
-        <ToastComponent
-          toastMessage={
-            errorWhileDeletingJob || GENERIC_GET_API_FAILED_ERROR_MESSAGE
-          }
-          onDismiss={handleDismissToast}
-          customToastStyle={style.customToastStyle}
+      {applyJobModal && (
+        <QuestionaireModal
+          jobId={jobId}
+          handleCloseModal={handleCloseModal}
+          handleSuccessApply={handleSuccessApply}
         />
       )}
       <TwoRow
@@ -110,10 +118,10 @@ const SavedJobs = () => {
                         return (
                           <SavedJobComponent
                             details={details}
-                            handleRemove={() => {
-                              handleRemove(details?.id);
-                            }}
-                            isLoading={isDeletingJob}
+                            onPress={handleClickOnJobCard}
+                            isSaveVisible={false}
+                            isApplyVisible={!details?.is_applied}
+                            handleOpenModal={handleOpenModal}
                           />
                         );
                       })}

@@ -4,7 +4,7 @@ import colors from "../../../assets/colors";
 const styles = StyleSheet.create({
   container: {
     minHeight: 437,
-    maxHeight: Platform.OS == "web" ? " 50vh" : 700,
+    maxHeight: Platform.OS == "web" ? " 50vh" : 450,
     overflow: Platform.OS == "web" ? "auto" : "visible",
   },
   mobileButtonStyle: {

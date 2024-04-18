@@ -1,5 +1,6 @@
 import React, { useContext, useState, useRef } from "react";
 import { useIntl } from "react-intl";
+import Storage from "../../services/cookie-and-storage-service";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import CommonText from "../CommonText";
@@ -7,19 +8,18 @@ import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SessionDropdown from "../SessionDropdown";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import { setSelectedSession } from "../../globalContext/sidebar/sidebarActions";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { SESSION_KEY } from "../../constants/constants";
 import images from "../../images";
 import styles from "./SessionBar.style";
 
 const SessionBar = () => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState;
+  const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
+  const { globalSessionList, selectedSession } = sideBarState;
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(
-    selectedModule?.session?.[0]?.label
-  );
   const sessionRef = useRef(null);
   useOutsideClick(sessionRef, () => setShowDropdown(false));
 
@@ -27,8 +27,9 @@ const SessionBar = () => {
     setShowDropdown((prev) => !prev);
   };
 
-  const handleSelect = (option) => {
-    setSelectedValue(option);
+  const handleSelect = async (option) => {
+    sideBarDispatch(setSelectedSession(option));
+    await Storage.set({ key: SESSION_KEY, value: option?.value.toString() });
     handleDropdown();
   };
 
@@ -41,7 +42,8 @@ const SessionBar = () => {
         customTextStyle={styles.sessionText(currentBreakpoint)}
         fontWeight="600"
       >
-        {selectedValue || intl.formatMessage({ id: "label.select_session" })}
+        {selectedSession?.label ||
+          intl.formatMessage({ id: "label.select_session" })}
       </CommonText>
       <CustomImage
         source={images.iconArrowDown}
@@ -51,10 +53,13 @@ const SessionBar = () => {
       />
       {showDropdown && (
         <SessionDropdown
-          options={selectedModule.session}
+          options={globalSessionList}
           onSelect={handleSelect}
           sessionRef={sessionRef}
-          selectedItem={selectedValue}
+          selectedItem={selectedSession?.label}
+          valueField={"id"}
+          labelField={"name"}
+          includeAllKeys
         />
       )}
     </CustomTouchableOpacity>

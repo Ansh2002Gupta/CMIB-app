@@ -1,6 +1,10 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { Image, View } from "@unthinkable/react-core-components";
+import {
+  Image,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
 import { TwoColumn } from "../../core/layouts";
 import MultiRow from "../../core/layouts/MultiRow";
@@ -10,7 +14,7 @@ import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
-import { changeComma, timeAgo } from "../../utils/util";
+import { changeComma, formatSalaryRange, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
@@ -18,8 +22,12 @@ import colors from "../../assets/colors";
 const JobCardMobile = ({
   cardDetails,
   isLoading,
-  handleRemove,
+  isApplyVisible,
+  isSaved,
+  isApplyLoading,
   handleApply,
+  handleSaveAndRemove,
+  onPress,
 }) => {
   const intl = useIntl();
   const {
@@ -37,6 +45,9 @@ const JobCardMobile = ({
     requirement,
   } = cardDetails;
 
+  const buttonOneText = isSaved ? "label.save" : "label.remove";
+  const buttonTwoText = isApplyVisible ? "label.apply" : "label.applied";
+
   const rowConfig = (data) => {
     return data?.map((item, index) => {
       return {
@@ -51,19 +62,6 @@ const JobCardMobile = ({
           >
             {item?.name || item}
             {index !== data?.length - 1 && ","}
-          </CommonText>
-        ),
-      };
-    });
-  };
-
-  const locationConfig = (data) => {
-    return data.map((item, index) => {
-      return {
-        content: (
-          <CommonText customTextStyle={[style.blackText]}>
-            {item?.name}
-            {index !== data.length - 1 && "/"}
           </CommonText>
         ),
       };
@@ -93,11 +91,9 @@ const JobCardMobile = ({
               <Image source={images.iconRupee} style={style.mobileIconStyle} />
             }
             rightSection={
-              <CommonText
-                customTextStyle={style.normalText}
-              >{`${minSalary}-${maxSalary} ${intl.formatMessage({
-                id: "label.lpa",
-              })}`}</CommonText>
+              <CommonText customTextStyle={style.normalText}>
+                {formatSalaryRange(minSalary, maxSalary)}
+              </CommonText>
             }
           />
         </View>
@@ -170,10 +166,9 @@ const JobCardMobile = ({
             <Image source={images.iconLocation} style={style.mobileIconStyle} />
           }
           rightSection={
-            <MultiColumn
-              columns={LocationConfig(jobLocation)}
-              style={{ backgroundColor: "blue", paddingRight: 24 }}
-            />
+            <CommonText customTextStyle={style.mobileEllipsis}>
+              {LocationConfig(jobLocation)}
+            </CommonText>
           }
         />
       ),
@@ -204,28 +199,34 @@ const JobCardMobile = ({
             <TwoColumn
               leftSection={
                 <CustomButton
-                  disabled={isLoading}
+                  disabledStyle={style.disabledStyle}
+                  disabled={isApplyLoading || !isApplyVisible || isLoading}
                   onPress={handleApply}
                   customStyle={{
-                    customTextStyle: style.customButtonApplyStyle,
+                    customTextStyle: isApplyVisible
+                      ? style.customButtonApplyStyle
+                      : style.disableButtonText,
                   }}
                   style={style.buttonStyle}
                 >
-                  {intl.formatMessage({ id: "label.applyJob" })}
+                  {intl.formatMessage({ id: buttonTwoText })}
                 </CustomButton>
               }
               rightSection={
                 <CustomButton
+                  disabledStyle={style.disabledStyle}
                   disabled={isLoading}
                   iconLeft={{
                     leftIconAlt: "left-saved",
-                    leftIconSource: images.iconSaveSlashBlue,
+                    leftIconSource: isSaved
+                      ? images.iconArchiveSaveMobile
+                      : images.iconSaveSlashBlue,
                   }}
-                  onPress={handleRemove}
+                  onPress={handleSaveAndRemove}
                   customStyle={{ customTextStyle: style.customButtonTextStyle }}
                   style={style.buttonStyle}
                 >
-                  {intl.formatMessage({ id: "label.remove" })}
+                  {intl.formatMessage({ id: buttonOneText })}
                 </CustomButton>
               }
             />
@@ -235,7 +236,11 @@ const JobCardMobile = ({
     },
   ];
 
-  return <MultiRow rows={multiRow} style={style.mobileContainer} />;
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <MultiRow rows={multiRow} style={style.mobileContainer} />
+    </TouchableOpacity>
+  );
 };
 
 export default JobCardMobile;

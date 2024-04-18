@@ -19,7 +19,10 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import {
+  FILTER_TYPE_ENUM,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import images from "../../../images";
@@ -30,6 +33,11 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsListing.style";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
+
+const initialFilterState = {
+  selectedStatus: [],
+  selectedQuery: [],
+};
 
 const useTicketListing = () => {
   const { isWebView } = useIsWebView();
@@ -43,6 +51,7 @@ const useTicketListing = () => {
     query_type: "",
     searchData: "",
   });
+  const [filterState, setFilterState] = useState(initialFilterState);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -91,6 +100,54 @@ const useTicketListing = () => {
   });
 
   const isError = isErrorTicketListing || isErrorStatus || isErrorQueryType;
+
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
+    setFilterState((prevState) => {
+      const filterObj = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterObj?.name}`;
+      const existingSelectedOptions = prevState[filterKey];
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter?.[keyName]
+          )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
+            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
+      }
+
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
+  };
+
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "Status",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: statusData,
+      selectedOptions: filterState?.selectedStatus,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "id",
+      name: "QueryType",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: queryTypeData,
+      selectedOptions: filterState?.selectedQueryType,
+      handler: handleFilterChange,
+    },
+  ];
 
   const getErrorDetails = () => {
     if (isErrorTicketListing && isErrorStatus && isErrorQueryType) {
@@ -289,21 +346,32 @@ const useTicketListing = () => {
     });
   };
 
-  const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
+  const returnSelectedFilterOption = (filterInfo, filterName) => {
+    const filterObj = filterInfo?.find((obj) => obj.name === filterName);
+    return filterObj?.selectedOptions;
+  };
+
+  const filterApplyHandler = async (filterInfo) => {
     setIsFirstPageReceived(true);
-    setFilterOptions((prev) => ({
-      ...prev,
-      status: selectedStatus,
-      query_type: selectedQueryType,
-    }));
+    const currentFilterOptions = {
+      status: returnSelectedFilterOption(filterInfo, "Status"),
+      query_type: returnSelectedFilterOption(filterInfo, "QueryType"),
+    };
+    setFilterOptions((prev) => {
+      return {
+        ...prev,
+        ...currentFilterOptions,
+      };
+    });
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);
       const newData = await fetchDataTicketListing({
         queryParamsObject: {
           q: filterOptions.searchData,
-          status: selectedStatus,
-          queryType: selectedQueryType,
+          multiFacet: 1,
+          status: currentFilterOptions.status,
+          queryType: currentFilterOptions.query_type,
         },
       });
       setCurrentRecords(newData?.records);
@@ -315,10 +383,11 @@ const useTicketListing = () => {
       }
     } else {
       await updateCurrentRecords({
-        status: selectedStatus,
-        queryType: selectedQueryType,
         perPage: rowsPerPage,
         page: currentPage,
+        multiFacet: 1,
+        status: currentFilterOptions.status,
+        queryType: currentFilterOptions.query_type,
       });
     }
   };
@@ -456,9 +525,12 @@ const useTicketListing = () => {
   return {
     allDataLoaded,
     currentPage,
+    customFilterInfo,
     fetchDataTicketListing,
     filterApplyHandler,
     filterCategory,
+    filterState,
+    setFilterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,

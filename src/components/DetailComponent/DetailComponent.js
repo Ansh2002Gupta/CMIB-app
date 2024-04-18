@@ -115,7 +115,7 @@ const DetailComponent = ({
 
   const renderDetailContent = (detail) => {
     if (detail?.isEmptyField) return <></>;
-    
+
     if (detail.showBadgeLabel) {
       return (
         <BadgeLabel

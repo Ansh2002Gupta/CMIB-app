@@ -13,7 +13,11 @@ import useIsWebView from "../../../hooks/useIsWebView";
 import classes from "../../../theme/styles/CssClassProvider";
 import styles from "./CandidateRoundOneContainer.style";
 
-const CandidateRoundOneContainerTemplate = ({ roundOneCards, onPressCard }) => {
+const CandidateRoundOneContainerTemplate = ({
+  cardsData,
+  onPressCard,
+  hasRoundone,
+}) => {
   const { isWebView } = useIsWebView();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
@@ -26,7 +30,13 @@ const CandidateRoundOneContainerTemplate = ({ roundOneCards, onPressCard }) => {
     <ScrollView style={styles.mainContainer}>
       <TwoRow
         topSection={
-          <IconHeader headerText={intl.formatMessage({ id: "label.round1" })} />
+          <IconHeader
+            headerText={
+              hasRoundone
+                ? intl.formatMessage({ id: "label.round1" })
+                : intl.formatMessage({ id: "label.round2" })
+            }
+          />
         }
         bottomSection={
           <TwoRow
@@ -39,7 +49,7 @@ const CandidateRoundOneContainerTemplate = ({ roundOneCards, onPressCard }) => {
                     : styles.containerStyle),
                 }}
               >
-                {roundOneCards.map(
+                {cardsData.map(
                   (card, index) =>
                     index < 3 && (
                       <CustomTouchableOpacity
@@ -95,7 +105,7 @@ const CandidateRoundOneContainerTemplate = ({ roundOneCards, onPressCard }) => {
                       : styles.containerStyle),
                   }}
                 >
-                  {roundOneCards.map(
+                  {cardsData.map(
                     (card, index) =>
                       index > 2 && (
                         <CustomTouchableOpacity

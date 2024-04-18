@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ReactQuill from "react-quill";
 import { useIntl } from "react-intl";
 import "quill/dist/quill.snow.css";
 import { View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
+import CustomButton from "../CustomButton";
 import {
   ATTACHMENT_TYPE,
   COLOR,
@@ -13,6 +14,7 @@ import {
   LIST_TYPE,
   SIZE,
   TEXT_FORMATS,
+  PREVIEWED_LENGTH,
 } from "../../constants/constants";
 import "./styles.css";
 import styles from "./CustomTextEditor.style";
@@ -25,6 +27,7 @@ const CustomTextEditor = (props) => {
     disabled,
     errorMessage,
     isMandatory,
+    isViewMore,
     label,
     onChangeText,
     value,
@@ -47,6 +50,13 @@ const CustomTextEditor = (props) => {
   const handleProcedureContentChange = (content) => {
     onChangeText && onChangeText(content);
   };
+
+  const [isExpanded, setIsExpanded] = useState(!isViewMore);
+  const getPreviewContent = (val) => {
+    const previewDelta = val.slice(0, PREVIEWED_LENGTH);
+    return previewDelta;
+  };
+
   const getTextEditorStyles = () => {
     if (!!errorMessage) {
       return "error";
@@ -72,18 +82,36 @@ const CustomTextEditor = (props) => {
         )}
       </View>
       <View style={{ ...styles.quillContainer, ...quillContainerStyle }}>
-        <ReactQuill
-          theme="snow"
-          value={value}
-          className={getTextEditorStyles()}
-          modules={modules}
-          onBlur={customHandleBlur}
-          formats={FORMAT}
-          placeholder={intl.formatMessage({ id: "label.description" })}
-          onChange={handleProcedureContentChange}
-          style={{ ...styles.quillStyling, ...quilStyle }}
-          readOnly={disabled}
-        />
+        <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+          <ReactQuill
+            theme="snow"
+            value={isExpanded ? value : getPreviewContent(value)}
+            className={[getTextEditorStyles(), isViewMore && "custom"].join(
+              " "
+            )}
+            modules={modules}
+            onBlur={customHandleBlur}
+            formats={FORMAT}
+            placeholder={intl.formatMessage({ id: "label.description" })}
+            onChange={handleProcedureContentChange}
+            style={{ ...styles.quillStyling, ...quilStyle }}
+            readOnly={disabled}
+          />
+          {isViewMore && value.length > PREVIEWED_LENGTH && (
+            <CustomButton
+              onPress={(event) => {
+                setIsExpanded(!isExpanded);
+                event.stopPropagation();
+              }}
+              customStyle={{ customTextStyle: styles.customButtonTextStyle }}
+              style={styles.buttonStyle}
+            >
+              {isExpanded
+                ? intl.formatMessage({ id: "label.viewLess" })
+                : intl.formatMessage({ id: "label.viewMore" })}
+            </CustomButton>
+          )}
+        </View>
       </View>
       {!!errorMessage && (
         <CommonText

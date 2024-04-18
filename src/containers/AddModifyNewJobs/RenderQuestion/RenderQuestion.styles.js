@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderRadius: 8,
     justifyContent: "center",
+    backgroundColor: colors.white,
   },
   questionViewStyle: {
     alignItems: "center",
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     flex: 0.74,
     marginLeft: 24,
     flexDirection: "row",
+    height: 54,
   },
   copyIconStyle: {
     height: 24,
