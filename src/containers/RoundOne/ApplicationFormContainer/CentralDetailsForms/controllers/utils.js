@@ -45,12 +45,13 @@ export const contactDetailFields = (countryData, intl) => {
         key: keys.personName,
         label: "label.contact_person",
         placeholder: "label.contact_person",
+        isMandatory: true,
       },
       {
         key: keys.emailId,
         label: "label.email_id",
         placeholder: "label.email_id",
-
+        isMandatory: true,
         isEmail: true,
         validate: (value) => {
           if (value && validateEmail(value)) {
@@ -64,7 +65,7 @@ export const contactDetailFields = (countryData, intl) => {
         key: keys.mobileNumber,
         label: "label.mobile_number",
         placeholder: "label.mobile_number",
-        isMandatory: false,
+        isMandatory: true,
         isMobileNumber: true,
         isNumeric: true,
         options: countryData,
@@ -136,7 +137,9 @@ const getDesgnationDetails = (designationDetatils) => {
       designationObject[item.cellID] = temp;
     }
     if (item.key == "designation_details") {
-      designationObject[item.cellID].round_company_job_detail_id = item.value;
+      designationObject[item.cellID].round_company_job_detail_id = Number(
+        item.value
+      );
     }
     if (item.key == "number_of_vacancies") {
       designationObject[item.cellID].no_of_vacancy = Number(item.value);
@@ -179,6 +182,7 @@ const getDocumentData = (isCompanyPPt, fileUploadResult, profileData) => {
 
 export const getFormattedData = (
   contactDetails,
+  interviewDetailsState,
   designationDetatils,
   otherBenefits,
   isCompanyPPt,
@@ -197,9 +201,10 @@ export const getFormattedData = (
       telephone_number: contactDetails[keys.telephoneNumber],
     },
     interview_details: {
-      campus_dates: [],
-      interview_type: "",
+      campus_dates: interviewDetailsState?.campusDates,
+      interview_type: interviewDetailsState?.companyAvailableForInterview,
     },
+    selection_process: ["Group Discussion"],
     designation_details: designation,
     other_details: otherDetails,
     other_benefits: benefits,

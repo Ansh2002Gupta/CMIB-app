@@ -10,7 +10,7 @@ import useFetch from "../../../../../hooks/useFetch";
 import { COUNTRY_CODE } from "../../../../../services/apiServices/apiEndPoint";
 import { useParams } from "react-router";
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
-import { useDelete, usePost } from "../../../../../hooks/useApiRequest";
+import { useDelete, usePost, usePut } from "../../../../../hooks/useApiRequest";
 import { useIntl } from "react-intl";
 import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
@@ -112,6 +112,25 @@ const useCentralDetails = () => {
     otherOptions: {
       skipApiCallOnMount: true,
     },
+  });
+
+  const {
+    data: desginationData,
+    isLoading: designationDataLoading,
+    // fetchData: fetchDesignationData,
+  } = useFetch({
+    url: `/company/${selectedModule.key}/rounds/${roundId}/application/job-detail`,
+    otherOptions: {},
+  });
+
+  const {
+    // data: desginationData,
+    isLoading: saveRoundDetailLoading,
+    makeRequest: saveRoundDetails,
+  } = usePut({
+    // url: `/company/${selectedModule.key}/rounds/${roundId}/application/job-detail`,
+    url: ``,
+    otherOptions: {},
   });
 
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
@@ -216,7 +235,6 @@ const useCentralDetails = () => {
     setCurrentDesginationID(centerData?.id);
     setSelectedOptions([centerData?.id]);
 
-    //TODO: api issue
     fetchRoundCenterDetails({
       overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}`,
     });
@@ -248,11 +266,22 @@ const useCentralDetails = () => {
   const handleSave = () => {
     const body = getFormattedData(
       contactDetailsState,
+      interviewDetailsState,
       designationDetatils,
       requiredDocumentDetails,
       isCompanyPPt,
       fileUploadResult
     );
+
+    saveRoundDetails({
+      overrideUrl: `company/${
+        selectedModule.key
+      }/rounds/${roundId}/application/centres/${17}`,
+      body,
+      onSuccessCallback: () => {
+        console.log("onSuccessCallback,onSuccessCallback");
+      },
+    });
     console.log(body, "body");
   };
 
@@ -282,53 +311,6 @@ const useCentralDetails = () => {
       const fileName = fileUploadResult?.data?.file_name.split("/");
       handleDeleteLogo(fileName[fileName.length - 1]);
     }
-  };
-
-  const createPayloadFromProfileData = (profileData) => {
-    const companyDetails = {};
-    if (fileUploadResult?.data?.file_name || profileData?.companyLogo) {
-      const logoFileName = profileData?.companyLogo?.split("/")?.pop();
-      companyDetails.company_logo =
-        fileUploadResult?.data?.file_name || logoFileName;
-    } else {
-      companyDetails.company_logo = null;
-    }
-    let designationObject = {};
-    let requiredObject = {};
-    designationDetatils.forEach((item, index) => {
-      let temp = {};
-      if (!designationObject[item.cellID]) {
-        designationObject[item.cellID] = temp;
-      }
-      if (item.key == "designation_details") {
-        designationObject[item.cellID].value = item.value;
-      }
-      if (item.key == "number_of_vacancies") {
-        designationObject[item.cellID].numberOfVacancies = item.value;
-      }
-    });
-
-    requiredDocumentDetails.forEach((item, index) => {
-      let temp = {};
-      if (!requiredObject[item.cellID]) {
-        requiredObject[item.cellID] = temp;
-      }
-      if (item.key == "benefits_details") {
-        requiredObject[item.cellID].value = item.value;
-      }
-      if (item.key == "benefits_amount") {
-        requiredObject[item.cellID].amount = item.value;
-      }
-    });
-    companyDetails.designationDetatils = designationObject;
-    companyDetails.otherDetails = requiredObject;
-    companyDetails.pptIsSelected = isCompanyPPt;
-
-    const payload = {
-      ...companyDetails,
-    };
-
-    return payload;
   };
 
   return {
@@ -392,6 +374,7 @@ const useCentralDetails = () => {
     setDesignationDetatils,
     isCompanyPPt,
     setIsCompanyPPT,
+    desginationData,
   };
 };
 

@@ -6,6 +6,7 @@ import AddDesignationTemplate from "./AddDesignationTemplate.js";
 const AddDesignation = ({
   requiredDocumentDetails,
   setRequiredDocumentDetails,
+  options
 }) => {
   const {
     addDocumentModal,
@@ -25,6 +26,7 @@ const AddDesignation = ({
   } = useAddDesignation({
     requiredDocumentDetails,
     setRequiredDocumentDetails,
+    options
   });
 
   return (

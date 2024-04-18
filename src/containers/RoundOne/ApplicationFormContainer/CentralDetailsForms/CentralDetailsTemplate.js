@@ -63,6 +63,7 @@ const CentralDetailsTemplate = ({
   setIsCompanyPPT,
   designationDetatils,
   setDesignationDetatils,
+  desginationData,
 }) => {
   const {
     fileUploadResult,
@@ -135,6 +136,7 @@ const CentralDetailsTemplate = ({
             handleMultiSelect={handleInterviewDetailMultiSelect}
           />
           <AddDesignation
+            options={desginationData}
             requiredDocumentDetails={designationDetatils}
             setRequiredDocumentDetails={setDesignationDetatils}
           />

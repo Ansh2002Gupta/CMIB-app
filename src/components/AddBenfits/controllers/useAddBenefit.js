@@ -12,6 +12,7 @@ const addDocumentField = [
     label: "label.benefit_details",
     placeholder: "label.enter_benefit_details",
     value: "",
+    isMandatory: true,
   },
   {
     cellID: 1,
@@ -19,6 +20,7 @@ const addDocumentField = [
     label: "label.amount",
     placeholder: "label.enter_amount",
     value: "",
+    isMandatory: true,
     isNumeric: true,
   },
   {

@@ -51,7 +51,7 @@ const CustomMultiRowTextInput = ({
   const handleAddNewRow = (cellID) => {
     if (isEmptyCellPresent()) return;
     const newRowID = cellID + 1;
-    const newRowTemplate = startRowTemplate.map((cell, index) => {
+    const newRowTemplate = startRowTemplate?.map((cell, index) => {
       return {
         ...cell,
         cellID: newRowID,

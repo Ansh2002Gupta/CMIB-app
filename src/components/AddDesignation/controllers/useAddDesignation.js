@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 import { designation_key } from "../../../constants/constants";
 
-const addDocumentField = [
+const addDocumentField = (options, data) => [
   {
     cellID: 1,
     key: designation_key.DESIGNATION_DETAILS,
     label: "label.designation",
     placeholder: "label.enter_designationName",
     isDropdown: true,
+    isMandatory: true,
+    valueField: "id",
     value: "",
+    options: options?.map((option) =>
+      createModuleOptions(option, data, "designation", "designation")
+    ),
   },
   {
     cellID: 1,
     key: designation_key.NUMBER_OF_VACANCIES,
     label: "label.no_of_vacancy",
     placeholder: "label.enter_no_of_vacancies",
+    isMandatory: true,
     value: "",
     isNumeric: true,
   },
@@ -25,9 +31,26 @@ const addDocumentField = [
   },
 ];
 
+export const createModuleOptions = (
+  module,
+  contact,
+  labelKey = "label",
+  valueKey = "value"
+) => {
+  return {
+    id: module?.id,
+    label: module[labelKey],
+    name: module[labelKey],
+    value: module[valueKey],
+    isSelected: contact?.includes(module[valueKey]),
+    selectedIndex: null,
+  };
+};
+
 const useAddDesignation = ({
   requiredDocumentDetails,
   setRequiredDocumentDetails,
+  options,
 }) => {
   const [addDocumentModal, setAddDocumentModal] = useState(false);
   const [editDocumentModal, setEditDocumentModal] = useState();
@@ -48,8 +71,13 @@ const useAddDesignation = ({
   }, []);
 
   const [multiDocumentDetail, setMultiDocumentDetail] = useState([
-    ...addDocumentField,
+    ...addDocumentField(),
   ]);
+
+  useEffect(() => {
+    const templateData = addDocumentField(options, requiredDocumentDetails);
+    setMultiDocumentDetail(templateData);
+  }, [options]);
 
   useEffect(() => {
     validateForm();
@@ -78,17 +106,15 @@ const useAddDesignation = ({
   };
 
   const handleMultiRowDocumentDetails = (propertyName, value, id) => {
-    setMultiDocumentDetail((prevDetail) => {
-      const updatedDetail = prevDetail.map((item, index) => {
-        if (item.label === propertyName && index == id) {
-          return { ...item, value: value };
-        }
-        return item;
-      });
-
-      setRequiredDocumentDetails([...updatedDetail]);
-      return updatedDetail;
+    const updatedDetail = multiDocumentDetail.map((item, index) => {
+      if (item.label === propertyName && index == id) {
+        return { ...item, value: value };
+      }
+      return item;
     });
+
+    setRequiredDocumentDetails([...updatedDetail]);
+    setMultiDocumentDetail([...updatedDetail]);
   };
 
   const handleDocumentDetailChange = (propertyName, value) => {
@@ -136,7 +162,7 @@ const useAddDesignation = ({
 
   return {
     addDocumentModal,
-    addDocumentField,
+    addDocumentField: addDocumentField(options, requiredDocumentDetails),
     multiDocumentDetail,
     setMultiDocumentDetail,
     documentDetail,
