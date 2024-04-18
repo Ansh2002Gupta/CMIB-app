@@ -826,6 +826,7 @@ const locale = {
   "label.work_experience_range": "Experience Range",
   "label.select_work_experience_range": "Select work experience range",
   "label.fexi_hours": "Flexi Hours",
+  "label.selectCenterMessage": "Please select center in left section",
 };
 
 export default locale;

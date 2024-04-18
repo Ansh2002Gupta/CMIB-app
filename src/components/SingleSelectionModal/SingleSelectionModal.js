@@ -9,6 +9,7 @@ import styles from "./styles";
 import CommonText from "../CommonText";
 import SaveCancelButton from "../SaveCancelButton";
 import Spinner from "../Spinner";
+import { useIntl } from "react-intl";
 
 const SingleSelectionModal = ({
   title,
@@ -22,11 +23,23 @@ const SingleSelectionModal = ({
   isLoading,
   isDataLoading,
 }) => {
+  const intl = useIntl();
+
   const renderList = () => {
     if (isDataLoading) {
       return (
-        <View style={styles.spinner}>
+        <View style={styles.flexCenterContainer}>
           <Spinner />
+        </View>
+      );
+    }
+
+    if (!data?.length) {
+      return (
+        <View style={styles.flexCenterContainer}>
+          <CommonText customTextStyle={styles.messageText}>
+            {intl.formatMessage({ id: "label.noResultFound" })}
+          </CommonText>
         </View>
       );
     }

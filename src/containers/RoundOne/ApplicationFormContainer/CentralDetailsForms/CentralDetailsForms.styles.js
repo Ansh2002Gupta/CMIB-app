@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
-  spinner: {
+  flexContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  errorText: {
+  messageText: {
     fontSize: 14,
     lineHeight: 16,
     color: colors.black,
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   },
   customToggleStyle: { marginTop: 12 },
   customLabelStyle: { color: colors.gray },
+  toggleComponent: { marginBottom: 24 },
 });
 
 export default styles;

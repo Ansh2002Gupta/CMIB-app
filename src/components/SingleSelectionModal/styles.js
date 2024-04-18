@@ -34,7 +34,7 @@ const styles = {
         maxHeight: deviceHeight * 0.65,
       },
       web: {
-        maxHeight: deviceHeight * 0.5,
+        height: deviceHeight * 0.5,
       },
     }),
   },
@@ -65,10 +65,16 @@ const styles = {
     color: colors.black,
     fontWeight: "500",
   },
-  spinner:{
+  flexCenterContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  messageText: {
+    fontSize: 14,
+    lineHeight: 16,
+    color: colors.black,
+    fontWeight: "600",
   },
 };
 export default styles;

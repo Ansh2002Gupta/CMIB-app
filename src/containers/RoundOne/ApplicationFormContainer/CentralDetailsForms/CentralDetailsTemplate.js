@@ -84,7 +84,7 @@ const CentralDetailsTemplate = ({
   const renderRoundDetail = () => {
     if (roundCenterDetailsLoading) {
       return (
-        <View style={styles.spinner}>
+        <View style={styles.flexContainer}>
           <Spinner />
         </View>
       );
@@ -92,15 +92,15 @@ const CentralDetailsTemplate = ({
 
     if (roundCenterDetailsError) {
       return (
-        <View style={styles.spinner}>
-          <CommonText customTextStyle={styles.errorText}>
+        <View style={styles.flexContainer}>
+          <CommonText customTextStyle={styles.messageText}>
             {roundCenterDetailsError?.data?.message}
           </CommonText>
         </View>
       );
     }
 
-    if (roundCenterDetails)
+    if (roundCenterDetails) {
       return (
         <>
           <DetailCard
@@ -140,6 +140,15 @@ const CentralDetailsTemplate = ({
           />
         </>
       );
+    }
+
+    return (
+      <View style={styles.flexContainer}>
+        <CommonText customTextStyle={styles.messageText}>
+          {intl.formatMessage({ id: "label.selectCenterMessage" })}
+        </CommonText>
+      </View>
+    );
   };
 
   const renderBottomSection = () => {
@@ -150,7 +159,7 @@ const CentralDetailsTemplate = ({
             headerText={intl.formatMessage({ id: "label.other_details" })}
             headerTextCustomStyles={styles.headerTextStyle}
           />
-          <View style={{ marginBottom: 24 }}>
+          <View style={styles.toggleComponent}>
             <CustomToggleComponent
               label={intl.formatMessage({ id: "label.company_ppt" })}
               value={isCompanyPPt}
