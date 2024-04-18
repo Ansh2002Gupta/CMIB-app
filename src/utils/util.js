@@ -706,3 +706,7 @@ export const formateErrors = (errorResponse) => {
 
   return "An unexpected error occurred.";
 };
+
+export const convertStringtoNumber = (val) => {
+  return +val;
+};

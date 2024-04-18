@@ -1,4 +1,5 @@
 import { DOCUMENT_TYPE, document_keys } from "../../../../constants/constants";
+import { convertStringtoNumber } from "../../../../utils/util";
 
 export const mapMonthyApiToUI = () => {
   return [
@@ -171,8 +172,8 @@ export const mapPostedPlaceApiToUI = () => {
 export const mapDataToUI = (data) => {
   return {
     designation: data?.designation || "-",
-    compensation: data?.compensation || "-",
-    starting_salary: data?.starting_salary || "-",
+    compensation: convertStringtoNumber(data?.compensation) || "-",
+    starting_salary: convertStringtoNumber(data?.starting_salary) || "-",
     role_responsibility: data?.role_responsibility || "-",
     ctc_details: data?.ctc_details || "-",
     otherInfo: data?.other_details || "-",
@@ -180,7 +181,7 @@ export const mapDataToUI = (data) => {
       {
         key: "monthly_basic",
         label: "label.basic",
-        value: data?.monthly?.monthly_basic || "-",
+        value: convertStringtoNumber(data?.monthly?.monthly_basic) || "-",
         placeholder: "label.basic",
         isMandatory: true,
         isRow: true,
@@ -191,7 +192,7 @@ export const mapDataToUI = (data) => {
       {
         key: "monthly_hra",
         label: "label.hra",
-        value: data?.monthly?.monthly_hra || "-",
+        value: convertStringtoNumber(data?.monthly?.monthly_hra) || "-",
         isMandatory: true,
         placeholder: "label.hra",
         isRow: true,
@@ -202,7 +203,7 @@ export const mapDataToUI = (data) => {
       {
         key: "monthly_other",
         label: "label.others",
-        value: data?.monthly?.monthly_other || "-",
+        value: convertStringtoNumber(data?.monthly?.monthly_other) || "-",
         isMandatory: true,
         placeholder: "label.others",
         isRow: true,
@@ -213,7 +214,7 @@ export const mapDataToUI = (data) => {
       {
         key: "monthly_fixed_pay",
         label: "label.fixedPay",
-        value: data?.monthly?.monthly_fixed_pay || "-",
+        value: convertStringtoNumber(data?.monthly?.monthly_fixed_pay) || "-",
         isMandatory: true,
         placeholder: "label.fixedPay",
         isRow: true,
@@ -224,7 +225,8 @@ export const mapDataToUI = (data) => {
       {
         key: "monthly_variable_pay",
         label: "label.variablePay",
-        value: data?.monthly?.monthly_variable_pay || "-",
+        value:
+          convertStringtoNumber(data?.monthly?.monthly_variable_pay) || "-",
         isMandatory: true,
         placeholder: "label.variablePay",
         isRow: true,
@@ -235,7 +237,8 @@ export const mapDataToUI = (data) => {
       {
         key: "monthly_semi_variable",
         label: "label.semiVariable",
-        value: data?.monthly?.monthly_semi_variable || "-",
+        value:
+          convertStringtoNumber(data?.monthly?.monthly_semi_variable) || "-",
         isMandatory: true,
         placeholder: "label.semiVariable",
         isRow: true,
@@ -246,7 +249,7 @@ export const mapDataToUI = (data) => {
       {
         key: "monthly_take_home",
         label: "label.takeHome",
-        value: data?.monthly?.monthly_take_home || "-",
+        value: convertStringtoNumber(data?.monthly?.monthly_take_home) || "-",
         isMandatory: true,
         placeholder: "label.takeHome",
         isRow: true,
@@ -257,7 +260,8 @@ export const mapDataToUI = (data) => {
       {
         key: "monthly_gross_salary",
         label: "label.gross_Salary",
-        value: data?.monthly?.monthly_gross_salary || "-",
+        value:
+          convertStringtoNumber(data?.monthly?.monthly_gross_salary) || "-",
         isMandatory: true,
         placeholder: "label.enter_gross_Salary",
         isRow: true,
@@ -271,7 +275,8 @@ export const mapDataToUI = (data) => {
       {
         key: "yearly_one_time_payment",
         label: "label.oneTimePayment",
-        value: data?.yearly?.yearly_one_time_payment || "-",
+        value:
+          convertStringtoNumber(data?.yearly?.yearly_one_time_payment) || "-",
         isMandatory: true,
         placeholder: "label.oneTimePayment",
         isRow: true,
@@ -282,7 +287,8 @@ export const mapDataToUI = (data) => {
       {
         key: "yearly_total_gross_salary",
         label: "label.totalGrossSalary",
-        value: data?.yearly?.yearly_total_gross_salary || "-",
+        value:
+          convertStringtoNumber(data?.yearly?.yearly_total_gross_salary) || "-",
         isMandatory: true,
         placeholder: "label.totalGrossSalary",
         isRow: true,
@@ -294,7 +300,7 @@ export const mapDataToUI = (data) => {
       {
         key: "yearly_ctc",
         label: "label.ctc",
-        value: data?.yearly?.yearly_ctc || "-",
+        value: convertStringtoNumber(data?.yearly?.yearly_ctc) || "-",
         isMandatory: true,
         isEditable: false,
         placeholder: "label.ctc",
@@ -307,8 +313,10 @@ export const mapDataToUI = (data) => {
     bond_details: {
       is_bond_included:
         data?.bond_details?.is_bond_included === "yes" ? 0 : 1 || "-",
-      bond_period_in_mm: data?.bond_details?.bond_period_in_mm || "-",
-      exit_amount: data?.bond_details?.exit_amount || "-",
+      bond_period_in_mm:
+        convertStringtoNumber(data?.bond_details?.bond_period_in_mm) || "-",
+      exit_amount:
+        convertStringtoNumber(data?.bond_details?.exit_amount) || "-",
     },
     specific_performa_required:
       data?.specific_performa_required === "yes" ? 0 : 1 || "-",
@@ -587,7 +595,7 @@ export const mapDataToPayload = (data) => {
     ctc_details: data?.ctc_details,
     monthly: {},
     yearly: {},
-    posting_details: mapPostingDetailsToPayload(data),
+    ...mapPostingDetailsToPayload(data),
     required_docs: [],
     bond_details: {
       is_bond_included:
@@ -598,9 +606,9 @@ export const mapDataToPayload = (data) => {
     specific_performa_required:
       data?.specific_performa_required === 0 ? "yes" : "no",
     other_details: data?.otherInfo,
-    job_type: data?.job_type,
+    job_type: "WFH",
     flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",
-    work_exp_range_id: data?.work_exp_range_id,
+    work_exp_range_id: "30",
   };
 
   // Map monthly data
