@@ -117,14 +117,15 @@ export const interviewDetailsFields = (state, roundCenterDetails, intl) => {
         isMultiSelect: true,
         isDropdown: true,
         placeholder: "label.select_module",
-        valueField: "value",
+        valueField: "id",
+        labelField: "label",
         defaultValues: [],
         options: roundCenterDetails?.interview_dates?.map((option) =>
           createModuleOptions(
             option,
             state[keys.campusDates],
             "interview_schedule_date",
-            "interview_schedule_date"
+            "id"
           )
         ),
         isSingleMutliSelect: true,
@@ -199,7 +200,7 @@ const getDocumentData = (isCompanyPPt, fileUploadResult, profileData) => {
   } else {
     companyDetails.file_path = null;
   }
-  companyDetails.company_ppt = isCompanyPPt;
+  companyDetails.company_ppt = isCompanyPPt === "0" ? "yes" : "no";
 
   return companyDetails;
 };
@@ -240,13 +241,15 @@ export const createModuleOptions = (
   module,
   contact,
   labelKey = "label",
-  valueKey = "value"
+  valueKey = "value",
+  idKey = "id"
 ) => {
   return {
+    id: module[idKey],
     label: module[labelKey],
     name: module[labelKey],
     value: module[valueKey],
-    isSelected: contact?.includes(module[valueKey]),
+    isSelected: contact?.includes(String(module[valueKey])),
     selectedIndex: null,
   };
 };

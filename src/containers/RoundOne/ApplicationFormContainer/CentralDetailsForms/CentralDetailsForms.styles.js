@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   selectionProcessStyle: {
     color: colors.black,
     fontSize: 16,
-    paddingBottom: 16,
+    paddingBottom: 12,
   },
   bottomMargin: {
     marginBottom: 24,
