@@ -21,6 +21,9 @@ const ApplicationFormStepper = ({
   webActionButton,
 }) => {
   const intl = useIntl();
+  const steps = APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
+    intl.formatMessage({ id: step.title })
+  );
 
   return (
     <>
@@ -45,10 +48,10 @@ const ApplicationFormStepper = ({
             )}
           </View>
           <StepperTabs
-            activeStep={activeStep}
-            steps={APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
-              intl.formatMessage({ id: step.title })
-            )}
+            {...{
+              activeStep,
+              steps,
+            }}
           />
         </View>
       ) : (

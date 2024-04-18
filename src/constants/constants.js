@@ -214,6 +214,24 @@ export const DOCUMENT_TYPE = [
   },
 ];
 
+export const AREA_CODES = [
+  { label: "+01", value: "+01" },
+  { label: "+02", value: "+02" },
+  {
+    label: "+03",
+    value: "+03",
+  },
+];
+
+export const MOBILE_CODES = [
+  { label: "+01", value: "+01" },
+  { label: "+02", value: "+02" },
+  {
+    label: "+03",
+    value: "+03",
+  },
+];
+
 export const ADD_DOCUMENT = {
   BOTH: "Both",
   PHOTOCOPIES: "Photocopies",
@@ -247,6 +265,16 @@ export const document_keys = {
   DOCUMENT_NAME: "document_name",
   DOCUMENT_TYPE: "document_type",
   NUMBER_OF_COPIES: "no_of_copies",
+};
+
+export const HEAD_CONTACT = {
+  DESIGNATION: "designation",
+  NAME: "name",
+  EMAIL: "email",
+  MOBILE_COUNTRY_CODE: "mobile_country_code",
+  MOBILE_NUMBER: "mobile_number",
+  AREA_CODE: "std_country_code",
+  TELEPHONE_NUMBER: "telephone_number",
 };
 
 export const document_keys_with_label = {
