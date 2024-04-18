@@ -776,6 +776,12 @@ const locale = {
   "label.womenPlacedYears":
     "Percentage of Women Members Placed in the Last 5 Years",
   "label.percentageWomenMembers": "Percentage of Women Members",
+  "label.CTCOfferedDesignation": "CTC Offered for each Designation",
+  "label.CTCOfferedINR": "CTC Offered (in INR)",
+  "label.centersChosenCandidatesInterview":
+    "Centers Chosen by Candidates for Interview",
+  "label.candidatesAcceptingOffersAreasWork":
+    "Candidates Accepting Offers in Areas of Work",
 };
 
 export default locale;

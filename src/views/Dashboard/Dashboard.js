@@ -7,6 +7,7 @@ import CAJobsDashboard from "../CompanyDashboard/CAJobsDashboard";
 import CAJobsMemberDashboard from "../MemberDashBoard/CAJobsMemberDashboard";
 import CarrerAscentMemeberDashboard from "../MemberDashBoard/CarrerAscentMemeberDashboard";
 import NQCACandidateDashboard from "../MemberDashBoard/NQCACandidateDashboard";
+import NQCACompanyDashboard from "../CompanyDashboard/NQCACompanyDashboard";
 import OverSeasMemberDashBoard from "../MemberDashBoard/OverSeasMemberDashBoard";
 import WomenMemberDashBoard from "../MemberDashBoard/WomenMemberDashBoard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
@@ -41,11 +42,15 @@ function DashboardView() {
         bottomSection={
           <View>
             {isCompany ? (
-              moduleKeys.CA_JOBS_KEY === selectedModule?.key && (
-                <CAJobsDashboard />
-              )
+              <View style={styles.innerContainer}>
+                {moduleKeys.CA_JOBS_KEY === selectedModule?.key && (
+                  <CAJobsDashboard />
+                )}
+                {moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY ===
+                  selectedModule?.key && <NQCACompanyDashboard />}
+              </View>
             ) : (
-              <View style={{ padding: 24 }}>
+              <View style={styles.innerContainer}>
                 {moduleKeys.CA_JOBS_KEY === selectedModule?.key && (
                   <CAJobsMemberDashboard />
                 )}
