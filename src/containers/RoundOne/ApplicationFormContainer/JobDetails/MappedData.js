@@ -175,6 +175,7 @@ export const mapDataToUI = (data) => {
     starting_salary: data?.starting_salary || "-",
     role_responsibility: data?.role_responsibility || "-",
     ctc_details: data?.ctc_details || "-",
+    otherInfo: data?.other_details || "-",
     monthly: [
       {
         key: "monthly_basic",
@@ -596,6 +597,10 @@ export const mapDataToPayload = (data) => {
     },
     specific_performa_required:
       data?.specific_performa_required === 0 ? "yes" : "no",
+    other_details: data?.otherInfo,
+    job_type: data?.job_type,
+    flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",
+    work_exp_range_id: data?.work_exp_range_id,
   };
 
   // Map monthly data

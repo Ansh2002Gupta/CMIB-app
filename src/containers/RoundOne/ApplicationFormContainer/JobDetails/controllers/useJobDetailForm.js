@@ -69,6 +69,9 @@ const initialState = {
   specific_performa_required: "",
   posting_details: [],
   otherInfo: "",
+  job_type: "",
+  flexi_hours: "",
+  work_exp_range_id: "",
 };
 
 const useJobDetailForm = ({ tabHandler }) => {
