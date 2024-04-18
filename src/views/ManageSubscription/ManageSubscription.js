@@ -215,9 +215,6 @@ function ManageSubscription() {
               <CAJobsPackagesListing
                 subscriptionListingData={subscriptionListingData}
                 isSubscribe={true}
-                isExpired={
-                  subscribedPackageData?.status.toLowerCase() === "inactive"
-                }
               />
             </>
           )}
