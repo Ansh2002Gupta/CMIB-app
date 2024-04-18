@@ -15,6 +15,7 @@ import CustomButton from "../../../../components/CustomButton";
 import CustomMultiRowTextInput from "../../../../components/CustomMultiRowTextinput";
 import DetailCard from "../../../../components/DetailCard";
 import MultiRow from "../../../../core/layouts/MultiRow";
+import Spinner from "../../../../components/Spinner";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../../../hooks/useFetch";
@@ -38,7 +39,7 @@ import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
 
 const PreInterviewPreferencesTemplate = ({
-  tabhandler,
+  tabHandler,
   handleInterviewPreferences,
   preInterviewDetails,
 }) => {
@@ -48,6 +49,8 @@ const PreInterviewPreferencesTemplate = ({
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const round_id = params?.id;
+  const isMob = Platform.OS.toLowerCase() !== "web";
+  const webProps = !isMob ? { size: "xs" } : {};
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -119,7 +122,6 @@ const PreInterviewPreferencesTemplate = ({
       label: obj?.["dial_code"],
       value: obj?.["dial_code"],
     }));
-    console.log("options_object:", options_object);
     const newData = data.map((object) => {
       if (object?.key?.trim().toLowerCase() === key?.trim().toLowerCase())
         return { ...object, options: options_object };
@@ -291,14 +293,14 @@ const PreInterviewPreferencesTemplate = ({
       body: { data: payload },
       onErrorCallback: (error) => {
         const errorMsg = !!error?.errors
-          ? formateErrors(error?.errors)
+          ? formateErrors(error)
           : formateErrors(
               intl.formatMessage({ id: "label.some_error_occured" })
             );
         if (!!error?.errors) setToastMsg(errorMsg);
       },
       onSuccessCallback: () => {
-        tabhandler("next");
+        tabHandler("next");
         setToastMsg("Changes saved successfully!");
       },
     });
@@ -376,6 +378,7 @@ const PreInterviewPreferencesTemplate = ({
             });
           }}
           headerId={"label.head_contacts"}
+          footerId={"label.at_least_one_mandatory_with_star"}
         />
       ),
     },
@@ -387,7 +390,13 @@ const PreInterviewPreferencesTemplate = ({
         {!!toastMsg && (
           <ToastComponent toastMessage={toastMsg} onDismiss={handleDismiss} />
         )}
-        <MultiRow rows={JobDetailsConfig} />
+        {isLoadingHeadContactData ? (
+          <View style={styles.loaderContainer}>
+            <Spinner thickness={2} {...webProps} />
+          </View>
+        ) : (
+          <MultiRow rows={JobDetailsConfig} />
+        )}
         <View style={styles.actionBtnContainer}>
           <CustomButton
             style={styles.buttonStyle}
@@ -395,7 +404,7 @@ const PreInterviewPreferencesTemplate = ({
               leftIconSource: images.iconArrowLeft,
             }}
             onPress={() => {
-              tabhandler("prev");
+              tabHandler("prev");
             }}
           >
             <CommonText
@@ -411,10 +420,12 @@ const PreInterviewPreferencesTemplate = ({
             onPressButtonOne={() => navigate(-1)}
             onPressButtonTwo={() => {
               handleSaveAndNext();
+              tabHandler("next");
             }}
             customStyles={{
               ...isWebProps,
               customContainerStyle: commonStyles.customContainerStyle,
+              buttonTwoStyle: styles.saveAndNextButton,
             }}
             displayLoader={isLoadingUpdateContactData}
             isDisabled={errorOnPage || isLoadingUpdateContactData}
