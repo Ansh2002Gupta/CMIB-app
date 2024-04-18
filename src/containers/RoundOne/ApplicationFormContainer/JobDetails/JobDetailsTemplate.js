@@ -30,65 +30,36 @@ import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../../../constants/con
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
 import CustomScrollView from "../../../../components/CustomScrollView";
+import ConfigurableList from "../../../../components/ConfigurableList";
+import { getDocumentField, getPlaceOfPostingDetails } from "./MappedData";
 
 const JobDetailsTemplate = ({
   renderJobDetails,
   handleInputChange,
+  configurableListQuery,
+  setConfigurableListQuery,
+  menuOptions,
+  setMenuOptions,
+  handlePress,
+  handleAdd,
+  handleDelete,
+  handleBlur,
+  selectedOptions,
+  desginationItems,
   setRenderJobDetails,
-  addDocumentField,
   addDesignation,
-  bondPeriod,
-  compensation,
-  CTCDetail,
-  designationName,
-  exitAmount,
-  handleBondPeriod,
-  handleCompensation,
-  handleCTCDetail,
-  handleDesignationName,
-  handleExitAmount,
   handleMonthlyData,
-  handleTextEditorValue,
-  handleStartingSalary,
   handleYearlyData,
-  handleSaveAndNext,
-  requiredDocumentDetails,
-  setRequiredDocumentDetails,
-  requiredPostingPlaceDetail,
-  setRequiredPostingPlaceDetail,
-  handleToggle,
-  jobDetailData,
   onClickAddDesignation,
-  selectionProcess,
-  startingSalary,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
-  console.log("renderJobDetails", renderJobDetails);
-
   const columnCount = isWebView && gridStyles[currentBreakpoint];
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
-
-  const renderSelectionProcess = () => {
-    return (
-      <View style={styles.checkBoxStyle}>
-        {renderJobDetails?.selectionProcess?.map((item, index) => (
-          <CheckBox
-            key={item.id}
-            id={item.id}
-            index={index}
-            title={item.title}
-            isSelected={item.isSelected}
-            handleCheckbox={handleToggle}
-          />
-        ))}
-      </View>
-    );
-  };
 
   const JobDetailsConfig = [
     {
@@ -120,7 +91,7 @@ const JobDetailsTemplate = ({
             isMandatory
             value={renderJobDetails?.designation}
             onChangeText={(val) => handleInputChange("designation", val)}
-            customHandleBlur={(val) => console.log("val", val)}
+            customHandleBlur={(val) => handleBlur("designation", val)}
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -182,7 +153,6 @@ const JobDetailsTemplate = ({
             details={renderJobDetails?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile
-            // cols={isWebView ? 3 : 1}
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
@@ -190,7 +160,6 @@ const JobDetailsTemplate = ({
             details={renderJobDetails?.yearly}
             handleChange={handleYearlyData}
             isEditProfile
-            // cols={isWebView ? 3 : 1}
             customCardStyle={styles.yearlyCustomCardStyle}
           />
         </View>
@@ -200,9 +169,9 @@ const JobDetailsTemplate = ({
       content: (
         <AddDocument
           {...{
-            handleInputChange,
-            requiredDocumentDetails,
-            setRequiredDocumentDetails,
+            requiredDocumentDetails: renderJobDetails?.required_docs,
+            setRenderJobDetails,
+            addDocumentField: getDocumentField(),
           }}
         />
       ),
@@ -271,29 +240,16 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <CardComponent customStyle={styles.bottomMargin}>
-          <CommonText
-            customContainerStyle={styles.selectionProcessTextStyle}
-            customTextStyle={styles.selectionProcessStyle}
-            fontWeight="600"
-          >
-            {intl.formatMessage({
-              id: "label.selection_process",
-            })}
-          </CommonText>
-          {renderSelectionProcess()}
-        </CardComponent>
-      ),
-    },
-    {
-      content: (
         <AddPlaceOfPosting
           {...{
-            jobDetailData: renderJobDetails?.posting_details,
-            requiredPostingPlaceDetail,
-            setRequiredPostingPlaceDetail,
-            renderJobDetails,
             handleInputChange,
+            jobDetailData: renderJobDetails?.posting_details,
+            requiredPostingPlaceDetail: renderJobDetails?.posting_details,
+            setRenderJobDetails,
+            addPostingDetailsField: getPlaceOfPostingDetails(),
+            isSpecificPerformaRequired:
+              renderJobDetails?.specific_performa_required,
+            otherInfo: renderJobDetails?.otherInfo,
           }}
         />
       ),
@@ -322,11 +278,31 @@ const JobDetailsTemplate = ({
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
         <TwoColumn
-          leftSection={[]}
+          leftSection={
+            desginationItems.length && (
+              <ConfigurableList
+                customOuterContianer={styles.customOuterContianer}
+                title={intl.formatMessage({ id: "label.desgination" })}
+                searchQuery={configurableListQuery}
+                setSearchQuery={setConfigurableListQuery}
+                selectedOptions={selectedOptions}
+                onDelete={handleDelete}
+                onPress={handlePress}
+                onAdd={handleAdd}
+                options={desginationItems}
+                menuOptions={menuOptions}
+                setMenuOptions={setMenuOptions}
+                nameField={"designation"}
+              />
+            )
+          }
           isLeftFillSpace={false}
           isRightFillSpace
+          leftSectionStyle={{
+            width: "25%",
+          }}
           rightSectionStyle={{
-            width: "100%",
+            width: "75%",
           }}
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
         />

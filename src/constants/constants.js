@@ -25,6 +25,7 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const OTHER_INFO_MAX_LENGTH = 400;
 export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const FILE_MAX_SIZE = 5000000;
@@ -205,11 +206,20 @@ export const STEPPER_STATE = {
 };
 
 export const DOCUMENT_TYPE = [
-  { label: "Photocopies", value: "Photocopies" },
-  { label: "Original", value: "Original" },
+  { label: "Photocopies", value: "photocopies" },
+  { label: "Original", value: "original" },
   {
     label: "Both",
-    value: "Both",
+    value: "both",
+  },
+];
+
+export const AREA_CODES = [
+  { label: "+01", value: "+01" },
+  { label: "+02", value: "+02" },
+  {
+    label: "+03",
+    value: "+03",
   },
 ];
 
@@ -246,6 +256,15 @@ export const document_keys = {
   DOCUMENT_NAME: "document_name",
   DOCUMENT_TYPE: "document_type",
   NUMBER_OF_COPIES: "no_of_copies",
+};
+
+export const HEAD_CONTACT = {
+  DESIGNATION: "designation",
+  NAME: "name",
+  EMAIL: "email",
+  MOBILE_NUMBER: "mobile_number",
+  AREA_CODE: "std_country_code",
+  TELEPHONE_NUMBER: "telephone_number",
 };
 
 export const document_keys_with_label = {
@@ -749,6 +768,15 @@ export const JOB_SEEKERS_TABLE_HEADING = {
   candidate_id: "Candidate ID",
   total_experience: "Total Experience",
   functional_area: "Functional Area",
+};
+
+export const INACTIVE_PACKAGE_TABLE_HEADING = {
+  package_name: "Package Name",
+  description: "Package Description",
+  price: "Price",
+  validity: "Package Validuty Period",
+  start_date: "Start Date",
+  validity_date: "Validity Date",
 };
 export const JOB_STATUS_RESPONSE_CODE = {
   "Shortlist Candidate": 3,

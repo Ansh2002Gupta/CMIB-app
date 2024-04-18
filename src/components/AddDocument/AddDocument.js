@@ -4,16 +4,13 @@ import AddDocumentTemplate from "./AddDocumentTemplate.js";
 import useAddDocument from "./controllers/useAddDocument.js";
 
 const AddDocument = ({
-  handleInputChange,
   requiredDocumentDetails,
-  setRequiredDocumentDetails,
+  setRenderJobDetails,
+  addDocumentField,
 }) => {
   const {
     addDocumentModal,
     documentDetail,
-    multiDocumentDetail,
-    setMultiDocumentDetail,
-    addDocumentField,
     editDocumentModal,
     handleDocumentDetailChange,
     isFormValid,
@@ -24,19 +21,16 @@ const AddDocument = ({
     onClickDeleteDocument,
     onCLickEditDocument,
   } = useAddDocument({
-    handleInputChange,
     requiredDocumentDetails,
-    setRequiredDocumentDetails,
+    setRenderJobDetails,
   });
 
   return (
     <AddDocumentTemplate
       {...{
+        addDocumentField,
         addDocumentModal,
         documentDetail,
-        multiDocumentDetail,
-        setMultiDocumentDetail,
-        addDocumentField,
         editDocumentModal,
         handleDocumentDetailChange,
         handleMultiRowDocumentDetails,
@@ -47,6 +41,7 @@ const AddDocument = ({
         onClickDeleteDocument,
         onCLickEditDocument,
         requiredDocumentDetails,
+        setRenderJobDetails,
       }}
     />
   );

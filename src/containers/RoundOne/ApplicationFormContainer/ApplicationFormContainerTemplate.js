@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
@@ -21,16 +21,26 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const [sideBarState] = useContext(SideBarContext);
   const intl = useIntl();
   const { navigateScreen } = useNavigateScreen();
+  const [isError, setIsError] = useState();
+  const [isLoading, setIsLoading] = useState();
 
   const renderStepContent = (step) => {
     switch (step) {
       case 1:
         return <JobDetails />;
       case 2:
-        return <PreInterviewPreferences />;
+        return;
       default:
         return null;
     }
+  };
+
+  const updateParentState = ({
+    isErrorChildState = false,
+    isLoadingChildState = false,
+  }) => {
+    setIsError(isErrorChildState);
+    setIsLoading(isLoadingChildState);
   };
 
   const handleCancelClick = () => {
@@ -42,8 +52,11 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
     // {
     //   component: CompanyProfile,
     // },
+    // {
+    //   component: JobDetails,
+    // },
     {
-      component: JobDetails,
+      component: PreInterviewPreferences,
     },
   ];
 
@@ -66,38 +79,6 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
           isBottomFillSpace
         />
       </CustomScrollView>
-      <View style={styles.mainViewStyle}>
-        <ApplicationFormStepper activeStep={activeStep} />
-        {renderStepContent(activeStep)}
-        <View style={styles.buttonContainer}>
-          <CustomButton
-            onPress={() => onHandleTab("prev")}
-            iconLeft={{
-              leftIconAlt: "left-arrow",
-              leftIconSource: images.iconArrowLeft,
-            }}
-          >
-            {intl.formatMessage({ id: "label.back" })}
-          </CustomButton>
-          <View style={styles.actionBtnContainer}>
-            <CustomButton onPress={handleCancelClick}>
-              {intl.formatMessage({ id: "label.cancel" })}
-            </CustomButton>
-            <CustomButton
-              onPress={() => {
-                onHandleTab("next");
-              }}
-              withGreenBackground
-              iconRight={{
-                rightIconAlt: "right-arrow",
-                rightIconSource: images.iconArrowRightWhite,
-              }}
-            >
-              {intl.formatMessage({ id: "label.save_and_next" })}
-            </CustomButton>
-          </View>
-        </View>
-      </View>
     </>
   );
 };

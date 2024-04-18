@@ -16,11 +16,9 @@ import { numericValidator } from "../../utils/validation";
 import styles from "./AddDocument.style";
 
 const AddDocumentTemplate = ({
+  addDocumentField,
   addDocumentModal,
   documentDetail,
-  multiDocumentDetail,
-  setMultiDocumentDetail,
-  addDocumentField,
   editDocumentModal,
   handleDocumentDetailChange,
   handleMultiRowDocumentDetails,
@@ -31,9 +29,17 @@ const AddDocumentTemplate = ({
   onClickDeleteDocument,
   onCLickEditDocument,
   requiredDocumentDetails,
+  setRenderJobDetails,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const setObjectGridTemplate = (updatedDocs) => {
+    setRenderJobDetails((prev) => ({
+      ...prev,
+      required_docs: [...updatedDocs],
+    }));
+  };
 
   return (
     <View>
@@ -49,9 +55,10 @@ const AddDocumentTemplate = ({
         {isWebView ? (
           <CustomMultiRowTextInput
             customCardStyle={styles.multiRowTextStyle}
+            customWebContainerStyle={{ overflow: "visible" }}
             startRowTemplate={addDocumentField}
-            gridTemplate={multiDocumentDetail}
-            setGridTemplate={setMultiDocumentDetail}
+            gridTemplate={requiredDocumentDetails}
+            setObjectGridTemplate={setObjectGridTemplate}
             numColsInARow={4}
             handleValueChange={(type, inputValue, cellId) => {
               handleMultiRowDocumentDetails(type, inputValue, cellId);

@@ -4,20 +4,19 @@ import AddPlaceOfPostingTemplate from "./AddPlaceOfPostingTemplate";
 import useAddPlaceOfPosting from "./controllers/useAddPlaceOfPosting.js";
 
 const AddPlaceOfPosting = ({
+  addPostingDetailsField,
+  handleInputChange,
   jobDetailData,
   requiredPostingPlaceDetail,
-  setRequiredPostingPlaceDetail,
-  renderJobDetails,
-  handleInputChange,
+  setRenderJobDetails,
+  isSpecificPerformaRequired,
+  otherInfo,
 }) => {
   const {
     addPlaceModal,
     editPlaceModal,
     handlePostingPlaceChange,
     handleMultiRowDocumentDetails,
-    addPlaceOfPosting,
-    multiAddPlaceOfPosting,
-    setMultiAddPlacePosting,
     isFormValid,
     onClickAddPlace,
     onClickAddPlaceCancelButton,
@@ -26,22 +25,20 @@ const AddPlaceOfPosting = ({
     onCLickEditPlace,
     postingPlaceDetail,
   } = useAddPlaceOfPosting({
-    setRequiredPostingPlaceDetail,
     requiredPostingPlaceDetail,
-    handleInputChange,
+    setRenderJobDetails,
   });
   return (
     <AddPlaceOfPostingTemplate
       {...{
-        renderJobDetails,
+        otherInfo,
+        isSpecificPerformaRequired,
+        addPostingDetailsField,
         handleInputChange,
         addPlaceModal,
         editPlaceModal,
         handlePostingPlaceChange,
         handleMultiRowDocumentDetails,
-        addPlaceOfPosting,
-        multiAddPlaceOfPosting,
-        setMultiAddPlacePosting,
         isFormValid,
         jobDetailData,
         onClickAddPlace,
@@ -51,6 +48,7 @@ const AddPlaceOfPosting = ({
         onCLickEditPlace,
         postingPlaceDetail,
         requiredPostingPlaceDetail,
+        setRenderJobDetails,
       }}
     />
   );

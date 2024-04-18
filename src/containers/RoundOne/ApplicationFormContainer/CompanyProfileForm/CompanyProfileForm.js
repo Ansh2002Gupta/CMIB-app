@@ -73,9 +73,9 @@ const CompanyProfileForm = ({ tabHandler }) => {
     Platform.OS.toLowerCase() === "web"
       ? {
           buttonOneStyle: styles.buttonStyle,
-          buttonTwoStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonTwoStyle,
           buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyle,
         }
       : {};
 

@@ -6,6 +6,7 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./DetailCard.style";
+import { useIntl } from "react-intl";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
@@ -41,6 +42,10 @@ const DetailCard = ({
   checkBoxTextStyle,
 }) => {
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
+  const headerTextValue = !!headerId
+    ? intl.formatMessage({ id: headerId })
+    : "";
 
   return (
     <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
@@ -51,17 +56,12 @@ const DetailCard = ({
             : isWeb && isWebView
             ? {
                 ...customWebContainerStyle,
-                overflowX: "auto",
-                flexDirection: "row",
-                width: "100%",
-
-                // flexWrap: "wrap",
               }
             : {}),
           ...customContainerStyle,
         }}
         hasActionButton={isWebView && hasActionButton}
-        headerText={headerId}
+        headerText={headerTextValue}
         index={index}
         isEditable={isEditProfile}
         onAdd={onAdd}
@@ -120,6 +120,7 @@ DetailCard.defaultProps = {
   isEditProfile: false,
   isRow: false,
   isShowSwitch: false,
+  customWebContainerStyle: {},
   onPressActionButton: () => {},
   otherDetails: [],
   isShowCancel: false,
@@ -133,6 +134,7 @@ DetailCard.propTypes = {
   cols: PropTypes.number,
   customCardStyle: PropTypes.object,
   customContainerStyle: PropTypes.object,
+  customWebContainerStyle: PropTypes.object,
   details: PropTypes.array,
   handleBlur: PropTypes.func,
   footerId: PropTypes.string,
