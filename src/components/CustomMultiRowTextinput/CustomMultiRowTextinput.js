@@ -22,6 +22,7 @@ const CustomMultiRowTextInput = ({
       value: inputValue,
       id,
       cellID: changedCellID,
+      index,
     });
   };
 

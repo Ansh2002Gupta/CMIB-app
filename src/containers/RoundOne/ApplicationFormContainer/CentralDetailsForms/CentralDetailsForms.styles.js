@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   cardStyle: {
     marginLeft: 16,
     marginRight: 16,
-    marginTop: 24,
   },
   companyLogo: {
     marginTop: 24,
@@ -123,6 +122,9 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     color: colors.black,
     fontWeight: "600",
+  },
+  headerTextStyle: {
+    fontSize: 16,
   },
 });
 

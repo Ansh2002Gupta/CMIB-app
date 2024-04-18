@@ -795,7 +795,14 @@ const locale = {
   "label.companyDates": "Campus Dates",
   "label.companyDates": "Company Available For Interview",
   "label.centers": "Centers",
-  'label.selectCenters':'Add Centers'
+  "label.selectCenters": "Add Centers",
+  "label.benefit_details": "Benefits Details",
+  "label.enter_benefit_details": "Enter benefits details",
+  "label.amount": "Amount",
+  "label.enter_amount": "Enter amount",
+  "label.company_ppt": "Company PPT",
+  "label.enter_no_of_vacancies": "Enter Number of Vacancies",
+  "label.other_Benefits": "Other Benefits to be provided apart from above CTC",
 };
 
 export default locale;

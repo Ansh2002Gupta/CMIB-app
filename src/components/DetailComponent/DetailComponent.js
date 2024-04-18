@@ -427,7 +427,7 @@ const DetailComponent = ({
               style={isWebView ? styles.webContainer : getRowStyle(detail)}
             >
               {isEditable ? (
-                renderEditableContent(detail)
+                renderEditableContent(detail, idx)
               ) : (
                 <>
                   <View style={styles.titleContainer}>

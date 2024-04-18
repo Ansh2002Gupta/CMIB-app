@@ -1,23 +1,24 @@
-import {
-  ScrollView,
-  View,
-} from "@unthinkable/react-core-components";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 import React from "react";
 import styles from "./CentralDetailsForms.styles";
 import DetailCard from "../../../../components/DetailCard";
 import { useIntl } from "react-intl";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
-import LoadingScreen from "../../../../components/LoadingScreen";
 import ConfigurableList from "../../../../components/ConfigurableList";
 import SaveCancelButton from "../../../../components/SaveCancelButton";
 import { keys } from "./controllers/utils";
 import CommonText from "../../../../components/CommonText";
 import SingleSelectionModal from "../../../../components/SingleSelectionModal";
 import Spinner from "../../../../components/Spinner";
+import CardComponent from "../../../../components/CardComponent";
+import DetailComponent from "../../../../components/DetailComponent";
+import CustomToggleComponent from "../../../../components/CustomToggleComponent";
+import colors from "../../../../assets/colors";
+import UploadImage from "../../../../components/UploadImage";
+import AddBenefits from "../../../../components/AddBenfits";
+import AddDesignation from "../../../../components/AddDesignation";
 
 const CentralDetailsTemplate = ({
-  isLoading,
-  formDetails,
   handleContactDetailsChange,
   isEditProfile,
   setErrorWhileUpdating,
@@ -52,7 +53,36 @@ const CentralDetailsTemplate = ({
   roundCenterDetailsLoading,
   roundCenterDetails,
   roundCenterDetailsError,
+
+  errorWhileUpload,
+  onDeleteImage,
+  uploadImageToServerUtils,
+  requiredDocumentDetails,
+  setRequiredDocumentDetails,
+  isCompanyPPt,
+  setIsCompanyPPT,
+  designationDetatils,
+  setDesignationDetatils,
 }) => {
+  const {
+    fileUploadResult,
+    handleFileUpload,
+    isUploadingImageToServer,
+    setFileUploadResult,
+    uploadPercentage,
+  } = uploadImageToServerUtils;
+
+  const hasCompanyLogo = false;
+  const defaultUploadResult = hasCompanyLogo
+    ? {
+        data: { url: false },
+      }
+    : null;
+
+  const updatedFileUploadResult = isEditProfile
+    ? fileUploadResult || defaultUploadResult
+    : defaultUploadResult;
+
   const intl = useIntl();
   const renderRoundDetail = () => {
     if (roundCenterDetailsLoading) {
@@ -105,17 +135,16 @@ const CentralDetailsTemplate = ({
             customContainerStyle={styles.customContainerStyle}
             handleMultiSelect={handleInterviewDetailMultiSelect}
           />
+          <AddDesignation
+            requiredDocumentDetails={designationDetatils}
+            setRequiredDocumentDetails={setDesignationDetatils}
+          />
         </>
       );
   };
 
   return (
     <ScrollView style={styles.container}>
-      {isLoading && (
-        <View style={styles.loading}>
-          <LoadingScreen />
-        </View>
-      )}
       <View style={styles.topContainer}>
         <ConfigurableList
           title={intl.formatMessage({ id: "label.centers" })}
@@ -135,6 +164,43 @@ const CentralDetailsTemplate = ({
         />
         <View style={styles.innerContainerStyle}>{renderRoundDetail()}</View>
       </View>
+      <View>
+        <CardComponent customStyle={styles.cardStyle}>
+          <DetailComponent
+            headerText={intl.formatMessage({ id: "label.other_details" })}
+            headerTextCustomStyles={styles.headerTextStyle}
+          />
+          <View style={{ marginBottom: 24 }}>
+            <CustomToggleComponent
+              label={intl.formatMessage({ id: "label.company_ppt" })}
+              value={isCompanyPPt}
+              onValueChange={(item) => setIsCompanyPPT(item)}
+              customToggleStyle={{ marginTop: 12 }}
+              customLabelStyle={{ color: colors.gray }}
+            />
+          </View>
+
+          <View style={styles.imageContainer}>
+            <UploadImage
+              {...{
+                onDeleteImage,
+                errorWhileUpload,
+                fileUploadResult: updatedFileUploadResult,
+                handleFileUpload,
+                isUploadingImageToServer,
+                setFileUploadResult,
+                uploadPercentage,
+                hideIconDelete: false,
+                isDocumentUpload: true,
+              }}
+            />
+          </View>
+          <AddBenefits
+            {...{ setRequiredDocumentDetails, requiredDocumentDetails }}
+          />
+        </CardComponent>
+      </View>
+
       {showCenterModal && (
         <SingleSelectionModal
           data={centerListData}

@@ -10,11 +10,10 @@ import useFetch from "../../../../../hooks/useFetch";
 import { COUNTRY_CODE } from "../../../../../services/apiServices/apiEndPoint";
 import { useParams } from "react-router";
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
-import {
-  useDelete,
-  usePost,
-} from "../../../../../hooks/useApiRequest";
+import { useDelete, usePost } from "../../../../../hooks/useApiRequest";
 import { useIntl } from "react-intl";
+import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 
 const useCentralDetails = () => {
   const [contactDetailsState, setContactDetailsState] = useState({});
@@ -34,6 +33,9 @@ const useCentralDetails = () => {
   const [fieldError, setFieldError] = useState({});
   const [selectedCenterData, setSelectedCenterData] = useState(null);
   const [showCenterModal, setShowCenterModal] = useState(false);
+  const [requiredDocumentDetails, setRequiredDocumentDetails] = useState([]);
+  const [designationDetatils, setDesignationDetatils] = useState([]);
+  const [isCompanyPPt, setIsCompanyPPT] = useState(-1);
 
   const intl = useIntl();
 
@@ -202,12 +204,12 @@ const useCentralDetails = () => {
     setSelectedOptions([selectedItemID]);
 
     //TODO: api issue
-    // fetchRoundCenterDetails({
-    //   overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${selectedItemID}`,
-    // });
-    // fetchApplicationDetail({
-    //   overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedItemID}`,
-    // });
+    fetchRoundCenterDetails({
+      overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${selectedItemID}`,
+    });
+    fetchApplicationDetail({
+      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedItemID}`,
+    });
   };
 
   const handleAdd = () => {
@@ -255,6 +257,72 @@ const useCentralDetails = () => {
     }
   };
 
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
+  } = useSaveLogo();
+
+  const handleImageDeletion = () => {
+    if (fileUploadResult?.data?.file_name) {
+      const fileName = fileUploadResult?.data?.file_name.split("/");
+      handleDeleteLogo(fileName[fileName.length - 1]);
+    }
+  };
+
+  const createPayloadFromProfileData = (profileData) => {
+    const companyDetails = {};
+    if (fileUploadResult?.data?.file_name || profileData?.companyLogo) {
+      const logoFileName = profileData?.companyLogo?.split("/")?.pop();
+      companyDetails.company_logo =
+        fileUploadResult?.data?.file_name || logoFileName;
+    } else {
+      companyDetails.company_logo = null;
+    }
+    let designationObject = {};
+    let requiredObject = {};
+    designationDetatils.forEach((item, index) => {
+      let temp = {};
+      if (!designationObject[item.cellID]) {
+        designationObject[item.cellID] = temp;
+      }
+      if (item.key == "designation_details") {
+        designationObject[item.cellID].value = item.value;
+      }
+      if (item.key == "number_of_vacancies") {
+        designationObject[item.cellID].numberOfVacancies = item.value;
+      }
+    });
+
+    requiredDocumentDetails.forEach((item, index) => {
+      let temp = {};
+      if (!requiredObject[item.cellID]) {
+        requiredObject[item.cellID] = temp;
+      }
+      if (item.key == "benefits_details") {
+        requiredObject[item.cellID].value = item.value;
+      }
+      if (item.key == "benefits_amount") {
+        requiredObject[item.cellID].amount = item.value;
+      }
+    });
+    companyDetails.designationDetatils = designationObject;
+    companyDetails.otherDetails = requiredObject;
+    companyDetails.pptIsSelected = isCompanyPPt;
+
+    const payload = {
+      ...companyDetails,
+    };
+
+    return payload;
+  };
+
   return {
     contactDetails: addValueOnField(
       contactDetailsState,
@@ -296,6 +364,26 @@ const useCentralDetails = () => {
     roundCenterDetailsLoading,
     roundCenterDetails,
     roundCenterDetailsError,
+
+    errorWhileUpload,
+    handleFileUpload,
+    isUploadingImageToServer,
+    onDeleteImage: handleImageDeletion,
+    setFileUploadResult,
+    uploadImageToServerUtils: {
+      fileUploadResult,
+      handleFileUpload,
+      isUploadingImageToServer,
+      setFileUploadResult,
+      uploadPercentage,
+    },
+    uploadPercentage,
+    requiredDocumentDetails,
+    setRequiredDocumentDetails,
+    designationDetatils,
+    setDesignationDetatils,
+    isCompanyPPt,
+    setIsCompanyPPT,
   };
 };
 

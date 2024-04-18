@@ -863,3 +863,12 @@ export const interviewTypeOptions = [
   { label: "Virtual Interview", value: "online" },
   { label: "Face to Face", value: "offline" },
 ];
+
+export const benefits_key = {
+  BENEFITS_DETAILS: "benefits_details",
+  BENEFITS_AMOUNT: "benefits_amount",
+};
+export const designation_key = {
+  DESIGNATION_DETAILS: "designation_details",
+  NUMBER_OF_VACANCIES: "number_of_vacancies",
+};
