@@ -12,6 +12,7 @@ import NQCACompanyDashboard from "../CompanyDashboard/NQCACompanyDashboard";
 import OverSeasMemberDashBoard from "../MemberDashBoard/OverSeasMemberDashBoard";
 import OverseasCompanyDashboard from "../CompanyDashboard/OverseasCompanyDashboard";
 import WomenMemberDashBoard from "../MemberDashBoard/WomenMemberDashBoard";
+import WomenComapnyDashBoard from "../CompanyDashboard/WomenComapnyDashBoard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
@@ -55,6 +56,9 @@ function DashboardView() {
                 )}
                 {moduleKeys.CARRER_ASCENT_KEY === selectedModule?.key && (
                   <CarrerAscentCompanyDashboard />
+                )}
+                {moduleKeys.WOMEN_PARTTIME_KEY === selectedModule?.key && (
+                  <WomenComapnyDashBoard />
                 )}
               </View>
             ) : (
