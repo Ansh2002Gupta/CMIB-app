@@ -10,6 +10,8 @@ import styles from "./PieChart.style";
 import colors from "../../assets/colors";
 
 const PieChart = ({
+  differentRadius,
+  baseRadius = 80,
   colorScale,
   data,
   height,
@@ -59,12 +61,16 @@ const PieChart = ({
           innerRadius={1}
           colorScale={colorScale}
           labelRadius={({ innerRadius }) => innerRadius + labelRadius}
+          radius={({ datum }) => {
+            return !!differentRadius ? baseRadius + datum.y * 0.7 : baseRadius;
+          }}
           labels={renderLabel}
           style={{
             data: {
               stroke: colors.white,
               strokeWidth: 0.25,
             },
+
             labels: {
               fill: labelColor,
               fontSize: labelFontSize,

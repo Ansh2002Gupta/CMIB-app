@@ -3,7 +3,7 @@ import CustomModal from "../../components/CustomModal";
 import styles from "./CCAvenuePaymentModal.styles";
 import { WebView } from "react-native-webview";
 
-const CCA_FE_REDIRECT_URL = "https://cmib-qa.cloudzmall.com/app/dashboard";
+const CCA_FE_REDIRECT_URL = "https://cmib.cloudzmall.com/app/dashboard";
 
 const CCAvenueModal = ({
   setCcAvenueUrl,
