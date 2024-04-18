@@ -2,20 +2,20 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
-import BarChart from "../../components/BarChart";
-import DonutChart from "../../components/DonutChart/DonutChart";
-import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-import PieChart from "../../components/PieChart/PieChart";
-import LoadingScreen from "../../components/LoadingScreen";
-import useFetch from "../../hooks/useFetch";
-import useIsWebView from "../../hooks/useIsWebView";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import { CHART_DATA_TYPE } from "../../constants/constants";
+import BarChart from "../../../components/BarChart";
+import DonutChart from "../../../components/DonutChart/DonutChart";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
+import PieChart from "../../../components/PieChart/PieChart";
+import LoadingScreen from "../../../components/LoadingScreen";
+import useFetch from "../../../hooks/useFetch";
+import useIsWebView from "../../../hooks/useIsWebView";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { CHART_DATA_TYPE } from "../../../constants/constants";
 import {
   ROUND_ONE_DASHBOARD,
   USER_TYPE_MEMBER,
-} from "../../services/apiServices/apiEndPoint";
-import colors from "../../assets/colors";
+} from "../../../services/apiServices/apiEndPoint";
+import colors from "../../../assets/colors";
 import styles from "./CarrerAscentMemeberDashboard.style";
 
 const CarrerAscentMemeberDashboard = () => {

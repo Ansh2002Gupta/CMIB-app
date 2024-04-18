@@ -5,8 +5,8 @@ import { View } from "@unthinkable/react-core-components";
 import { TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
-import CAJobsMemberDashboard from "../CAJobsMemberDashboard";
-import CarrerAscentMemeberDashboard from "../CarrerAscentMemeberDashboard";
+import CAJobsMemberDashboard from "../MemberDashBoard/CAJobsMemberDashboard";
+import CarrerAscentMemeberDashboard from "../MemberDashBoard/CarrerAscentMemeberDashboard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
