@@ -775,6 +775,7 @@ const locale = {
   "label.topCountriesHighestCTCs": "Top 10 Countries with Highest CTCs",
   "label.womenPlacedYears":
     "Percentage of Women Members Placed in the Last 5 Years",
+  "label.percentageWomenMembers": "Percentage of Women Members",
 };
 
 export default locale;

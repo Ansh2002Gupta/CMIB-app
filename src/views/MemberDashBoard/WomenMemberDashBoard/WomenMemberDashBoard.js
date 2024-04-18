@@ -131,7 +131,9 @@ const WomenMemberDashBoard = () => {
     !error && (
       <ScrollView style={{ gap: 24 }}>
         <BarChart
-          yAxisLabel={intl.formatMessage({ id: "label.highestCTCinINR" })}
+          yAxisLabel={intl.formatMessage({
+            id: "label.percentageWomenMembers",
+          })}
           domainPadding={20}
           height={200}
           label={intl.formatMessage({
