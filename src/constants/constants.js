@@ -858,3 +858,8 @@ export const SAVED_CANDIDATES_TABLE_HEADING = {
   functional_areas: ["Functional Area"],
   designation_applied_for: ["Designation Applied For"],
 };
+
+export const interviewTypeOptions = [
+  { label: "Virtual Interview", value: "online" },
+  { label: "Face to Face", value: "offline" },
+];

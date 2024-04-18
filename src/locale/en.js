@@ -786,6 +786,16 @@ const locale = {
   "label.st": "ST",
   "label.select_place_of_posting": "Select Place of Posting",
   "label.desgination": "Desgination",
+  "label.areaCode": "Area Code",
+  "label.telephoneNumber": "Telephone Number",
+  "label.campusDates": "Campus Dates",
+  "label.companyAvailableForInterview": "Company Available For Interview",
+  "label.campusDates": "Select Campus Dates",
+  "label.selectCompany": "Select Company",
+  "label.companyDates": "Campus Dates",
+  "label.companyDates": "Company Available For Interview",
+  "label.centers": "Centers",
+  'label.selectCenters':'Add Centers'
 };
 
 export default locale;

@@ -9,6 +9,7 @@ import ApplicationFormStepper from "../ApplicationFormStepper";
 import CompanyProfile from "./CompanyProfileForm/CompanyProfileForm";
 import JobDetails from "./JobDetails";
 import CustomScrollView from "../../../components/CustomScrollView";
+import CentralDetailsForm from "./CentralDetailsForms/CentralDetailsForms";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
@@ -17,6 +18,9 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
     // {
     //   component: CompanyProfile,
     // },
+    {
+      component: CentralDetailsForm,
+    },
     {
       component: JobDetails,
     },

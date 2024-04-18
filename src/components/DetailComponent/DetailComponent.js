@@ -204,7 +204,7 @@ const DetailComponent = ({
   const renderEditableContent = (detail, index) => {
     if (detail?.isEmptyField) return <></>;
 
-    if (detail.isMobileNumber) {
+    if (detail?.isMobileNumber) {
       return (
         <MobileNumberInput
           mobNumberValue={detail.value}
@@ -215,6 +215,7 @@ const DetailComponent = ({
           onChangeCode={(val) => handleChange(detail.label, val, true)}
           onChangeMobNumber={(val) => handleChange(detail.label, val)}
           mobNumberError={detail.error}
+          isMandatory={detail?.isMandatory}
         />
       );
     }
@@ -365,7 +366,7 @@ const DetailComponent = ({
           ))}
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
         {details?.map((detail, idx) => {
-          if (isEditable && detail.viewOnlyField) {
+          if (isEditable && detail?.viewOnlyField) {
             return null;
           }
           if (isColumnVariableWidth) {

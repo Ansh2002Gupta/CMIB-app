@@ -24,6 +24,8 @@ const ConfigurableList = ({
   title,
   idField = "id",
   nameField = "name",
+  outerContainer = {},
+  componentContainer = {},
 }) => {
   const intl = useIntl();
   const allOptions = useRef([]);
@@ -35,7 +37,7 @@ const ConfigurableList = ({
   useEffect(() => {
     allOptions.current = items;
     setMenuOptions(items);
-  }, []);
+  }, [options]);
 
   const handleSearch = (query, keyName) => {
     const queryList = fetchData(query, keyName);
@@ -59,8 +61,8 @@ const ConfigurableList = ({
   };
 
   return (
-    <View style={styles.outerContainer}>
-      <View style={styles.componentContainer}>
+    <View style={{ ...styles.outerContainer, ...outerContainer }}>
+      <View style={{ ...styles.componentContainer, ...componentContainer }}>
         <View style={styles.header}>
           <CommonText customTextStyle={styles.titleStyles}>{title}</CommonText>
           <TouchableImage
