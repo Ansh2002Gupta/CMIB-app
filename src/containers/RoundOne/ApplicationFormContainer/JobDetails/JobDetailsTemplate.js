@@ -26,11 +26,16 @@ import commonStyles, {
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
-import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../../../constants/constants";
+import {
+  DOCUMENT_TYPE,
+  SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH,
+} from "../../../../constants/constants";
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
 import CustomScrollView from "../../../../components/CustomScrollView";
 import ConfigurableList from "../../../../components/ConfigurableList";
+import { getDocumentField, getPlaceOfPostingDetails } from "./MappedData";
+import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
 
 const JobDetailsTemplate = ({
   renderJobDetails,
@@ -42,47 +47,26 @@ const JobDetailsTemplate = ({
   handlePress,
   handleAdd,
   handleDelete,
+  handleBlur,
   selectedOptions,
   desginationItems,
-  setSelectedOptions,
   setRenderJobDetails,
-  addDocumentField,
   addDesignation,
   handleMonthlyData,
   handleYearlyData,
-  requiredPostingPlaceDetail,
-  setRequiredPostingPlaceDetail,
-  handleToggle,
-  jobDetailData,
   onClickAddDesignation,
-  selectionProcess,
-  startingSalary,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const { currentModule } = useGetCurrentUser();
+
+  console.log("currentModule", currentModule);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
-
-  const renderSelectionProcess = () => {
-    return (
-      <View style={styles.checkBoxStyle}>
-        {renderJobDetails?.selectionProcess?.map((item, index) => (
-          <CheckBox
-            key={item.id}
-            id={item.id}
-            index={index}
-            title={item.title}
-            isSelected={item.isSelected}
-            handleCheckbox={handleToggle}
-          />
-        ))}
-      </View>
-    );
-  };
 
   const JobDetailsConfig = [
     {
@@ -114,7 +98,7 @@ const JobDetailsTemplate = ({
             isMandatory
             value={renderJobDetails?.designation}
             onChangeText={(val) => handleInputChange("designation", val)}
-            customHandleBlur={(val) => {}}
+            customHandleBlur={(val) => handleBlur("designation", val)}
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -159,12 +143,56 @@ const JobDetailsTemplate = ({
             placeholder={intl.formatMessage({
               id: "label.enter_details_of_ctc",
             })}
-            isMultiline
-            maxLength={SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH}
             isMandatory
             value={renderJobDetails?.ctc_details}
             onChangeText={(val) => handleInputChange("ctc_details", val)}
-          />
+          />{" "}
+          <View style={styles.overseasContainerStyles}>
+            {currentModule === "overseas-chapters" && (
+              <>
+                <CustomTextInput
+                  customStyle={styles.ctcTextInputStyle}
+                  label={intl.formatMessage({
+                    id: "label.work_experience_range",
+                  })}
+                  placeholder={intl.formatMessage({
+                    id: "label.select_work_experience_range",
+                  })}
+                  isDropdown
+                  options={DOCUMENT_TYPE}
+                  value={renderJobDetails?.work_exp_range_id}
+                  onChangeValue={(val) =>
+                    handleInputChange("work_exp_range_id", val)
+                  }
+                />
+                <CustomToggleComponent
+                  label={intl.formatMessage({
+                    id: "label.fexi_hours",
+                  })}
+                  value={renderJobDetails?.flexi_hours}
+                  onValueChange={(val) => {
+                    handleInputChange("flexi_hours", val);
+                  }}
+                  isMandatory
+                  customToggleStyle={styles.customToggleStyle}
+                  customLabelStyle={styles.customLabelStyle}
+                />
+                <CustomTextInput
+                  customStyle={styles.ctcTextInputStyle}
+                  label={intl.formatMessage({
+                    id: "label.job_type",
+                  })}
+                  isDropdown
+                  options={DOCUMENT_TYPE}
+                  placeholder={intl.formatMessage({
+                    id: "label.select_job_type",
+                  })}
+                  value={renderJobDetails?.job_type}
+                  onChangeValue={(val) => handleInputChange("job_type", val)}
+                />
+              </>
+            )}
+          </View>
         </CardComponent>
       ),
     },
@@ -194,6 +222,7 @@ const JobDetailsTemplate = ({
           {...{
             requiredDocumentDetails: renderJobDetails?.required_docs,
             setRenderJobDetails,
+            addDocumentField: getDocumentField(),
           }}
         />
       ),
@@ -262,29 +291,16 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <CardComponent customStyle={styles.bottomMargin}>
-          <CommonText
-            customContainerStyle={styles.selectionProcessTextStyle}
-            customTextStyle={styles.selectionProcessStyle}
-            fontWeight="600"
-          >
-            {intl.formatMessage({
-              id: "label.selection_process",
-            })}
-          </CommonText>
-          {renderSelectionProcess()}
-        </CardComponent>
-      ),
-    },
-    {
-      content: (
         <AddPlaceOfPosting
           {...{
-            jobDetailData: renderJobDetails?.posting_details,
-            requiredPostingPlaceDetail,
-            setRequiredPostingPlaceDetail,
-            renderJobDetails,
             handleInputChange,
+            jobDetailData: renderJobDetails?.posting_details,
+            requiredPostingPlaceDetail: renderJobDetails?.posting_details,
+            setRenderJobDetails,
+            addPostingDetailsField: getPlaceOfPostingDetails(),
+            isSpecificPerformaRequired:
+              renderJobDetails?.specific_performa_required,
+            otherInfo: renderJobDetails?.otherInfo,
           }}
         />
       ),
@@ -314,21 +330,20 @@ const JobDetailsTemplate = ({
       ) : (
         <TwoColumn
           leftSection={
-            desginationItems.length && (
-              <ConfigurableList
-                title={intl.formatMessage({ id: "label.desgination" })}
-                searchQuery={configurableListQuery}
-                setSearchQuery={setConfigurableListQuery}
-                selectedOptions={selectedOptions}
-                onDelete={handleDelete}
-                onPress={handlePress}
-                onAdd={handleAdd}
-                options={desginationItems}
-                menuOptions={menuOptions}
-                setMenuOptions={setMenuOptions}
-                nameField={"designation"}
-              />
-            )
+            <ConfigurableList
+              customOuterContianer={styles.customOuterContianer}
+              title={intl.formatMessage({ id: "label.desgination" })}
+              searchQuery={configurableListQuery}
+              setSearchQuery={setConfigurableListQuery}
+              selectedOptions={selectedOptions}
+              onDelete={handleDelete}
+              onPress={handlePress}
+              onAdd={handleAdd}
+              options={desginationItems}
+              menuOptions={menuOptions}
+              setMenuOptions={setMenuOptions}
+              nameField={"designation"}
+            />
           }
           isLeftFillSpace={false}
           isRightFillSpace

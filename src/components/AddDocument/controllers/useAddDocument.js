@@ -1,45 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  DOCUMENT_TYPE,
-  document_keys,
-  document_keys_with_label,
-} from "../../../constants/constants";
-
-const addDocumentField = [
-  {
-    cellID: 1,
-    key: document_keys.DOCUMENT_NAME,
-    label: "label.document_name",
-    placeholder: "label.select_document_name",
-    value: "",
-  },
-  {
-    cellID: 1,
-    id: 1,
-    includeAllKeys: true,
-    key: document_keys.DOCUMENT_TYPE,
-    label: "label.document_type",
-    placeholder: "label.select_document_type",
-    isDropdown: true,
-    labelField: "label",
-    valueField: "value",
-    options: DOCUMENT_TYPE,
-    value: "",
-  },
-  {
-    cellID: 1,
-    key: document_keys.NUMBER_OF_COPIES,
-    label: "label.no_of_copies",
-    placeholder: "label.select_no_of_copies",
-    value: "",
-    isNumeric: true,
-  },
-  {
-    cellID: 1,
-    isButton: true,
-    isAdd: true,
-  },
-];
+import { useIntl } from "react-intl";
 
 const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   const [addDocumentModal, setAddDocumentModal] = useState(false);
@@ -51,6 +11,7 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
     documentType: "",
     copiesNumber: null,
   });
+  const intl = useIntl();
 
   useEffect(() => {
     if (editDocumentModal) {
@@ -60,10 +21,6 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
         copiesNumber: documentDetail.copiesNumber,
       });
     }
-    // setRenderJobDetails((prev) => ({
-    //   ...prev,
-    //   required_docs: [...addDocumentField],
-    // }));
   }, []);
 
   useEffect(() => {
@@ -105,8 +62,21 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   }) => {
     setRenderJobDetails((prevDetail) => {
       const updatedDetail = prevDetail?.required_docs?.map((item) => {
+        if (
+          !value &&
+          value?.length === 0 &&
+          item.cellID === cellID &&
+          item.label === propertyName
+        ) {
+          return {
+            ...item,
+            value: value,
+            isError: true,
+            error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+          };
+        }
         if (item.label === propertyName && item.cellID === cellID) {
-          return { ...item, value: value };
+          return { ...item, value: value, isError: null, error: null };
         }
         return item;
       });
@@ -122,6 +92,7 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   };
 
   const onClickAddDocumentSaveButton = () => {
+    // Todo: Fix Logic for mobile
     // if (editDocumentModal && editDocumentIndex !== -1) {
     //   setRequiredDocumentDetails((prev) => {
     //     const updatedList = [...prev];
@@ -143,6 +114,7 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   };
 
   const onClickDeleteDocument = (index) => {
+    // Todo: Fix Logic for mobile
     // setRequiredDocumentDetails((prev) => prev.filter((_, i) => i !== index));
   };
 
@@ -161,7 +133,6 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
 
   return {
     addDocumentModal,
-    addDocumentField,
     documentDetail,
     editDocumentModal,
     handleMultiRowDocumentDetails,

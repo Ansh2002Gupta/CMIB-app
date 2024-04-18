@@ -107,10 +107,6 @@ const useCompanyProfile = ({ tabHandler }) => {
       PROFILE,
   });
 
-  useEffect(() => {
-    console.log("upadred", formDetails);
-  }, [formDetails]);
-
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
   const {
@@ -198,8 +194,6 @@ const useCompanyProfile = ({ tabHandler }) => {
           updatedCompanyDetail.splice(newNoOfPartnersIndex, 1);
         }
       }
-      console.log("updatedCompanyDetail", updatedCompanyDetail);
-
       setFormDetails({
         ...formDetails,
         companyDetail: updatedCompanyDetail.map((detail) =>

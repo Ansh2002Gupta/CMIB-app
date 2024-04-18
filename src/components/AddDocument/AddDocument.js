@@ -3,11 +3,14 @@ import React from "react";
 import AddDocumentTemplate from "./AddDocumentTemplate.js";
 import useAddDocument from "./controllers/useAddDocument.js";
 
-const AddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
+const AddDocument = ({
+  requiredDocumentDetails,
+  setRenderJobDetails,
+  addDocumentField,
+}) => {
   const {
     addDocumentModal,
     documentDetail,
-    addDocumentField,
     editDocumentModal,
     handleDocumentDetailChange,
     isFormValid,
@@ -25,9 +28,9 @@ const AddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   return (
     <AddDocumentTemplate
       {...{
+        addDocumentField,
         addDocumentModal,
         documentDetail,
-        addDocumentField,
         editDocumentModal,
         handleDocumentDetailChange,
         handleMultiRowDocumentDetails,

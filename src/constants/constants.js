@@ -25,6 +25,7 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const OTHER_INFO_MAX_LENGTH = 400;
 export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const FILE_MAX_SIZE = 5000000;
@@ -749,6 +750,15 @@ export const JOB_SEEKERS_TABLE_HEADING = {
   candidate_id: "Candidate ID",
   total_experience: "Total Experience",
   functional_area: "Functional Area",
+};
+
+export const INACTIVE_PACKAGE_TABLE_HEADING = {
+  package_name: "Package Name",
+  description: "Package Description",
+  price: "Price",
+  validity: "Package Validuty Period",
+  start_date: "Start Date",
+  validity_date: "Validity Date",
 };
 export const JOB_STATUS_RESPONSE_CODE = {
   "Shortlist Candidate": 3,

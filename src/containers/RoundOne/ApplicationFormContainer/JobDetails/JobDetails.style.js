@@ -32,11 +32,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.black,
   },
+  overseasContainerStyles: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   bottomMargin: {
     marginBottom: 16,
     marginRight: 16,
     marginLeft: 16,
-    width: "100%",
   },
   bondIfAnyView: {
     marginBottom: 16,
@@ -92,6 +96,14 @@ const styles = StyleSheet.create({
     width: "50%",
     display: "flex",
   },
+  customOuterContianer: {
+    backgroundColor: colors.backgroundColor,
+    color: colors.black,
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingTop: 0,
+  },
   scrollViewStyle: {
     backgroundColor: colors.backgroundColor,
     paddingTop: 16,
@@ -104,9 +116,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     gap: 16,
     padding: 24,
-    backgroundColor: colors.backgroundGrey,
+    backgroundColor: colors.backgroundColor,
   },
   buttonStyle: { maxHeight: 44, maxWidth: 80 },
+  buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
+  backButtonStyle: {
+    fontSize: 14,
+  },
 });
 
 export default styles;

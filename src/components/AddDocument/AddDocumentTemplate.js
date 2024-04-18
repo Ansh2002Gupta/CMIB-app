@@ -16,9 +16,9 @@ import { numericValidator } from "../../utils/validation";
 import styles from "./AddDocument.style";
 
 const AddDocumentTemplate = ({
+  addDocumentField,
   addDocumentModal,
   documentDetail,
-  addDocumentField,
   editDocumentModal,
   handleDocumentDetailChange,
   handleMultiRowDocumentDetails,
@@ -56,7 +56,7 @@ const AddDocumentTemplate = ({
           <CustomMultiRowTextInput
             customCardStyle={styles.multiRowTextStyle}
             customWebContainerStyle={{ overflow: "visible" }}
-            startRowTemplate={requiredDocumentDetails}
+            startRowTemplate={addDocumentField}
             gridTemplate={requiredDocumentDetails}
             setObjectGridTemplate={setObjectGridTemplate}
             numColsInARow={4}

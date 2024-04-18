@@ -12,21 +12,22 @@ import CustomTextInput from "../../components/CustomTextInput";
 import EditDeleteAction from "../../components/EditDeleteAction/EditDeleteAction";
 import ModalWithTitleButton from "../../components/ModalWithTitleButton";
 import { numericValidator } from "../../utils/validation";
-import { PLACE_OF_POSTING } from "../../constants/constants";
+import {
+  OTHER_INFO_MAX_LENGTH,
+  PLACE_OF_POSTING,
+} from "../../constants/constants";
 import styles from "./AddPlaceOfPosting.style";
 import useIsWebView from "../../hooks/useIsWebView";
 import CustomMultiRowTextInput from "../CustomMultiRowTextinput";
 
 const AddPlaceOfPostingTemplate = ({
-  renderJobDetails,
+  addPostingDetailsField,
+  isSpecificPerformaRequired,
   handleInputChange,
   addPlaceModal,
   editPlaceModal,
   handlePostingPlaceChange,
   handleMultiRowDocumentDetails,
-  addPlaceOfPosting,
-  multiAddPlaceOfPosting,
-  setMultiAddPlacePosting,
   isFormValid,
   jobDetailData,
   onClickAddPlace,
@@ -36,9 +37,18 @@ const AddPlaceOfPostingTemplate = ({
   onCLickEditPlace,
   postingPlaceDetail,
   requiredPostingPlaceDetail,
+  setRenderJobDetails,
+  otherInfo,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const setObjectGridTemplate = (updatedDocs) => {
+    setRenderJobDetails((prev) => ({
+      ...prev,
+      posting_details: [...updatedDocs],
+    }));
+  };
 
   return (
     <View>
@@ -49,7 +59,7 @@ const AddPlaceOfPostingTemplate = ({
           })}
           customToggleStyle={styles.companyRequireToggleStyle}
           customLabelViewStyle={styles.toggleLabelViewStyle}
-          value={renderJobDetails?.specific_performa_required}
+          value={isSpecificPerformaRequired}
           onValueChange={(val) => {
             handleInputChange("specific_performa_required", val);
           }}
@@ -62,6 +72,17 @@ const AddPlaceOfPostingTemplate = ({
             id: "label.any_other_information",
           })}
         </CommonText>
+        <CustomTextInput
+          placeholder={intl.formatMessage({
+            id: "label.enter_your_info",
+          })}
+          isMandatory
+          isMultiline
+          maxLength={OTHER_INFO_MAX_LENGTH}
+          value={otherInfo}
+          onChangeText={(val) => handleInputChange("otherInfo", val)}
+          customHandleBlur={(val) => {}}
+        />
         <CommonText
           fontWeight="600"
           customTextStyle={styles.postingPlaceTextStyle}
@@ -74,10 +95,9 @@ const AddPlaceOfPostingTemplate = ({
           <CustomMultiRowTextInput
             customWebContainerStyle={styles.customWebContainerStyle}
             customCardStyle={styles.multiRowTextStyle}
-            startRowTemplate={addPlaceOfPosting}
-            gridTemplate={multiAddPlaceOfPosting}
-            setGridTemplate={setMultiAddPlacePosting}
-            numColsInARow={4}
+            startRowTemplate={addPostingDetailsField}
+            gridTemplate={requiredPostingPlaceDetail}
+            setObjectGridTemplate={setObjectGridTemplate}
             handleValueChange={(type, inputValue, cellId) => {
               handleMultiRowDocumentDetails(type, inputValue, cellId);
             }}
@@ -160,8 +180,6 @@ const AddPlaceOfPostingTemplate = ({
             <View style={styles.postingPlaceView}>
               {!!jobDetailData?.Posting_Place?.length &&
                 jobDetailData?.Posting_Place.map((detail, index) => {
-                  console.log("detail", detail);
-
                   return (
                     <View key={index} style={styles.postingPlaceMapView}>
                       <CounterInput

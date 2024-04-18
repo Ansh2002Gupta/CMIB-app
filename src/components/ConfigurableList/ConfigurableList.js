@@ -13,6 +13,7 @@ import styles from "./ConfigurableListStyle";
 
 const ConfigurableList = ({
   options,
+  customOuterContianer,
   menuOptions,
   onAdd,
   onDelete,
@@ -61,7 +62,7 @@ const ConfigurableList = ({
   };
 
   return (
-    <View style={{ ...styles.outerContainer, ...outerContainer }}>
+    <View style={{ ...styles.outerContainer, ...customOuterContianer }}>
       <View style={{ ...styles.componentContainer, ...componentContainer }}>
         <View style={styles.header}>
           <CommonText customTextStyle={styles.titleStyles}>{title}</CommonText>

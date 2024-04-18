@@ -1,80 +1,9 @@
 import { useEffect, useState } from "react";
-
-const addPlaceOfPosting = [
-  {
-    cellID: 1,
-    key: "place_of_posting",
-    label: "label.place_of_posting",
-    placeholder: "label.select_place_of_posting",
-    value: "",
-  },
-  {
-    cellID: 1,
-    key: "general",
-    label: "label.general",
-    placeholder: "label.general",
-    value: "",
-    isNumeric: true,
-  },
-  {
-    cellID: 1,
-    key: "obc",
-    label: "label.obc",
-    placeholder: "label.obc",
-    value: "",
-    isNumeric: true,
-  },
-  {
-    cellID: 1,
-    key: "sc",
-    label: "label.sc",
-    placeholder: "label.sc",
-    value: "",
-    isNumeric: true,
-  },
-  {
-    cellID: 1,
-    key: "st",
-    label: "label.st",
-    placeholder: "label.st",
-    value: "",
-    isNumeric: true,
-  },
-  {
-    cellID: 1,
-    key: "ph",
-    label: "label.ph",
-    placeholder: "label.ph",
-    value: "",
-    isNumeric: true,
-  },
-  {
-    cellID: 1,
-    key: "others",
-    label: "label.others",
-    placeholder: "label.others",
-    value: "",
-    isNumeric: true,
-  },
-  {
-    cellID: 1,
-    key: "total",
-    label: "label.total",
-    placeholder: "label.total",
-    value: "",
-    isNumeric: true,
-  },
-  {
-    cellID: 1,
-    isButton: true,
-    isAdd: true,
-  },
-];
+import { useIntl } from "react-intl";
 
 const useAddPlaceOfPosting = ({
-  handleInputChange,
-  setRequiredPostingPlaceDetail,
   requiredPostingPlaceDetail,
+  setRenderJobDetails,
 }) => {
   const [addPlaceModal, setAddPlaceModal] = useState(false);
   const [editPlaceModal, setEditPlaceModal] = useState(false);
@@ -90,10 +19,7 @@ const useAddPlaceOfPosting = ({
     others: null,
     total: null,
   });
-
-  const [multiAddPlaceOfPosting, setMultiAddPlacePosting] = useState([
-    ...addPlaceOfPosting,
-  ]);
+  const intl = useIntl();
 
   useEffect(() => {
     validateForm();
@@ -140,32 +66,33 @@ const useAddPlaceOfPosting = ({
   };
 
   const onClickAddPlaceSaveButton = () => {
-    if (editPlaceModal && index !== -1) {
-      setRequiredPostingPlaceDetail((prev) => {
-        const updatedList = [...prev];
-        updatedList[index] = { ...postingPlaceDetail };
-        return updatedList;
-      });
-    } else {
-      setRequiredPostingPlaceDetail((prev) => [
-        ...prev,
-        { ...postingPlaceDetail },
-      ]);
-    }
-    setPostingPlaceDetail({
-      postingPlace: "",
-      general: null,
-      obc: null,
-      st: null,
-      sc: null,
-      ph: null,
-      others: null,
-      total: null,
-    });
-    setIsFormValid(false);
-    setIndex(-1);
-    setEditPlaceModal(false);
-    setAddPlaceModal(false);
+    // Todo: Need to change logic for mobile
+    // if (editPlaceModal && index !== -1) {
+    //   setRequiredPostingPlaceDetail((prev) => {
+    //     const updatedList = [...prev];
+    //     updatedList[index] = { ...postingPlaceDetail };
+    //     return updatedList;
+    //   });
+    // } else {
+    //   setRequiredPostingPlaceDetail((prev) => [
+    //     ...prev,
+    //     { ...postingPlaceDetail },
+    //   ]);
+    // }
+    // setPostingPlaceDetail({
+    //   postingPlace: "",
+    //   general: null,
+    //   obc: null,
+    //   st: null,
+    //   sc: null,
+    //   ph: null,
+    //   others: null,
+    //   total: null,
+    // });
+    // setIsFormValid(false);
+    // setIndex(-1);
+    // setEditPlaceModal(false);
+    // setAddPlaceModal(false);
   };
 
   const handlePostingPlaceChange = (propertyName, value) => {
@@ -176,7 +103,8 @@ const useAddPlaceOfPosting = ({
   };
 
   const onClickDeletePlace = (index) => {
-    setRequiredPostingPlaceDetail((prev) => prev.filter((_, i) => i !== index));
+    // Todo: Fix Logic for mobile
+    // setRequiredPostingPlaceDetail((prev) => prev.filter((_, i) => i !== index));
   };
 
   const onCLickEditPlace = (index) => {
@@ -204,26 +132,35 @@ const useAddPlaceOfPosting = ({
     id,
     cellID,
   }) => {
-    setMultiAddPlacePosting((prevDetail) => {
-      const updatedDetail = prevDetail.map((item) => {
+    setRenderJobDetails((prevDetail) => {
+      const updatedDetail = prevDetail?.posting_details?.map((item) => {
+        if (
+          !value &&
+          value?.length === 0 &&
+          item.cellID === cellID &&
+          item.label === propertyName
+        ) {
+          return {
+            ...item,
+            value: value,
+            isError: true,
+            error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+          };
+        }
+
         if (item.label === propertyName && item.cellID === cellID) {
-          return { ...item, value: value };
+          return { ...item, value: value, isError: null, error: null };
         }
         return item;
       });
-      setRequiredPostingPlaceDetail([...updatedDetail]);
-      handleInputChange("posting_details", updatedDetail);
-      return updatedDetail;
+      return { ...prevDetail, posting_details: updatedDetail };
     });
   };
 
   return {
     addPlaceModal,
     editPlaceModal,
-    multiAddPlaceOfPosting,
     handleMultiRowDocumentDetails,
-    setMultiAddPlacePosting,
-    addPlaceOfPosting,
     handlePostingPlaceChange,
     isFormValid,
     onClickAddPlace,
@@ -232,7 +169,6 @@ const useAddPlaceOfPosting = ({
     onClickDeletePlace,
     onCLickEditPlace,
     postingPlaceDetail,
-    setRequiredPostingPlaceDetail,
   };
 };
 

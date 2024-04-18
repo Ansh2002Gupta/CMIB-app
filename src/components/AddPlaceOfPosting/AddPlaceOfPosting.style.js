@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginLeft: 16,
     marginRight: 16,
-    // overFlow: "hidden",
   },
   companyRequireToggleStyle: {
     paddingTop: 12,
@@ -76,11 +75,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   customWebContainerStyle: {
-    display: "flex",
-    width: "100%",
-    // gridTemplateColumns: "1fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.2fr",
-    // alignItems: "center",
-    overflowX: "auto",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+    overflowY: "auto",
   },
 });
 

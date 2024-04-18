@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 
 import DetailCard from "../DetailCard/DetailCard";
@@ -16,6 +17,7 @@ const CustomMultiRowTextInput = ({
   handleValueChange,
   numColsInARow = 4,
 }) => {
+  const intl = useIntl();
   const handleChange = (label, inputValue, index, id, changedCellID) => {
     handleValueChange({
       propertyName: label,
@@ -26,7 +28,27 @@ const CustomMultiRowTextInput = ({
     });
   };
 
+  const isEmptyCellPresent = () => {
+    let wasThereEmptyCell = false;
+    const updatedGridTemplate = gridTemplate.map((cell) => {
+      if (!cell.isButton && !cell.value) {
+        wasThereEmptyCell = true;
+        return {
+          ...cell,
+          isError: true,
+          error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+        };
+      }
+      return { ...cell, isError: null, error: null };
+    });
+    !!setObjectGridTemplate
+      ? setObjectGridTemplate([...updatedGridTemplate])
+      : setGridTemplate([...updatedGridTemplate]);
+    return wasThereEmptyCell;
+  };
+
   const handleAddNewRow = (cellID) => {
+    if (isEmptyCellPresent()) return;
     const newRowID = cellID + 1;
     const newRowTemplate = startRowTemplate.map((cell, index) => {
       return {
