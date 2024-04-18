@@ -23,7 +23,12 @@ import {
 } from "../../constants/constants";
 import { validateGSTIN, validatePAN } from "../../utils/validation";
 
-const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId, setCcAvenueUrl }) => {
+const PaymentInitiateModal = ({
+  onPressCancel,
+  amount,
+  subscriptionId,
+  setCcAvenueUrl,
+}) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const [errors, setErrors] = useState({
@@ -35,7 +40,6 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId, setCcAven
   const [gstNumber, setGstNumber] = useState("");
   const [PONumber, setPONumber] = useState("");
   const [address, setAddress] = useState("");
-  
 
   const {
     isLoading: isPaymentInitializedLoading,

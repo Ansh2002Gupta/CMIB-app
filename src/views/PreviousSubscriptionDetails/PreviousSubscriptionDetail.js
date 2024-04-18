@@ -42,7 +42,7 @@ const PreviousSubscriptionDetail = () => {
     {
       key: "price",
       label: "label.price",
-      value: inactiveSubscriptionDetail?.price ?? "--",
+      value: `₹${inactiveSubscriptionDetail?.price}` ?? "--",
     },
     {
       key: "packageValidityPeriod",
@@ -57,7 +57,7 @@ const PreviousSubscriptionDetail = () => {
     {
       key: "endDate",
       label: "label.endDate",
-      value: formatDate(inactiveSubscriptionDetail?.end_date) ?? "--",
+      value: formatDate(inactiveSubscriptionDetail?.validity_date) ?? "--",
     },
   ];
 

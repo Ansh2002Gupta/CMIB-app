@@ -66,9 +66,7 @@ function PurchasedPackageDetail({
   const validityDateFormatted = formatDate(new Date(validityDate));
 
   const onViewPress = (item) => {
-    navigate(
-      `${navigations.PREVIOUS_SUBSCRIPTION_DETAILS}/${item.subscription_id}`
-    );
+    navigate(`${navigations.PREVIOUS_SUBSCRIPTION_DETAILS}/${item?.id}`);
   };
 
   const {
@@ -193,7 +191,7 @@ function PurchasedPackageDetail({
                   customTextStyle={styles.packagePriceText}
                   fontWeight={"500"}
                 >
-                  {price}
+                  ₹{price}
                 </CommonText>
               }
             />
