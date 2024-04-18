@@ -62,6 +62,19 @@ const styles = StyleSheet.create({
   addApplicationFormText: {
     fontSize: 24,
     color: colors.black,
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: "355px",
+      },
+    }),
+  },
+
+  addApplicationModalFormText: {
+    fontSize: 24,
+    color: colors.black,
     flexWrap: "wrap",
     overFlow: "hidden",
     whiteSpace: "break-space",
@@ -82,8 +95,8 @@ const styles = StyleSheet.create({
     // wordBreak: "break-word",
     // overFlow: "hidden",
     // whiteSpace: "break-space",
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     // alignItems: 'flex-end',
     // justifyContent: 'space-between',
   },

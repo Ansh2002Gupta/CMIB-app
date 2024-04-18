@@ -66,7 +66,9 @@ function PurchasedPackageDetail({
   const validityDateFormatted = formatDate(new Date(validityDate));
 
   const onViewPress = (item) => {
-    navigate(`${navigations.PREVIOUS_SUBSCRIPTION_DETAILS}/${item.subscription_id}`);
+    navigate(
+      `${navigations.PREVIOUS_SUBSCRIPTION_DETAILS}/${item.subscription_id}`
+    );
   };
 
   const {
@@ -134,7 +136,15 @@ function PurchasedPackageDetail({
   };
 
   const renderMobileComponent = (item, index) => {
-    return <RenderMobileItem item={item} lastElement={inactiveSubscriptionListData.length -1 === index} onPress={(item)=> {onViewPress(item)}} />;
+    return (
+      <RenderMobileItem
+        item={item}
+        lastElement={inactiveSubscriptionListData.length - 1 === index}
+        onPress={(item) => {
+          onViewPress(item);
+        }}
+      />
+    );
   };
 
   return (
@@ -151,9 +161,13 @@ function PurchasedPackageDetail({
         <TwoRow
           topSection={
             <TwoColumn
-              leftSectionStyle={isWebView ? { width: '70%' } : { width: '60%' }}
-              rightSectionStyle={isWebView ? {width: '30%', alignItems: 'flex-end'} : {width: '40%', alignItems: 'flex-end'}}
-              style={{ justifyContent: 'space-between' }}
+              leftSectionStyle={isWebView ? { width: "70%" } : { width: "60%" }}
+              rightSectionStyle={
+                isWebView
+                  ? { width: "30%", alignItems: "flex-end" }
+                  : { width: "40%", alignItems: "flex-end" }
+              }
+              style={{ justifyContent: "space-between" }}
               leftSection={
                 <>
                   <View>
@@ -279,11 +293,11 @@ function PurchasedPackageDetail({
             </CommonText>
           }
           bottomSection={
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               {!isError && (
                 <CustomTable
                   {...{
-                    customTableStyle:{padding:0, marginTop: 24},
+                    customTableStyle: { padding: 0, marginTop: 24 },
                     allDataLoaded,
                     currentPage,
                     currentRecords,
@@ -315,10 +329,12 @@ function PurchasedPackageDetail({
                     extraDetailsText,
                     extraDetailsKey,
                     showSearchBar: false,
-                    totalcards
+                    totalcards,
                   }}
-                  containerStyle={{flex: 1, backgroundColor: 'white'}}
-                  mobileComponentToRender={(item, index) => renderMobileComponent(item, index)}
+                  containerStyle={{ flex: 1, backgroundColor: "white" }}
+                  mobileComponentToRender={(item, index) =>
+                    renderMobileComponent(item, index)
+                  }
                 />
               )}
               {isError && !!getErrorDetails()?.errorMessage && (
