@@ -21,18 +21,21 @@ import { useIntl } from "react-intl";
 import PackageDetailModal from "../PackageDetailModal";
 import CCAvenueModal from "../CCAvenuePaymentModal";
 import useFetch from "../../hooks/useFetch";
-import { COMPANY_SUBSCRIPTION_LISTING, GET_PAYMENTS_STATUS } from "../../services/apiServices/apiEndPoint";
+import {
+  COMPANY_SUBSCRIPTION_LISTING,
+  GET_PAYMENTS_STATUS,
+} from "../../services/apiServices/apiEndPoint";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const getPaymentStatus = (status) => {
-   if (status === 'Success') {
-     return "Payment Successfull"
-   } else if (status === 'Pending') {
-    return "Payment Pending"
-   } else {
-    return "Payment Failed"
-   }
-}
+  if (status === "Success") {
+    return "Payment Successfull";
+  } else if (status === "Pending") {
+    return "Payment Pending";
+  } else {
+    return "Payment Failed";
+  }
+};
 
 const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
   const { isWebView } = useIsWebView();
@@ -44,7 +47,7 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
   const [modalData, setModalData] = useState({ amount: 0, subscriptionId: "" });
   const [modalStyle, setModalStyle] = useState({});
   const [ccAvenueUrl, setCcAvenueUrl] = useState("");
-  const [orderNumber, setOrderNumber] = useState("");
+  const [orderNumber, setOrderNumber] = useState(0);
   const [paymentStatus, setPaymentStatus] = useState("");
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
 
@@ -54,7 +57,7 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
     isError: isErrorPaymentStatusDataListing,
     isSuccess: isGetPaymentSuccess,
     error: errorPaymentStatusDataListing,
-    fetchData: fetchPaymentStatus
+    fetchData: fetchPaymentStatus,
   } = useFetch({
     url: GET_PAYMENTS_STATUS + `/${orderNumber}`,
     otherOptions: {
@@ -62,18 +65,18 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
     },
   });
 
-
-  useEffect(()=>{
+  useEffect(() => {
     if (isGetPaymentSuccess) {
       let status = getPaymentStatus(paymentStatusData?.txn_status);
       setPaymentStatus(status);
     }
-  }, [isGetPaymentSuccess, paymentStatusData])
+  }, [isGetPaymentSuccess, paymentStatusData]);
 
-
-  useEffect(()=> {
-    fetchPaymentStatus({})
-  }, [orderNumber])
+  useEffect(() => {
+    if (!!orderNumber) {
+      fetchPaymentStatus({});
+    }
+  }, [orderNumber]);
 
   const keyboardDidHideCallback = () => {
     if (isIosPlatform) {
@@ -124,9 +127,9 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
       ...modalData,
       amount: price,
       subscriptionId: subscribeId,
-    })
+    });
     setShowPaymentInitiateModal(true);
-  }
+  };
 
   const renderViewPackageDetailModal = () => {
     return (
@@ -138,7 +141,7 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
           ...styles.modalInnerContainer,
           ...modalStyle,
         }}
-        headerTextStyle={styles.addApplicationFormText}
+        headerTextStyle={styles.addApplicationModalFormText}
         onBackdropPress={() => {
           setViewPackageDetailModal(false);
         }}
@@ -254,15 +257,24 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
         </View>
       ))}
 
-      {ccAvenueUrl?.length > 0 && !isWebView && <CCAvenueModal ccAvenueUrl={ccAvenueUrl} setCcAvenueUrl={setCcAvenueUrl} modalStyle={modalStyle} setOrderNumber={setOrderNumber} />}
+      {ccAvenueUrl?.length > 0 && !isWebView && (
+        <CCAvenueModal
+          ccAvenueUrl={ccAvenueUrl}
+          setCcAvenueUrl={setCcAvenueUrl}
+          modalStyle={modalStyle}
+          setOrderNumber={setOrderNumber}
+        />
+      )}
       {showPaymentInitiateModal && renderPaymentInitiateModal()}
       {viewPackageDetailModal && renderViewPackageDetailModal()}
       {!!paymentStatus && (
-          <ToastComponent
-            toastMessage={paymentStatus}
-            onDismiss={()=> {setPaymentStatus('')}}
-          />
-        )}
+        <ToastComponent
+          toastMessage={paymentStatus}
+          onDismiss={() => {
+            setPaymentStatus("");
+          }}
+        />
+      )}
     </View>
   );
 };
