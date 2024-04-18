@@ -32,9 +32,11 @@ const PieChart = ({ colorScale, data, height, label }) => {
           chartConfig={chartConfig}
           accessor={"value"}
           backgroundColor={colors.white}
+          absolute
           center={[screenWidth / 15, 0]}
           hasLegend={true}
-          holeRadius={5}
+          innerRadius={"45%"} // This creates the doughnut hole
+          outerRadius={"90%"} // This sets the overall size of the chart
         />
       }
     />

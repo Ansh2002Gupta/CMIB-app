@@ -54,7 +54,7 @@ function DashboardView() {
         bottomSection={
           <View>
             {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
-              !isCompany ? (
+              isCompany ? (
                 <CAJobsDashboard />
               ) : (
                 <CAJobsMemberDashboard />
