@@ -9,6 +9,7 @@ import CarrerAscentMemeberDashboard from "../MemberDashBoard/CarrerAscentMemeber
 import NQCACandidateDashboard from "../MemberDashBoard/NQCACandidateDashboard";
 import NQCACompanyDashboard from "../CompanyDashboard/NQCACompanyDashboard";
 import OverSeasMemberDashBoard from "../MemberDashBoard/OverSeasMemberDashBoard";
+import OverseasCompanyDashboard from "../CompanyDashboard/OverseasCompanyDashboard";
 import WomenMemberDashBoard from "../MemberDashBoard/WomenMemberDashBoard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -48,6 +49,9 @@ function DashboardView() {
                 )}
                 {moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY ===
                   selectedModule?.key && <NQCACompanyDashboard />}
+                {moduleKeys.OVERSEAS_CHAPTERS_KEY === selectedModule?.key && (
+                  <OverseasCompanyDashboard />
+                )}
               </View>
             ) : (
               <View style={styles.innerContainer}>

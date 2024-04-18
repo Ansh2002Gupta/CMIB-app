@@ -783,6 +783,10 @@ const locale = {
   "label.candidatesAcceptingOffersAreasWork":
     "Candidates Accepting Offers in Areas of Work",
   "label.recruitmentHistory": "Recruitment History",
+  "label.regionsBasedHighestCTCs": "Regions based on Highest CTCs",
+  "label.topCountriesHighestJobsAcceptedCandidates":
+    "Top 10 Countries based on Highest Number of Jobs Accepted by Candidates",
+  "label.numberJobsAccepted": "Number of Jobs Accepted",
 };
 
 export default locale;
