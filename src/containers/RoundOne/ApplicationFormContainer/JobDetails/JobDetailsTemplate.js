@@ -1,16 +1,10 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-  Platform,
-} from "@unthinkable/react-core-components";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import CardComponent from "../../../../components/CardComponent/CardComponent";
-import CheckBox from "../../../../components/CheckBox";
 import CommonText from "../../../../components/CommonText";
 import CustomImage from "../../../../components/CustomImage";
 import CustomTextInput from "../../../../components/CustomTextInput";
@@ -20,15 +14,14 @@ import DetailCard from "../../../../components/DetailCard";
 import MultiRow from "../../../../core/layouts/MultiRow";
 import TwoColumn from "../../../../core/layouts/TwoColumn/TwoColumn";
 import useIsWebView from "../../../../hooks/useIsWebView";
-import commonStyles, {
-  gridStyles,
-} from "../../../../theme/styles/commonStyles";
+import { gridStyles } from "../../../../theme/styles/commonStyles";
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
 import {
   DOCUMENT_TYPE,
-  SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH,
+  EXEPERIENCE_RANGE,
+  JOB_TYPE,
 } from "../../../../constants/constants";
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
@@ -159,7 +152,7 @@ const JobDetailsTemplate = ({
                     id: "label.select_work_experience_range",
                   })}
                   isDropdown
-                  options={DOCUMENT_TYPE}
+                  options={EXEPERIENCE_RANGE}
                   value={renderJobDetails?.work_exp_range_id}
                   onChangeValue={(val) =>
                     handleInputChange("work_exp_range_id", val)
@@ -183,7 +176,7 @@ const JobDetailsTemplate = ({
                     id: "label.job_type",
                   })}
                   isDropdown
-                  options={DOCUMENT_TYPE}
+                  options={JOB_TYPE}
                   placeholder={intl.formatMessage({
                     id: "label.select_job_type",
                   })}

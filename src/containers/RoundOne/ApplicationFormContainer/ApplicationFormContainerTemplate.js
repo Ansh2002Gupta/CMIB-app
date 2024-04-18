@@ -9,16 +9,20 @@ import ApplicationFormStepper from "../ApplicationFormStepper";
 import CompanyProfile from "./CompanyProfileForm/CompanyProfileForm";
 import JobDetails from "./JobDetails";
 import CustomScrollView from "../../../components/CustomScrollView";
+import PaymentForm from "./PaymentForm";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
 
   let tabConfig = [
+    // {
+    //   component: CompanyProfile,
+    // },
+    // {
+    //   component: JobDetails,
+    // },
     {
-      component: CompanyProfile,
-    },
-    {
-      component: JobDetails,
+      component: PaymentForm,
     },
   ];
 

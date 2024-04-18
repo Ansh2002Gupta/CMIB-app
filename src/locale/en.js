@@ -808,6 +808,16 @@ const locale = {
   "label.work_experience_range": "Experience Range",
   "label.select_work_experience_range": "Select work experience range",
   "label.fexi_hours": "Flexi Hours",
+  "label.fill_the_payment_form_slots":
+    "Please fill the payment details given below to get your slot(s) blocked/booked",
+  "label.enter_gstin": "Enter GSTIN",
+  "label.enter_pan": "Enter PAN",
+  "label.enter_po_number": "Enter PO Number",
+  "label.enter_address_for_hard_copy": "Enter ther address for hard copy",
+  "label.total_tds_number": "Total TDS Added",
+  "label.enter_total_tds_number": "Enter total TDS number",
+  "label.final_amount": "Final Amount",
+  "label.select_final_amount": "Enter final amount",
 };
 
 export default locale;

@@ -214,6 +214,28 @@ export const DOCUMENT_TYPE = [
   },
 ];
 
+export const EXEPERIENCE_RANGE = [
+  { label: "1-5", value: "1-5" },
+  { label: "5-10", value: "5-10" },
+  {
+    label: "10-20",
+    value: "10-20",
+  },
+  {
+    label: "20 years and above",
+    value: "20 years and above",
+  },
+];
+
+export const JOB_TYPE = [
+  { label: "WFH", value: "WFH" },
+  { label: "Hybrid", value: "Hybrid" },
+  {
+    label: "On-Site",
+    value: "On-Site",
+  },
+];
+
 export const ADD_DOCUMENT = {
   BOTH: "Both",
   PHOTOCOPIES: "Photocopies",
