@@ -276,7 +276,9 @@ const CentralDetailsTemplate = ({
         />
         <View style={styles.innerContainerStyle}>{renderRoundDetail()}</View>
       </View>
-      {roundCenterDetails && renderBottomSection()}
+      {!roundCenterDetailsLoading &&
+        roundCenterDetails &&
+        renderBottomSection()}
       {showCenterModal && (
         <SingleSelectionModal
           data={centerListData}

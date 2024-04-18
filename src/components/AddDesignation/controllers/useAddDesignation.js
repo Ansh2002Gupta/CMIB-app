@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { designation_key } from "../../../constants/constants";
 
-const addDocumentField = (options, data) => [
+export const addDesignationField = (options, data) => [
   {
     cellID: 1,
     key: designation_key.DESIGNATION_DETAILS,
@@ -60,6 +60,7 @@ const useAddDesignation = ({
     designationTitle: "",
     numberOfVacancies: "",
   });
+  const [isInitialDataAdded, setIsInitialDataAdded] = useState(false);
 
   useEffect(() => {
     if (editDocumentModal) {
@@ -71,13 +72,20 @@ const useAddDesignation = ({
   }, []);
 
   const [multiDocumentDetail, setMultiDocumentDetail] = useState([
-    ...addDocumentField(),
+    ...addDesignationField(),
   ]);
 
   useEffect(() => {
-    const templateData = addDocumentField(options, requiredDocumentDetails);
+    const templateData = addDesignationField(options, requiredDocumentDetails);
     setMultiDocumentDetail(templateData);
   }, [options]);
+
+  useEffect(() => {
+    if (!isInitialDataAdded && requiredDocumentDetails?.length > 0) {
+      setIsInitialDataAdded(true);
+      setMultiDocumentDetail([...requiredDocumentDetails]);
+    }
+  }, [isInitialDataAdded, requiredDocumentDetails]);
 
   useEffect(() => {
     validateForm();
@@ -162,7 +170,7 @@ const useAddDesignation = ({
 
   return {
     addDocumentModal,
-    addDocumentField: addDocumentField(options, requiredDocumentDetails),
+    addDocumentField: addDesignationField(options, requiredDocumentDetails),
     multiDocumentDetail,
     setMultiDocumentDetail,
     documentDetail,

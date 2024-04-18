@@ -5,7 +5,7 @@ import {
   document_keys_with_label,
 } from "../../../constants/constants";
 
-const addDocumentField = [
+export const addDocumentField = [
   {
     cellID: 1,
     key: benefits_key.BENEFITS_DETAILS,
@@ -42,7 +42,7 @@ const useAddBenefit = ({
     benefitsDetails: "",
     benefitAmount: "",
   });
-
+  const [isInitialDataAdded, setIsInitialDataAdded] = useState(false);
   useEffect(() => {
     if (editDocumentModal) {
       setDocumentDetail({
@@ -59,6 +59,13 @@ const useAddBenefit = ({
   useEffect(() => {
     validateForm();
   }, [documentDetail]);
+
+  useEffect(() => {
+    if (!isInitialDataAdded && requiredDocumentDetails?.length > 0) {
+      setIsInitialDataAdded(true);
+      setMultiDocumentDetail([...requiredDocumentDetails]);
+    }
+  }, [isInitialDataAdded, requiredDocumentDetails]);
 
   const onClickAddDocument = () => {
     setAddDocumentModal(true);

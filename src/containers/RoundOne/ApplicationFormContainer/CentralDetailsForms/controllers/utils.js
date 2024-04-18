@@ -1,3 +1,5 @@
+import { addDocumentField } from "../../../../../components/AddBenfits/controllers/useAddBenefit";
+import { addDesignationField } from "../../../../../components/AddDesignation/controllers/useAddDesignation";
 import { interviewTypeOptions } from "../../../../../constants/constants";
 import { formatCountryCode } from "../../../../../utils/util";
 import { validateEmail } from "../../../../../utils/validation";
@@ -166,6 +168,9 @@ const getDesgnationDetails = (designationDetatils) => {
         item.value
       );
     }
+    if (item?.itemId) {
+      designationObject[item.cellID].id = item?.itemId;
+    }
     if (item.key == "number_of_vacancies") {
       designationObject[item.cellID].no_of_vacancy = Number(item.value);
     }
@@ -183,6 +188,9 @@ const getOtherDetails = (otherDetailsData) => {
     if (item.key == "benefits_details") {
       requiredObject[item.cellID].name = item.value;
     }
+    if (item?.itemId) {
+      requiredObject[item.cellID].id = item?.itemId;
+    }
     if (item.key == "benefits_amount") {
       requiredObject[item.cellID].amount = item.value;
     }
@@ -190,17 +198,20 @@ const getOtherDetails = (otherDetailsData) => {
   return Object.values(requiredObject);
 };
 
-const getDocumentData = (isCompanyPPt, fileUploadResult, profileData) => {
+const getDocumentData = (isCompanyPPt, fileUploadResult, pptData) => {
   const companyDetails = {};
 
-  if (fileUploadResult?.data?.file_name || profileData?.companyLogo) {
-    const logoFileName = profileData?.companyLogo?.split("/")?.pop();
+  if (
+    !Boolean(isCompanyPPt) &&
+    (fileUploadResult?.data?.file_name || pptData?.file_path)
+  ) {
+    const logoFileName = pptData?.file_path?.split("/")?.pop();
     companyDetails.file_path =
       fileUploadResult?.data?.file_name || logoFileName;
   } else {
     companyDetails.file_path = null;
   }
-  companyDetails.company_ppt = isCompanyPPt === "0" ? "yes" : "no";
+  companyDetails.company_ppt = isCompanyPPt === 0 ? "yes" : "no";
 
   return companyDetails;
 };
@@ -212,11 +223,12 @@ export const getFormattedData = (
   otherBenefits,
   isCompanyPPt,
   fileUploadResult,
-  selectionProcess
+  selectionProcess,
+  pptData
 ) => {
   const designation = getDesgnationDetails(designationDetatils);
   const benefits = getOtherDetails(otherBenefits);
-  const otherDetails = getDocumentData(isCompanyPPt, fileUploadResult);
+  const otherDetails = getDocumentData(isCompanyPPt, fileUploadResult, pptData);
   return {
     contact_person_info: {
       name: contactDetails[keys.personName],
@@ -256,12 +268,30 @@ export const createModuleOptions = (
 
 export const getFormattedContactDetails = (contactDetail) => {
   return {
-    [keys.personName]: contactDetail[""],
-    [keys.emailId]: contactDetail[""],
-    [keys.mobileNumber]: contactDetail[""],
-    [keys.areaCode]: contactDetail[""],
-    [keys.telephoneNumber]: contactDetail[""],
+    [keys.personName]: contactDetail?.name ?? "",
+    [keys.emailId]: contactDetail?.email ?? "",
+    [keys.mobileNumber]: contactDetail?.mobile_number ?? "",
+    [keys.areaCode]: contactDetail?.std_country_code ?? "",
+    [keys.telephoneNumber]: contactDetail?.telephone_number ?? "",
+    [keys.countryCode]: contactDetail?.mobile_country_code ?? "+91 (India)",
   };
+};
+
+export const getInterviewDetails = (interviewDetails) => {
+  return {
+    [keys.campusDates]:
+      interviewDetails?.campus_dates?.map((value) => String(value)) ?? [],
+    [keys.companyAvailableForInterview]: interviewDetails?.interview_type ?? "",
+  };
+};
+
+export const getSelectionProcess = (fields, selectionProcess) => {
+  return fields.map((item) => {
+    return {
+      ...item,
+      isSelected: selectionProcess?.includes(item.label),
+    };
+  });
 };
 
 export const selectionProcessFields = (intl) => [
@@ -284,3 +314,59 @@ export const selectionProcessFields = (intl) => [
     isSelected: false,
   },
 ];
+
+export const getFormattedOtherBenefits = (benefitArray) => {
+  return benefitArray
+    ?.map((item, index) => {
+      index += 1;
+      let documentField = [...addDocumentField.map((item) => ({ ...item }))];
+      documentField[0] = {
+        ...documentField[0],
+        cellID: index,
+        value: item.name,
+        itemId: item?.id,
+      };
+      documentField[1] = {
+        ...documentField[1],
+        cellID: index,
+        value: Number(item.amount),
+      };
+      documentField[2] = {
+        ...documentField[2],
+        cellID: index,
+        isAdd: index === benefitArray.length,
+      };
+
+      return documentField;
+    })
+    .flat();
+};
+
+export const getDesignationsData = (designationArray, options) => {
+  return designationArray
+    ?.map((item, index) => {
+      index += 1;
+      let designationField = [
+        ...addDesignationField(options).map((item) => ({ ...item })),
+      ];
+      designationField[0] = {
+        ...designationField[0],
+        cellID: index,
+        value: item.round_company_job_detail_id,
+        itemId: item?.id,
+      };
+      designationField[1] = {
+        ...designationField[1],
+        cellID: index,
+        value: Number(item.no_of_vacancy),
+      };
+      designationField[2] = {
+        ...designationField[2],
+        cellID: index,
+        isAdd: index === designationArray.length,
+      };
+
+      return designationField;
+    })
+    .flat();
+};

@@ -1,8 +1,13 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import {
   addValueOnField,
   contactDetailFields,
+  getDesignationsData,
+  getFormattedContactDetails,
   getFormattedData,
+  getFormattedOtherBenefits,
+  getInterviewDetails,
+  getSelectionProcess,
   interviewDetailsFields,
   keys,
   selectionProcessFields,
@@ -159,6 +164,43 @@ const useCentralDetails = () => {
     return interviewDetailsFields(interviewDetailsState, roundCenterDetails);
   }, [interviewDetailsState, roundCenterDetails]);
 
+  useEffect(() => {
+    if (applicationDetail)
+      setContactDetailsState(
+        getFormattedContactDetails(applicationDetail?.contact_person_info)
+      );
+    setInterviewDetailsState(
+      getInterviewDetails(applicationDetail?.interview_details)
+    );
+    setSelectionProcess(
+      getSelectionProcess(
+        selectionProcessFields(intl),
+        applicationDetail?.selection_process
+      )
+    );
+    setRequiredDocumentDetails(
+      getFormattedOtherBenefits(applicationDetail?.other_benefits)
+    );
+    setDesignationDetatils(
+      getDesignationsData(
+        applicationDetail?.designation_details,
+        desginationData
+      )
+    );
+    if (applicationDetail?.other_details) {
+      setIsCompanyPPT(
+        applicationDetail?.other_details?.company_ppt === "yes" ? 0 : 1
+      );
+      setFileUploadResult(
+        applicationDetail?.other_details?.file_path
+          ? {
+              data: { url: applicationDetail?.other_details?.file_path },
+            }
+          : null
+      );
+    }
+  }, [applicationDetail, desginationData]);
+
   const findFieldByKeyOrLabel = (value, details) => {
     return details
       .flatMap((group) => group)
@@ -247,6 +289,9 @@ const useCentralDetails = () => {
     setSelectedOptions([centerData]);
     if (centerData?.id !== selectedOptions?.[0]?.id) {
       setContactDetailsState({});
+      setInterviewDetailsState({});
+      setRequiredDocumentDetails([]);
+      setDesignationDetatils([]);
       fetchRoundCenterDetails({
         overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}`,
       });
@@ -286,7 +331,8 @@ const useCentralDetails = () => {
       fileUploadResult,
       selectionProcess
         .filter((item) => item?.isSelected)
-        .map((item) => item?.value)
+        .map((item) => item?.value),
+      applicationDetail?.other_details
     );
 
     saveRoundDetails({
