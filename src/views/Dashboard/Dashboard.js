@@ -41,7 +41,9 @@ function DashboardView() {
               isCompany ? (
                 <CAJobsDashboard />
               ) : (
-                <CAJobsMemberDashboard />
+                <View style={{ padding: 24 }}>
+                  <CAJobsMemberDashboard />
+                </View>
               )
             ) : null}
           </View>
