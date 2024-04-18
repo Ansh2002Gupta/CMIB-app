@@ -7,6 +7,8 @@ import { TwoRow } from "../../../../core/layouts";
 import JobDetailsTemplate from "./JobDetailsTemplate";
 import useJobDetailForm from "./controllers/useJobDetailForm";
 import ActionPairButton from "../../../../components/ActionPairButton";
+import CustomButton from "../../../../components/CustomButton";
+import CommonText from "../../../../components/CommonText";
 import { useNavigate } from "../../../../routes";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./JobDetails.style";
@@ -66,9 +68,9 @@ const JobDetails = ({ tabHandler }) => {
     Platform.OS.toLowerCase() === "web"
       ? {
           buttonOneStyle: styles.buttonStyle,
-          buttonTwoStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonTwoStyle,
           buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyle,
         }
       : {};
 
@@ -123,6 +125,22 @@ const JobDetails = ({ tabHandler }) => {
           isTopFillSpace
           bottomSection={
             <View style={styles.actionBtnContainer}>
+              <CustomButton
+                style={styles.buttonStyle}
+                iconLeft={{
+                  leftIconSource: images.iconArrowLeft,
+                }}
+                onPress={() => {
+                  tabHandler("prev");
+                }}
+              >
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.backButtonStyle}
+                >
+                  {intl.formatMessage({ id: "label.back" })}
+                </CommonText>
+              </CustomButton>
               <ActionPairButton
                 buttonOneText={intl.formatMessage({ id: "label.cancel" })}
                 buttonTwoText={intl.formatMessage({ id: "label.save" })}
@@ -144,7 +162,7 @@ const JobDetails = ({ tabHandler }) => {
       {!!error && !isLoading && <ErrorComponent errorMsg={error} />}
       {!!currentError && (
         <ToastComponent
-          toastMessage={formateErrors(currentError?.errors)}
+          toastMessage={currentError || formateErrors(currentError?.errors)}
           onDismiss={() => setCurrentError("")}
         />
       )}

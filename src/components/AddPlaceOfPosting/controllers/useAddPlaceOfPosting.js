@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
 const useAddPlaceOfPosting = ({
   requiredPostingPlaceDetail,
@@ -18,6 +19,7 @@ const useAddPlaceOfPosting = ({
     others: null,
     total: null,
   });
+  const intl = useIntl();
 
   useEffect(() => {
     validateForm();
@@ -132,8 +134,22 @@ const useAddPlaceOfPosting = ({
   }) => {
     setRenderJobDetails((prevDetail) => {
       const updatedDetail = prevDetail?.posting_details?.map((item) => {
+        if (
+          !value &&
+          value?.length === 0 &&
+          item.cellID === cellID &&
+          item.label === propertyName
+        ) {
+          return {
+            ...item,
+            value: value,
+            isError: true,
+            error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+          };
+        }
+
         if (item.label === propertyName && item.cellID === cellID) {
-          return { ...item, value: value };
+          return { ...item, value: value, isError: null, error: null };
         }
         return item;
       });

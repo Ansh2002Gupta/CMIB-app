@@ -139,7 +139,7 @@ const locale = {
   "label.remove": "Remove",
   "label.company_profile": "Company Profile",
   "label.cancel": "Cancel",
-  "label.save": "Save",
+  "label.save": "Save & Next",
   "label.change_password": "Change Password",
   "label.tickets": "Tickets",
   "label.notification_settings": "Notification Settings",
@@ -804,6 +804,7 @@ const locale = {
   "label.designation_name": "Designation name",
   "label.ok": "Ok",
   "label.manageSubscription": "Manage Subscriptions",
+  "label.error.cannot_be_empty": "Field cannot be empty",
 };
 
 export default locale;
