@@ -3,8 +3,7 @@ import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
-
-import CAJobsDashboard from "../CAJobsDashboard";
+import CAJobsDashboard from "../CompanyDashboard/CAJobsDashboard";
 import CAJobsMemberDashboard from "../MemberDashBoard/CAJobsMemberDashboard";
 import CarrerAscentMemeberDashboard from "../MemberDashBoard/CarrerAscentMemeberDashboard";
 import NQCACandidateDashboard from "../MemberDashBoard/NQCACandidateDashboard";
