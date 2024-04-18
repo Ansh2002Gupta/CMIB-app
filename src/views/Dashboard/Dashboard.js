@@ -9,6 +9,7 @@ import CAJobsMemberDashboard from "../MemberDashBoard/CAJobsMemberDashboard";
 import CarrerAscentMemeberDashboard from "../MemberDashBoard/CarrerAscentMemeberDashboard";
 import NQCACandidateDashboard from "../MemberDashBoard/NQCACandidateDashboard";
 import OverSeasMemberDashBoard from "../MemberDashBoard/OverSeasMemberDashBoard";
+import WomenMemberDashBoard from "../MemberDashBoard/WomenMemberDashBoard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
@@ -57,6 +58,9 @@ function DashboardView() {
                 )}
                 {moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY ===
                   selectedModule?.key && <NQCACandidateDashboard />}
+                {moduleKeys.WOMEN_PARTTIME_KEY === selectedModule?.key && (
+                  <WomenMemberDashBoard />
+                )}
               </View>
             )}
           </View>
