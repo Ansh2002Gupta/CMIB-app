@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import BarChart from "../../../components/BarChart";
+import BarGroupChart from "../../../components/BarGroupChart";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import PieChart from "../../../components/PieChart/PieChart";
 import LoadingScreen from "../../../components/LoadingScreen";
@@ -249,6 +250,100 @@ const NQCACompanyDashboard = () => {
     },
   ];
 
+  const recruitmentHistoryData = {
+    candidatesInterviewed: [
+      {
+        label: "16/08/2023",
+        value: 32,
+      },
+      {
+        label: "17/08/2023",
+        value: 35,
+      },
+      {
+        label: "18/08/2023",
+        value: 41,
+      },
+      {
+        label: "19/08/2023",
+        value: 26,
+      },
+      {
+        label: "20/08/2023",
+        value: 29,
+      },
+      {
+        label: "21/08/2023",
+        value: 19,
+      },
+
+      {
+        label: "22/08/2023",
+        value: 14,
+      },
+      {
+        label: "23/08/2023",
+        value: 9,
+      },
+      {
+        label: "24/08/2023",
+        value: 44,
+      },
+      {
+        label: "25/08/2023",
+        value: 56,
+      },
+    ],
+    candidatesHired: [
+      {
+        label: "16/08/2023",
+        value: 34,
+      },
+      {
+        label: "17/08/2023",
+        value: 36,
+      },
+      {
+        label: "18/08/2023",
+        value: 29,
+      },
+      {
+        label: "19/08/2023",
+        value: 20,
+      },
+      {
+        label: "20/08/2023",
+        value: 21,
+      },
+      {
+        label: "21/08/2023",
+        value: 28,
+      },
+
+      {
+        label: "22/08/2023",
+        value: 22,
+      },
+      {
+        label: "23/08/2023",
+        value: 16,
+      },
+      {
+        label: "24/08/2023",
+        value: 49,
+      },
+      {
+        label: "25/08/2023",
+        value: 60,
+      },
+    ],
+  };
+
+  const legendData = [
+    { name: "Candidates Interviewed", symbol: { fill: colors.purple } },
+    { name: "Candidates Hired", symbol: { fill: colors.babyPink } },
+  ];
+
   return isLoading ? (
     <LoadingScreen />
   ) : error ? (
@@ -325,6 +420,21 @@ const NQCACompanyDashboard = () => {
           toolTipLabel={({ datum }) => datum.y}
           barColor={colors.purple}
           data={candidatesAcceptingData}
+        />
+        <BarGroupChart
+          domainPadding={20}
+          barWidth={7}
+          height={200}
+          label={intl.formatMessage({
+            id: "label.candidatesAcceptingOffersAreasWork",
+          })}
+          legendData={legendData}
+          toolTipLabel={({ datum }) => datum.y}
+          barColor1={colors.purple}
+          barColor2={colors.babyPink}
+          data1={recruitmentHistoryData.candidatesInterviewed}
+          data2={recruitmentHistoryData.candidatesHired}
+          offset={12}
         />
       </ScrollView>
     )
