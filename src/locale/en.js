@@ -805,6 +805,9 @@ const locale = {
   "label.ok": "Ok",
   "label.manageSubscription": "Manage Subscriptions",
   "label.error.cannot_be_empty": "Field cannot be empty",
+  "label.work_experience_range": "Experience Range",
+  "label.select_work_experience_range": "Select work experience range",
+  "label.fexi_hours": "Flexi Hours",
 };
 
 export default locale;

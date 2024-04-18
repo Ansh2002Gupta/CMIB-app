@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.black,
   },
+  overseasContainerStyles: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   bottomMargin: {
     marginBottom: 16,
     marginRight: 16,

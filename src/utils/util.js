@@ -684,13 +684,29 @@ export const doesPathIncludeAnyKey = (pathName) => {
   return pathName.includes(key);
 };
 
-export const formateErrors = (errors) => {
-  // Convert the error object into an array of strings
-  const errorMessages = Object.keys(errors).map((key) => {
-    // Assuming each key in the error object has an array of messages, we join them with a space
-    return `- ${errors[key].join(" ")}`;
-  });
+export const formateErrors = (errorResponse) => {
+  if (typeof errorResponse === "string") {
+    return errorResponse;
+  }
 
-  // Join the array of strings into a single string, separated by line breaks
-  return errorMessages.join("\n");
+  if (
+    errorResponse &&
+    typeof errorResponse === "object" &&
+    errorResponse.errors
+  ) {
+    const errorPoints = Object.entries(errorResponse.errors).map(
+      ([fieldName, messages]) => {
+        const readableFieldName = fieldName.replace(/\./g, " ");
+
+        return `- ${readableFieldName}: ${messages.join(" ")}`;
+      }
+    );
+    return errorPoints.join("\n");
+  }
+
+  return "An unexpected error occurred.";
+};
+
+export const convertStringtoNumber = (val) => {
+  return +val;
 };
