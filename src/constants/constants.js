@@ -223,6 +223,15 @@ export const AREA_CODES = [
   },
 ];
 
+export const MOBILE_CODES = [
+  { label: "+01", value: "+01" },
+  { label: "+02", value: "+02" },
+  {
+    label: "+03",
+    value: "+03",
+  },
+];
+
 export const ADD_DOCUMENT = {
   BOTH: "Both",
   PHOTOCOPIES: "Photocopies",
@@ -262,6 +271,7 @@ export const HEAD_CONTACT = {
   DESIGNATION: "designation",
   NAME: "name",
   EMAIL: "email",
+  MOBILE_COUNTRY_CODE: "mobile_country_code",
   MOBILE_NUMBER: "mobile_number",
   AREA_CODE: "std_country_code",
   TELEPHONE_NUMBER: "telephone_number",

@@ -829,6 +829,8 @@ const locale = {
   "label.at_least_one_mandatory": "At least one mandatory",
   "label.error.cannot_be_empty": "Cannot be empty!",
   "label.head_contacts": "Director/VP/HR Head Contacts",
+  "label.mobile_country_code": "Mobile Country Code",
+  "label.select_mobile_country_code": "Code",
 };
 
 export default locale;

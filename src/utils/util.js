@@ -685,6 +685,7 @@ export const doesPathIncludeAnyKey = (pathName) => {
 };
 
 export const formateErrors = (errors) => {
+  if (typeof errors === "string") return `- ${errors}`;
   // Convert the error object into an array of strings
   const errorMessages = Object.keys(errors).map((key) => {
     // Assuming each key in the error object has an array of messages, we join them with a space

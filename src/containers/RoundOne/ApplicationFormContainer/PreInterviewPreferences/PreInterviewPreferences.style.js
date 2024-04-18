@@ -19,8 +19,21 @@ const styles = StyleSheet.create({
   }),
   customWebContainerStyle: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-    overflowY: "auto",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+    overflowX: "scroll",
+  },
+  actionBtnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 16,
+    padding: 24,
+    backgroundColor: colors.backgroundColor,
+  },
+  buttonStyle: { maxHeight: 44, maxWidth: 80 },
+  buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
+  backButtonStyle: {
+    fontSize: 14,
   },
 });
 

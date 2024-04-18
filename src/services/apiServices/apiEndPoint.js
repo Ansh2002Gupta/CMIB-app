@@ -7,6 +7,7 @@ export const CORE = "core";
 export const ADMIN = "admin";
 
 /* API Endpoints */
+export const CANDIDATES = "/candidates";
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password/confirm`;
 export const COMPANY_LOGIN = `${USER_TYPE_COMPANY}/login`;
 export const COMPANY_CHANGE_PASSWORD_OTP = `${USER_TYPE_COMPANY}/user/password`;
@@ -31,7 +32,7 @@ export const COMPANY_TICKET_STATUS = `${CORE}/status`;
 export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`;
 export const GET_PAYMENTS_STATUS = `${CORE}/payments`;
 export const COMPANY_INACTIVE_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/inactive-subscription`;
-export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`
+export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`;
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
@@ -62,7 +63,7 @@ export const TICKET_REPLIES_SUB_ROUTES = "replies";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
-export const ROUND_ONE_DASHBOARD = `/dashboard`;
+export const ROUND_ONE_DASHBOARD = `/board`;
 export const GLOBAL_SESSIONS = `/sessions`;
 export const APPLICANTS = "/applicants";
 
