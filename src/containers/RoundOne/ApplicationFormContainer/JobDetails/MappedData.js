@@ -325,6 +325,10 @@ export const mapDataToUI = (data) => {
 };
 
 export const mapDocsToUI = (data) => {
+  if (!data.length) {
+    return getDocumentField();
+  }
+
   const newDocsArray = data.map((docs, index) => {
     return [
       {
@@ -405,10 +409,12 @@ export const getDocumentField = () => {
 };
 
 export const mapPostingDetailsToUI = (data) => {
+  if (!data.length) {
+    return getPlaceOfPostingDetails();
+  }
   const newDocsArray = data.map((docs, index) => {
     const location = Object.keys(docs)[0];
     const details = docs[location];
-
     return [
       {
         cellID: index + 1,
