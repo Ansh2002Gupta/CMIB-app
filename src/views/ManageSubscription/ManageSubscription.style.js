@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundGrey,
+    width: "100%",
   },
   headingTextContainer: {
     marginBottom: 16,
