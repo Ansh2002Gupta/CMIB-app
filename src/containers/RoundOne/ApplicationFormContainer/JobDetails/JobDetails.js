@@ -162,7 +162,7 @@ const JobDetails = ({ tabHandler }) => {
       {!!error && !isLoading && <ErrorComponent errorMsg={error} />}
       {!!currentError && (
         <ToastComponent
-          toastMessage={currentError || formateErrors(currentError?.errors)}
+          toastMessage={currentError ?? formateErrors(currentError?.errors)}
           onDismiss={() => setCurrentError("")}
         />
       )}
