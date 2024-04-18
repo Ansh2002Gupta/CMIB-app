@@ -831,6 +831,9 @@ const locale = {
   "label.head_contacts": "Director/VP/HR Head Contacts",
   "label.mobile_country_code": "Mobile Country Code",
   "label.select_mobile_country_code": "Code",
+  "label.work_experience_range": "Experience Range",
+  "label.select_work_experience_range": "Select work experience range",
+  "label.fexi_hours": "Flexi Hours",
 };
 
 export default locale;
