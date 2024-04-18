@@ -7,6 +7,7 @@ import { TwoRow } from "../../core/layouts";
 import CAJobsDashboard from "../CAJobsDashboard";
 import CAJobsMemberDashboard from "../MemberDashBoard/CAJobsMemberDashboard";
 import CarrerAscentMemeberDashboard from "../MemberDashBoard/CarrerAscentMemeberDashboard";
+import OverSeasMemberDashBoard from "../MemberDashBoard/OverSeasMemberDashBoard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
@@ -49,6 +50,9 @@ function DashboardView() {
                 )}
                 {moduleKeys.CARRER_ASCENT_KEY === selectedModule?.key && (
                   <CarrerAscentMemeberDashboard />
+                )}
+                {moduleKeys.OVERSEAS_CHAPTERS_KEY === selectedModule?.key && (
+                  <OverSeasMemberDashBoard />
                 )}
               </View>
             )}
