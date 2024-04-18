@@ -787,6 +787,10 @@ const locale = {
   "label.topCountriesHighestJobsAcceptedCandidates":
     "Top 10 Countries based on Highest Number of Jobs Accepted by Candidates",
   "label.numberJobsAccepted": "Number of Jobs Accepted",
+  "label.companyPreferenceKindIndustry":
+    "Company Preference for Kind of Industry",
+  "label.vacanciesIndustries": "Vacancies in Industries",
+  "label.companies": "Companies",
 };
 
 export default locale;
