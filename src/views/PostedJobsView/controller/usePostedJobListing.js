@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import {
   Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
+
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import TouchableImage from "../../../components/TouchableImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
@@ -14,23 +16,22 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import { urlService } from "../../../services/urlService";
+import colors from "../../../assets/colors";
 import images from "../../../images";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { navigations } from "../../../constants/routeNames";
+import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
+import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../PostedJobsView.styles";
-import colors from "../../../assets/colors";
-import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import { navigations } from "../../../constants/routeNames";
-import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const usePostedJobListing = (onViewPress, onEditPress) => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
@@ -44,11 +45,11 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     searchData: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const {
