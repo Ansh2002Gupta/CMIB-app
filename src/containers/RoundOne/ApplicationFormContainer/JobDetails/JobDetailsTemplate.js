@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
+  Platform,
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
@@ -19,31 +20,37 @@ import DetailCard from "../../../../components/DetailCard";
 import MultiRow from "../../../../core/layouts/MultiRow";
 import TwoColumn from "../../../../core/layouts/TwoColumn/TwoColumn";
 import useIsWebView from "../../../../hooks/useIsWebView";
-import { gridStyles } from "../../../../theme/styles/commonStyles";
+import commonStyles, {
+  gridStyles,
+} from "../../../../theme/styles/commonStyles";
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
+import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../../../constants/constants";
+import AddDocument from "../../../../components/AddDocument";
+import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
+import CustomScrollView from "../../../../components/CustomScrollView";
+import ConfigurableList from "../../../../components/ConfigurableList";
+import { getDocumentField, getPlaceOfPostingDetails } from "./MappedData";
 
 const JobDetailsTemplate = ({
+  renderJobDetails,
+  handleInputChange,
+  configurableListQuery,
+  setConfigurableListQuery,
+  menuOptions,
+  setMenuOptions,
+  handlePress,
+  handleAdd,
+  handleDelete,
+  handleBlur,
+  selectedOptions,
+  desginationItems,
+  setRenderJobDetails,
   addDesignation,
-  bondPeriod,
-  compensation,
-  CTCDetail,
-  designationName,
-  exitAmount,
-  handleBondPeriod,
-  handleCompensation,
-  handleCTCDetail,
-  handleDesignationName,
-  handleExitAmount,
   handleMonthlyData,
-  handleStartingSalary,
   handleYearlyData,
-  handleToggle,
-  jobDetailData,
   onClickAddDesignation,
-  selectionProcess,
-  startingSalary,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
@@ -53,23 +60,6 @@ const JobDetailsTemplate = ({
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
-
-  const renderSelectionProcess = () => {
-    return (
-      <View style={styles.checkBoxStyle}>
-        {selectionProcess.map((item, index) => (
-          <CheckBox
-            key={item.id}
-            id={item.id}
-            index={index}
-            title={item.title}
-            isSelected={item.isSelected}
-            handleCheckbox={handleToggle}
-          />
-        ))}
-      </View>
-    );
-  };
 
   const JobDetailsConfig = [
     {
@@ -99,9 +89,9 @@ const JobDetailsTemplate = ({
               id: "label.enter_designationName",
             })}
             isMandatory
-            value={designationName}
-            onChangeText={(val) => handleDesignationName(val)}
-            isNumeric
+            value={renderJobDetails?.designation}
+            onChangeText={(val) => handleInputChange("designation", val)}
+            customHandleBlur={(val) => handleBlur("designation", val)}
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -111,12 +101,9 @@ const JobDetailsTemplate = ({
                 id: "label.enter_compensation",
               })}
               isMandatory
-              value={compensation}
-              onChangeText={(val) =>
-                numericValidator(val) && handleCompensation(val)
-              }
-              maxLength={9}
               isRupee
+              value={renderJobDetails?.compensation}
+              onChangeText={(val) => handleInputChange("compensation", val)}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -126,19 +113,20 @@ const JobDetailsTemplate = ({
                 id: "label.enter_starting_salary_including_perks",
               })}
               isMandatory
-              value={startingSalary}
-              onChangeText={(val) =>
-                numericValidator(val) && handleStartingSalary(val)
-              }
-              maxLength={9}
               isRupee
+              value={renderJobDetails?.starting_salary}
+              onChangeText={(val) => handleInputChange("starting_salary", val)}
             />
           </View>
           <CustomTextEditor
             label={intl.formatMessage({
               id: "label.roles_and_responsibility",
             })}
+            value={renderJobDetails?.role_responsibility}
             isMandatory
+            onChangeText={(val) =>
+              handleInputChange("role_responsibility", val)
+            }
           />
           <CustomTextInput
             customStyle={styles.ctcTextInputStyle}
@@ -148,9 +136,11 @@ const JobDetailsTemplate = ({
             placeholder={intl.formatMessage({
               id: "label.enter_details_of_ctc",
             })}
+            isMultiline
+            maxLength={SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH}
             isMandatory
-            value={CTCDetail}
-            onChangeText={(val) => handleCTCDetail(val)}
+            value={renderJobDetails?.ctc_details}
+            onChangeText={(val) => handleInputChange("ctc_details", val)}
           />
         </CardComponent>
       ),
@@ -159,20 +149,31 @@ const JobDetailsTemplate = ({
       content: (
         <View style={styles.bottomMargin}>
           <DetailCard
-            headerId="label.monthly"
-            details={jobDetailData?.monthly}
+            headerId={intl.formatMessage({ id: "label.monthly" })}
+            details={renderJobDetails?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
-            headerId="label.yearly"
-            details={jobDetailData?.yearly}
+            headerId={intl.formatMessage({ id: "label.yearly" })}
+            details={renderJobDetails?.yearly}
             handleChange={handleYearlyData}
             isEditProfile
             customCardStyle={styles.yearlyCustomCardStyle}
           />
         </View>
+      ),
+    },
+    {
+      content: (
+        <AddDocument
+          {...{
+            requiredDocumentDetails: renderJobDetails?.required_docs,
+            setRenderJobDetails,
+            addDocumentField: getDocumentField(),
+          }}
+        />
       ),
     },
     {
@@ -190,6 +191,10 @@ const JobDetailsTemplate = ({
               label={intl.formatMessage({
                 id: "label.bond_required",
               })}
+              value={renderJobDetails?.bond_details?.is_bond_included}
+              onValueChange={(val) => {
+                handleInputChange("bond_details", val, "is_bond_included");
+              }}
               isMandatory
               customToggleStyle={styles.customToggleStyle}
               customLabelStyle={styles.customLabelStyle}
@@ -202,10 +207,13 @@ const JobDetailsTemplate = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_months_bond_period",
               })}
-              isMandatory
-              value={bondPeriod}
+              isMandatory={
+                renderJobDetails?.bond_details?.is_bond_included === 0
+              }
+              value={renderJobDetails?.bond_details?.bond_period_in_mm}
               onChangeText={(val) =>
-                numericValidator(val) && handleBondPeriod(val)
+                numericValidator(val) &&
+                handleInputChange("bond_details", val, "bond_period_in_mm")
               }
             />
             <CustomTextInput
@@ -216,10 +224,13 @@ const JobDetailsTemplate = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_exit_amount",
               })}
-              isMandatory
-              value={exitAmount}
+              isMandatory={
+                renderJobDetails?.bond_details?.is_bond_included === 0
+              }
+              value={renderJobDetails?.bond_details?.exit_amount}
               onChangeText={(val) =>
-                numericValidator(val) && handleExitAmount(val)
+                numericValidator(val) &&
+                handleInputChange("bond_details", val, "exit_amount")
               }
               isRupee
             />
@@ -229,18 +240,18 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <CardComponent customStyle={styles.bottomMargin}>
-          <CommonText
-            customContainerStyle={styles.selectionProcessTextStyle}
-            customTextStyle={styles.selectionProcessStyle}
-            fontWeight="600"
-          >
-            {intl.formatMessage({
-              id: "label.selection_process",
-            })}
-          </CommonText>
-          {renderSelectionProcess()}
-        </CardComponent>
+        <AddPlaceOfPosting
+          {...{
+            handleInputChange,
+            jobDetailData: renderJobDetails?.posting_details,
+            requiredPostingPlaceDetail: renderJobDetails?.posting_details,
+            setRenderJobDetails,
+            addPostingDetailsField: getPlaceOfPostingDetails(),
+            isSpecificPerformaRequired:
+              renderJobDetails?.specific_performa_required,
+            otherInfo: renderJobDetails?.otherInfo,
+          }}
+        />
       ),
     },
   ];
@@ -262,18 +273,40 @@ const JobDetailsTemplate = ({
   }
 
   return (
-    <ScrollView style={styles.scrollViewStyle}>
+    <CustomScrollView style={styles.scrollViewStyle}>
       {currentBreakpoint === "xs" ? (
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
         <TwoColumn
-          leftSection={[]}
+          leftSection={
+            desginationItems.length && (
+              <ConfigurableList
+                title={intl.formatMessage({ id: "label.desgination" })}
+                searchQuery={configurableListQuery}
+                setSearchQuery={setConfigurableListQuery}
+                selectedOptions={selectedOptions}
+                onDelete={handleDelete}
+                onPress={handlePress}
+                onAdd={handleAdd}
+                options={desginationItems}
+                menuOptions={menuOptions}
+                setMenuOptions={setMenuOptions}
+                nameField={"designation"}
+              />
+            )
+          }
           isLeftFillSpace={false}
           isRightFillSpace
+          leftSectionStyle={{
+            width: "25%",
+          }}
+          rightSectionStyle={{
+            width: "75%",
+          }}
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
         />
       )}
-    </ScrollView>
+    </CustomScrollView>
   );
 };
 

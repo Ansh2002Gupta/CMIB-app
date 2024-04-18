@@ -2,15 +2,19 @@ import { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import { mapApiDataToUI } from "../../../../../views/CompanyProfile/mappedData";
+import { mapApiDataToUI } from "../mappedData";
 import { validateFields } from "../../../../../views/CompanyProfile/CompanyProfileUtils";
 import useIsWebView from "../../../../../hooks/useIsWebView";
 import useFetch from "../../../../../hooks/useFetch";
 import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import {
+  APPLICATION,
   CORE_INDUSTRY_TYPE,
   COUNTRY_CODE,
+  PROFILE,
+  ROUNDS,
+  USER_TYPE_COMPANY,
 } from "../../../../../services/apiServices/apiEndPoint";
 import {
   FIRM_OF_CHARTERED_ACCOUNTANTS,
@@ -19,49 +23,16 @@ import {
 } from "../../../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
 import { gridStyles } from "../../../../../theme/styles/commonStyles";
+import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
+import { useParams } from "react-router";
+import { usePatch } from "../../../../../hooks/useApiRequest";
 
-const profiledata = {
-  id: 14,
-  name: "Pankaj Kachhwaye",
-  entity: "Corporate",
-  frn_number: null,
-  number_of_partners: null,
-  industry_type: {
-    id: 1,
-    name: "Diversified",
-  },
-  address: "123 Business Road, Suite 456, Business City, BC 12345",
-  email: "pankajkachhwaye@gmail.com",
-  std_country_code: "+91",
-  telephone_number: "12345678",
-  company_module_access: [],
-  contact_details: [
-    {
-      id: 7,
-      salutation: "Mr.",
-      name: "Pankaj",
-      designation: "sdfasdf",
-      email: "pankajkachhwaye@gmail.com",
-      mobile_country_code: "+93",
-      mobile_number: "1122334455",
-      modules: [],
-      status: null,
-    },
-  ],
-  company_details: "This is a test company",
-  website: "www.testcompany.com",
-  nature_of_suppliers: "Registered",
-  type: null,
-  source_of_information: ["Campus"],
-  credit_amount: 2000000000,
-  company_logo: null,
-  updated_at: "2024-03-19T07:36:56.000000Z",
-};
-
-const useCompanyProfile = () => {
+const useCompanyProfile = ({ tabHandler }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const [sideBarState] = useContext(SideBarContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const { id } = useParams();
 
   const [formDetails, setFormDetails] = useState();
   const [options, setOptions] = useState(
@@ -73,6 +44,7 @@ const useCompanyProfile = () => {
   );
 
   const isEditProfile = true;
+  const currentModule = sideBarState?.selectedModule?.key;
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
@@ -100,6 +72,45 @@ const useCompanyProfile = () => {
       skipApiCallOnMount: true,
     },
   });
+
+  const {
+    data: personalProfileData,
+    isLoading: isProfileDataLoading,
+    isError: isErrorProfileData,
+    error: errorWhileGettingProfileData,
+    fetchData: getProfileData,
+  } = useFetch({
+    url:
+      USER_TYPE_COMPANY +
+      `/${currentModule}` +
+      ROUNDS +
+      `/${id}` +
+      APPLICATION +
+      PROFILE,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+  const {
+    makeRequest: updateProfileData,
+    error: errorWhileUpdating,
+    setError: setErrorWhileUpdating,
+    isLoading: isProfileUpdating,
+    isError: isErrorWhileUpdating,
+  } = usePatch({
+    url:
+      USER_TYPE_COMPANY +
+      `/${currentModule}` +
+      ROUNDS +
+      `/${id}` +
+      APPLICATION +
+      PROFILE,
+  });
+
+  useEffect(() => {
+    console.log("upadred", formDetails);
+  }, [formDetails]);
+
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
   const {
@@ -112,24 +123,33 @@ const useCompanyProfile = () => {
     uploadPercentage,
   } = useSaveLogo();
 
-  useEffect(async () => {
-    const fetchData = async () => {
-      const newIndustryOptions = await getIndustryType();
-      const newCountryCodes = await getCountryCodes();
-
+  useEffect(() => {
+    const fetchPersonalData = async () => {
+      const newCountryCode = await getCountryCodes();
+      const newIndustryType = await getIndustryType();
+      const newProfileData = await getProfileData();
       setFormDetails(
         mapApiDataToUI({
-          apiData: profiledata,
-          industryOptions: newIndustryOptions,
+          apiData: newProfileData,
+          industryOptions: newIndustryType,
           intl,
-          countryCodes: newCountryCodes,
+          countryCodes: newCountryCode,
           isEditMode: true,
         })
       );
+      const updatedInfoOptions = INTEREST_OPTIONS.map((option) => ({
+        ...option,
+        title: intl.formatMessage({ id: option.messageId }),
+        isSelected: newProfileData.source_of_information?.includes(
+          intl.formatMessage({ id: option.messageId })
+        ),
+      }));
+      setOptions(updatedInfoOptions);
     };
-
-    fetchData();
-  }, []);
+    if (currentModule) {
+      fetchPersonalData();
+    }
+  }, [currentModule]);
 
   const handleInputChange = (fieldName, value) => {
     if (fieldName === "label.entity") {
@@ -178,6 +198,8 @@ const useCompanyProfile = () => {
           updatedCompanyDetail.splice(newNoOfPartnersIndex, 1);
         }
       }
+      console.log("updatedCompanyDetail", updatedCompanyDetail);
+
       setFormDetails({
         ...formDetails,
         companyDetail: updatedCompanyDetail.map((detail) =>
@@ -326,6 +348,122 @@ const useCompanyProfile = () => {
     }
   };
 
+  const getContactPersonDetails = ({ data, dataKeyName = "key", keyName }) => {
+    return data.find((info) => info[dataKeyName] === keyName);
+  };
+
+  const createPayloadFromProfileData = (profileData) => {
+    const companyDetails = profileData.companyDetail.reduce((acc, detail) => {
+      if (detail.key) {
+        switch (detail.key) {
+          case "companyName":
+            acc.name = detail.value;
+            break;
+          case "entity":
+            acc.entity = detail.value;
+            break;
+          case "address":
+            acc.address = detail.value;
+            break;
+          case "emailId":
+            acc.email = detail.value;
+            break;
+          case "currentIndustry":
+            acc.industry_type_id = detail.value;
+            break;
+          case "code":
+            acc.std_country_code = detail.value;
+            break;
+          case "telephoneNo":
+            acc.telephone_number = detail.value;
+            break;
+          case "registrationNo":
+            acc.frn_number = detail.value;
+            break;
+          case "noOfPartners":
+            acc.number_of_partners = detail.value;
+            break;
+          default:
+            break;
+        }
+      }
+      return acc;
+    }, {});
+
+    companyDetails.company_details = profileData?.companyProfile?.[0]?.value;
+    companyDetails.website = profileData?.otherDetails?.find(
+      (detail) => detail.key === "website"
+    ).value;
+    companyDetails.nature_of_suppliers = profileData?.otherDetails?.find(
+      (detail) => detail.label === "label.nature_of_supplier"
+    ).value;
+    companyDetails.type = profileData?.otherDetails?.find(
+      (detail) => detail.label === "label.company_type"
+    ).value;
+    companyDetails.source_of_information = profileData?.sourceOfInfo;
+    companyDetails.credit_amount = profileData?.balanceCredit;
+    if (fileUploadResult?.data?.file_name || profileData?.companyLogo) {
+      const logoFileName = profileData?.companyLogo?.split("/")?.pop();
+      companyDetails.company_logo =
+        fileUploadResult?.data?.file_name || logoFileName;
+    } else {
+      companyDetails.company_logo = null;
+    }
+
+    const contactDetails = profileData?.contactPersonInfo?.map((contact) => ({
+      id: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "name",
+      })?.id,
+      modules: contact?.contactModules?.[0].value,
+      salutation: getContactPersonDetails({
+        data: contact?.contactInfo,
+        dataKeyName: "label",
+        keyName: "label.salutation",
+      })?.value,
+      name: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "name",
+      })?.value,
+      email: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "contactEmailId",
+      })?.value,
+      designation: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "designation",
+      })?.value,
+      mobile_country_code:
+        "+" +
+        getContactPersonDetails({
+          data: contact?.contactInfo,
+          keyName: "mobileNo",
+        })?.codeValue.replace(/\D/g, ""),
+      mobile_number: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "mobileNo",
+      })?.value,
+      status: contact?.isContactActive || contact?.isNewContactPerson ? 1 : 0,
+    }));
+
+    const payload = {
+      ...companyDetails,
+      contact_details: contactDetails[0],
+    };
+
+    return payload;
+  };
+
+  const handleSaveAndNext = () => {
+    const payLoad = createPayloadFromProfileData(formDetails);
+    updateProfileData({
+      body: payLoad,
+      onSuccessCallback: () => {
+        tabHandler("next");
+      },
+    });
+  };
+
   return {
     countryCodes,
     columnCount,
@@ -333,12 +471,17 @@ const useCompanyProfile = () => {
     errorWhileUpload,
     getErrorDetails,
     handleInputChange,
+    handleSaveAndNext,
     handleContactPersonInfo,
     handleCompanyProfile,
     handleBlur,
     handleToggle,
     handleFileUpload,
     industryOptions,
+    errorWhileUpdating,
+    setErrorWhileUpdating,
+    isProfileUpdating,
+    isErrorWhileUpdating,
     isEditProfile,
     isLoading,
     isUploadingImageToServer,

@@ -21,6 +21,7 @@
   --black: #000;
 }
 
+
 .account-dropdown__base:hover {
   background: var(--secondaryLightGrey) !important;
 }
@@ -29,6 +30,14 @@
   border-color: var(--green) !important;
   background: linear-gradient(0deg, var(--greenOne) 0%, var(--greenOne) 100%),
     var(--white);
+}
+
+.configurableList__item--green:hover {
+  background: var(--greenTwo) !important;
+}
+
+.configurableList__item--green:hover .item--black {
+  color: var(--black) !important;
 }
 
 .module-box_outline--darkBlue:hover {

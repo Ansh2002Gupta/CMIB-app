@@ -40,7 +40,12 @@ export const DETAIL = `/detail`;
 //sub routes
 export const ACADEMICS = "/academics";
 export const ACTIVITIES = "/activities";
+export const APPLICANT = "/applicant";
+export const APPLICATION = "/application";
+export const CANDIDATES = "/candidates";
 export const FILTERS = "/filters";
+export const INTERVIEWS = "/interviews";
+export const INTERVIEW = "/interview";
 export const JOB_APPLICANTS = "/applicants";
 export const JOB_APPLICANT = "/applicant";
 export const JOBS = "jobs";
@@ -50,16 +55,15 @@ export const MEMBERS = "/members";
 export const MEMBERSHIP = "/membership";
 export const MARK_PREFER = "/mark-prefer";
 export const PERSONAL = "/personal";
+export const PROFILE = "/profile";
+export const ROUNDS = "/rounds";
 export const STATUS = "/status";
-export const APPLICANT = "/applicant";
+export const JOB_DETAILS = "/job-detail";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
-export const INTERVIEWS = "/interviews";
-export const INTERVIEW = "/interview";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
 export const ROUND_ONE_DASHBOARD = `/dashboard`;
-export const ROUNDS = `/rounds`;
 export const GLOBAL_SESSIONS = `/sessions`;
 export const APPLICANTS = "/applicants";
 
@@ -82,7 +86,6 @@ export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
 export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 
 export const PREFERRED = "/preferred";
-export const CANDIDATES = "/candidates";
 export const MARKED_PREFER = "/marked-prefer";
 export const UNMARKED_PREFER = "/unmark-prefer";
 

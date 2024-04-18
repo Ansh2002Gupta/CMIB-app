@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginRight: 16,
     marginLeft: 16,
+    width: "100%",
   },
   bondIfAnyView: {
     marginBottom: 16,
@@ -54,6 +55,8 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginRight: 0,
     marginTop: 0,
+    justifyContent: "space-between",
+    flexWrap: "wrap",
   },
   yearlyCustomCardStyle: {
     marginLeft: 0,
@@ -91,8 +94,19 @@ const styles = StyleSheet.create({
   },
   scrollViewStyle: {
     backgroundColor: colors.backgroundColor,
-    marginTop: 16,
+    paddingTop: 16,
+    paddingRight: 16,
+    width: "100%",
   },
+  actionBtnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 16,
+    padding: 24,
+    backgroundColor: colors.backgroundGrey,
+  },
+  buttonStyle: { maxHeight: 44, maxWidth: 80 },
 });
 
 export default styles;

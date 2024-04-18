@@ -11,34 +11,39 @@ import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent
 import RenderSourceOfInfo from "../../../../components/RenderSourceOfInfo/RenderSourceOfInfo";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import UploadImage from "../../../../components/UploadImage";
+import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../../hooks/useIsWebView";
 import useCompanyProfile from "./controllers/useCompanyProfileForm";
 import { DEFAULT_BALANCE_CREDIT } from "../../../../constants/constants";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./CompanyProfileForm.style";
+import { useNavigate } from "../../../../routes";
 
 const CompanyProfileForm = ({ tabHandler }) => {
   const {
     columnCount,
-    countryCodes,
     errorWhileUpload,
+    errorWhileUpdating,
+    setErrorWhileUpdating,
+    isProfileUpdating,
+    isErrorWhileUpdating,
     formDetails,
     getErrorDetails,
     handleBlur,
     handleInputChange,
+    handleSaveAndNext,
     handleContactPersonInfo,
     handleCompanyProfile,
     handleToggle,
-    industryOptions,
     isLoading,
     isEditProfile,
     onDeleteImage,
     options,
     uploadImageToServerUtils,
-  } = useCompanyProfile();
+  } = useCompanyProfile({ tabHandler });
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-
+  const navigate = useNavigate();
   const {
     fileUploadResult,
     handleFileUpload,
@@ -188,10 +193,11 @@ const CompanyProfileForm = ({ tabHandler }) => {
             <ActionPairButton
               buttonOneText={intl.formatMessage({ id: "label.cancel" })}
               buttonTwoText={intl.formatMessage({ id: "label.save" })}
-              onPressButtonOne={() => tabHandler("prev")}
+              onPressButtonOne={() => navigate(-1)}
               onPressButtonTwo={() => {
-                tabHandler("next");
+                handleSaveAndNext();
               }}
+              displayLoader={isProfileUpdating}
               customStyles={{
                 ...isWebProps,
                 customContainerStyle: commonStyles.customContainerStyle,
@@ -206,6 +212,14 @@ const CompanyProfileForm = ({ tabHandler }) => {
           errorHeading={intl.formatMessage({ id: "label.error" })}
           errorMsg={getErrorDetails().errorMessage}
           onRetry={getErrorDetails().onRetry}
+        />
+      )}
+      {isErrorWhileUpdating && !!errorWhileUpdating && (
+        <ToastComponent
+          toastMessage={errorWhileUpdating}
+          onDismiss={() => {
+            setErrorWhileUpdating("");
+          }}
         />
       )}
     </View>

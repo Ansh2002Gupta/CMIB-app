@@ -68,6 +68,11 @@ const commonStyles = {
     maxHeight: keyboardHeight * 2.2,
   }),
   buttonStyle: { maxHeight: 44 },
+  customContainerStyle: {
+    paddingBottom: Platform.OS === "android" ? 0 : 22,
+    maxHeight: Platform.OS === "web" ? 44 : "auto",
+    justifyContent: "flex-end",
+  },
   modalInnerContainer: {
     ...Platform.select({
       ios: {
@@ -87,11 +92,6 @@ const commonStyles = {
     backgroundColor: colors.lightGrey,
     marginTop: 24,
     marginBottom: 24,
-  },
-  customContainerStyle: {
-    paddingBottom: Platform.OS === "android" ? 0 : 22,
-    maxHeight: Platform.OS === "web" ? 44 : "auto",
-    justifyContent: "flex-end",
   },
 };
 

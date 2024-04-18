@@ -25,6 +25,7 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const OTHER_INFO_MAX_LENGTH = 400;
 export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const FILE_MAX_SIZE = 5000000;
@@ -204,6 +205,29 @@ export const STEPPER_STATE = {
   INACTIVE: "inActive",
 };
 
+export const DOCUMENT_TYPE = [
+  { label: "Photocopies", value: "photocopies" },
+  { label: "Original", value: "original" },
+  {
+    label: "Both",
+    value: "both",
+  },
+];
+
+export const ADD_DOCUMENT = {
+  BOTH: "Both",
+  PHOTOCOPIES: "Photocopies",
+  DOCUMENT_NAME: "documentName",
+  DOCUMENT_TYPE: "documentType",
+  COPIESNUMBER: "copiesNumber",
+  ORIGINAL: "Original",
+};
+
+export const PLACE_OF_POSTING = {
+  TOTAL: "total",
+  POSTING_PLACE: "postingPlace",
+};
+
 export const SIGN_UP_STEPPER_OPTION = [
   {
     title: "label.welcome_to_sign_up",
@@ -218,6 +242,18 @@ export const SIGN_UP_STEPPER_OPTION = [
     title: "label.other_details",
   },
 ];
+
+export const document_keys = {
+  DOCUMENT_NAME: "document_name",
+  DOCUMENT_TYPE: "document_type",
+  NUMBER_OF_COPIES: "no_of_copies",
+};
+
+export const document_keys_with_label = {
+  "label.document_name": "documentName",
+  "label.document_type": "documentType",
+  "label.no_of_copies": "copiesNumber",
+};
 
 export const ZOOM_CONSTANT = {
   MAX_ZOOM: 3,
