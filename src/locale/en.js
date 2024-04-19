@@ -781,7 +781,7 @@ const locale = {
   "label.memberCompletionProfilePercentWeb":
     "Complete your job profile! its at ",
   "label.complete": "Complete",
-  "label.years": "Years",
+  "label.year": "Years",
   "label.experience": "Experience",
   "label.removed_from_saved_candidates": "Remove from saved candidates",
   "label.add_to_saved_candidates": "Add to saved candidates",
@@ -869,6 +869,23 @@ const locale = {
   "label.downloadPerformaInvoice": "Download Performa Invoice",
   "label.paymentHistory": "Payment History",
   "label.billing_info": "Billing Info",
+  "label.topCompaniesHighestJobsOffered":
+    "Top 10 Companies with Highest Number of Jobs Offered",
+  "label.topCompaniesHighestCTCs": "Top 10 Companies with Highest CTCs",
+  "label.selectedFunctionalAreas": "Selected Functional Areas",
+  "label.urgentJobs": "Urgent Jobs",
+  "label.selectOption": "Select option",
+  "label.interviewsScheduled": "Interviews Scheduled",
+  "label.jobTypes": "Job Types",
+  "label.numberJobsOffered": "Number of Jobs Offered",
+  "label.highestCTCinINR": "Highest CTC (in INR)",
+  "label.viewAllUrgentJobs": "View All Urgent Jobs",
+  "label.nofGivenInterviews": "Interviews Given",
+  "label.nofPendingInterviews": "Interviews Pending",
+  "label.nofJobOffered": "Jobs Offered",
+  "label.nofOfferAccepted": "Offers Accepted",
+  "label.nofOfferRejected": "Offers Rejected",
+  "label.job_details": "Job Details",
 };
 
 export default locale;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Keyboard,
@@ -21,20 +21,28 @@ import { useIntl } from "react-intl";
 import PackageDetailModal from "../PackageDetailModal";
 import CCAvenueModal from "../CCAvenuePaymentModal";
 import useFetch from "../../hooks/useFetch";
-import { COMPANY_SUBSCRIPTION_LISTING, GET_PAYMENTS_STATUS } from "../../services/apiServices/apiEndPoint";
+import {
+  COMPANY_SUBSCRIPTION_LISTING,
+  GET_PAYMENTS_STATUS,
+} from "../../services/apiServices/apiEndPoint";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 
 const getPaymentStatus = (status) => {
-   if (status === 'Success') {
-     return "Payment Successfull"
-   } else if (status === 'Pending') {
-    return "Payment Pending"
-   } else {
-    return "Payment Failed"
-   }
-}
+  if (status === "Success") {
+    return "Payment Successfull";
+  } else if (status === "Pending") {
+    return "Payment Pending";
+  } else {
+    return "Payment Failed";
+  }
+};
 
-const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
+const CaJobsPackagesListing = ({
+  subscriptionListingData,
+  isSubscribe,
+  isExpired,
+}) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
@@ -44,7 +52,7 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
   const [modalData, setModalData] = useState({ amount: 0, subscriptionId: "" });
   const [modalStyle, setModalStyle] = useState({});
   const [ccAvenueUrl, setCcAvenueUrl] = useState("");
-  const [orderNumber, setOrderNumber] = useState("");
+  const [orderNumber, setOrderNumber] = useState(0);
   const [paymentStatus, setPaymentStatus] = useState("");
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
 
@@ -54,7 +62,7 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
     isError: isErrorPaymentStatusDataListing,
     isSuccess: isGetPaymentSuccess,
     error: errorPaymentStatusDataListing,
-    fetchData: fetchPaymentStatus
+    fetchData: fetchPaymentStatus,
   } = useFetch({
     url: GET_PAYMENTS_STATUS + `/${orderNumber}`,
     otherOptions: {
@@ -62,18 +70,20 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
     },
   });
 
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isGetPaymentSuccess) {
       let status = getPaymentStatus(paymentStatusData?.txn_status);
       setPaymentStatus(status);
     }
-  }, [isGetPaymentSuccess, paymentStatusData])
+  }, [isGetPaymentSuccess, paymentStatusData]);
 
-
-  useEffect(()=> {
-    fetchPaymentStatus({})
-  }, [orderNumber])
+  useEffect(() => {
+    if (!!orderNumber) {
+      fetchPaymentStatus({});
+    }
+  }, [orderNumber]);
 
   const keyboardDidHideCallback = () => {
     if (isIosPlatform) {
@@ -124,9 +134,9 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
       ...modalData,
       amount: price,
       subscriptionId: subscribeId,
-    })
+    });
     setShowPaymentInitiateModal(true);
-  }
+  };
 
   const renderViewPackageDetailModal = () => {
     return (
@@ -138,7 +148,7 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
           ...styles.modalInnerContainer,
           ...modalStyle,
         }}
-        headerTextStyle={styles.addApplicationFormText}
+        headerTextStyle={styles.addApplicationModalFormText}
         onBackdropPress={() => {
           setViewPackageDetailModal(false);
         }}
@@ -156,7 +166,9 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
     <View
       style={{
         ...(!isWebPlatform ? styles.mobContainer : {}),
-        ...(isWebView ? styles.webContainerStyle : styles.containerStyle),
+        ...(isWebView
+          ? styles.webContainerStyle(currentBreakpoint)
+          : styles.containerStyle),
       }}
     >
       {subscriptionListingData?.map((container, index) => (
@@ -214,7 +226,7 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
               style={styles.subscribeButtonContainer}
               leftSection={
                 <CommonText customTextStyle={styles.priceText}>
-                  {container?.price}
+                  ₹{container?.price}
                 </CommonText>
               }
               rightSection={
@@ -246,6 +258,33 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
                         {intl.formatMessage({ id: "label.subscribe" })}
                       </CommonText>
                     </CustomTouchableOpacity>
+                  ) : isExpired ? (
+                    <CustomTouchableOpacity
+                      style={
+                        isWebView
+                          ? styles.subscribePackagesButton
+                          : styles.subscribePackagesButtonMob
+                      }
+                      onPress={() => {
+                        setShowPaymentInitiateModal(true);
+                        setModalData({
+                          ...modalData,
+                          amount: container?.price,
+                          subscriptionId: container.id,
+                        });
+                      }}
+                    >
+                      <CommonText
+                        customTextStyle={
+                          isWebView
+                            ? styles.viewPackageText
+                            : styles.viewPackageTextMob
+                        }
+                        fontWeight={"600"}
+                      >
+                        {intl.formatMessage({ id: "label.pay" })}
+                      </CommonText>
+                    </CustomTouchableOpacity>
                   ) : null}
                 </>
               }
@@ -254,15 +293,24 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
         </View>
       ))}
 
-      {ccAvenueUrl?.length > 0 && !isWebView && <CCAvenueModal ccAvenueUrl={ccAvenueUrl} setCcAvenueUrl={setCcAvenueUrl} modalStyle={modalStyle} setOrderNumber={setOrderNumber} />}
+      {ccAvenueUrl?.length > 0 && !isWebView && (
+        <CCAvenueModal
+          ccAvenueUrl={ccAvenueUrl}
+          setCcAvenueUrl={setCcAvenueUrl}
+          modalStyle={modalStyle}
+          setOrderNumber={setOrderNumber}
+        />
+      )}
       {showPaymentInitiateModal && renderPaymentInitiateModal()}
       {viewPackageDetailModal && renderViewPackageDetailModal()}
       {!!paymentStatus && (
-          <ToastComponent
-            toastMessage={paymentStatus}
-            onDismiss={()=> {setPaymentStatus('')}}
-          />
-        )}
+        <ToastComponent
+          toastMessage={paymentStatus}
+          onDismiss={() => {
+            setPaymentStatus("");
+          }}
+        />
+      )}
     </View>
   );
 };

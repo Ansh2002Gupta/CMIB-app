@@ -146,6 +146,7 @@ const PersonalDetails = ({
         callBack({
           candidate_name: data?.name?.[0]?.name,
           candidate_id: data?.member_id,
+          is_save: data?.is_save,
         });
     }
   }, [data]);

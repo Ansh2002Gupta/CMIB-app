@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
-import TouchableImage from "../../../components/TouchableImage";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import TouchableImage from "../../../components/TouchableImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
@@ -26,6 +26,7 @@ import {
 import usePagination from "../../../hooks/usePagination";
 import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import images from "../../../images";
+import { urlService } from "../../../services/urlService";
 import { navigations } from "../../../constants/routeNames";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import commonStyles from "../../../theme/styles/commonStyles";
@@ -40,7 +41,6 @@ const initialFilterState = {
 
 const useTicketListing = () => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -53,11 +53,11 @@ const useTicketListing = () => {
   });
   const [filterState, setFilterState] = useState(initialFilterState);
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const navigate = useNavigate();

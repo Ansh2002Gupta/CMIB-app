@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
@@ -34,6 +34,7 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePatch } from "../../../hooks/useApiRequest";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import { urlService } from "../../../services/urlService";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -44,18 +45,17 @@ const initialFilterState = {
 const useJobApplicants = () => {
   const [sideBarState] = useContext(SideBarContext);
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
   const [filterOptions, setFilterOptions] = useState({
     status: "",
