@@ -10,8 +10,11 @@ import styles from "./PieChart.style";
 import colors from "../../assets/colors";
 
 const PieChart = ({
+  baseRadius = 80,
   colorScale,
+  customHeaderText,
   data,
+  differentRadius,
   height,
   label,
   labelColor,
@@ -35,7 +38,10 @@ const PieChart = ({
         <TwoColumn
           isLeftFillSpace
           leftSection={
-            <CommonText customTextStyle={styles.headerText} fontWeight="600">
+            <CommonText
+              customTextStyle={{ ...styles.headerText, ...customHeaderText }}
+              fontWeight="600"
+            >
               {label}
             </CommonText>
           }
@@ -59,12 +65,16 @@ const PieChart = ({
           innerRadius={1}
           colorScale={colorScale}
           labelRadius={({ innerRadius }) => innerRadius + labelRadius}
+          radius={({ datum }) => {
+            return !!differentRadius ? baseRadius + datum.y * 0.7 : baseRadius;
+          }}
           labels={renderLabel}
           style={{
             data: {
               stroke: colors.white,
               strokeWidth: 0.25,
             },
+
             labels: {
               fill: labelColor,
               fontSize: labelFontSize,
