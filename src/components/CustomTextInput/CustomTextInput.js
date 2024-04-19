@@ -495,7 +495,7 @@ const CustomTextInput = (props) => {
     >
       {!!label && showLabel && (
         <View style={style.innerLabelContainer}>
-          <CustomLabelView label={label} isMandatory={isMandatory} />
+          <CustomLabelView label={label} isMandatory={isMandatory} customLabelStyle={customLabelStyle} />
           {!!label2 && (
             <CommonText customContainerStyle={style.marginRight10}>
               {label2}
@@ -503,7 +503,7 @@ const CustomTextInput = (props) => {
           )}
         </View>
       )}
-      {isViewMode ? <span>{viewText}</span> : <>
+      {isViewMode ? <CommonText>{viewText}</CommonText> : <>
       {renderTextInput()}
         {(isError || isMultiline) && (
           <View

@@ -672,6 +672,25 @@ const locale = {
   "label.field_cannot_be_empty": "Field cannot be empty",
   "label.proficiency": "Proficiency",
   "label.nonEmptyField": "Please fill this field",
+  "label.gmcsDetails": "GMCS Details",
+  "label.doYouHaveGmcsNumber": "Do you have a GMCS number?",
+  "label.gmcsCertifiedNumber": "GMCS Certified Number",
+  "label.dateOfCompletion": "Date of Completion",
+  "label.doYouHaveMembership": "Do you have Membership Number?",
+  "label.membershipEnrollment": "Membership Enrollment Number",
+  "label.membershipDetails": "Membership Details",
+  "label.caCourseTraining": "Training Details for CA Course",
+  "label.articlesTraining": "Articles Training",
+  "label.nameOfFirm": "Name of the Firm",
+  "label.trainingFrom": "Training From",
+  "label.trainingTo": "Training To",
+  "label.noOfPartnersCaFirm": "No. of Partners in CA Firm",
+  "label.natureOfWorkdone": "Nature of Work Done During Articleship",
+  "label.provideCompanyName": "Provide the Company Name for the Completed Assignment",
+  "label.provideIndustryName": "Provide the Industry Name for the Completed Assignment",
+  "label.otherAreas": "Other Areas, If Any",
+  "label.secondmentExchange": "Secondment, Exchange, If Any",
+  "label.addIndustrialTraining": "Add Industrial Training"
 };
 
 export default locale;

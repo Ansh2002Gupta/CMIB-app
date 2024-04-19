@@ -6,6 +6,7 @@ import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import Exams from "./Exams";
 import styles from "./EducationalDetails.style";
 import EdDetails from "./EdDetails";
+import OtherCourses from "./OtherCourses";
 
 const   EducationalDetailsTemplate = ({
   educationalTabList,
@@ -26,6 +27,12 @@ const   EducationalDetailsTemplate = ({
         return (
           <ScrollView>
             <Exams intl={intl} isWebView={isWebView} />
+          </ScrollView>
+        );
+      case 3:
+        return (
+          <ScrollView>
+            <OtherCourses intl={intl} isWebView={isWebView} />
           </ScrollView>
         );
       default:
