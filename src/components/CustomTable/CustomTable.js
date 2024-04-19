@@ -54,6 +54,7 @@ const CustomTable = ({
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
+  isShowPagination,
   isTicketListingLoading,
   isGeetingJobbSeekers,
   isFirstPageReceived,
@@ -130,7 +131,12 @@ const CustomTable = ({
   };
 
   return (
-    <View style={{...(isWebView ? styles.container : styles.mobileMainContainer), ...customTableStyle}}>
+    <View
+      style={{
+        ...(isWebView ? styles.container : styles.mobileMainContainer),
+        ...customTableStyle,
+      }}
+    >
       <TwoRow
         topSection={
           <>
@@ -358,7 +364,7 @@ const CustomTable = ({
                         return null;
                       }}
                     />
-                    {isWebView && (
+                    {isWebView && isShowPagination && (
                       <PaginationFooter
                         {...{
                           currentPage,
@@ -379,7 +385,8 @@ const CustomTable = ({
             isBottomFillSpace={false}
             bottomSection={
               isWeb &&
-              !isWebView && (
+              !isWebView &&
+              isShowPagination && (
                 <PaginationFooter
                   {...{
                     currentPage,
@@ -432,9 +439,10 @@ CustomTable.defaultProps = {
   subHeadingText: "",
   selectedFilterOptions: [],
   totalcards: 0,
+  isShowPagination: true,
   onIconPress: () => {},
   placeholder: "Search",
-  getStatusStyle: ()=>{},
+  getStatusStyle: () => {},
   isTotalCardVisible: true,
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,
@@ -449,6 +457,7 @@ CustomTable.propTypes = {
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func,
+  isShowPagination: PropTypes.bool,
   filterApplyHandler: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,

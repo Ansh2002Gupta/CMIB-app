@@ -684,6 +684,32 @@ export const doesPathIncludeAnyKey = (pathName) => {
   return pathName.includes(key);
 };
 
+export const formateErrors = (errorResponse) => {
+  if (typeof errorResponse === "string") {
+    return errorResponse;
+  }
+  if (
+    errorResponse &&
+    typeof errorResponse === "object" &&
+    errorResponse.errors
+  ) {
+    const errorPoints = Object.entries(errorResponse.errors).map(
+      ([fieldName, messages]) => {
+        const readableFieldName = fieldName.replace(/\./g, " ");
+
+        return `- ${readableFieldName}: ${messages.join(" ")}`;
+      }
+    );
+    return errorPoints.join("\n");
+  }
+
+  return "An unexpected error occurred.";
+};
+
+export const convertStringtoNumber = (val) => {
+  return +val;
+};
+
 export const convertGraphData = (data) => {
   const formattedData = data.map((item) => {
     return {

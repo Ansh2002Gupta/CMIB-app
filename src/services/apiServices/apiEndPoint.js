@@ -7,6 +7,7 @@ export const CORE = "core";
 export const ADMIN = "admin";
 
 /* API Endpoints */
+export const CANDIDATES = "/candidates";
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password/confirm`;
 export const COMPANY_LOGIN = `${USER_TYPE_COMPANY}/login`;
 export const COMPANY_CHANGE_PASSWORD_OTP = `${USER_TYPE_COMPANY}/user/password`;
@@ -31,7 +32,7 @@ export const COMPANY_TICKET_STATUS = `${CORE}/status`;
 export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`;
 export const GET_PAYMENTS_STATUS = `${CORE}/payments`;
 export const COMPANY_INACTIVE_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/inactive-subscription`;
-export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`
+export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`;
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
@@ -40,7 +41,11 @@ export const DETAIL = `/detail`;
 //sub routes
 export const ACADEMICS = "/academics";
 export const ACTIVITIES = "/activities";
+export const APPLICANT = "/applicant";
+export const APPLICATION = "/application";
 export const FILTERS = "/filters";
+export const INTERVIEWS = "/interviews";
+export const INTERVIEW = "/interview";
 export const JOB_APPLICANTS = "/applicants";
 export const JOB_APPLICANT = "/applicant";
 export const JOBS = "jobs";
@@ -50,16 +55,15 @@ export const MEMBERS = "/members";
 export const MEMBERSHIP = "/membership";
 export const MARK_PREFER = "/mark-prefer";
 export const PERSONAL = "/personal";
+export const PROFILE = "/profile";
+export const ROUNDS = "/rounds";
 export const STATUS = "/status";
-export const APPLICANT = "/applicant";
+export const JOB_DETAILS = "/job-detail";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
-export const INTERVIEWS = "/interviews";
-export const INTERVIEW = "/interview";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
-export const ROUND_ONE_DASHBOARD = `/dashboard`;
-export const ROUNDS = `/rounds`;
+export const ROUND_ONE_DASHBOARD = `/board`;
 export const GLOBAL_SESSIONS = `/sessions`;
 export const APPLICANTS = "/applicants";
 
@@ -82,7 +86,6 @@ export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
 export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 
 export const PREFERRED = "/preferred";
-export const CANDIDATES = "/candidates";
 export const MARKED_PREFER = "/marked-prefer";
 export const UNMARKED_PREFER = "/unmark-prefer";
 
@@ -131,3 +134,6 @@ export const CHANGE_STATUS = "/change-status";
 export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${APPLICANTS}${INTERVIEW}`;
 export const ACCEPTED = "/accepted";
 export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;
+
+//api endpoint: Round-1>NQCA Placements>Pre-Interview Placements
+export const PRE_INTERVIEW = `/pre-interview`;

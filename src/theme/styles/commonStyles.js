@@ -73,6 +73,10 @@ const commonStyles = {
     maxHeight: Platform.OS === "web" ? 44 : "auto",
     justifyContent: "flex-end",
   },
+  tableHeadingText: {
+    fontWeight: "600",
+    color: colors.darkGrey,
+  },
   modalInnerContainer: {
     ...Platform.select({
       ios: {

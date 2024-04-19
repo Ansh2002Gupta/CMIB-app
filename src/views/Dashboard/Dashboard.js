@@ -19,6 +19,8 @@ import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import { moduleKeys } from "../../constants/sideBarHelpers";
 import styles from "./dashboard.style";
+import JobDetails from "../../containers/RoundOne/ApplicationFormContainer/JobDetails";
+import CompanyProfileForm from "../../containers/RoundOne/ApplicationFormContainer/CompanyProfileForm/CompanyProfileForm";
 
 // Just ignore this file as just to test custom component
 function DashboardView() {
