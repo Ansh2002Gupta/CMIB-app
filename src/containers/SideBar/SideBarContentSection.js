@@ -28,11 +28,19 @@ import { COMPANY } from "../../constants/constants";
 import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
 import styles from "./SideBar.style";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const [userProfileDetails] = useContext(UserProfileContext);
-  const { getGlobalSessionList } = useGlobalSessionListApi();
+  const {
+    getGlobalSessionList,
+    error,
+    isError,
+    setErrorGettingGlobalSession,
+    setErrorGettingSession,
+  } = useGlobalSessionListApi();
   const { selectedModule, selectedSession } = sideBarState;
   const { navigateScreen } = useNavigateScreen();
   const navigate = useNavigate();
@@ -236,6 +244,15 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           />
         </CustomTouchableOpacity>
       </View>
+      {isError && (
+        <ToastComponent
+          toastMessage={error?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE}
+          onDismiss={() => {
+            setErrorGettingGlobalSession(null);
+            setErrorGettingSession(null);
+          }}
+        />
+      )}
     </View>
   );
 };

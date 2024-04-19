@@ -23,9 +23,6 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
-  console.log(doesPathIncludeAnyKey(location?.pathname), "PathName")
-
-
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -46,7 +43,6 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
   const { isWebView } = useIsWebView();
   const windowDimensions = useWindowDimensions();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-
 
   const modalSideBar = isSideBarVisible && !(windowDimensions.width >= 900);
   const isMdOrGreater = useMemo(
@@ -83,7 +79,8 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
       )}
       <MainLayout
         header={
-          (doesExcludeHeader || doesPathIncludeAnyKey(location?.pathname)) &&  !isWebView ? null : (
+          (doesExcludeHeader || doesPathIncludeAnyKey(location?.pathname)) &&
+          !isWebView ? null : (
             <Header
               onPressLeftIcon={toggleSideBar}
               leftIcon={images.iconMenu}
@@ -93,8 +90,13 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
         }
         bottomSection={
           // TODO : check user type and route as application form
-          isAuthenticated && !location.pathname.includes(navigations.APPLICATION_FORM) &&
-          (!isWebView && !doesExcludeHeader && !doesPathIncludeAnyKey(location?.pathname) ? <BottomBar /> : null)
+          isAuthenticated &&
+          !location.pathname.includes(navigations.APPLICATION_FORM) &&
+          (!isWebView &&
+          !doesExcludeHeader &&
+          !doesPathIncludeAnyKey(location?.pathname) ? (
+            <BottomBar />
+          ) : null)
         }
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}

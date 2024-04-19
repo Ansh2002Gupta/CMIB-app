@@ -284,7 +284,7 @@ const locale = {
   "label.enter": "Enter",
   "label.no_result_found": "No Result Found",
   "label.no_module_available": "No module available",
-  "label.select_session": "Select Session",
+  "label.select_session": "No Active Session",
   "label.logout_successfully": "Logged out successfully.",
   "label.country_code": "Country Code",
   "label.email_address": "Email Address: ",
