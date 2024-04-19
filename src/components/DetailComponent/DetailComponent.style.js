@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
       gridTemplateColumns: getColumnCount(detail),
     };
   },
-  getFieldWidth: (width, isMobileView) => {
+  getFieldWidth: (width, isMobileView, customWidthValue) => {
     if (isMobileView) {
       return { width: "100%" };
     }
@@ -155,6 +155,11 @@ const styles = StyleSheet.create({
       case 4: {
         return {
           width: 200,
+        };
+      }
+      case 5: {
+        return {
+          width: customWidthValue,
         };
       }
       default: {

@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   customWebContainerStyle: {
     display: "grid",
-    gridTemplateColumns: "10fr 1fr 0.5fr ",
+    gridTemplateColumns: "10fr 4fr 1fr ",
     overflowY: "auto",
   },
 });

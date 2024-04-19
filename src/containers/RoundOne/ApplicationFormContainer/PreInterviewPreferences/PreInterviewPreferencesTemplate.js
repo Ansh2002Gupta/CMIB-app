@@ -168,6 +168,8 @@ const PreInterviewPreferencesTemplate = ({
                     label: "label.designation",
                     placeholder: "label.enter_designation",
                     value: contact.designation,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -176,6 +178,8 @@ const PreInterviewPreferencesTemplate = ({
                     label: "label.name",
                     placeholder: "label.enter_name",
                     value: contact.name,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -184,6 +188,8 @@ const PreInterviewPreferencesTemplate = ({
                     label: "label.email",
                     placeholder: "label.enter_email",
                     value: contact.email,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -196,6 +202,8 @@ const PreInterviewPreferencesTemplate = ({
                     labelField: "label",
                     valueField: "value",
                     options: options_object,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -205,6 +213,8 @@ const PreInterviewPreferencesTemplate = ({
                     placeholder: "label.mobile_number",
                     value: contact.mobile_number,
                     isNumeric: true,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -214,6 +224,8 @@ const PreInterviewPreferencesTemplate = ({
                     placeholder: "label.select_area_code",
                     value: contact.std_country_code,
                     isNumeric: true,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -223,6 +235,8 @@ const PreInterviewPreferencesTemplate = ({
                     placeholder: "label.enter_telephone_number",
                     value: contact.telephone_number,
                     isNumeric: true,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
