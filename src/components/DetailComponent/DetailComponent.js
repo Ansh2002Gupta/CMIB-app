@@ -51,6 +51,7 @@ const DetailComponent = ({
   handleAddRemoveRow,
   handleCheckBoxSelection,
   datePickerContainer,
+  customErrorViewStyle
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -204,7 +205,7 @@ const DetailComponent = ({
   const renderEditableContent = (detail, index) => {
     if (detail?.isEmptyField) return <></>;
 
-    if (detail.isMobileNumber) {
+    if (detail?.isMobileNumber) {
       return (
         <MobileNumberInput
           mobNumberValue={detail.value}
@@ -215,6 +216,7 @@ const DetailComponent = ({
           onChangeCode={(val) => handleChange(detail.label, val, true)}
           onChangeMobNumber={(val) => handleChange(detail.label, val)}
           mobNumberError={detail.error}
+          isMandatory={detail?.isMandatory}
         />
       );
     }
@@ -314,6 +316,7 @@ const DetailComponent = ({
           isSingleMutliSelect={detail.isSingleMutliSelect}
           showMonthYearPicker={detail?.showMonthYearPicker}
           checkBoxTextStyle={detail?.checkBoxTextStyle}
+          customErrorViewStyle={customErrorViewStyle}
         />
         {!!footerText && (
           <CommonText customTextStyle={styles.footerText} fontWeight="500">
@@ -365,7 +368,7 @@ const DetailComponent = ({
           ))}
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
         {details?.map((detail, idx) => {
-          if (isEditable && detail.viewOnlyField) {
+          if (isEditable && detail?.viewOnlyField) {
             return null;
           }
           if (isColumnVariableWidth) {
@@ -426,7 +429,7 @@ const DetailComponent = ({
               style={isWebView ? styles.webContainer : getRowStyle(detail)}
             >
               {isEditable ? (
-                renderEditableContent(detail)
+                renderEditableContent(detail, idx)
               ) : (
                 <>
                   <View style={styles.titleContainer}>

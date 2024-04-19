@@ -25,18 +25,27 @@ const ConfigurableList = ({
   title,
   idField = "id",
   nameField = "name",
+  outerContainer = {},
+  componentContainer = {},
+  handlePressCustom,
+  optionFormatter,
 }) => {
   const intl = useIntl();
   const allOptions = useRef([]);
-  const items = options?.map((option) => ({
+
+  const defaultOptionFormatter = (option) => ({
     id: String(option[idField]),
     name: String(option[nameField]),
-  }));
+  });
+
+  const items = options?.map(
+    optionFormatter ? optionFormatter : defaultOptionFormatter
+  );
 
   useEffect(() => {
     allOptions.current = items;
     setMenuOptions(items);
-  }, []);
+  }, [options]);
 
   const handleSearch = (query, keyName) => {
     const queryList = fetchData(query, keyName);
@@ -61,7 +70,7 @@ const ConfigurableList = ({
 
   return (
     <View style={{ ...styles.outerContainer, ...customOuterContianer }}>
-      <View style={styles.componentContainer}>
+      <View style={{ ...styles.componentContainer, ...componentContainer }}>
         <View style={styles.header}>
           <CommonText customTextStyle={styles.titleStyles}>{title}</CommonText>
           <TouchableImage
@@ -91,7 +100,13 @@ const ConfigurableList = ({
                       ? `${classes["configurableList__item--green"]}`
                       : ``
                   }
-                  onPress={() => onPress(item.id)}
+                  onPress={() => {
+                    if (handlePressCustom) {
+                      handlePressCustom(item);
+                    } else {
+                      onPress(item.id);
+                    }
+                  }}
                   style={[
                     styles.itemContainer,
                     selectedOptions.includes(item.id)

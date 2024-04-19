@@ -7,5 +7,13 @@ const styles = StyleSheet.create({
     overflowX: "auto",
     width: "100%",
   },
+  detailErrorViewStyle: {
+    position: "absolute",
+    bottom: 6,
+  },
+  customContainerStyle: {
+    flexDirection: "row",
+    flexWrap: "unwrap",
+  },
 });
 export default styles;

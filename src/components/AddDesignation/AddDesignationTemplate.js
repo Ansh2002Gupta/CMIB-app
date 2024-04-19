@@ -3,22 +3,23 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import AddIconText from "../../components/AddIconText";
-import CardComponent from "../CardComponent/CardComponent";
+import AddIconText from "../AddIconText";
 import CustomMultiRowTextInput from "../CustomMultiRowTextinput";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
-import EditDeleteAction from "../../components/EditDeleteAction/EditDeleteAction";
+import EditDeleteAction from "../EditDeleteAction/EditDeleteAction";
 import useIsWebView from "../../hooks/useIsWebView";
 import ModalWithTitleButton from "../ModalWithTitleButton";
 import { ADD_DOCUMENT, DOCUMENT_TYPE } from "../../constants/constants";
 import { numericValidator } from "../../utils/validation";
-import styles from "./AddDocument.style";
+import styles from "./AddDesignation.style";
 
-const AddDocumentTemplate = ({
-  addDocumentField,
+const AddDesignationTemplate = ({
   addDocumentModal,
   documentDetail,
+  multiDocumentDetail,
+  setMultiDocumentDetail,
+  addDocumentField,
   editDocumentModal,
   handleDocumentDetailChange,
   handleMultiRowDocumentDetails,
@@ -29,90 +30,81 @@ const AddDocumentTemplate = ({
   onClickDeleteDocument,
   onCLickEditDocument,
   requiredDocumentDetails,
-  setRenderJobDetails,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
 
-  const setObjectGridTemplate = (updatedDocs) => {
-    setRenderJobDetails((prev) => ({
-      ...prev,
-      required_docs: [...updatedDocs],
-    }));
-  };
-
   return (
     <View>
-      <CardComponent customStyle={styles.notBorderStyle}>
-        <CommonText
-          fontWeight="600"
-          customTextStyle={styles.detailDocumentRequiredText}
-        >
-          {intl.formatMessage({
-            id: "label.details_of_required_document",
+      <CommonText
+        fontWeight="600"
+        customTextStyle={styles.detailDocumentRequiredText}
+      >
+        {`${intl.formatMessage({
+          id: "label.designation",
+        })}s`}
+      </CommonText>
+      {isWebView ? (
+        <CustomMultiRowTextInput
+          customCardStyle={styles.multiRowTextStyle}
+          startRowTemplate={addDocumentField}
+          gridTemplate={multiDocumentDetail}
+          setGridTemplate={setMultiDocumentDetail}
+          numColsInARow={3}
+          handleValueChange={({ propertyName, value, index }) => {
+            handleMultiRowDocumentDetails(propertyName, value, index);
+          }}
+          customContainerStyle={styles.customContainerStyle}
+          customWebContainerStyle={styles.customWebContainerStyle}
+        />
+      ) : (
+        <>
+          {requiredDocumentDetails.map((item, index) => {
+            const isOriginal = item?.documentType === ADD_DOCUMENT.ORIGINAL;
+            const isBoth = item?.documentType === ADD_DOCUMENT.BOTH;
+            const copiesNumber = item?.copiesNumber || "0";
+            return (
+              <View>
+                <View
+                  style={
+                    index !== 0
+                      ? { ...styles.documentBorderStyle }
+                      : { ...styles.notBorderStyle }
+                  }
+                ></View>
+                <EditDeleteAction
+                  topText={item?.documentName}
+                  bottomLeftText={
+                    isOriginal || isBoth
+                      ? intl.formatMessage({
+                          id: "label.original",
+                        })
+                      : intl.formatMessage({
+                          id: "label.not_original",
+                        })
+                  }
+                  bottomRightText={`${copiesNumber} ${intl.formatMessage({
+                    id: "label.photocopies",
+                  })} `}
+                  onDeleteDocument={() => {
+                    onClickDeleteDocument(index);
+                  }}
+                  onEditDocument={() => {
+                    onCLickEditDocument(index);
+                  }}
+                />
+              </View>
+            );
           })}
-        </CommonText>
-        {isWebView ? (
-          <CustomMultiRowTextInput
-            customCardStyle={styles.multiRowTextStyle}
-            customWebContainerStyle={styles.customWebContainerStyle}
-            startRowTemplate={addDocumentField}
-            gridTemplate={requiredDocumentDetails}
-            setObjectGridTemplate={setObjectGridTemplate}
-            numColsInARow={4}
-            handleValueChange={(type, inputValue, cellId) => {
-              handleMultiRowDocumentDetails(type, inputValue, cellId);
-            }}
-          />
-        ) : (
-          <>
-            {requiredDocumentDetails.map((item, index) => {
-              const isOriginal = item?.documentType === ADD_DOCUMENT.ORIGINAL;
-              const isBoth = item?.documentType === ADD_DOCUMENT.BOTH;
-              const copiesNumber = item?.copiesNumber || "0";
-              return (
-                <View>
-                  <View
-                    style={
-                      index !== 0
-                        ? { ...styles.documentBorderStyle }
-                        : { ...styles.notBorderStyle }
-                    }
-                  ></View>
-                  <EditDeleteAction
-                    topText={item?.documentName}
-                    bottomLeftText={
-                      isOriginal || isBoth
-                        ? intl.formatMessage({
-                            id: "label.original",
-                          })
-                        : intl.formatMessage({
-                            id: "label.not_original",
-                          })
-                    }
-                    bottomRightText={`${copiesNumber} ${intl.formatMessage({
-                      id: "label.photocopies",
-                    })} `}
-                    onDeleteDocument={() => {
-                      onClickDeleteDocument(index);
-                    }}
-                    onEditDocument={() => {
-                      onCLickEditDocument(index);
-                    }}
-                  />
-                </View>
-              );
+          <AddIconText
+            customViewStyle={styles.customAddIconTextStyle}
+            label={intl.formatMessage({
+              id: "label.add_document",
             })}
-            <AddIconText
-              customViewStyle={styles.customAddIconTextStyle}
-              label={intl.formatMessage({
-                id: "label.add_document",
-              })}
-              onPress={onClickAddDocument}
-            />
-          </>
-        )}
-      </CardComponent>
+            onPress={onClickAddDocument}
+          />
+        </>
+      )}
       {(addDocumentModal || editDocumentModal) && (
         <ModalWithTitleButton
           enableBottomButton
@@ -203,7 +195,7 @@ const AddDocumentTemplate = ({
   );
 };
 
-AddDocumentTemplate.propTypes = {
+AddDesignationTemplate.propTypes = {
   addDocumentModal: PropTypes.bool.isRequired,
   documentDetail: PropTypes.shape({
     documentName: PropTypes.string,
@@ -226,7 +218,7 @@ AddDocumentTemplate.propTypes = {
   ).isRequired,
 };
 
-AddDocumentTemplate.defaultProps = {
+AddDesignationTemplate.defaultProps = {
   addDocumentModal: false,
   documentDetail: {
     documentName: "",
@@ -243,4 +235,4 @@ AddDocumentTemplate.defaultProps = {
   requiredDocumentDetails: [],
 };
 
-export default AddDocumentTemplate;
+export default AddDesignationTemplate;

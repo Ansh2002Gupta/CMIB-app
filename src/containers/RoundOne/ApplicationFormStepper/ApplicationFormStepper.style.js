@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopWidth: 1,
     borderColor: colors.lightGrey,
+    overflow: "hidden",
   },
   container: {
     backgroundColor: colors.white,

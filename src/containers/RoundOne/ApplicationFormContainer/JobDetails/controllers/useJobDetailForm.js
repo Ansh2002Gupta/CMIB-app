@@ -20,6 +20,7 @@ import {
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
 import { useParams } from "react-router";
 import useFetch from "../../../../../hooks/useFetch";
+import { areAllValuesEmpty } from "../../../../../utils/util";
 
 const addDocumentField = () => [
   {
@@ -72,6 +73,7 @@ const initialState = {
   job_type: "",
   flexi_hours: "",
   work_exp_range_id: "",
+  errors: "",
 };
 
 const useJobDetailForm = ({ tabHandler }) => {
@@ -94,10 +96,12 @@ const useJobDetailForm = ({ tabHandler }) => {
   const [desginationItems, setDesginationItems] = useState([]);
   const [deleteDesginationId, setDeleteDesginationId] = useState(null);
   const [currentDesginationID, setCurrentDesginationID] = useState(null);
+  const [validateError, setValidateError] = useState(initialState);
   const [modalDetails, setModalDetails] = useState({
     isShown: false,
     modalMessage: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   const renderJobDetails = isAddNewJob ? addNewJobDetails : editJobDetails;
   const setRenderJobDetails = isAddNewJob
@@ -140,7 +144,6 @@ const useJobDetailForm = ({ tabHandler }) => {
     },
   });
 
-  const isLoading = isFetchingJobDetailsData || isDisagnationListLoading;
   const error = errorWhileFetchingData || errorInDesginationList;
 
   const { makeRequest, isLoading: isLoadingOnAddJob } = usePost({
@@ -179,11 +182,13 @@ const useJobDetailForm = ({ tabHandler }) => {
         `/${currentDesginationID}`,
     });
 
+  const isButtonLoading =
+    currentDesginationID === null ? isLoadingOnAddJob : isLoadingOnUpdating;
+
   useEffect(() => {
     const fetchListing = async () => {
       if (currentModule) {
         const newList = await fetchDesginationList();
-
         if (!!newList?.length) {
           setDesginationItems([...newList]);
           setSelectedOptions([String(newList[0]?.id)]);
@@ -191,8 +196,10 @@ const useJobDetailForm = ({ tabHandler }) => {
         }
       }
     };
-
     fetchListing();
+    if (!!error) {
+      setIsLoading(false);
+    }
   }, [currentModule]);
 
   useEffect(() => {
@@ -220,10 +227,13 @@ const useJobDetailForm = ({ tabHandler }) => {
       if (currentDesginationID) {
         const newProfileData = await fetchJobDetailsData({});
         setEditJobDetails(mapDataToUI(newProfileData));
+        setIsLoading(false);
       }
     };
-
     fetchProfileData();
+    if (!!error) {
+      setIsLoading(false);
+    }
   }, [currentDesginationID]);
 
   const handleInputChange = (fieldName, value, subFieldName) => {
@@ -244,9 +254,20 @@ const useJobDetailForm = ({ tabHandler }) => {
   };
 
   const handleMonthlyData = (fieldName, value) => {
-    let updatedMonthly = renderJobDetails.monthly.map((detail) =>
-      detail.label === fieldName ? { ...detail, value: value } : detail
-    );
+    let updatedMonthly = renderJobDetails.monthly.map((detail) => {
+      if (!value && detail.label === fieldName) {
+        return {
+          ...detail,
+          value: value,
+          isError: true,
+          error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+        };
+      } else {
+        return detail.label === fieldName
+          ? { ...detail, value: value, isError: null, error: null }
+          : detail;
+      }
+    });
     let updatedYearly = [...renderJobDetails.yearly];
     if (
       [
@@ -304,9 +325,20 @@ const useJobDetailForm = ({ tabHandler }) => {
   };
 
   const handleYearlyData = (fieldName, value) => {
-    let updatedYearly = renderJobDetails.yearly.map((detail) =>
-      detail.label === fieldName ? { ...detail, value: value } : detail
-    );
+    let updatedYearly = renderJobDetails.yearly.map((detail) => {
+      if (!value && detail.label === fieldName) {
+        return {
+          ...detail,
+          value: value,
+          isError: true,
+          error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+        };
+      } else {
+        return detail.label === fieldName
+          ? { ...detail, value: value, isError: null, error: null }
+          : detail;
+      }
+    });
     const monthlyGrossSalary = getMonthlyGrossSalary();
     updatedYearly = updatedYearly.map((detail) =>
       detail.key === "yearly_total_gross_salary"
@@ -391,7 +423,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     }
   };
 
-  const handleBlur = (fieldName, value) => {
+  const handleBlur = (fieldName) => {
     if (fieldName === "designation") {
       setMenuOptions((prevOptions) => {
         return prevOptions.map((option) => {
@@ -402,10 +434,24 @@ const useJobDetailForm = ({ tabHandler }) => {
         });
       });
     }
+    const value = renderJobDetails[fieldName];
+    if (value == null || value == "") {
+      setValidateError((prev) => ({
+        ...prev,
+        [fieldName]: intl.formatMessage({
+          id: "label.error.cannot_be_empty",
+        }),
+      }));
+    } else
+      setValidateError((prev) => ({
+        ...prev,
+        [fieldName]: "",
+      }));
   };
+  const isDisabled = !areAllValuesEmpty(validateError);
 
   const handleSaveAndNext = () => {
-    const mappedPayload = mapDataToPayload(renderJobDetails);
+    const mappedPayload = mapDataToPayload(renderJobDetails, currentModule);
     if (currentDesginationID !== null) {
       handleUpdateDetails({
         body: mappedPayload,
@@ -440,6 +486,9 @@ const useJobDetailForm = ({ tabHandler }) => {
   };
 
   return {
+    isButtonLoading,
+    isDisabled,
+    validateError,
     renderJobDetails,
     setRenderJobDetails,
     handlePress,

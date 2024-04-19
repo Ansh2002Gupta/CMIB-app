@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 16,
-    overflow: "visible",
   },
   postingPlaceTextStyle: {
     fontSize: 14,
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
   },
   customWebContainerStyle: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr",
+    gridTemplateColumns: "1fr 1fr 1fr ",
     overflowY: "auto",
   },
 });
