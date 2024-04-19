@@ -431,7 +431,6 @@ const PreInterviewPreferencesTemplate = ({
             onPressButtonOne={() => navigate(-1)}
             onPressButtonTwo={() => {
               handleSaveAndNext();
-              tabHandler("next");
             }}
             customStyles={{
               ...isWebProps,

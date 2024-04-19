@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     paddingBottom: 24,
-    minWidth: 250,
   },
   tableHeaderText: {
     color: colors.darkGrey,
@@ -151,6 +150,11 @@ const styles = StyleSheet.create({
       case 3: {
         return {
           marginRight: 24,
+        };
+      }
+      case 4: {
+        return {
+          width: 200,
         };
       }
       default: {

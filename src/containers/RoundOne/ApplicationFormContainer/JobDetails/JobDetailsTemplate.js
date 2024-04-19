@@ -151,7 +151,7 @@ const JobDetailsTemplate = ({
             {currentModule === "overseas-chapters" && (
               <>
                 <CustomTextInput
-                  customStyle={styles.ctcTextInputStyle}
+                  customStyle={styles.dropdownInputStyle}
                   label={intl.formatMessage({
                     id: "label.work_experience_range",
                   })}
@@ -178,7 +178,7 @@ const JobDetailsTemplate = ({
                   customLabelStyle={styles.customLabelStyle}
                 />
                 <CustomTextInput
-                  customStyle={styles.ctcTextInputStyle}
+                  customStyle={styles.dropdownInputStyle}
                   label={intl.formatMessage({
                     id: "label.job_type",
                   })}
