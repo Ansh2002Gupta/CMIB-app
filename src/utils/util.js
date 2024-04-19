@@ -710,6 +710,17 @@ export const convertStringtoNumber = (val) => {
   return +val;
 };
 
+export const convertGraphData = (data) => {
+  const formattedData = data.map((item) => {
+    return {
+      x: item.label,
+      y: item.value,
+    };
+  });
+
+  return formattedData;
+};
+
 export const convertMobileGraphData = (data, colors) => {
   const formattedData = data.map((item, index) => {
     return {
@@ -730,15 +741,4 @@ export const convertDonutChartData = (data) => {
     }
   }
   return convertedArray;
-};
-
-export const convertGraphData = (data) => {
-  const formattedData = data.map((item) => {
-    return {
-      x: item.label,
-      y: item.value,
-    };
-  });
-
-  return formattedData;
 };

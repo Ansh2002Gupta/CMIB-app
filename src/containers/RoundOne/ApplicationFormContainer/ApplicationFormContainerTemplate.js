@@ -13,6 +13,7 @@ import useNavigateScreen from "../../../services/hooks/useNavigateScreen";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import CustomScrollView from "../../../components/CustomScrollView";
+import CentralDetailsForm from "./CentralDetailsForms/CentralDetailsForms";
 import PaymentForm from "./PaymentForm";
 import BillingInfo from "./BIllingInfo/BillingInfo";
 
@@ -56,6 +57,9 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
     },
     {
       component: PreInterviewPreferences,
+    },
+    {
+      component: CentralDetailsForm,
     },
     {
       component: BillingInfo,

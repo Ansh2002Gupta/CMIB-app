@@ -929,6 +929,21 @@ export const SAVED_CANDIDATES_TABLE_HEADING = {
   designation_applied_for: ["Designation Applied For"],
 };
 
+export const interviewTypeOptions = [
+  { label: "Virtual Interview", value: "online" },
+  { label: "Face to Face", value: "offline" },
+];
+
+export const benefits_key = {
+  BENEFITS_DETAILS: "benefits_details",
+  BENEFITS_AMOUNT: "benefits_amount",
+};
+
+export const designation_key = {
+  DESIGNATION_DETAILS: "designation_details",
+  NUMBER_OF_VACANCIES: "number_of_vacancies",
+};
+
 export const CHART_DATA_TYPE = {
   JOBS_BY_TYPES: "JOBS_BY_TYPES",
   URGENT_JOBS: "URGENT_JOBS",

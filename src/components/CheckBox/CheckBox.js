@@ -22,6 +22,7 @@ const CheckBox = ({
   iconUnCheck,
   checkBoxTextStyle,
   style,
+  isFillSpace,
 }) => {
   const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
@@ -43,10 +44,11 @@ const CheckBox = ({
 
   const rowCheckBox = [
     {
+      isFillSpace,
       content: (
-        <View style={{...styles.containerStyle,...customTextStyle }}>
+        <View style={{ ...styles.containerStyle, ...customTextStyle }}>
           <TouchableImage
-          hitSlop={hitSlop}
+            hitSlop={hitSlop}
             Icon={getCheckBoxIcon()}
             style={styles.iconStyle}
             source={getCheckBoxIcon()}
