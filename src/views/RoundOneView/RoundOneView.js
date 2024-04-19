@@ -99,7 +99,11 @@ const RoundOneView = () => {
             <LoadingScreen />
           )}
           {!isCardsDataLoading && !isErrorOnCardsData && !!cardsData && (
-            <RoundOneContainer cardsData={cardsData} hasRoundone />
+            <RoundOneContainer
+              cardsData={cardsData}
+              hasRoundone
+              roundId={roundOneId}
+            />
           )}
           {isErrorOnCardsData && (
             <ErrorComponent

@@ -2,23 +2,25 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
-import BarChart from "../../components/BarChart";
-import DonutChart from "../../components/DonutChart/DonutChart";
-import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-import PieChart from "../../components/PieChart/PieChart";
-import LoadingScreen from "../../components/LoadingScreen";
-import useFetch from "../../hooks/useFetch";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import { CHART_DATA_TYPE } from "../../constants/constants";
+import BarChart from "../../../components/BarChart";
+import DonutChart from "../../../components/DonutChart/DonutChart";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
+import PieChart from "../../../components/PieChart/PieChart";
+import LoadingScreen from "../../../components/LoadingScreen";
+import useFetch from "../../../hooks/useFetch";
+import useIsWebView from "../../../hooks/useIsWebView";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { CHART_DATA_TYPE } from "../../../constants/constants";
 import {
   ROUND_ONE_DASHBOARD,
   USER_TYPE_MEMBER,
-} from "../../services/apiServices/apiEndPoint";
-import colors from "../../assets/colors";
-import styles from "./CAJobsMemberDashboard.style";
+} from "../../../services/apiServices/apiEndPoint";
+import colors from "../../../assets/colors";
+import styles from "./OverSeasMemberDashBoard.style";
 
-const CAJobsMemberDashboard = () => {
+const OverSeasMemberDashBoard = () => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
   const {
     data: interviewChartData,
     isLoading: isGettingInterview,
@@ -113,6 +115,92 @@ const CAJobsMemberDashboard = () => {
     getHighestCtc({});
   };
 
+  const hightPlacementCountries = [
+    {
+      label: "Nepal",
+      value: 82,
+    },
+    {
+      label: "Nepal",
+      value: 81,
+    },
+    {
+      label: "Bangladesh",
+      value: 80,
+    },
+    {
+      label: "Africa",
+      value: 70,
+    },
+    {
+      label: "Russia",
+      value: 60,
+    },
+    {
+      label: "China",
+      value: 50,
+    },
+    {
+      label: "India",
+      value: 40,
+    },
+    {
+      label: "Dubai",
+      value: 32,
+    },
+    {
+      label: "USA",
+      value: 31,
+    },
+    {
+      label: "Brazil",
+      value: 30,
+    },
+  ];
+
+  const highestCTcCountries = [
+    {
+      label: "Nepal",
+      value: 80,
+    },
+    {
+      label: "Nepal",
+      value: 74,
+    },
+    {
+      label: "Bangladesh",
+      value: 63,
+    },
+    {
+      label: "Africa",
+      value: 60,
+    },
+    {
+      label: "Russia",
+      value: 55,
+    },
+    {
+      label: "China",
+      value: 50,
+    },
+    {
+      label: "India",
+      value: 44,
+    },
+    {
+      label: "Dubai",
+      value: 30,
+    },
+    {
+      label: "USA",
+      value: 28,
+    },
+    {
+      label: "Brazil",
+      value: 25,
+    },
+  ];
+
   return isLoading ? (
     <LoadingScreen />
   ) : error ? (
@@ -133,7 +221,7 @@ const CAJobsMemberDashboard = () => {
     !error && (
       <ScrollView style={{ gap: 24 }}>
         <View style={styles.pieChartContiner}>
-          <View style={{ flex: 1 }}>
+          <View style={isWebView && { flex: 1 }}>
             <DonutChart
               colorScale={[
                 colors.disabledGrey,
@@ -154,46 +242,7 @@ const CAJobsMemberDashboard = () => {
               labelColor={colors.white}
             />
           </View>
-          <View style={{ flex: 1 }}>
-            <PieChart
-              colorScale={[
-                colors.greenBlue,
-                colors.green,
-                colors.babyPink,
-                colors.purple,
-              ]}
-              data={jobTypeChartData}
-              width={250}
-              height={248}
-              label={intl.formatMessage({
-                id: "label.jobTypes",
-              })}
-              labelFontSize={8}
-              labelRadius={100}
-              labelColor={colors.darkGrey}
-            />
-          </View>
-        </View>
-        <View style={styles.pieChartContiner}>
-          <View style={{ flex: 1 }}>
-            <PieChart
-              colorScale={[colors.errorRed, colors.grassGreen]}
-              data={urgentChartData}
-              width={250}
-              height={248}
-              label={intl.formatMessage({
-                id: "label.urgentJobs",
-              })}
-              labelFontSize={8}
-              labelRadius={100}
-              labelColor={colors.darkGrey}
-              // popupMessage={intl.formatMessage({
-              //   id: "label.viewAllUrgentJobs",
-              // })}
-              onPopupClick={() => {}}
-            />
-          </View>
-          <View style={{ flex: 1 }}>
+          <View style={isWebView && { flex: 1 }}>
             <PieChart
               colorScale={[
                 colors.mustardYellow,
@@ -242,9 +291,70 @@ const CAJobsMemberDashboard = () => {
           toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
           yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
         />
+        <View style={styles.pieChartContiner}>
+          <View style={isWebView && { flex: 1 }}>
+            <PieChart
+              baseRadius={5}
+              colorScale={[
+                colors.mustardYellow,
+                colors.graphiteGray,
+                colors.yellowGreen,
+                colors.purple,
+                colors.originalPurple,
+                colors.babyPink,
+                colors.green,
+                colors.errorRed,
+                colors.greenBlue,
+                colors.darkOrange,
+              ]}
+              differentRadius
+              data={hightPlacementCountries}
+              width={250}
+              height={248}
+              label={intl.formatMessage({
+                id: "label.topCountriesHighestPlacements",
+              })}
+              labelFontSize={8}
+              labelRadius={90}
+              labelColor={colors.darkGrey}
+              // popupMessage={intl.formatMessage({
+              //   id: "label.viewAllUrgentJobs",
+              // })}
+              onPopupClick={() => {}}
+            />
+          </View>
+
+          <View style={isWebView && { flex: 1 }}>
+            <PieChart
+              baseRadius={5}
+              colorScale={[
+                colors.mustardYellow,
+                colors.graphiteGray,
+                colors.yellowGreen,
+                colors.purple,
+                colors.originalPurple,
+                colors.babyPink,
+                colors.green,
+                colors.errorRed,
+                colors.greenBlue,
+                colors.darkOrange,
+              ]}
+              differentRadius
+              data={highestCTcCountries}
+              width={250}
+              height={248}
+              label={intl.formatMessage({
+                id: "label.topCountriesHighestCTCs",
+              })}
+              labelFontSize={8}
+              labelRadius={90}
+              labelColor={colors.darkGrey}
+            />
+          </View>
+        </View>
       </ScrollView>
     )
   );
 };
 
-export default CAJobsMemberDashboard;
+export default OverSeasMemberDashBoard;

@@ -251,11 +251,11 @@ const config = [
       },
       {
         viewPath: `${navigations.MODULE_LANDING_PAGE}/${navigations.MANAGE_SUBSCRIPTION}`,
-        element: <ManageSubscription />
+        element: <ManageSubscription />,
       },
       {
         viewPath: `${navigations.MODULE_LANDING_PAGE}/${navigations.MANAGE_SUBSCRIPTION}/${navigations.OTHER_PACKAGES}`,
-        element: <OtherPackages />
+        element: <OtherPackages />,
       },
       {
         viewPath: navigations.POSTED_JOBS,
@@ -339,6 +339,10 @@ const config = [
         viewPath: navigations.ROUND_ONE,
         element: <RoundOne />,
       },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
+        element: <RoundOneApplicationForm />,
+      },
     ],
   },
   {
@@ -353,6 +357,10 @@ const config = [
         viewPath: navigations.ROUND_ONE,
         element: <RoundOne />,
       },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
+        element: <RoundOneApplicationForm />,
+      },
     ],
   },
   {
@@ -366,6 +374,10 @@ const config = [
       {
         viewPath: navigations.ROUND_ONE,
         element: <RoundOne />,
+      },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
+        element: <RoundOneApplicationForm />,
       },
     ],
   },

@@ -1,39 +1,94 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { ScrollView, View } from "@unthinkable/react-core-components";
+
+import { TwoRow } from "../../../core/layouts";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
-import CustomButton from "../../../components/CustomButton";
+import CompanyProfile from "./CompanyProfileForm/CompanyProfileForm";
 import JobDetails from "./JobDetails";
-import styles from "./ApplicationFormContainer.style";
+import PreInterviewPreferences from "./PreInterviewPreferences";
+import useNavigateScreen from "../../../services/hooks/useNavigateScreen";
+import { navigations } from "../../../constants/routeNames";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import CustomScrollView from "../../../components/CustomScrollView";
+import CentralDetailsForm from "./CentralDetailsForms/CentralDetailsForms";
+import PaymentForm from "./PaymentForm";
+import BillingInfo from "./BIllingInfo/BillingInfo";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
+  const [sideBarState] = useContext(SideBarContext);
   const intl = useIntl();
+  const { navigateScreen } = useNavigateScreen();
+  const [isError, setIsError] = useState();
+  const [isLoading, setIsLoading] = useState();
+
+  const renderStepContent = (step) => {
+    switch (step) {
+      case 1:
+        return <JobDetails />;
+      case 2:
+        return;
+      default:
+        return null;
+    }
+  };
+
+  const updateParentState = ({
+    isErrorChildState = false,
+    isLoadingChildState = false,
+  }) => {
+    setIsError(isErrorChildState);
+    setIsLoading(isLoadingChildState);
+  };
+
+  const handleCancelClick = () => {
+    const moduleKey = sideBarState.selectedModule.key;
+    navigateScreen(`/${moduleKey}/${navigations.ROUND_ONE}`);
+  };
+
+  let tabConfig = [
+    {
+      component: CompanyProfile,
+    },
+    {
+      component: JobDetails,
+    },
+    {
+      component: PreInterviewPreferences,
+    },
+    {
+      component: CentralDetailsForm,
+    },
+    {
+      component: BillingInfo,
+    },
+    {
+      component: PaymentForm,
+    },
+  ];
+
+  const activeTabIndex = Math.min(activeStep, tabConfig.length - 1);
+  const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
   return (
-    <View style={styles.mainViewStyle}>
-      <ApplicationFormStepper activeStep={activeStep} />
-      <JobDetails />
-      {/* TODO This button will be in seprate form file*/}
-      <View style={styles.actionBtnContainer}>
-        <CustomButton
-          onPress={() => {
-            onHandleTab("prev");
-          }}
-        >
-          {intl.formatMessage({ id: "label.cancel" })}
-        </CustomButton>
-        <CustomButton
-          onPress={() => {
-            onHandleTab("next");
-          }}
-          withGreenBackground
-        >
-          {intl.formatMessage({ id: "label.save" })}
-        </CustomButton>
-      </View>
-    </View>
+    <>
+      <CustomScrollView style={{ flex: 1 }}>
+        <TwoRow
+          topSection={
+            <ApplicationFormStepper
+              headingText={intl.formatMessage({
+                id: "label.add_application_form",
+              })}
+              activeStep={activeStep}
+            />
+          }
+          bottomSection={<ActiveTabComponent tabHandler={onHandleTab} />}
+          isBottomFillSpace
+        />
+      </CustomScrollView>
+    </>
   );
 };
 

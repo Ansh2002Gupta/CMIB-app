@@ -14,11 +14,10 @@ const styles = StyleSheet.create({
   componentContainer: {
     display: "flex",
     flexDirection: "column",
-    margin: 10,
     paddingBottom: 10,
     borderRadius: 16,
     borderColor: colors.lightGray,
-    borderWidth: 2,
+    borderWidth: 1,
     overflow: "hidden",
     minWidth: 300,
     minHeight: 360,

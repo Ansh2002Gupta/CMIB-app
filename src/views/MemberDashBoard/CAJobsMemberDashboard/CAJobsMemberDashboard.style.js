@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "@unthinkable/react-core-components";
 
-import colors from "../../assets/colors";
+import colors from "../../../assets/colors";
 
 const { width: WIDTH } = Dimensions.get("window");
 

@@ -12,7 +12,8 @@ import images from "../../images";
 import styles from "./ConfigurableListStyle";
 
 const ConfigurableList = ({
-  items,
+  options,
+  customOuterContianer,
   menuOptions,
   onAdd,
   onDelete,
@@ -22,14 +23,29 @@ const ConfigurableList = ({
   setMenuOptions,
   setSearchQuery,
   title,
+  idField = "id",
+  nameField = "name",
+  outerContainer = {},
+  componentContainer = {},
+  handlePressCustom,
+  optionFormatter,
 }) => {
   const intl = useIntl();
   const allOptions = useRef([]);
 
+  const defaultOptionFormatter = (option) => ({
+    id: String(option[idField]),
+    name: String(option[nameField]),
+  });
+
+  const items = options?.map(
+    optionFormatter ? optionFormatter : defaultOptionFormatter
+  );
+
   useEffect(() => {
     allOptions.current = items;
     setMenuOptions(items);
-  }, []);
+  }, [options]);
 
   const handleSearch = (query, keyName) => {
     const queryList = fetchData(query, keyName);
@@ -53,8 +69,8 @@ const ConfigurableList = ({
   };
 
   return (
-    <View style={styles.outerContainer}>
-      <View style={styles.componentContainer}>
+    <View style={{ ...styles.outerContainer, ...customOuterContianer }}>
+      <View style={{ ...styles.componentContainer, ...componentContainer }}>
         <View style={styles.header}>
           <CommonText customTextStyle={styles.titleStyles}>{title}</CommonText>
           <TouchableImage
@@ -84,7 +100,13 @@ const ConfigurableList = ({
                       ? `${classes["configurableList__item--green"]}`
                       : ``
                   }
-                  onPress={() => onPress(item.id)}
+                  onPress={() => {
+                    if (handlePressCustom) {
+                      handlePressCustom(item);
+                    } else {
+                      onPress(item.id);
+                    }
+                  }}
                   style={[
                     styles.itemContainer,
                     selectedOptions.includes(item.id)
@@ -134,7 +156,7 @@ ConfigurableList.defaultProps = {
   onAdd: () => {},
   onDelete: () => {},
   onPress: () => {},
-  items: [],
+  options: [],
   allOptions: [],
   menuOptions: [],
   searchQuery: [],
@@ -142,14 +164,13 @@ ConfigurableList.defaultProps = {
   setMenuOptions: () => {},
   setSearchQuery: () => {},
   title: "DefaultTitle",
-  items: [],
 };
 
 ConfigurableList.protoTypes = {
   onAdd: PropTypes.func,
   onDelete: PropTypes.func,
   onPress: PropTypes.func,
-  items: PropTypes.array,
+  options: PropTypes.array,
   allOptions: PropTypes.array,
   menuOptions: PropTypes.array,
   searchQuery: PropTypes.array,
@@ -157,7 +178,6 @@ ConfigurableList.protoTypes = {
   setMenuOptions: PropTypes.func,
   setSearchQuery: PropTypes.func,
   title: PropTypes.string,
-  items: PropTypes.array,
 };
 
 export default ConfigurableList;
