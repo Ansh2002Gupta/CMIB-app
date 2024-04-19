@@ -1,30 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+
 import ActivitiesUI from "./ActivitesUI";
-import { useContext, useEffect, useState } from "react";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import {
+  ACTIVITIES,
+  MEMBERS,
   MEMBER_CA_JOB_PROFILE_ACTIVITY,
-  MEMBER_CA_JOB_PROFILE_OTHER_COURSES,
+  USER_TYPE_COMPANY,
 } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useActivities } from "./Controllers/useActivities";
 import { getIndexForBoolean, yesNoToBoolean } from "../../utils/util";
 
-const Activities = ({ isEditable = true, handleEdit, onSaveSuccessfull }) => {
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState || {};
+const Activities = ({
+  isEditable = true,
+  handleEdit,
+  customUrl,
+  onSaveSuccessfull,
+}) => {
+  const { id } = useParams();
+  const { isCompany, currentModule } = useGetCurrentUser();
+
   const {
-    data,
-    fetchData,
-    isLoading: isPageLoading,
-    error: fetchDataError,
+    data: applicantActivityData,
+    isLoading: isGettingApplicantActivityDataLoading,
+    error: errorWhileGettingApplicantActivityData,
+    fetchData: fetchingApplicantActivityData,
   } = useFetch({
-    url: MEMBER_CA_JOB_PROFILE_ACTIVITY,
+    url:
+      USER_TYPE_COMPANY + `/${currentModule}` + MEMBERS + `/${id}` + ACTIVITIES,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
+  const {
+    data: memberActivityData,
+    fetchData,
+    isLoading: ismemberActivityDataLoading,
+    error: errorWhilememberActivityData,
+  } = useFetch({
+    url: customUrl || MEMBER_CA_JOB_PROFILE_ACTIVITY,
+  });
+
+  useEffect(() => {
+    if (currentModule) {
+      if (isCompany) {
+        fetchingApplicantActivityData({});
+      } else {
+        fetchData({});
+      }
+    }
+  }, [currentModule]);
+
+  const data = isCompany ? applicantActivityData : memberActivityData;
+  const isPageLoading = isCompany
+    ? isGettingApplicantActivityDataLoading
+    : ismemberActivityDataLoading;
+  const fetchDataError = isCompany
+    ? errorWhileGettingApplicantActivityData
+    : errorWhilememberActivityData;
+
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_PROFILE_ACTIVITY);
+    useUpdateService(customUrl || MEMBER_CA_JOB_PROFILE_ACTIVITY);
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}
   );

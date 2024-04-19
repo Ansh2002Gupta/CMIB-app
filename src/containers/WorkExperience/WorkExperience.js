@@ -1,21 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useFetch from "../../hooks/useFetch";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import WorkExperienceTemplate from "./WorkExperienceTemplate";
 import {
   FUNCTION_AREAS,
   INDUSTRY_TYPES,
-  MEMBER_CA_JOB_PROFILE,
+  MEMBERS,
   MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE,
+  USER_TYPE_COMPANY,
+  WORK_EXPERIENCE,
 } from "../../services/apiServices/apiEndPoint";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
   doHaveWorkExperience,
   useWorkExperience,
 } from "./controller/useWorkExperience";
-import { formatDate, yesNoToBoolean } from "../../utils/util";
-import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { formatDate } from "../../utils/util";
 import {
   validateCurrentStatus,
   validateFields,
@@ -33,37 +36,90 @@ const workExperienceKeys = () => ({
   areas_of_work: [],
 });
 
-const WorkExperience = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState || {};
+const WorkExperience = ({
+  customUrl,
+  isEditable,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
+  const { id } = useParams();
+  const { isCompany, currentModule } = useGetCurrentUser();
 
   const {
-    data,
-    fetchData,
-    isLoading: workExperienceIsLoading,
-    error: workExperienceError,
+    data: applicantWorkExperienceData,
+    isLoading: isGettingApplicantWorkExperienceDataLoading,
+    error: errorWhileGettingApplicantWorkExperienceData,
+    fetchData: fetchingApplicantWorkExperienceData,
   } = useFetch({
-    url: MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE,
+    url:
+      USER_TYPE_COMPANY +
+      `/${currentModule}` +
+      MEMBERS +
+      `/${id}` +
+      WORK_EXPERIENCE,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const {
+    data: workexperinceData,
+    fetchData,
+    isLoading: workExperienceDataIsLoading,
+    error: erroWhileFetching,
+  } = useFetch({
+    url: customUrl ?? MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const {
     data: functionalAreas,
     isLoading: functionalAreasIsLoading,
     error: functionalAreasError,
+    fetchData: fetchingFunctionalAreas,
   } = useFetch({
     url: FUNCTION_AREAS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const {
     data: industryTypes,
     isLoading: industryTypesIsLoading,
     error: industryTypesError,
+    fetchData: fetchingIndustryTypes,
   } = useFetch({
     url: INDUSTRY_TYPES,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
+  useEffect(async () => {
+    if (currentModule) {
+      if (isCompany) {
+        fetchingApplicantWorkExperienceData({});
+      } else {
+        await fetchingFunctionalAreas();
+        await fetchingIndustryTypes();
+        await fetchData({});
+      }
+    }
+  }, [currentModule]);
+
+  const data = isCompany ? applicantWorkExperienceData : workexperinceData;
+  const workExperienceIsLoading = isCompany
+    ? isGettingApplicantWorkExperienceDataLoading
+    : workExperienceDataIsLoading;
+  const workExperienceError = isCompany
+    ? errorWhileGettingApplicantWorkExperienceData
+    : erroWhileFetching;
+
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE);
 
   const [formFieldsError, setFormFieldsError] = useState([]);
   const [currentStatusError, setCurrentStatusError] = useState({});

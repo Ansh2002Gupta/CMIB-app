@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "../../../routes";
+import React, { useEffect, useRef, useState } from "react";
+import dayjs from "dayjs";
+import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
+
 import CommonText from "../../../components/CommonText";
+import CustomImage from "../../../components/CustomImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import TouchableImage from "../../../components/TouchableImage";
+import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
+import useOutsideClick from "../../../hooks/useOutsideClick";
+import usePagination from "../../../hooks/usePagination";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
+import { urlService } from "../../../services/urlService";
 import {
   DEFAULT_CATEGORY_FOR_FILTER_MODAL,
   FILTER_TYPE_ENUM,
   JOB_STATUS_RESPONSE_CODE,
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
-import usePagination from "../../../hooks/usePagination";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
-import PopupMessage from "../../../components/PopupMessage/PopupMessage";
-import dayjs from "dayjs";
-import { useIntl } from "react-intl";
-import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import CustomImage from "../../../components/CustomImage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -34,13 +37,16 @@ const initialFilterState = {
 
 const useGetScheduleList = (id, onClickAction) => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.GetSchedule;
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+  const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
+  const popupRef = useRef(null);
+  useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
+
   const intl = useIntl();
 
   const [filterOptions, setFilterOptions] = useState({
@@ -50,11 +56,11 @@ const useGetScheduleList = (id, onClickAction) => {
   });
   const [filterState, setFilterState] = useState(initialFilterState);
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const {
@@ -74,6 +80,7 @@ const useGetScheduleList = (id, onClickAction) => {
     isLoading,
     isError: isErrorApplicantStatusChange,
     errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
   } = useChangeApplicantStatusApi();
 
   const statusData = [];
@@ -99,14 +106,9 @@ const useGetScheduleList = (id, onClickAction) => {
         errorMessage: errorGetPostedJobs?.data?.message,
         onRetry: () => fetchScheduleInterviews({}),
       };
-    if (isErrorApplicantStatusChange)
-      return {
-        errorMessage: errorWhileApplicantStatusChange,
-        onRetry: () => {},
-      };
   };
-  const isTicketListingLoading = isLoading || isScheduleInterviewLoading;
-  const isError = isErrorGetScheduleInterview || isErrorApplicantStatusChange;
+  const isTicketListingLoading = isScheduleInterviewLoading;
+  const isError = isErrorGetScheduleInterview;
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -151,7 +153,7 @@ const useGetScheduleList = (id, onClickAction) => {
             ? existingSelectedOptions?.filter((item) => {
                 return item !== selectedFilter?.[keyName];
               })
-            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+            : [selectedFilter?.[keyName]];
         } else {
           newSelectedOptions = selectedFilter.value;
         }
@@ -267,7 +269,11 @@ const useGetScheduleList = (id, onClickAction) => {
 
   const filterApplyHandler = async (filterInfo) => {
     const currentFilterOptions = {
-      date: returnSelectedFilterOption(filterInfo, "Date"),
+      date: returnSelectedFilterOption(filterInfo, "Date").length
+        ? dayjs(returnSelectedFilterOption(filterInfo, "Date")[0]).format(
+            "YYYY-MM-DD"
+          )
+        : [],
     };
     setFilterOptions((prev) => {
       return {
@@ -296,17 +302,6 @@ const useGetScheduleList = (id, onClickAction) => {
         page: currentPage,
       });
     }
-  };
-
-  const onDateSorting = async (sortField) => {
-    //TODO: required in future.
-    // setIsAscendingOrder((prev) => !prev);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   sortField: sortField,
-    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
-    // });
   };
 
   const onNameSorting = async (sortField) => {
@@ -343,36 +338,46 @@ const useGetScheduleList = (id, onClickAction) => {
     }
   }
   function tConvert(time) {
-    // Check correct time format and split into components
     time = time
       .toString()
       .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
     if (time.length > 1) {
-      // If time format correct
-      time = time.slice(1); // Remove full string match value
-      time[5] = +time[0] < 12 ? " AM" : " PM"; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
+      time = time.slice(1);
+      time[5] = +time[0] < 12 ? " AM" : " PM";
+      time[0] = +time[0] % 12 || 12;
     }
-    return time.join(""); // return adjusted time or original string
+    return time.join("");
   }
   function convertDateFormat(dateStr) {
     return dateStr.split(".").join("/");
   }
+  const onIconPress = (item) => {
+    setCurrentPopupMessage(item.application_id);
+  };
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
     const optionArray = [
-      intl.formatMessage({ id: "label.view_interview_details" }),
-      intl.formatMessage({ id: "label.edit_interview_details" }),
+      {
+        name: intl.formatMessage({ id: "label.view_interview_details" }),
+        id: item.application_id,
+      },
+      {
+        name: intl.formatMessage({ id: "label.edit_interview_details" }),
+        id: item.application_id,
+      },
     ];
     if (
       item.is_primary_schedule_accepted ||
       item.is_alternate_schedule_accepted
     ) {
-      optionArray.push(intl.formatMessage({ id: "label.offer_job" }));
+      optionArray.push({
+        name: intl.formatMessage({ id: "label.offer_job" }),
+        id: item.application_id,
+      });
     }
     return [
       {
@@ -486,7 +491,7 @@ const useGetScheduleList = (id, onClickAction) => {
           </>
         ),
         style: {
-          ...commonStyles.columnStyle("16%"),
+          ...commonStyles.columnStyle("15%"),
           ...styles.justifyContentCenter,
           ...{ paddingLeft: 5, paddingRight: 5 },
         },
@@ -496,22 +501,47 @@ const useGetScheduleList = (id, onClickAction) => {
         content: (
           <View>
             {!isHeading && (
-              <PopupMessage
-                message={optionArray}
-                onPopupClick={(selectedItem) => {
-                  if (
-                    selectedItem ===
-                    intl.formatMessage({ id: "label.offer_job" })
-                  ) {
-                    const request = {
-                      status: JOB_STATUS_RESPONSE_CODE[selectedItem],
-                    };
-                    handleUseApplicantStatus(item.id, request);
-                  } else {
-                    onClickAction(selectedItem, item);
-                  }
-                }}
-              />
+              <>
+                <TouchableImage
+                  onPress={() => {
+                    onIconPress(item);
+                  }}
+                  source={images.iconMore}
+                  imageStyle={{ height: 20, width: 20 }}
+                  isSvg={true}
+                />
+                {currentPopUpMessage == item.application_id && (
+                  <View ref={popupRef}>
+                    <PopupMessage
+                      message={optionArray}
+                      onPopupClick={(selectedItem) => {
+                        setCurrentPopupMessage(-1);
+                        if (
+                          selectedItem.name ===
+                          intl.formatMessage({ id: "label.offer_job" })
+                        ) {
+                          const request = {
+                            status: JOB_STATUS_RESPONSE_CODE[selectedItem.name],
+                          };
+                          handleUseApplicantStatus(
+                            item.application_id,
+                            request
+                          );
+                        } else {
+                          onClickAction(selectedItem.name, item);
+                        }
+                      }}
+                      labelName={"name"}
+                      customStyle={{
+                        ...styles.popupContainer,
+                        ...{ right: 130 },
+                      }}
+                      isPopupModal
+                      onPopUpClose={() => setCurrentPopupMessage(-1)}
+                    />
+                  </View>
+                )}
+              </>
             )}
           </View>
         ),
@@ -550,11 +580,13 @@ const useGetScheduleList = (id, onClickAction) => {
     loadingMore,
     queryTypeData,
     rowsPerPage,
-
+    initialFilterState,
     setFilterState,
     statusData,
     statusText,
     subHeadingText,
+    errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
     tableIcon,
     scheduleInterviewData: currentRecords,
     totalcards: scheduleInterviewData?.meta?.total,

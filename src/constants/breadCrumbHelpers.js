@@ -1,6 +1,7 @@
 import { navigations } from "./routeNames";
 
-const getBreadCrumbDetails = ({ path, isEditMode }) => {
+const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
+  const { job_id, id } = params;
   switch (path) {
     case `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}`: {
       return [
@@ -14,6 +15,15 @@ const getBreadCrumbDetails = ({ path, isEditMode }) => {
         {
           path: navigations.COMPANY_PROFILE,
           label: isEditMode ? "Edit Company Profile" : "View Company Profile",
+        },
+      ];
+    }
+    case `/${currentModule}/${navigations.JOB_APPLICANTS}/${job_id}/applicant-details/${id}`: {
+      return [
+        { path: navigations.JOB_APPLICANTS, label: "Job Applicants Listing" },
+        {
+          path: navigations.APPLICANT_DETAILS,
+          label: "View Job Applicant Details",
         },
       ];
     }

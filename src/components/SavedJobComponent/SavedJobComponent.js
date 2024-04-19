@@ -27,7 +27,7 @@ const SavedJobComponent = ({
   const { id } = details;
 
   const cardDetails = {
-    companyName: details?.company_name,
+    companyName: details?.company_name || details?.company?.name,
     createdAt: details?.created_at,
     jobPostion: details?.designation,
     jobDescription: details?.detail,
@@ -38,7 +38,7 @@ const SavedJobComponent = ({
     minExperience: details?.min_experience,
     maxExperience: details?.max_experience,
     requirement: details?.functional_areas,
-    company_logo: details?.company_logo,
+    company_logo: details?.company_logo || details?.company?.company_logo,
   };
 
   const handleClickOnCard = () => {
@@ -59,23 +59,31 @@ const SavedJobComponent = ({
   return (
     <>
       <TwoRow
-        style={{ ...style.mainContainer, ...containerStyle }}
+        style={{
+          ...style.mainContainer,
+          ...containerStyle,
+          ...(details?.is_urgent ? style.borderTop : style.paddingTop),
+        }}
         topSection={
-          <TwoColumn
-            style={style.topCurveSection}
-            isLeftFillSpace
-            leftSection={<View style={style.whiteCurveSection} />}
-            rightSection={
-              <CommonText
-                customContainerStyle={style.urgentText}
-                customTextStyle={style.urgentTextStyles}
-                fontWeight="600"
-              >
-                {intl.formatMessage({ id: "label.urgent" })}
-              </CommonText>
-            }
-            rightSectionStyle={style.backgroundWhite}
-          />
+          details?.is_urgent ? (
+            <TwoColumn
+              style={style.topCurveSection}
+              isLeftFillSpace
+              leftSection={<View style={style.whiteCurveSection} />}
+              rightSection={
+                <CommonText
+                  customContainerStyle={style.urgentText}
+                  customTextStyle={style.urgentTextStyles}
+                  fontWeight="600"
+                >
+                  {intl.formatMessage({ id: "label.urgent" })}
+                </CommonText>
+              }
+              rightSectionStyle={style.backgroundWhite}
+            />
+          ) : (
+            <View />
+          )
         }
         bottomSection={
           isWebView ? (

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import { useSearchParams } from "../../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
 import CompanyProfileUI from "./CompanyProfileUI";
@@ -11,6 +10,7 @@ import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDelet
 import useFetch from "../../hooks/useFetch";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useUpdateCompanyProfile from "../../services/apiServices/hooks/CompanyProfile/useUpdateCompanyProfileAPI";
+import { urlService } from "../../services/urlService";
 import {
   EDIT,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
@@ -21,6 +21,7 @@ import {
 } from "../../constants/constants";
 import {
   CORE_INDUSTRY_TYPE,
+  CORE_STATE,
   COUNTRY_CODE,
 } from "../../services/apiServices/apiEndPoint";
 import { mapApiDataToUI } from "./mappedData";
@@ -31,7 +32,6 @@ const CompanyProfileComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [userProfileState] = useContext(UserProfileContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
   const [isEditProfile, setIsEditProfile] = useState(false);
@@ -59,6 +59,7 @@ const CompanyProfileComponent = () => {
   const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
     useGetCompanyProfileAPI();
   const { data: industryOptions } = useFetch({ url: CORE_INDUSTRY_TYPE });
+  const { data: stateOptions } = useFetch({ url: CORE_STATE });
   const {
     errorWhileUpload,
     fileUploadResult,
@@ -76,7 +77,7 @@ const CompanyProfileComponent = () => {
   } = useUpdateCompanyProfile();
 
   useEffect(() => {
-    if (searchParams.get("mode") === EDIT) {
+    if (urlService.getQueryStringValue("mode") === EDIT) {
       setIsEditProfile(true);
     }
     onGetProfile();
@@ -87,6 +88,7 @@ const CompanyProfileComponent = () => {
       setProfileData(
         mapApiDataToUI({
           apiData: profileResult,
+          stateOptions: stateOptions,
           industryOptions: industryOptions,
           intl,
           countryCodes,
@@ -153,6 +155,9 @@ const CompanyProfileComponent = () => {
             break;
           case "telephoneNo":
             acc.telephone_number = detail.value;
+            break;
+          case "state":
+            acc.state_code = detail.value;
             break;
           case "registrationNo":
             acc.frn_number = detail.value;
@@ -238,9 +243,7 @@ const CompanyProfileComponent = () => {
     fileUploadResult && setFileUploadResult("");
     onGetProfile();
     setIsEditProfile(false);
-    setSearchParams((params) => {
-      params.delete("mode");
-    });
+    urlService.removeParam("mode");
   };
 
   const handleBlur = (name, index) => {
@@ -551,10 +554,7 @@ const CompanyProfileComponent = () => {
     if (value) {
       if (isWebPlatform) {
         window.scrollTo({ top: 0, behavior: "smooth" });
-        setSearchParams((prev) => {
-          prev.set("mode", EDIT);
-          return prev;
-        });
+        urlService.setQueryStringValue("mode", EDIT);
       }
     }
     setIsEditProfile(value);

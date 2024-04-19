@@ -15,14 +15,18 @@ const lightBlue = "#269AD4";
 const skyBlueDark = "#0099CA";
 const skyBlueLight = "#E8FCFF";
 const skyBlueLightSecond = "#E7EAFC";
+const greenBlue = "#2FA5CB";
 
 /* Greens */
 const darkGreen = "#00873E";
 const green = "#04AF55";
 const greenOne = "#04af55";
+const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
-const lightGreen = "#E6F9EF";
-const lightGreen2 = "#DFFFDC";
+const lightGreen2 = "#E6F9EF";
+const lightGreen = "#DFFFDC";
+const grassGreen = "#2CA900";
+const yellowGreen = "#CDDC39";
 
 /* Greys */
 const backgroundGrey = "#F6F8F9";
@@ -48,6 +52,7 @@ const disabledTextFieldColor = "#F2F2F2";
 const neutralGrey = "#0F172A";
 const greyFive = "#E7E7F1";
 const greySix = "#808080";
+const graphiteGray = "#607D8B";
 
 /* Reds */
 const errorBackground = "#ffeded"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -60,15 +65,23 @@ const offWhite = "#FFFFFF14";
 
 /* Yellows */
 const yellow = "#FABB00";
+const mustardYellow = "#FFD54F";
 
 /* Oranges */
 const orange = "#D76200";
 const lightOrange = "#FFEFE5";
 const lightOrangeSecond = "#F9DED6";
+const lightOrangeThird = "#FFF2EF";
+const darkOrange = "#E88532";
 
 /* Purple */
+const originalPurple = "#9C27B0";
+const purple = "#4B1FAA";
 const lightPurple = "#E3E2F5";
 const darkPurple = "#6F6AC4";
+
+/* Pink */
+const babyPink = "#FB5581";
 
 const colors = {
   darkBlueShade,
@@ -102,6 +115,7 @@ const colors = {
   offWhite,
   red,
   secondaryGrey,
+  shallowGreen,
   silver,
   slateGray,
   subHeadingGray,
@@ -125,5 +139,15 @@ const colors = {
   greySix,
   lightOrangeSecond,
   skyBlueLightSecond,
+  lightOrangeThird,
+  purple,
+  grassGreen,
+  mustardYellow,
+  graphiteGray,
+  yellowGreen,
+  originalPurple,
+  babyPink,
+  greenBlue,
+  darkOrange,
 };
 export default colors;

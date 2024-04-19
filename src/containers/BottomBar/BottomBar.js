@@ -148,7 +148,7 @@ function BottomBar() {
     // Create and add the "Candidates" tab to the filtered menu
     const candidatesTab = {
       label: "Candidates",
-      key: navigations.JOB_APPLICANTS,
+      key: navigations.CANDIDATES,
       icon: "iconCandidates",
     };
 

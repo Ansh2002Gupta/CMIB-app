@@ -3,7 +3,6 @@ import { Platform } from "@unthinkable/react-core-components";
 
 import Candidates from "../views/Candidates";
 import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
-import ApplicantJobDetails from "../views/ApplicantJobDetails";
 import AppliedJobsView from "../views/AppliedJobsView";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
@@ -17,13 +16,16 @@ import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
+import JobApplicantsView from "../views/JobApplicantsView";
 import JobSeekers from "../views/JobSeekers";
 import JobProfileTab from "../views/JobProfile";
+import JobApplicantsDetails from "../views/JobApplicantsDetails";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
 import RoundOne from "../views/RoundOneView";
 import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
+import RoundTwoApplicationForm from "../views/RoundTwoApplicationForm/index";
 import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
@@ -38,6 +40,9 @@ import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
 import AllJobs from "../views/AllJobs/AllJobs";
+import PreviousSubscriptionDetail from "../views/PreviousSubscriptionDetails";
+import OtherPackages from "../containers/OtherPackages";
+import ManageSubscription from "../views/ManageSubscription";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -223,6 +228,10 @@ const config = [
         element: <RoundOneApplicationForm />,
       },
       {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.APPLICATION_FORM}`,
+        element: <RoundTwoApplicationForm />,
+      },
+      {
         viewPath: navigations.ROUND_TWO,
         element: <RoundTwo />,
       },
@@ -237,22 +246,32 @@ const config = [
         element: <DashboardView />,
       },
       {
+        viewPath: `${navigations.MODULE_LANDING_PAGE}/${navigations.MANAGE_SUBSCRIPTION}/${navigations.PREVIOUS_SUBSCRIPTION_DETAILS}/:subscriptionId`,
+        element: <PreviousSubscriptionDetail />,
+      },
+      {
+        viewPath: `${navigations.MODULE_LANDING_PAGE}/${navigations.MANAGE_SUBSCRIPTION}`,
+        element: <ManageSubscription />
+      },
+      {
+        viewPath: `${navigations.MODULE_LANDING_PAGE}/${navigations.MANAGE_SUBSCRIPTION}/${navigations.OTHER_PACKAGES}`,
+        element: <OtherPackages />
+      },
+      {
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
       },
-
       {
         viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
         element: <AddModifyNewJobs />,
       },
-
       {
         viewPath: `${navigations.DETAILS_JOBS}`,
         element: <ViewPostedJobDetails />,
       },
       {
-        viewPath: `${navigations.DETAILS_JOBS}/${navigations.VIEW_JOB_DETAILS}`,
-        element: <ApplicantJobDetails />,
+        viewPath: `${navigations.JOBS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
       },
       {
         viewPath: navigations.APPLIED_JOBS,
@@ -260,13 +279,16 @@ const config = [
       },
       {
         viewPath: navigations.JOB_APPLICANTS,
-        element: <Candidates />,
+        element: <JobApplicantsView />,
+      },
+      {
+        viewPath: `${navigations.JOB_APPLICANTS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
       },
       {
         viewPath: navigations.JOB_SEEKERS,
         element: <JobSeekers />,
       },
-
       {
         viewPath: navigations.JOB_SEEKERS + navigations.CANDIDATE_DETAILS,
         element: <ViewDetailsScreen />,
@@ -294,6 +316,14 @@ const config = [
       {
         viewPath: navigations.JOBS,
         element: <Jobs />,
+      },
+      {
+        viewPath: navigations.CANDIDATES,
+        element: <Candidates />,
+      },
+      {
+        viewPath: `${navigations.CANDIDATE_DETAIL}/:id`,
+        element: <ViewDetailsScreen />,
       },
     ],
   },

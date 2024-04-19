@@ -52,7 +52,7 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
   );
 
   const primaryFaceToFace = FACE_TO_FACE(
-    interviewData?.vanue_address || "-",
+    interviewData?.venue_address || "-",
     formatDate(interviewData?.primary_schedule) || "-",
     formatTime(interviewData?.primary_schedule) || "-"
   );
@@ -85,19 +85,20 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
     interviewData?.alternate_remote_meeting_link || "-"
   );
 
-  const currentType = data?.type.toLowerCase();
+  const currentPrimaryType = data?.type.toLowerCase();
+  const currentAlternateType = data?.alternate_type.toLowerCase();
 
   const currentPrimaryDetails =
-    currentType === "face-to-face"
+    currentPrimaryType === "face-to-face"
       ? primaryFaceToFace
-      : currentType === "remote"
+      : currentPrimaryType === "remote"
       ? primaryRemoteDetails
       : primaryTelephonicDetails;
 
   const currentAlternateDetails =
-    currentType === "face-to-face"
+    currentAlternateType === "face-to-face"
       ? alternateFaceToFace
-      : currentType === "remote"
+      : currentAlternateType === "remote"
       ? alternateRemoteDetails
       : alternateTelephonicDetails;
 
@@ -155,20 +156,20 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
   };
 
   return (
-    <>
-      {isLoading && !isError && <LoadingScreen />}
-      {!isLoading && !isError && (
-        <CustomModal
-          headerText={intl.formatMessage({ id: "label.interview_details" })}
-          isIconCross
-          onPressIconCross={onClose}
-          onBackdropPress={onClose}
-          maxWidth={"lg"}
-        >
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.modalInnerContainer}
-          >
+    <CustomModal
+      headerText={intl.formatMessage({ id: "label.interview_details" })}
+      isIconCross
+      onPressIconCross={onClose}
+      onBackdropPress={onClose}
+      maxWidth={"lg"}
+    >
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.modalInnerContainer}
+      >
+        {isLoading && !isError && <LoadingScreen />}
+        {!isLoading && !isError && (
+          <>
             <View style={styles.detailsSection}>
               {interviewDetails.map((item) => {
                 return (
@@ -195,8 +196,10 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
                     {intl.formatMessage({ id: "label.primary_interview" })}
                   </CommonText>
                   {renderHeadingAndValue({
-                    heading: intl.formatMessage({ id: "label.interview_type" }),
-                    value: currentType,
+                    heading: intl.formatMessage({
+                      id: "label.interview_type",
+                    }),
+                    value: currentPrimaryType,
                     isMandatory: true,
                   })}
                 </View>
@@ -216,8 +219,10 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
                     {intl.formatMessage({ id: "label.alternate_interview" })}
                   </CommonText>
                   {renderHeadingAndValue({
-                    heading: intl.formatMessage({ id: "label.interview_type" }),
-                    value: currentType,
+                    heading: intl.formatMessage({
+                      id: "label.interview_type",
+                    }),
+                    value: currentAlternateType,
                     isMandatory: false,
                   })}
                 </View>
@@ -227,16 +232,16 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
                 false
               )}
             />
-          </ScrollView>
-        </CustomModal>
-      )}
-      {isError && (
-        <ErrorComponent
-          errorMsg={error?.data?.message}
-          onRetry={() => fetchData()}
-        />
-      )}
-    </>
+          </>
+        )}
+        {isError && (
+          <ErrorComponent
+            errorMsg={error?.data?.message}
+            onRetry={() => fetchData()}
+          />
+        )}
+      </ScrollView>
+    </CustomModal>
   );
 };
 

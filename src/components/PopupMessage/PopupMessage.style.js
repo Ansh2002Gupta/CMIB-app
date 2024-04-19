@@ -33,20 +33,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.lightGrey,
     borderRadius: 8,
-    maxHeight: 150,
+    zIndex: 20,
+    backgroundColor: colors.white,
   },
   deletetext: {
     fontSize: 14,
+    marginRight: 4,
   },
   popUpComponentStyle: {
     backgroundColor: colors.white,
-    zIndex: 10,
     padding: 16,
     width: 240,
     height: 54,
     borderColor: colors.lightGrey,
     borderRadius: 8,
+    alignItems: "center",
   },
+  spinner: {},
 });
 
 export default styles;

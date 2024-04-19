@@ -20,7 +20,15 @@ export const getImageSource = (uploadedImage) => {
   return "";
 };
 
-export const getRenderText = (items, keys) => {
+export const getFormattedText = (item, key, formatConfig) => {
+  if (formatConfig[key]) {
+    const { prefix = "", suffix = "" } = formatConfig[key];
+    return `${prefix}${item[key]}${suffix}`;
+  }
+  return item[key];
+};
+
+export const getRenderText = (items, keys, formatConfig = {}) => {
   if (!keys?.length) {
     return "";
   }
@@ -104,6 +112,18 @@ export const getTime = (isoString) => {
   return formattedTime;
 };
 
+export const getDate = (isoDateString, format = "DD-MM-YYYY") => {
+  const date = new Date(isoDateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // getMonth() returns 0-11
+  const day = date.getDate();
+
+  return format
+    .replace("YYYY", year.toString())
+    .replace("MM", month.toString().padStart(2, "0"))
+    .replace("DD", day.toString().padStart(2, "0"));
+};
+
 export const capitalize = (text) => {
   if (!text || typeof text !== "string") {
     return text;
@@ -114,12 +134,13 @@ export const capitalize = (text) => {
 };
 
 export const formatDate = (date, format = "DD/MM/YYYY") => {
-  return dayjs(date).format(format);
+  return !!date ? dayjs(date).format(format) : "-";
 };
 
 export const formatTime = (dateString, format = "hh:mm A") => {
-  return dayjs(dateString).format(format);
+  return !!dateString ? dayjs(dateString).format(format) : "-";
 };
+
 export const extractFilename = (fileUri) => {
   const parts = fileUri.split("/");
   const filename = parts.pop() || "";
@@ -606,7 +627,7 @@ export const convertToTime = ({ dateString, format24Hour = true }) => {
 export const formateDateandTime = (date, time) => {
   const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
   const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
-  return formattedDate + "" + formattedTime;
+  return formattedDate + formattedTime;
 };
 
 export const areAllValuesEmpty = (obj) => {
@@ -624,10 +645,74 @@ export const areAllValuesEmpty = (obj) => {
   return true;
 };
 
-const isObjectFilled = (obj) => {
+export const isObjectFilled = (obj) => {
   return Object.values(obj).every((value) => value !== "");
 };
 
 export const areAllValuesFilled = (objects) => {
   return Object.values(objects).some(isObjectFilled);
+};
+
+export const capitalizePhrase = (sentence) => {
+  if (!sentence.length) return "-";
+  const words = sentence.split(" ");
+  const new_sentence = words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+  return new_sentence;
+};
+
+export const formatSalaryRange = (minSalary, maxSalary) => {
+  const minSalaryInLpa = (minSalary / 100000).toFixed(2);
+  const maxSalaryInLpa = (maxSalary / 100000).toFixed(2);
+  let formattedSalaryRange = `${minSalaryInLpa}-${maxSalaryInLpa} LPA`;
+  if (
+    parseFloat(minSalaryInLpa) > 99.99 ||
+    parseFloat(maxSalaryInLpa) > 99.99
+  ) {
+    const minSalaryInCRA = (minSalary / 10000000).toFixed(2);
+    const maxSalaryInCRA = (maxSalary / 10000000).toFixed(2);
+    formattedSalaryRange = `${minSalaryInCRA}-${maxSalaryInCRA} CRA`;
+  }
+
+  return formattedSalaryRange;
+};
+
+const key = "manage-subscriptions";
+
+export const doesPathIncludeAnyKey = (pathName) => {
+  return pathName.includes(key);
+};
+
+export const convertGraphData = (data) => {
+  const formattedData = data.map((item) => {
+    return {
+      x: item.label,
+      y: item.value,
+    };
+  });
+
+  return formattedData;
+};
+
+export const convertMobileGraphData = (data, colors) => {
+  const formattedData = data.map((item, index) => {
+    return {
+      name: item.label,
+      value: item.value,
+      color: colors[index],
+    };
+  });
+
+  return formattedData;
+};
+
+export const convertDonutChartData = (data) => {
+  let convertedArray = [];
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      convertedArray.push({ x: key, y: data[key] });
+    }
+  }
+  return convertedArray;
 };

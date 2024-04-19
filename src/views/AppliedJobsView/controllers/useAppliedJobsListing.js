@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate, useSearchParams } from "../../../routes";
-import { Platform, View } from "@unthinkable/react-core-components";
+import { useNavigate } from "../../../routes";
+import {
+  Platform,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
@@ -36,9 +40,10 @@ import {
   STATUS_OPTIONS,
 } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
-import { usePatch } from "../../../hooks/useApiRequest";
 import useOutsideClick from "../../../hooks/useOutsideClick";
-import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
+import { usePatch } from "../../../hooks/useApiRequest";
+import { urlService } from "../../../services/urlService";
+import { navigations } from "../../../constants/routeNames";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../AppliedJobsView.style";
@@ -54,11 +59,11 @@ const initialFilterState = {
 
 const useAppliedJobsListing = () => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const [userProfileDetails] = useContext(UserProfileContext);
   const applicantID = userProfileDetails?.userDetails?.id;
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.AppliedJobs;
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -91,11 +96,11 @@ const useAppliedJobsListing = () => {
     decision: -1,
   });
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
   const [candidateDecision, setCandidateDecision] = useState({
     decision: null,
@@ -176,6 +181,11 @@ const useAppliedJobsListing = () => {
         }));
         setShowJobOfferResponseModal(false);
         setIsPatchingSuccess(isPatchingSuccessAcceptRejectOfferDecision);
+        const requestedParams = {
+          perPage: rowsPerPage,
+          page: currentPage,
+        };
+        updateCurrentRecords(requestedParams);
       },
     });
   };
@@ -419,13 +429,13 @@ const useAppliedJobsListing = () => {
   const onIconPress = (item) => {
     if (!item?.status) return "-";
     switch (item?.status?.trim()?.toLowerCase()) {
-      case STATUS_OPTIONS.JOB_OFFERED:
+      case STATUS_OPTIONS.JOB_OFFERED?.trim()?.toLowerCase():
         setShowPopUpWithID(item?.id);
         setPopUpMessage(
           intl.formatMessage({ id: "label.respond_to_job_offer" })
         );
         break;
-      case STATUS_OPTIONS.NO_RESPONSE:
+      case STATUS_OPTIONS.NO_RESPONSE?.trim()?.toLowerCase():
         setShowPopUpWithID(item?.id);
         setPopUpMessage(
           intl.formatMessage({ id: "label.select_interview_time" })
@@ -438,8 +448,10 @@ const useAppliedJobsListing = () => {
 
   const renderMoreActionButton = (item) => {
     return (
-      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.NO_RESPONSE ||
-      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.JOB_OFFERED
+      item?.status?.trim()?.toLowerCase() ===
+        STATUS_OPTIONS.NO_RESPONSE?.trim().toLowerCase() ||
+      item?.status?.trim()?.toLowerCase() ===
+        STATUS_OPTIONS.JOB_OFFERED?.trim().toLowerCase()
     );
   };
 
@@ -551,11 +563,20 @@ const useAppliedJobsListing = () => {
     return [
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.readable_id || item.job_id
-              ? item.readable_id || item.job_id
-              : "-"}
-          </CommonText>
+          <TouchableOpacity
+            onPress={() => {
+              navigate(
+                `${navigations.APPLIED_JOBS_REDIRECT}/${item.related_job_id}`
+              );
+            }}
+            style={styles.cursorStyle}
+          >
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {item.readable_id || item.job_id
+                ? item.readable_id || item.job_id
+                : "-"}
+            </CommonText>
+          </TouchableOpacity>
         ),
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,

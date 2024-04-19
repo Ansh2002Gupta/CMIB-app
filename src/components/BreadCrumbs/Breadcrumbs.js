@@ -1,20 +1,23 @@
 import React from "react";
-import { useLocation, useNavigate, useSearchParams } from "../../routes";
-
+import { useLocation, useNavigate, useParams } from "../../routes";
 import { View, useWindowDimensions } from "@unthinkable/react-core-components";
+
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import getBreadCrumbDetails from "../../constants/breadCrumbHelpers";
-import { EDIT } from "../../constants/constants";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { navigations } from "../../constants/routeNames";
+import { urlService } from "../../services/urlService";
+import { EDIT } from "../../constants/constants";
 import styles from "./Breadcrumbs.style";
 
 const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchParams] = useSearchParams();
+  const { job_id, id } = useParams();
   const windowDimensions = useWindowDimensions();
   const isMdOrGreater = windowDimensions.width >= 900;
+  const { currentModule } = useGetCurrentUser();
 
   const handleNavigation = (val) => {
     navigate(val);
@@ -32,13 +35,17 @@ const Breadcrumbs = () => {
 
   const breadcrumbs = getBreadCrumbDetails({
     path: location.pathname,
-    isEditMode: searchParams.get("mode") === EDIT,
+    isEditMode: urlService.getQueryStringValue("mode") === EDIT,
+    params: { job_id, id },
+    currentModule,
   });
 
   const isBreadcrumbLocation = (pathname) => {
     return (
       pathname === `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}` ||
-      (pathname === navigations.COMPANY_PROFILE && isMdOrGreater)
+      (pathname === navigations.COMPANY_PROFILE && isMdOrGreater) ||
+      pathname ===
+        `/${currentModule}/${navigations.JOB_APPLICANTS}/${job_id}/applicant-details/${id}`
     );
   };
 

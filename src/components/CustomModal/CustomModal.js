@@ -36,6 +36,7 @@ const CustomModal = ({
   onBackdropPress,
   secondaryText,
   showActionButtonOnSuccess,
+  topLeftIcon,
 }) => {
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
@@ -96,6 +97,25 @@ const CustomModal = ({
           </>
         ) : (
           <>
+            {!!topLeftIcon && (
+              <View style={style.topIconContianer}>
+                {isIconCross && (
+                  <TouchableImage
+                    isSvg={isWeb}
+                    source={topLeftIcon}
+                    style={{ height: 24, width: 24 }}
+                  />
+                )}
+                {isIconCross && (
+                  <TouchableImage
+                    isSvg={isWeb}
+                    onPress={onPressIconCross}
+                    source={isWeb ? images.iconCloseDark : images.iconCross}
+                    style={{ height: 24, width: 24 }}
+                  />
+                )}
+              </View>
+            )}
             <View style={{ ...style.headerStyle, ...customHeaderStyle }}>
               {!!headerText && (
                 <CommonText
@@ -105,7 +125,7 @@ const CustomModal = ({
                   {headerText}
                 </CommonText>
               )}
-              {isIconCross && (
+              {!topLeftIcon && isIconCross && (
                 <TouchableImage
                   isSvg={isWeb}
                   onPress={onPressIconCross}
