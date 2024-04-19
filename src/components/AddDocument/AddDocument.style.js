@@ -168,9 +168,6 @@ const styles = StyleSheet.create({
     width: "48%",
   },
   customWebContainerStyle: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr",
-    overflowY: "auto",
     overflow: "visible",
   },
 });
