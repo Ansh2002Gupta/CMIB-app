@@ -115,31 +115,187 @@ const WomenComapnyDashBoard = () => {
     getHighestCtc({});
   };
 
-  const womenPlacedData = [
+  const centreChoosenData = [
     {
-      label: "2023 Feb",
-      value: 25,
+      label: "Agra",
+      value: 24,
     },
     {
-      label: "2023 Aug",
-      value: 20,
+      label: "Delhi",
+      value: 21,
     },
     {
-      label: "2022 Feb",
-      value: 15,
+      label: "Mumbai",
+      value: 33,
     },
     {
-      label: "2022 Aug",
-      value: 10,
+      label: "Pune",
+      value: 18,
     },
     {
-      label: "2021 Feb",
-      value: 7,
+      label: "Lukcnow",
+      value: 12,
     },
     {
-      label: "2021 Aug",
-      value: 5,
+      label: "Jammu",
+      value: 6,
     },
+
+    {
+      label: "Ahmedabad",
+      value: 21,
+    },
+    {
+      label: "Kanpur",
+      value: 12,
+    },
+    {
+      label: "Banglore",
+      value: 46,
+    },
+    {
+      label: "Goa",
+      value: 32,
+    },
+  ];
+  const candidatesAcceptingData = [
+    {
+      label: "Auditing",
+      value: 35,
+    },
+    {
+      label: "Taxation",
+      value: 60,
+    },
+    {
+      label: "Accounting",
+      value: 101,
+    },
+    {
+      label: "Corporate Finance",
+      value: 83,
+    },
+    {
+      label: "Forensic Accounting",
+      value: 64,
+    },
+    {
+      label: "Risk Management",
+      value: 34,
+    },
+
+    {
+      label: "International Finance",
+      value: 75,
+    },
+    {
+      label: "Non-Profit Sector",
+      value: 50,
+    },
+    {
+      label: "Entrepreneurship",
+      value: 35,
+    },
+    {
+      label: "Direct Taxation",
+      value: 53,
+    },
+    {
+      label: "Costing",
+      value: 83,
+    },
+  ];
+  const recruitmentHistoryData = {
+    candidatesInterviewed: [
+      {
+        label: "16/08/2023",
+        value: 32,
+      },
+      {
+        label: "17/08/2023",
+        value: 35,
+      },
+      {
+        label: "18/08/2023",
+        value: 41,
+      },
+      {
+        label: "19/08/2023",
+        value: 26,
+      },
+      {
+        label: "20/08/2023",
+        value: 29,
+      },
+      {
+        label: "21/08/2023",
+        value: 19,
+      },
+
+      {
+        label: "22/08/2023",
+        value: 14,
+      },
+      {
+        label: "23/08/2023",
+        value: 9,
+      },
+      {
+        label: "24/08/2023",
+        value: 44,
+      },
+      {
+        label: "25/08/2023",
+        value: 56,
+      },
+    ],
+    candidatesHired: [
+      {
+        label: "16/08/2023",
+        value: 34,
+      },
+      {
+        label: "17/08/2023",
+        value: 36,
+      },
+      {
+        label: "18/08/2023",
+        value: 29,
+      },
+      {
+        label: "19/08/2023",
+        value: 20,
+      },
+      {
+        label: "20/08/2023",
+        value: 21,
+      },
+      {
+        label: "21/08/2023",
+        value: 28,
+      },
+
+      {
+        label: "22/08/2023",
+        value: 22,
+      },
+      {
+        label: "23/08/2023",
+        value: 16,
+      },
+      {
+        label: "24/08/2023",
+        value: 49,
+      },
+      {
+        label: "25/08/2023",
+        value: 60,
+      },
+    ],
+  };
+  const legendData = [
+    { name: "Candidates Interviewed", symbol: { fill: colors.purple } },
+    { name: "Candidates Hired", symbol: { fill: colors.babyPink } },
   ];
 
   const ctcOfferedData = [
@@ -186,105 +342,6 @@ const WomenComapnyDashBoard = () => {
     },
   ];
 
-  const companyActiveData = [
-    {
-      label: "Inactive",
-      value: 33,
-    },
-    {
-      label: "Active",
-      value: 67,
-    },
-  ];
-
-  const companyPreferenceData = [
-    {
-      label: "Trading",
-      value: 10,
-    },
-    {
-      label: "IT",
-      value: 54,
-    },
-    {
-      label: "Construction",
-      value: 30,
-    },
-    {
-      label: "Infrastructure",
-      value: 75,
-    },
-    {
-      label: "BPO",
-      value: 20,
-    },
-    {
-      label: "Financial Services",
-      value: 28,
-    },
-
-    {
-      label: "Diversified",
-      value: 45,
-    },
-    {
-      label: "Firm of Charted Accountants",
-      value: 60,
-    },
-    {
-      label: "Service Industry",
-      value: 35,
-    },
-    {
-      label: "Constructional Services",
-      value: 86,
-    },
-  ];
-
-  const companyVaccancyData = [
-    {
-      label: "Active",
-      value: 20,
-    },
-    {
-      label: "Inactive",
-      value: 24,
-    },
-    {
-      label: "Construction",
-      value: 30,
-    },
-    {
-      label: "Infrastructure",
-      value: 15,
-    },
-    {
-      label: "BPO",
-      value: 10,
-    },
-    {
-      label: "Financial Services",
-      value: 2,
-    },
-
-    {
-      label: "Diversified",
-      value: 25,
-    },
-    {
-      label: "Firm of Charted Accountants",
-      value: 10,
-    },
-    {
-      label: "Service Industry",
-      value: 55,
-    },
-    {
-      label: "Constructional Services",
-      value: 36,
-    },
-  ];
-
   return isLoading ? (
     <LoadingScreen />
   ) : error ? (
@@ -305,56 +362,22 @@ const WomenComapnyDashBoard = () => {
     !error && (
       <ScrollView style={{ gap: 24 }}>
         <BarChart
-          yAxisLabel={intl.formatMessage({
-            id: "label.percentageWomenMembers",
-          })}
+          yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
           domainPadding={20}
           height={200}
           label={intl.formatMessage({
-            id: "label.womenPlacedYears",
+            id: "label.CTCOfferedDesignation",
           })}
-          barColor={colors.purple}
-          data={womenPlacedData}
-          toolTipLabel={({ datum }) => `${datum.y}%`}
+          barColor={colors.green}
+          data={ctcOfferedData}
+          toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
+          yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
+          xAxisTickAngle={-20}
         />
         <View style={styles.pieChartContiner}>
-          <View style={isWebView && { flex: 2 }}>
-            <BarChart
-              yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
-              domainPadding={20}
-              height={200}
-              label={intl.formatMessage({
-                id: "label.CTCOfferedDesignation",
-              })}
-              barColor={colors.green}
-              data={ctcOfferedData}
-              toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
-              yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
-              xAxisTickAngle={-20}
-            />
-          </View>
           <View style={isWebView && { flex: 1 }}>
             <PieChart
-              baseRadius={90}
-              colorScale={[colors.errorRed, colors.green]}
-              customHeaderText={styles.customHeaderText}
-              data={companyActiveData}
-              width={300}
-              height={280}
-              label={intl.formatMessage({
-                id: "label.companies",
-              })}
-              labelFontSize={12}
-              labelRadius={100}
-              labelColor={colors.darkGrey}
-            />
-          </View>
-        </View>
-
-        <View style={styles.pieChartContiner}>
-          <View style={isWebView && { flex: 1 }}>
-            <PieChart
-              baseRadius={50}
+              baseRadius={25}
               colorScale={[
                 colors.mustardYellow,
                 colors.graphiteGray,
@@ -368,67 +391,47 @@ const WomenComapnyDashBoard = () => {
                 colors.darkOrange,
               ]}
               customHeaderText={styles.customHeaderText}
-              data={companyPreferenceData}
+              data={centreChoosenData}
               width={300}
-              height={140}
+              height={80}
               label={intl.formatMessage({
-                id: "label.companyPreferenceKindIndustry",
+                id: "label.centersChosenCandidatesInterview",
               })}
-              labelFontSize={8}
-              labelRadius={60}
-              labelColor={colors.darkGrey}
-            />
-          </View>
-          <View style={isWebView && { flex: 1 }}>
-            <PieChart
-              baseRadius={50}
-              colorScale={[
-                colors.mustardYellow,
-                colors.graphiteGray,
-                colors.yellowGreen,
-                colors.purple,
-                colors.originalPurple,
-                colors.babyPink,
-                colors.green,
-                colors.errorRed,
-                colors.greenBlue,
-                colors.darkOrange,
-              ]}
-              customHeaderText={styles.customHeaderText}
-              data={companyVaccancyData}
-              width={300}
-              height={140}
-              label={intl.formatMessage({
-                id: "label.vacanciesIndustries",
-              })}
-              labelFontSize={8}
-              labelRadius={60}
+              labelFontSize={3}
+              labelRadius={30}
               labelColor={colors.darkGrey}
             />
           </View>
         </View>
         <BarChart
-          yAxisLabel={intl.formatMessage({ id: "label.numberJobsOffered" })}
+          xAxisTickAngle={-20}
+          yAxisLabel={intl.formatMessage({
+            id: "label.candidates",
+          })}
           domainPadding={20}
           height={200}
           label={intl.formatMessage({
-            id: "label.topCompaniesHighestJobsOffered",
+            id: "label.candidatesAcceptingOffersAreasWork",
           })}
           toolTipLabel={({ datum }) => datum.y}
           barColor={colors.purple}
-          data={highestOffetChartData}
+          data={candidatesAcceptingData}
         />
-        <BarChart
-          yAxisLabel={intl.formatMessage({ id: "label.highestCTCinINR" })}
+
+        <BarGroupChart
           domainPadding={20}
+          barWidth={7}
           height={200}
           label={intl.formatMessage({
-            id: "label.topCompaniesHighestCTCs",
+            id: "label.recruitmentHistory",
           })}
-          barColor={colors.green}
-          data={hightCtcChartData}
-          toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
-          yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
+          legendData={legendData}
+          toolTipLabel={({ datum }) => datum.y}
+          barColor1={colors.purple}
+          barColor2={colors.babyPink}
+          data1={recruitmentHistoryData.candidatesInterviewed}
+          data2={recruitmentHistoryData.candidatesHired}
+          offset={12}
         />
       </ScrollView>
     )

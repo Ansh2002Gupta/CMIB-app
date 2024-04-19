@@ -791,6 +791,12 @@ const locale = {
     "Company Preference for Kind of Industry",
   "label.vacanciesIndustries": "Vacancies in Industries",
   "label.companies": "Companies",
+  "label.current_package_capital": "CURRENT PACKAGE",
+  "label.topDesignationsBasedCTCOffered":
+    "Top 10 Designations based on CTC Offered",
+  "label.activeJobs": "Active Jobs",
+  "label.candidatesAcceptingOffersIndustries":
+    "Candidates Accepting Offers in Industries",
 };
 
 export default locale;
