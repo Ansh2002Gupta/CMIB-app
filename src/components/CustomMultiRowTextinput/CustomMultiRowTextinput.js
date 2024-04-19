@@ -17,6 +17,7 @@ const CustomMultiRowTextInput = ({
   footerId,
   handleValueChange,
   numColsInARow = 4,
+  customContainerStyle,
 }) => {
   const intl = useIntl();
   const handleChange = (label, inputValue, index, id, changedCellID) => {
@@ -25,6 +26,7 @@ const CustomMultiRowTextInput = ({
       value: inputValue,
       id,
       cellID: changedCellID,
+      index,
     });
   };
 
@@ -50,7 +52,7 @@ const CustomMultiRowTextInput = ({
   const handleAddNewRow = (cellID) => {
     if (isEmptyCellPresent()) return;
     const newRowID = cellID + 1;
-    const newRowTemplate = startRowTemplate.map((cell, index) => {
+    const newRowTemplate = startRowTemplate?.map((cell, index) => {
       return {
         ...cell,
         cellID: newRowID,
@@ -86,9 +88,13 @@ const CustomMultiRowTextInput = ({
       isRow={false}
       isEditProfile={true}
       onAdd={handleAddNewRow}
+      customErrorViewStyle={styles.detailErrorViewStyle}
       onDelete={handleDeleteRow}
       tableHeaderList={startRowHeaderList}
-      customContainerStyle={{ flexDirection: "row", flexWrap: "unwrap" }}
+      customContainerStyle={{
+        ...styles.customContainerStyle,
+        ...customContainerStyle,
+      }}
       customWebContainerStyle={{
         ...styles.customWebContainerStyle,
         ...customWebContainerStyle,

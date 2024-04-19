@@ -342,8 +342,8 @@ const locale = {
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
   "label.module_access": "Module Access",
-  "label.srn": "SRN",
-  "label.srn_placeholder": "Enter your SRN number",
+  "label.srnMRN": "SRN/MRN",
+  "label.srn_mrn_placeholder": "Enter your SRN/MRN",
   "label.enter_otp": "Enter OTP",
   "label.otp_text_forgot_password":
     "Please enter the one time password that you have received on your registered mobile number to continue to reset your password.",
@@ -792,6 +792,7 @@ const locale = {
   "label.select_document_name": "Select document name",
   "label.select_document_type": "Select document type",
   "label.select_no_of_copies": "Select no of copies",
+  "label.contact_person": "Contact Person",
   "label.pre_interview_prefrences": "Pre-interview preferences",
   "label.short_listing_criteria": "Short Listing Criteria",
   "label.enter_short_listing_criteria": "Enter short listing criteria",
@@ -806,6 +807,23 @@ const locale = {
   "label.st": "ST",
   "label.select_place_of_posting": "Select Place of Posting",
   "label.desgination": "Desgination",
+  "label.areaCode": "Area Code",
+  "label.telephoneNumber": "Telephone Number",
+  "label.campusDates": "Campus Dates",
+  "label.companyAvailableForInterview": "Company Available For Interview",
+  "label.campusDates": "Select Campus Dates",
+  "label.selectCompany": "Select Company",
+  "label.companyDates": "Campus Dates",
+  "label.companyDates": "Campus Dates",
+  "label.centers": "Centers",
+  "label.selectCenters": "Add Centers",
+  "label.benefit_details": "Benefits Details",
+  "label.enter_benefit_details": "Enter benefits details",
+  "label.amount": "Amount",
+  "label.enter_amount": "Enter amount",
+  "label.company_ppt": "Company PPT",
+  "label.enter_no_of_vacancies": "Enter Number of Vacancies",
+  "label.other_Benefits": "Other Benefits to be provided apart from above CTC",
   "label.enter_your_info": "Enter your information",
   "label.you_can_add_one_desgination":
     "You cannot add one desgination at a time",
@@ -828,12 +846,17 @@ const locale = {
   "label.enter_telephone_number": "Enter Telephone Number",
   "label.at_least_one_mandatory": "At least one mandatory",
   "label.at_least_one_mandatory_with_star": "*At least one mandatory",
+  "label.error.cannot_be_empty": "Cannot be empty!",
   "label.head_contacts": "Director/VP/HR Head Contacts",
   "label.mobile_country_code": "Mobile Country Code",
   "label.select_mobile_country_code": "Code",
   "label.work_experience_range": "Experience Range",
   "label.select_work_experience_range": "Select work experience range",
   "label.fexi_hours": "Flexi Hours",
+  "label.selectCenterMessage": "Please the 'Centers' in the left section.",
+  "label.groupDiscussion": "Group Discussion",
+  "label.psychometricWrittenTest": "Psychometric Test/ Written Test",
+  "label.personalInterview": "Personal Interview",
   "label.fill_the_payment_form_slots":
     "Please fill the payment details given below to get your slot(s) blocked/booked",
   "label.enter_gstin": "Enter GSTIN",
@@ -866,6 +889,33 @@ const locale = {
   "label.nofOfferRejected": "Offers Rejected",
   "label.job_details": "Job Details",
   "label.add_desgination": "Add Desgination",
+  "label.topCountriesHighestPlacements":
+    "Top 10 Countries with Highest Number of Placements",
+  "label.topCountriesHighestCTCs": "Top 10 Countries with Highest CTCs",
+  "label.womenPlacedYears":
+    "Percentage of Women Members Placed in the Last 5 Years",
+  "label.percentageWomenMembers": "Percentage of Women Members",
+  "label.CTCOfferedDesignation": "CTC Offered for each Designation",
+  "label.CTCOfferedINR": "CTC Offered (in INR)",
+  "label.centersChosenCandidatesInterview":
+    "Centers Chosen by Candidates for Interview",
+  "label.candidatesAcceptingOffersAreasWork":
+    "Candidates Accepting Offers in Areas of Work",
+  "label.recruitmentHistory": "Recruitment History",
+  "label.regionsBasedHighestCTCs": "Regions based on Highest CTCs",
+  "label.topCountriesHighestJobsAcceptedCandidates":
+    "Top 10 Countries based on Highest Number of Jobs Accepted by Candidates",
+  "label.numberJobsAccepted": "Number of Jobs Accepted",
+  "label.companyPreferenceKindIndustry":
+    "Company Preference for Kind of Industry",
+  "label.vacanciesIndustries": "Vacancies in Industries",
+  "label.companies": "Companies",
+  "label.current_package_capital": "CURRENT PACKAGE",
+  "label.topDesignationsBasedCTCOffered":
+    "Top 10 Designations based on CTC Offered",
+  "label.activeJobs": "Active Jobs",
+  "label.candidatesAcceptingOffersIndustries":
+    "Candidates Accepting Offers in Industries",
 };
 
 export default locale;

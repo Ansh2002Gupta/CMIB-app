@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     backgroundColor: colors.backgroundGrey,
   },
+  innerContainer: {
+    padding: 24,
+  },
 });
 
 export default styles;
