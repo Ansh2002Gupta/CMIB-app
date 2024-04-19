@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   Col,
   Platform,
@@ -50,7 +50,7 @@ const SaveButton = ({
   onSave,
   onUnSave,
   setToastMsg,
-  isSaveDefault = true,
+  isSaveDefault,
 }) => {
   const intl = useIntl();
   const isWebView = useIsWebView();
@@ -129,9 +129,6 @@ const ViewDetailsScreen = () => {
   const [toastMsg, setToastMsg] = useState("");
   const [candidateProfile, setCandidateProfile] = useState();
 
-  const location = useLocation();
-  const { showSaveButton } = location.state ?? {};
-
   const returnModuleWiseUrl = (module) => {
     switch (module) {
       case MODULES.CA_JOBS:
@@ -173,9 +170,17 @@ const ViewDetailsScreen = () => {
     navigate(-1);
   };
 
-  const getShortProfileDetails = ({ candidate_name, candidate_id }) => {
+  const getShortProfileDetails = ({
+    candidate_name,
+    candidate_id,
+    is_save,
+  }) => {
     candidate_name = capitalizePhrase(candidate_name);
-    setCandidateProfile({ name: candidate_name, id: candidate_id });
+    setCandidateProfile({
+      name: candidate_name,
+      id: candidate_id,
+      is_save: is_save,
+    });
   };
 
   return (
@@ -233,17 +238,19 @@ const ViewDetailsScreen = () => {
                   }
                   leftSectionStyle={style.shortProfileOuterContainer}
                   rightSection={
-                    <SaveButton
-                      id={params?.id}
-                      onSave={saveCandidateDetails}
-                      onUnSave={unSaveCandidateDetails}
-                      isSaving={isSavingCandidateDetails}
-                      isUnsaving={isUnSavingCandidateDetails}
-                      errorInSaving={errorInSavingCandidateDetails}
-                      errorInUnSaving={errorInUnSavingCandidateDetails}
-                      isSaveDefault={showSaveButton}
-                      {...{ setToastMsg }}
-                    />
+                    candidateProfile && (
+                      <SaveButton
+                        id={params?.id}
+                        onSave={saveCandidateDetails}
+                        onUnSave={unSaveCandidateDetails}
+                        isSaving={isSavingCandidateDetails}
+                        isUnsaving={isUnSavingCandidateDetails}
+                        errorInSaving={errorInSavingCandidateDetails}
+                        errorInUnSaving={errorInUnSavingCandidateDetails}
+                        isSaveDefault={!candidateProfile?.is_save}
+                        {...{ setToastMsg }}
+                      />
+                    )
                   }
                   rightSectionStyle={style.saveButtonContainer}
                 ></TwoColumn>
