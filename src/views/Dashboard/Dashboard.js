@@ -5,7 +5,11 @@ import { View } from "@unthinkable/react-core-components";
 import { TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
-import CAJobsMemberDashboard from "../CAJobsMemberDashboard";
+import CAJobsMemberDashboard from "../MemberDashBoard/CAJobsMemberDashboard";
+import CarrerAscentMemeberDashboard from "../MemberDashBoard/CarrerAscentMemeberDashboard";
+import NQCACandidateDashboard from "../MemberDashBoard/NQCACandidateDashboard";
+import OverSeasMemberDashBoard from "../MemberDashBoard/OverSeasMemberDashBoard";
+import WomenMemberDashBoard from "../MemberDashBoard/WomenMemberDashBoard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
@@ -37,15 +41,28 @@ function DashboardView() {
         isBottomFillSpace
         bottomSection={
           <View>
-            {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
-              isCompany ? (
+            {isCompany ? (
+              moduleKeys.CA_JOBS_KEY === selectedModule?.key && (
                 <CAJobsDashboard />
-              ) : (
-                <View style={{ padding: 24 }}>
-                  <CAJobsMemberDashboard />
-                </View>
               )
-            ) : null}
+            ) : (
+              <View style={{ padding: 24 }}>
+                {moduleKeys.CA_JOBS_KEY === selectedModule?.key && (
+                  <CAJobsMemberDashboard />
+                )}
+                {moduleKeys.CARRER_ASCENT_KEY === selectedModule?.key && (
+                  <CarrerAscentMemeberDashboard />
+                )}
+                {moduleKeys.OVERSEAS_CHAPTERS_KEY === selectedModule?.key && (
+                  <OverSeasMemberDashBoard />
+                )}
+                {moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY ===
+                  selectedModule?.key && <NQCACandidateDashboard />}
+                {moduleKeys.WOMEN_PARTTIME_KEY === selectedModule?.key && (
+                  <WomenMemberDashBoard />
+                )}
+              </View>
+            )}
           </View>
         }
       ></TwoRow>
