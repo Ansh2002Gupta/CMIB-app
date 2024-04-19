@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useSearchParams } from "../../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
 import CompanyProfileUI from "./CompanyProfileUI";
@@ -10,7 +11,6 @@ import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDelet
 import useFetch from "../../hooks/useFetch";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useUpdateCompanyProfile from "../../services/apiServices/hooks/CompanyProfile/useUpdateCompanyProfileAPI";
-import { urlService } from "../../services/urlService";
 import {
   EDIT,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
@@ -32,6 +32,7 @@ const CompanyProfileComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [userProfileState] = useContext(UserProfileContext);
+  const [searchParams, setSearchParams] = useSearchParams();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
   const [isEditProfile, setIsEditProfile] = useState(false);
@@ -77,7 +78,7 @@ const CompanyProfileComponent = () => {
   } = useUpdateCompanyProfile();
 
   useEffect(() => {
-    if (urlService.getQueryStringValue("mode") === EDIT) {
+    if (searchParams.get("mode") === EDIT) {
       setIsEditProfile(true);
     }
     onGetProfile();
@@ -243,7 +244,9 @@ const CompanyProfileComponent = () => {
     fileUploadResult && setFileUploadResult("");
     onGetProfile();
     setIsEditProfile(false);
-    urlService.removeParam("mode");
+    setSearchParams((params) => {
+      params.delete("mode");
+    });
   };
 
   const handleBlur = (name, index) => {
@@ -554,7 +557,10 @@ const CompanyProfileComponent = () => {
     if (value) {
       if (isWebPlatform) {
         window.scrollTo({ top: 0, behavior: "smooth" });
-        urlService.setQueryStringValue("mode", EDIT);
+        setSearchParams((prev) => {
+          prev.set("mode", EDIT);
+          return prev;
+        });
       }
     }
     setIsEditProfile(value);

@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import { useLocation, useNavigate } from "../routes";
+import { useLocation, useNavigate, useSearchParams } from "../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
 import CookieAndStorageService from "../services/cookie-and-storage-service";
 import { AuthContext } from "../globalContext/auth/authProvider";
-import { urlService } from "../services/urlService";
 import { navigations } from "../constants/routeNames";
 import { REDIRECT_URL } from "../constants/constants";
 
@@ -12,6 +11,7 @@ function withPublicAccess(Component) {
   return (props) => {
     const [authState] = useContext(AuthContext);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
@@ -25,7 +25,7 @@ function withPublicAccess(Component) {
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           path: navigations.LOGIN,
-          redirectPath: urlService.getQueryStringValue(REDIRECT_URL) || "",
+          redirectPath: searchParams.get(REDIRECT_URL) || "",
         })
       );
     }

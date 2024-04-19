@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../../routes";
+import { useNavigate, useSearchParams } from "../../../routes";
 import {
   Platform,
   TouchableOpacity,
@@ -40,9 +40,8 @@ import {
   STATUS_OPTIONS,
 } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
-import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePatch } from "../../../hooks/useApiRequest";
-import { urlService } from "../../../services/urlService";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 import { navigations } from "../../../constants/routeNames";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
@@ -64,6 +63,7 @@ const useAppliedJobsListing = () => {
   const applicantID = userProfileDetails?.userDetails?.id;
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.AppliedJobs;
   const { isWebView } = useIsWebView();
+  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -96,11 +96,11 @@ const useAppliedJobsListing = () => {
     decision: -1,
   });
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
+    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(urlService.getQueryStringValue("page"))
+    getValidCurrentPage(searchParams.get("page"))
   );
   const [candidateDecision, setCandidateDecision] = useState({
     decision: null,

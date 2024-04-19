@@ -14,7 +14,8 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import { useNavigate } from "../../../routes";
+import useIsWebView from "../../../hooks/useIsWebView";
+import { useNavigate, useSearchParams } from "../../../routes";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
@@ -29,12 +30,13 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePost } from "../../../hooks/useApiRequest";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-import { urlService } from "../../../services/urlService";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useSavedCandidates = () => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
+  const [searchParams] = useSearchParams();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);
@@ -49,11 +51,11 @@ const useSavedCandidates = () => {
     searchData: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
+    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(urlService.getQueryStringValue("page"))
+    getValidCurrentPage(searchParams.get("page"))
   );
   const [removedCandidates, setRemovedCandidates] = useState([]);
 

@@ -1,20 +1,21 @@
 import React from "react";
-import { useLocation, useNavigate, useParams } from "../../routes";
-import { View, useWindowDimensions } from "@unthinkable/react-core-components";
+import { useParams } from "react-router";
+import { useLocation, useNavigate, useSearchParams } from "../../routes";
 
+import { View, useWindowDimensions } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import getBreadCrumbDetails from "../../constants/breadCrumbHelpers";
+import { EDIT } from "../../constants/constants";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { navigations } from "../../constants/routeNames";
-import { urlService } from "../../services/urlService";
-import { EDIT } from "../../constants/constants";
 import styles from "./Breadcrumbs.style";
 
 const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { job_id, id } = useParams();
+  const [searchParams] = useSearchParams();
   const windowDimensions = useWindowDimensions();
   const isMdOrGreater = windowDimensions.width >= 900;
   const { currentModule } = useGetCurrentUser();
@@ -35,7 +36,7 @@ const Breadcrumbs = () => {
 
   const breadcrumbs = getBreadCrumbDetails({
     path: location.pathname,
-    isEditMode: urlService.getQueryStringValue("mode") === EDIT,
+    isEditMode: searchParams.get("mode") === EDIT,
     params: { job_id, id },
     currentModule,
   });
