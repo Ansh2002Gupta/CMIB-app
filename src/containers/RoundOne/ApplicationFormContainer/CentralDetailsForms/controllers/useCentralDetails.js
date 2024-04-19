@@ -21,6 +21,7 @@ import { useIntl } from "react-intl";
 import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import { formateErrors } from "../../../../../utils/util";
+import { moduleKeys } from "../../../../../constants/sideBarHelpers";
 
 const useCentralDetails = ({ tabHandler }) => {
   const [contactDetailsState, setContactDetailsState] = useState({});
@@ -166,8 +167,13 @@ const useCentralDetails = ({ tabHandler }) => {
   }, [contactDetailsState, countryData, intl, fieldError]);
 
   const interviewDetailsTemplate = useMemo(() => {
-    return interviewDetailsFields(interviewDetailsState, roundCenterDetails);
-  }, [interviewDetailsState, roundCenterDetails]);
+    return interviewDetailsFields(
+      interviewDetailsState,
+      roundCenterDetails,
+      intl,
+      selectedModule.key !== moduleKeys.OVERSEAS_CHAPTERS_KEY
+    );
+  }, [interviewDetailsState, roundCenterDetails, selectedModule]);
 
   useEffect(() => {
     if (selectedModule?.key && roundId) {
