@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, View } from "@unthinkable/react-core-components";
+import { Dimensions, View, Text } from "@unthinkable/react-core-components";
 import { PieChart as PieChartComponent } from "react-native-chart-kit";
 
 import { TwoRow } from "../../core/layouts";
@@ -8,13 +8,39 @@ import CommonText from "../CommonText";
 import { convertMobileGraphData } from "../../utils/util";
 import colors from "../../assets/colors";
 import styles from "./PieChart.style";
+import Pie from 'react-native-pie'
 
 const PieChart = ({ colorScale, data, height, label }) => {
   const screenWidth = Dimensions.get("window").width;
   const chartConfig = {
-    color: () => {},
+    color: () => { },
   };
 
+
+  const sections = data.map(function (value, index) {
+    return { percentage: data[index].value, color: colorScale[index] };
+  });
+
+  const labelChart = data.map(function (value, index) {
+    return { label: data[index].label, color: colorScale[index] };
+  });
+
+  // const labelChart = data.map((el) => {
+  //   return el.label
+  // })
+
+  console.log('colorScale---', colorScale, data)
+  console.log('sections---', sections)
+  const labelView = () => {
+    return <View style={styles.labelContainer}>
+      {labelChart.map((el) =>
+        <View style={styles.labelView}>
+          <View style={[styles.labelColorView, { backgroundColor: el?.color }]} />
+          <Text style={styles.labelText}>{el?.label}</Text>
+        </View>
+      )}
+    </View>
+  }
   return (
     <TwoRow
       style={styles.container}
@@ -24,17 +50,18 @@ const PieChart = ({ colorScale, data, height, label }) => {
         </CommonText>
       }
       bottomSection={
-        <PieChartComponent
-          data={convertMobileGraphData(data, colorScale)}
-          width={screenWidth * 0.75}
-          height={height * 0.5}
-          chartConfig={chartConfig}
-          accessor={"value"}
-          backgroundColor={colors.white}
-          absolute
-          center={[0, 0]}
-          hasLegend={true}
-        />
+        <>
+          <View style={[{ width: screenWidth }, styles.pieChartView]}>
+            <Pie
+              radius={60}
+              innerRadius={40}
+              sections={sections}
+              dividerSize={2}
+              strokeCap={'butt'}
+            />
+            {labelView()}
+          </View>
+        </>
       }
     />
   );

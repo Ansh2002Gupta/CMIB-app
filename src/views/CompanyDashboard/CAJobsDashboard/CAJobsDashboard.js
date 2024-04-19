@@ -329,7 +329,7 @@ const CAJobsDashboard = () => {
             }
           />
         </View>
-        <ScrollView style={{ gap: 24 }}>
+        <ScrollView style={{ gap: 24 }} showsVerticalScrollIndicator={false}>
           <BarChart
             yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
             domainPadding={20}
@@ -345,7 +345,7 @@ const CAJobsDashboard = () => {
           />
 
           <View style={styles.pieChartContiner}>
-            <View style={isWebView && { flex: 1 }}>
+            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
@@ -372,7 +372,7 @@ const CAJobsDashboard = () => {
                 labelColor={colors.darkGrey}
               />
             </View>
-            <View style={isWebView && { flex: 1 }}>
+            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
@@ -399,7 +399,7 @@ const CAJobsDashboard = () => {
                 labelColor={colors.darkGrey}
               />
             </View>
-            <View style={isWebView && { flex: 1 }}>
+            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
