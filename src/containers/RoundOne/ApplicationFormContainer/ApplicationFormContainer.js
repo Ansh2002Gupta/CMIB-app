@@ -9,7 +9,7 @@ import { USER_TYPE_CANDIDATE } from "../../../constants/constants";
 const ApplicationFormContainer = () => {
   const { activeStep, onHandleTab } = useApplicationForm();
   const [userProfileDetails] = useContext(UserProfileContext);
- 
+
   return userProfileDetails?.userDetails?.user_type?.toLowerCase() ===
     USER_TYPE_CANDIDATE ? (
     <AddApplication />

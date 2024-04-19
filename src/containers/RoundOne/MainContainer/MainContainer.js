@@ -3,9 +3,10 @@ import React from "react";
 import MainContainerTemplate from "./MainContainerTemplate";
 import useMainContainerTabs from "./controllers/useMainContainerTabs";
 
-const MainContainer = ({ cardsData, hasRoundone }) => {
+const MainContainer = ({ cardsData, hasRoundone, roundId }) => {
   const { onPressCard, roundOneTabs, selectedTab } = useMainContainerTabs({
     cardsData,
+    roundId,
   });
 
   return (
