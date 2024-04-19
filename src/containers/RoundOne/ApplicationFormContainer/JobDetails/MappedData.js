@@ -429,6 +429,7 @@ export const mapPostingDetailsToUI = (data) => {
         label: "label.place_of_posting",
         placeholder: "label.select_place_of_posting",
         value: location,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -437,6 +438,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.general",
         value: details.general,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -445,6 +447,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.obc",
         value: details.obc,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -453,6 +456,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.sc",
         value: details.sc,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -461,6 +465,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.st",
         value: details.st,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -469,6 +474,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.ph",
         value: details.ph,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -477,6 +483,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.others",
         value: details.others,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -485,6 +492,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.total",
         value: details.total,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -505,6 +513,7 @@ export const getPlaceOfPostingDetails = () => {
       label: "label.place_of_posting",
       placeholder: "label.select_place_of_posting",
       value: "",
+      width: 4,
     },
     {
       cellID: 1,
@@ -513,6 +522,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.general",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -521,6 +531,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.obc",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -529,6 +540,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.sc",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -537,6 +549,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.st",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -545,6 +558,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.ph",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -553,6 +567,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.others",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -561,6 +576,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.total",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -601,7 +617,7 @@ const mapPostingDetailsToPayload = (fieldsArray) => {
 
 export const mapDataToPayload = (data, currentModule) => {
   const overSeasProps =
-    currentModule === "overseas"
+    currentModule === "overseas-chapters"
       ? {
           job_type: data?.job_type,
           flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",

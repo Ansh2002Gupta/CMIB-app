@@ -51,7 +51,7 @@ const DetailComponent = ({
   handleAddRemoveRow,
   handleCheckBoxSelection,
   datePickerContainer,
-  customErrorViewStyle
+  customErrorViewStyle,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -241,7 +241,11 @@ const DetailComponent = ({
           customHandleBlur={() => handleBlur(detail.key, index)}
           customStyle={{
             ...styles.inputStyle,
-            ...styles.getFieldWidth(detail.width, !isWebView),
+            ...styles.getFieldWidth(
+              detail.width,
+              !isWebView,
+              detail?.customWidthValue
+            ),
           }}
           datePickerContainer={datePickerContainer}
           label={detail?.label && intl.formatMessage({ id: detail.label })}
