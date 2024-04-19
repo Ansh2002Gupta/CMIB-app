@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   bottomSectionStyle: {
     marginTop: 12,
   },
+  legendLabel: { fontSize: 4, fill: colors.darkGrey },
 });
 
 export default styles;

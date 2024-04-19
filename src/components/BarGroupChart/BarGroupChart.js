@@ -1,25 +1,31 @@
 import React from "react";
+import { Dimensions } from "@unthinkable/react-core-components";
 import {
   VictoryBar,
   VictoryChart,
   VictoryAxis,
   VictoryTooltip,
   VictoryVoronoiContainer,
+  VictoryGroup,
+  VictoryLegend,
 } from "victory";
 import { TwoRow } from "../../core/layouts";
 import { convertGraphData } from "../../utils/util";
-import colors from "../../assets/colors";
-import styles from "./BarChart.style";
+import styles from "./BarGroupChart.style";
 import CommonText from "../CommonText";
 
-const BarChart = ({
-  barColor,
+const BarGroupChart = ({
+  barColor1,
+  barColor2,
   barWidth = 10,
-  data,
+  data1,
+  data2,
   domainPadding,
   height,
   label,
+  legendData,
   toolTipLabel,
+  offset,
   xAxisLabel,
   yAxisLabel,
   xAxisTickAngle,
@@ -72,20 +78,41 @@ const BarChart = ({
               grid: styles.gridLine,
             }}
           />
-
-          <VictoryBar
-            barWidth={barWidth}
-            animate={{
-              duration: 2000,
-              onLoad: { duration: 1000 },
+          <VictoryLegend
+            x={Dimensions.get("window").width - 1120}
+            y={40}
+            orientation="horizontal"
+            gutter={20}
+            style={{
+              border: styles.strokeNone,
+              labels: styles.legendLabel,
             }}
-            data={convertGraphData(data)}
-            style={{ data: styles.barStyles(barColor) }}
+            data={legendData}
           />
+          <VictoryGroup offset={offset}>
+            <VictoryBar
+              barWidth={barWidth}
+              animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 },
+              }}
+              data={convertGraphData(data1)}
+              style={{ data: styles.barStyles(barColor1) }}
+            />
+            <VictoryBar
+              barWidth={barWidth}
+              animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 },
+              }}
+              data={convertGraphData(data2)}
+              style={{ data: styles.barStyles(barColor2) }}
+            />
+          </VictoryGroup>
         </VictoryChart>
       }
     />
   );
 };
 
-export default BarChart;
+export default BarGroupChart;
