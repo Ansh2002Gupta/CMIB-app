@@ -827,6 +827,7 @@ const locale = {
   "label.telephone_number": "Telephone Number",
   "label.enter_telephone_number": "Enter Telephone Number",
   "label.at_least_one_mandatory": "At least one mandatory",
+  "label.at_least_one_mandatory_with_star": "*At least one mandatory",
   "label.error.cannot_be_empty": "Cannot be empty!",
   "label.head_contacts": "Director/VP/HR Head Contacts",
   "label.mobile_country_code": "Mobile Country Code",
