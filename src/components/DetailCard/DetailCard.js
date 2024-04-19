@@ -6,6 +6,7 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./DetailCard.style";
+import { useIntl } from "react-intl";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
@@ -42,6 +43,10 @@ const DetailCard = ({
   customErrorViewStyle,
 }) => {
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
+  const headerTextValue = !!headerId
+    ? intl.formatMessage({ id: headerId })
+    : "";
 
   return (
     <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
@@ -57,7 +62,7 @@ const DetailCard = ({
           ...customContainerStyle,
         }}
         hasActionButton={isWebView && hasActionButton}
-        headerText={headerId}
+        headerText={headerTextValue}
         index={index}
         isEditable={isEditProfile}
         onAdd={onAdd}

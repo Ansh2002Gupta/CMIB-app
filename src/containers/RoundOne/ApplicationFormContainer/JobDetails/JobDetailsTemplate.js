@@ -1,16 +1,10 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-  Platform,
-} from "@unthinkable/react-core-components";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import CardComponent from "../../../../components/CardComponent/CardComponent";
-import CheckBox from "../../../../components/CheckBox";
 import CommonText from "../../../../components/CommonText";
 import CustomImage from "../../../../components/CustomImage";
 import CustomTextInput from "../../../../components/CustomTextInput";
@@ -20,15 +14,14 @@ import DetailCard from "../../../../components/DetailCard";
 import MultiRow from "../../../../core/layouts/MultiRow";
 import TwoColumn from "../../../../core/layouts/TwoColumn/TwoColumn";
 import useIsWebView from "../../../../hooks/useIsWebView";
-import commonStyles, {
-  gridStyles,
-} from "../../../../theme/styles/commonStyles";
+import { gridStyles } from "../../../../theme/styles/commonStyles";
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
 import {
   DOCUMENT_TYPE,
-  SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH,
+  EXEPERIENCE_RANGE,
+  JOB_TYPE,
 } from "../../../../constants/constants";
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
@@ -38,6 +31,7 @@ import { getDocumentField, getPlaceOfPostingDetails } from "./MappedData";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
 
 const JobDetailsTemplate = ({
+  validateError,
   renderJobDetails,
   handleInputChange,
   configurableListQuery,
@@ -60,8 +54,6 @@ const JobDetailsTemplate = ({
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const { currentModule } = useGetCurrentUser();
-
-  console.log("currentModule", currentModule);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
   const containerStyle = isWebView
@@ -91,14 +83,16 @@ const JobDetailsTemplate = ({
       content: (
         <CardComponent customStyle={styles.bottomMargin}>
           <CustomTextInput
-            label={intl.formatMessage({ id: "label.designationName" })}
+            label={intl.formatMessage({ id: "label.designation_name" })}
             placeholder={intl.formatMessage({
-              id: "label.enter_designationName",
+              id: "label.enter_designation_name",
             })}
             isMandatory
             value={renderJobDetails?.designation}
             onChangeText={(val) => handleInputChange("designation", val)}
-            customHandleBlur={(val) => handleBlur("designation", val)}
+            customHandleBlur={() => handleBlur("designation")}
+            isError={!!validateError?.designation}
+            errorMessage={validateError?.designation}
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -111,6 +105,9 @@ const JobDetailsTemplate = ({
               isRupee
               value={renderJobDetails?.compensation}
               onChangeText={(val) => handleInputChange("compensation", val)}
+              customHandleBlur={() => handleBlur("compensation")}
+              isError={!!validateError?.compensation}
+              errorMessage={validateError?.compensation}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -123,6 +120,9 @@ const JobDetailsTemplate = ({
               isRupee
               value={renderJobDetails?.starting_salary}
               onChangeText={(val) => handleInputChange("starting_salary", val)}
+              customHandleBlur={() => handleBlur("starting_salary")}
+              isError={!!validateError?.starting_salary}
+              errorMessage={validateError?.starting_salary}
             />
           </View>
           <CustomTextEditor
@@ -134,6 +134,8 @@ const JobDetailsTemplate = ({
             onChangeText={(val) =>
               handleInputChange("role_responsibility", val)
             }
+            customHandleBlur={() => handleBlur("role_responsibility")}
+            errorMessage={validateError?.role_responsibility}
           />
           <CustomTextInput
             customStyle={styles.ctcTextInputStyle}
@@ -146,7 +148,10 @@ const JobDetailsTemplate = ({
             isMandatory
             value={renderJobDetails?.ctc_details}
             onChangeText={(val) => handleInputChange("ctc_details", val)}
-          />{" "}
+            customHandleBlur={() => handleBlur("ctc_details")}
+            isError={!!validateError?.ctc_details}
+            errorMessage={validateError?.ctc_details}
+          />
           <View style={styles.overseasContainerStyles}>
             {currentModule === "overseas-chapters" && (
               <>
@@ -159,7 +164,7 @@ const JobDetailsTemplate = ({
                     id: "label.select_work_experience_range",
                   })}
                   isDropdown
-                  options={DOCUMENT_TYPE}
+                  options={EXEPERIENCE_RANGE}
                   value={renderJobDetails?.work_exp_range_id}
                   onChangeValue={(val) =>
                     handleInputChange("work_exp_range_id", val)
@@ -183,7 +188,7 @@ const JobDetailsTemplate = ({
                     id: "label.job_type",
                   })}
                   isDropdown
-                  options={DOCUMENT_TYPE}
+                  options={JOB_TYPE}
                   placeholder={intl.formatMessage({
                     id: "label.select_job_type",
                   })}

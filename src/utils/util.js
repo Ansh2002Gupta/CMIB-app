@@ -688,7 +688,6 @@ export const formateErrors = (errorResponse) => {
   if (typeof errorResponse === "string") {
     return errorResponse;
   }
-
   if (
     errorResponse &&
     typeof errorResponse === "object" &&
@@ -705,4 +704,8 @@ export const formateErrors = (errorResponse) => {
   }
 
   return "An unexpected error occurred.";
+};
+
+export const convertStringtoNumber = (val) => {
+  return +val;
 };
