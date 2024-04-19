@@ -888,6 +888,7 @@ const locale = {
   "label.nofOfferAccepted": "Offers Accepted",
   "label.nofOfferRejected": "Offers Rejected",
   "label.job_details": "Job Details",
+  "label.add_desgination": "Add Desgination",
   "label.topCountriesHighestPlacements":
     "Top 10 Countries with Highest Number of Placements",
   "label.topCountriesHighestCTCs": "Top 10 Countries with Highest CTCs",
