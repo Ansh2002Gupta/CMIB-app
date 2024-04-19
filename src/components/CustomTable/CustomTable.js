@@ -86,6 +86,8 @@ const CustomTable = ({
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
+  isStatusTextBoolean,
+  popUpMessage,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -130,7 +132,12 @@ const CustomTable = ({
   };
 
   return (
-    <View style={{...(isWebView ? styles.container : styles.mobileMainContainer), ...customTableStyle}}>
+    <View
+      style={{
+        ...(isWebView ? styles.container : styles.mobileMainContainer),
+        ...customTableStyle,
+      }}
+    >
       <TwoRow
         topSection={
           <>
@@ -434,7 +441,7 @@ CustomTable.defaultProps = {
   totalcards: 0,
   onIconPress: () => {},
   placeholder: "Search",
-  getStatusStyle: ()=>{},
+  getStatusStyle: () => {},
   isTotalCardVisible: true,
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,

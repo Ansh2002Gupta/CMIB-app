@@ -95,6 +95,10 @@ const useAppliedJobsListing = () => {
     isShow: false,
     decision: -1,
   });
+  const [showToast, setShowToast] = useState(true);
+
+  useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
+
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -113,6 +117,7 @@ const useAppliedJobsListing = () => {
     fetchData: fetchDataAppliedJobs,
   } = useFetch({
     url: MEMBER_JOBS_LISTING,
+    // url: COMPANY_TICKET_LISTING,
     otherOptions: {
       skipApiCallOnMount: true,
     },

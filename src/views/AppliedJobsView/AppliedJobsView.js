@@ -1,13 +1,18 @@
 import React, { useRef, useState } from "react";
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
 import { TwoRow } from "../../core/layouts";
 
+import ActionPairButton from "../../components/ActionPairButton";
+import CustomModal from "../../components/CustomModal";
 import CustomTable from "../../components/CustomTable";
+import CustomTextInput from "../../components/CustomTextInput";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import InterviewTimeModal from "../../containers/InterviewTimeModal/InterviewTimeModal";
 import JobOfferResponseModal from "../../containers/JobOfferResponseModal/JobOfferResponseModal";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import useAppliedJobsListing from "./controllers/useAppliedJobsListing";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import {
@@ -16,6 +21,7 @@ import {
   APPLIED_JOBS_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
 import images from "../../images";
+import styles from "./AppliedJobsView.style";
 
 const isIos = Platform.OS.toLowerCase() === "ios";
 
@@ -39,6 +45,7 @@ const AppliedJobsView = () => {
     indexOfLastRecord,
     isHeading,
     isAppliedJobsListingLoading,
+    fetchDataAppliedJobs,
     isFirstPageReceived,
     loadingMore,
     onIconPress,
@@ -46,6 +53,9 @@ const AppliedJobsView = () => {
     rowsPerPage,
     setCurrentRecords,
     defaultCategory,
+    statusText,
+    subHeadingText,
+    tableIcon,
     appliedJobsData,
     totalcards,
     showJobOfferResponseModal,

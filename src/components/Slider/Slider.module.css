@@ -1,5 +1,5 @@
 :root {
-  --black: #000833;
+  --green: #000833;
   --blueOne: rgba(63, 81, 181, 0.16);
   --white: #fff;
 }
@@ -49,7 +49,7 @@
 /******** Firefox styles ********/
 /* slider track */
 .range::-moz-range-track {
-  background-color: var(--black);
+  background-color: var(--green);
   border-radius: 0.5rem;
   height: 0.4rem;
 }
