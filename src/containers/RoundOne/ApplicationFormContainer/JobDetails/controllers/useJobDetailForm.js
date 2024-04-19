@@ -193,6 +193,10 @@ const useJobDetailForm = ({ tabHandler }) => {
           setDesginationItems([...newList]);
           setSelectedOptions([String(newList[0]?.id)]);
           setCurrentDesginationID(newList[0]?.id);
+          setIsLoading(false);
+        } else {
+          setIsAddNewJob(true);
+          setIsLoading(false);
         }
       }
     };
@@ -224,7 +228,7 @@ const useJobDetailForm = ({ tabHandler }) => {
 
   useEffect(() => {
     const fetchProfileData = async () => {
-      if (currentDesginationID) {
+      if (!!currentDesginationID) {
         const newProfileData = await fetchJobDetailsData({});
         setEditJobDetails(mapDataToUI(newProfileData));
         setIsLoading(false);
@@ -369,6 +373,8 @@ const useJobDetailForm = ({ tabHandler }) => {
     );
     return monthlyDetail ? monthlyDetail.value : "0";
   }
+
+  console.log("selectedOPtions", menuOptions);
 
   const handleDelete = ({ itemToBeDeletedId, prevState }) => {
     if (currentDesginationID !== null) {

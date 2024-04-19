@@ -8,7 +8,6 @@ import CommonText from "../CommonText";
 import { convertMobileGraphData } from "../../utils/util";
 import colors from "../../assets/colors";
 import styles from "./PieChart.style";
-import { color } from "../../constants/constants";
 
 const PieChart = ({ colorScale, data, height, label }) => {
   const screenWidth = Dimensions.get("window").width;
@@ -28,13 +27,13 @@ const PieChart = ({ colorScale, data, height, label }) => {
         <PieChartComponent
           data={convertMobileGraphData(data, colorScale)}
           width={screenWidth * 0.75}
-          height={height}
+          height={height * 0.5}
           chartConfig={chartConfig}
           accessor={"value"}
           backgroundColor={colors.white}
-          center={[screenWidth / 15, 0]}
+          absolute
+          center={[0, 0]}
           hasLegend={true}
-          holeRadius={5}
         />
       }
     />

@@ -40,9 +40,11 @@ export const DETAIL = `/detail`;
 
 //sub routes
 export const ACADEMICS = "/academics";
+export const APPLICANTS = "/applicants";
 export const ACTIVITIES = "/activities";
 export const APPLICANT = "/applicant";
 export const APPLICATION = "/application";
+export const BILLING_INFO = "/billing-info";
 export const FILTERS = "/filters";
 export const INTERVIEWS = "/interviews";
 export const INTERVIEW = "/interview";
@@ -65,7 +67,6 @@ export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
 export const ROUND_ONE_DASHBOARD = `/board`;
 export const GLOBAL_SESSIONS = `/sessions`;
-export const APPLICANTS = "/applicants";
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;

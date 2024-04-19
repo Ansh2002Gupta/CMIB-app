@@ -33,6 +33,7 @@ import {
   HEAD_CONTACT,
   MOBILE_CODES,
 } from "../../../../constants/constants";
+import LoadingScreen from "../../../../components/LoadingScreen";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
@@ -402,7 +403,7 @@ const PreInterviewPreferencesTemplate = ({
         )}
         {isLoadingHeadContactData ? (
           <View style={styles.loaderContainer}>
-            <Spinner thickness={2} {...webProps} />
+            <LoadingScreen />
           </View>
         ) : (
           <MultiRow rows={JobDetailsConfig} />

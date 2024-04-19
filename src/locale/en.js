@@ -342,8 +342,8 @@ const locale = {
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
   "label.module_access": "Module Access",
-  "label.srn": "SRN",
-  "label.srn_placeholder": "Enter your SRN number",
+  "label.srnMRN": "SRN/MRN",
+  "label.srn_mrn_placeholder": "Enter your SRN/MRN",
   "label.enter_otp": "Enter OTP",
   "label.otp_text_forgot_password":
     "Please enter the one time password that you have received on your registered mobile number to continue to reset your password.",
@@ -888,6 +888,34 @@ const locale = {
   "label.nofOfferAccepted": "Offers Accepted",
   "label.nofOfferRejected": "Offers Rejected",
   "label.job_details": "Job Details",
+  "label.add_desgination": "Add Desgination",
+  "label.topCountriesHighestPlacements":
+    "Top 10 Countries with Highest Number of Placements",
+  "label.topCountriesHighestCTCs": "Top 10 Countries with Highest CTCs",
+  "label.womenPlacedYears":
+    "Percentage of Women Members Placed in the Last 5 Years",
+  "label.percentageWomenMembers": "Percentage of Women Members",
+  "label.CTCOfferedDesignation": "CTC Offered for each Designation",
+  "label.CTCOfferedINR": "CTC Offered (in INR)",
+  "label.centersChosenCandidatesInterview":
+    "Centers Chosen by Candidates for Interview",
+  "label.candidatesAcceptingOffersAreasWork":
+    "Candidates Accepting Offers in Areas of Work",
+  "label.recruitmentHistory": "Recruitment History",
+  "label.regionsBasedHighestCTCs": "Regions based on Highest CTCs",
+  "label.topCountriesHighestJobsAcceptedCandidates":
+    "Top 10 Countries based on Highest Number of Jobs Accepted by Candidates",
+  "label.numberJobsAccepted": "Number of Jobs Accepted",
+  "label.companyPreferenceKindIndustry":
+    "Company Preference for Kind of Industry",
+  "label.vacanciesIndustries": "Vacancies in Industries",
+  "label.companies": "Companies",
+  "label.current_package_capital": "CURRENT PACKAGE",
+  "label.topDesignationsBasedCTCOffered":
+    "Top 10 Designations based on CTC Offered",
+  "label.activeJobs": "Active Jobs",
+  "label.candidatesAcceptingOffersIndustries":
+    "Candidates Accepting Offers in Industries",
 };
 
 export default locale;

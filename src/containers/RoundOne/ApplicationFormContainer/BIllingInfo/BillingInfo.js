@@ -84,7 +84,8 @@ const BillingInfo = ({ tabHandler }) => {
               buttonTwoText={intl.formatMessage({ id: "label.save" })}
               onPressButtonOne={() => navigate(-1)}
               onPressButtonTwo={() => {
-                handleSaveAndNext();
+                // handleSaveAndNext();
+                tabHandler("next");
               }}
               // isDisabled={isDisabled}
               // displayLoader={isButtonLoading}
