@@ -742,3 +742,14 @@ export const convertDonutChartData = (data) => {
   }
   return convertedArray;
 };
+
+export const convertGraphData = (data) => {
+  const formattedData = data.map((item) => {
+    return {
+      x: item.label,
+      y: item.value,
+    };
+  });
+
+  return formattedData;
+};

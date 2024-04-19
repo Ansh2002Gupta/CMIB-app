@@ -608,6 +608,14 @@ export const mapDataToPayload = (data, currentModule) => {
           work_exp_range_id: data?.work_exp_range_id,
         }
       : {};
+
+  const bond_details_paylaod =
+    data?.bond_details?.is_bond_included === 0
+      ? {
+          bond_period_in_mm: data?.bond_details?.bond_period_in_mm,
+          exit_amount: data?.bond_details?.exit_amount,
+        }
+      : {};
   const payload = {
     designation: data?.designation,
     compensation: data?.compensation,
@@ -621,8 +629,7 @@ export const mapDataToPayload = (data, currentModule) => {
     bond_details: {
       is_bond_included:
         data?.bond_details?.is_bond_included === 0 ? "yes" : "no",
-      bond_period_in_mm: data?.bond_details?.bond_period_in_mm,
-      exit_amount: data?.bond_details?.exit_amount,
+      ...bond_details_paylaod,
     },
     specific_performa_required:
       data?.specific_performa_required === 0 ? "yes" : "no",

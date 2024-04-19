@@ -292,24 +292,31 @@ const useCompanyProfile = ({ tabHandler }) => {
     });
   };
 
-  const isLoading = isCountryCodeLoading || isIndustryTypeLoading;
+  const isLoading =
+    isCountryCodeLoading || isIndustryTypeLoading || isProfileDataLoading;
 
   const getErrorDetails = () => {
-    if (isErrorGettingIndustries && isErrorGettingCountryCodes) {
+    if (
+      isErrorGettingIndustries &&
+      isErrorGettingCountryCodes &&
+      isProfileDataLoading
+    ) {
       let errorMessage = "";
       if (
         errorGettingIndustries === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
-        errorGettingCountryCodes === GENERIC_GET_API_FAILED_ERROR_MESSAGE
+        errorGettingCountryCodes === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
+        errorWhileGettingProfileData == GENERIC_GET_API_FAILED_ERROR_MESSAGE
       ) {
         errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       } else {
-        errorMessage = `${errorGettingIndustries} , ${errorGettingCountryCodes}`;
+        errorMessage = `${errorGettingIndustries} , ${errorGettingCountryCodes} ,${errorWhileGettingProfileData}`;
       }
       return {
         errorMessage,
         onRetry: () => {
           getCountryCodes();
           getIndustryType();
+          getProfileData();
         },
       };
     }
@@ -322,6 +329,11 @@ const useCompanyProfile = ({ tabHandler }) => {
       return {
         errorMessage: errorGettingCountryCodes?.data?.message,
         onRetry: getCountryCodes,
+      };
+    if (isProfileDataLoading)
+      return {
+        errorMessage: errorWhileGettingProfileData?.data?.message,
+        onRetry: getProfileData,
       };
     return {
       errorMessage: "",

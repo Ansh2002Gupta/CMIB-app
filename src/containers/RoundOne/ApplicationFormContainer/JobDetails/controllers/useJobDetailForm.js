@@ -101,6 +101,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     isShown: false,
     modalMessage: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   const renderJobDetails = isAddNewJob ? addNewJobDetails : editJobDetails;
   const setRenderJobDetails = isAddNewJob
@@ -143,7 +144,6 @@ const useJobDetailForm = ({ tabHandler }) => {
     },
   });
 
-  const isLoading = isFetchingJobDetailsData || isDisagnationListLoading;
   const error = errorWhileFetchingData || errorInDesginationList;
 
   const { makeRequest, isLoading: isLoadingOnAddJob } = usePost({
@@ -189,7 +189,6 @@ const useJobDetailForm = ({ tabHandler }) => {
     const fetchListing = async () => {
       if (currentModule) {
         const newList = await fetchDesginationList();
-
         if (!!newList?.length) {
           setDesginationItems([...newList]);
           setSelectedOptions([String(newList[0]?.id)]);
@@ -197,8 +196,10 @@ const useJobDetailForm = ({ tabHandler }) => {
         }
       }
     };
-
     fetchListing();
+    if (!!error) {
+      setIsLoading(false);
+    }
   }, [currentModule]);
 
   useEffect(() => {
@@ -226,10 +227,13 @@ const useJobDetailForm = ({ tabHandler }) => {
       if (currentDesginationID) {
         const newProfileData = await fetchJobDetailsData({});
         setEditJobDetails(mapDataToUI(newProfileData));
+        setIsLoading(false);
       }
     };
-
     fetchProfileData();
+    if (!!error) {
+      setIsLoading(false);
+    }
   }, [currentDesginationID]);
 
   const handleInputChange = (fieldName, value, subFieldName) => {
