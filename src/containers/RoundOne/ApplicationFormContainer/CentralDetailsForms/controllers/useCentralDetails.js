@@ -20,8 +20,9 @@ import { useDelete, usePost, usePut } from "../../../../../hooks/useApiRequest";
 import { useIntl } from "react-intl";
 import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import { formateErrors } from "../../../../../utils/util";
 
-const useCentralDetails = () => {
+const useCentralDetails = ({ tabHandler }) => {
   const [contactDetailsState, setContactDetailsState] = useState({});
   const [interviewDetailsState, setInterviewDetailsState] = useState({
     [keys.campusDates]: [],
@@ -48,15 +49,12 @@ const useCentralDetails = () => {
     ...selectionProcessFields(intl),
   ]);
 
-  const {
-    data: countryData,
-    isLoading: countryLoading,
-    fetchData: fetchingCountryCode,
-  } = useFetch({
+  const [selectionFieldError, setSelectionFieldError] = useState("");
+  const [error, setError] = useState("");
+
+  const { data: countryData } = useFetch({
     url: COUNTRY_CODE,
-    otherOptions: {
-      //   skipApiCallOnMount: true,
-    },
+    otherOptions: {},
   });
 
   //used to fetch mapped centers
@@ -64,9 +62,10 @@ const useCentralDetails = () => {
     data: mappedCentersList,
     isLoading: mappedCentersListLoading,
     fetchData: fetchMappedCentersList,
+    error: mappedCenterListError,
   } = useFetch({
     url: `/company/${selectedModule.key}/rounds/${roundId}/application/centres`,
-    otherOptions: {},
+    otherOptions: { skipApiCallOnMount: true },
   });
 
   //used to fetch application detail based on center id
@@ -74,10 +73,12 @@ const useCentralDetails = () => {
     data: applicationDetail,
     isLoading: applicationDetailLoading,
     fetchData: fetchApplicationDetail,
+    error: fetchApplicationDetailError,
   } = useFetch({
-    //
     url: "",
-    otherOptions: {},
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const {
@@ -86,36 +87,25 @@ const useCentralDetails = () => {
     fetchData: fetchRoundCenterDetails,
     error: roundCenterDetailsError,
   } = useFetch({
-    //
-    url: `/core/${selectedModule.key}/rounds/${roundId}/centres/{centreId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
-  const {
-    // data: applicationDetail,
-    isLoading: mapCenterLoading,
-    fetchData: fetchMapCenter,
-    makeRequest: mapCenter,
-  } = usePost({
+  const { isLoading: mapCenterLoading, makeRequest: mapCenter } = usePost({
     url: "",
     otherOptions: {},
   });
-  const {
-    // data: applicationDetail,
-    isLoading: unMapCenterLoading,
-    fetchData: fetchUnMapCenter,
-    makeRequest: unMapCenter,
-  } = useDelete({
-    url: "",
-    otherOptions: {},
-  });
+
+  const { isLoading: unMapCenterLoading, makeRequest: unMapCenter } = useDelete(
+    { url: "", otherOptions: {} }
+  );
 
   const {
     data: centerListData,
     isLoading: centerListLoading,
     fetchData: fetchCenterList,
+    error: centerListError,
   } = useFetch({
     url: `core/${selectedModule.key}/rounds/${roundId}`,
     otherOptions: {
@@ -126,10 +116,13 @@ const useCentralDetails = () => {
   const {
     data: desginationData,
     isLoading: designationDataLoading,
-    // fetchData: fetchDesignationData,
+    fetchData: fetchDesignationData,
+    error: designationDataError,
   } = useFetch({
     url: `/company/${selectedModule.key}/rounds/${roundId}/application/job-detail`,
-    otherOptions: {},
+    otherOptions: {
+      fetchMappedCentersList: true,
+    },
   });
 
   const { isLoading: saveRoundDetailLoading, makeRequest: saveRoundDetails } =
@@ -151,6 +144,18 @@ const useCentralDetails = () => {
     uploadPercentage,
   } = useSaveLogo();
 
+  let isPageLoading = mappedCentersListLoading;
+  let innerPageLoading =
+    applicationDetailLoading ||
+    roundCenterDetailsLoading ||
+    designationDataLoading;
+
+  let fetchErrors =
+    mappedCenterListError ||
+    fetchApplicationDetailError ||
+    roundCenterDetailsError ||
+    designationDataError;
+
   const contactDetailTemplate = useMemo(() => {
     const data = contactDetailFields(countryData, intl);
     return data.map((row) => {
@@ -165,39 +170,47 @@ const useCentralDetails = () => {
   }, [interviewDetailsState, roundCenterDetails]);
 
   useEffect(() => {
-    if (applicationDetail)
+    if (selectedModule?.key && roundId) {
+      fetchDesignationData({});
+      fetchMappedCentersList();
+    }
+  }, [selectedModule, roundId]);
+
+  useEffect(() => {
+    if (applicationDetail) {
       setContactDetailsState(
         getFormattedContactDetails(applicationDetail?.contact_person_info)
       );
-    setInterviewDetailsState(
-      getInterviewDetails(applicationDetail?.interview_details)
-    );
-    setSelectionProcess(
-      getSelectionProcess(
-        selectionProcessFields(intl),
-        applicationDetail?.selection_process
-      )
-    );
-    setRequiredDocumentDetails(
-      getFormattedOtherBenefits(applicationDetail?.other_benefits)
-    );
-    setDesignationDetatils(
-      getDesignationsData(
-        applicationDetail?.designation_details,
-        desginationData
-      )
-    );
-    if (applicationDetail?.other_details) {
-      setIsCompanyPPT(
-        applicationDetail?.other_details?.company_ppt === "yes" ? 0 : 1
+      setInterviewDetailsState(
+        getInterviewDetails(applicationDetail?.interview_details)
       );
-      setFileUploadResult(
-        applicationDetail?.other_details?.file_path
-          ? {
-              data: { url: applicationDetail?.other_details?.file_path },
-            }
-          : null
+      setSelectionProcess(
+        getSelectionProcess(
+          selectionProcessFields(intl),
+          applicationDetail?.selection_process
+        )
       );
+      setRequiredDocumentDetails(
+        getFormattedOtherBenefits(applicationDetail?.other_benefits)
+      );
+      setDesignationDetatils(
+        getDesignationsData(
+          applicationDetail?.designation_details,
+          desginationData
+        )
+      );
+      if (applicationDetail?.other_details) {
+        setIsCompanyPPT(
+          applicationDetail?.other_details?.company_ppt === "yes" ? 0 : 1
+        );
+        setFileUploadResult(
+          applicationDetail?.other_details?.file_path
+            ? {
+                data: { url: applicationDetail?.other_details?.file_path },
+              }
+            : null
+        );
+      }
     }
   }, [applicationDetail, desginationData]);
 
@@ -231,6 +244,7 @@ const useCentralDetails = () => {
       }
       return item;
     });
+    setSelectionFieldError("");
     setSelectionProcess([...updatedItems]);
   };
 
@@ -268,8 +282,13 @@ const useCentralDetails = () => {
         prevState.current = prevState.current.filter(
           (item) => item.id !== itemToBeDeletedId
         );
+        selectedOptions.forEach((item) => {
+          if (item?.id) {
+            resetForm();
+          }
+        });
         setSelectedOptions((prev) => [
-          ...prev.filter((itemID) => itemID !== itemToBeDeletedId),
+          ...prev.filter((item) => item?.id !== itemToBeDeletedId),
         ]);
         if (configurableListQuery.length > 0) {
           const queryList = menuOptions.filter(
@@ -280,6 +299,9 @@ const useCentralDetails = () => {
           setMenuOptions([...prevState.current]);
         }
       },
+      onErrorCallback: (error) => {
+        setError(formateErrors(error));
+      },
     });
   };
 
@@ -288,10 +310,7 @@ const useCentralDetails = () => {
     setCurrentDesginationID(centerData);
     setSelectedOptions([centerData]);
     if (centerData?.id !== selectedOptions?.[0]?.id) {
-      setContactDetailsState({});
-      setInterviewDetailsState({});
-      setRequiredDocumentDetails([]);
-      setDesignationDetatils([]);
+      resetForm();
       fetchRoundCenterDetails({
         overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}`,
       });
@@ -299,6 +318,13 @@ const useCentralDetails = () => {
         overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${centerData?.detailId}`,
       });
     }
+  };
+
+  const resetForm = () => {
+    setContactDetailsState({});
+    setInterviewDetailsState({});
+    setRequiredDocumentDetails([]);
+    setDesignationDetatils([]);
   };
 
   const handleAdd = () => {
@@ -312,6 +338,10 @@ const useCentralDetails = () => {
       onSuccessCallback: () => {
         handleCenterCancel();
         fetchMappedCentersList();
+      },
+      onErrorCallback: (error) => {
+        handleCenterCancel();
+        setError(formateErrors(error));
       },
     });
   };
@@ -340,9 +370,16 @@ const useCentralDetails = () => {
       body,
       onSuccessCallback: () => {
         console.log("onSuccessCallback,onSuccessCallback");
+        tabHandler("next");
+      },
+      onErrorCallback: (error) => {
+        setError(formateErrors(error));
       },
     });
-    console.log(body, selectedOptions, "body");
+  };
+
+  const handleError = () => {
+    setError("");
   };
 
   const handleCancel = () => {};
@@ -411,7 +448,7 @@ const useCentralDetails = () => {
     centerListLoading,
     isEditProfile: true,
     handleInterviewDetailMultiSelect,
-    roundCenterDetailsLoading,
+    innerPageLoading,
     roundCenterDetails,
     roundCenterDetailsError,
 
@@ -437,6 +474,13 @@ const useCentralDetails = () => {
     desginationData,
     selectionProcess,
     handleClickOnSelectionProcess,
+    selectionFieldError,
+    errorWhileUpdating: error,
+    setErrorWhileUpdating: handleError,
+    isPageLoading,
+    fetchErrors,
+    centerListError,
+    saveRoundDetailLoading,
   };
 };
 

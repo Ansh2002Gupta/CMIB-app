@@ -76,5 +76,10 @@ const styles = {
     color: colors.black,
     fontWeight: "600",
   },
+  flexContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 };
 export default styles;

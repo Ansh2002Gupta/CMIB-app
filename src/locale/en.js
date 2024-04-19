@@ -814,7 +814,7 @@ const locale = {
   "label.campusDates": "Select Campus Dates",
   "label.selectCompany": "Select Company",
   "label.companyDates": "Campus Dates",
-  "label.companyDates": "Company Available For Interview",
+  "label.companyDates": "Campus Dates",
   "label.centers": "Centers",
   "label.selectCenters": "Add Centers",
   "label.benefit_details": "Benefits Details",

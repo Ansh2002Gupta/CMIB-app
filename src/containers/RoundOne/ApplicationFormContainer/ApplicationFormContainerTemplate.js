@@ -53,13 +53,13 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
       component: CompanyProfile,
     },
     {
-      component: CentralDetailsForm,
-    },
-    {
       component: JobDetails,
     },
     {
       component: PreInterviewPreferences,
+    },
+    {
+      component: CentralDetailsForm,
     },
     {
       component: BillingInfo,

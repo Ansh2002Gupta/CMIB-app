@@ -3,7 +3,7 @@ import colors from "../../../../assets/colors";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.backgroundGrey,
+    backgroundColor: colors.backgroundColor,
     flex: 1,
   },
   containerGridStyle: (columnCount) => ({
@@ -158,6 +158,10 @@ const styles = StyleSheet.create({
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
   backButtonStyle: {
     fontSize: 14,
+  },
+  starStyle: { color: colors.errorRed },
+  selectionProcessTitle: {
+    flexDirection: "row",
   },
 });
 

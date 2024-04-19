@@ -22,6 +22,7 @@ const SingleSelectionModal = ({
   onClickCancel,
   isLoading,
   isDataLoading,
+  centerListError,
 }) => {
   const intl = useIntl();
 
@@ -34,6 +35,16 @@ const SingleSelectionModal = ({
       );
     }
 
+    if (centerListError) {
+      return (
+        <View style={styles.flexContainer}>
+          <CommonText customTextStyle={styles.messageText}>
+            {centerListError?.data?.message}
+          </CommonText>
+        </View>
+      );
+    }
+    
     if (!data?.length) {
       return (
         <View style={styles.flexCenterContainer}>

@@ -38,7 +38,7 @@ import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
 
 const PreInterviewPreferencesTemplate = ({
-  tabhandler,
+  tabHandler,
   handleInterviewPreferences,
   preInterviewDetails,
 }) => {
@@ -298,7 +298,7 @@ const PreInterviewPreferencesTemplate = ({
         if (!!error?.errors) setToastMsg(errorMsg);
       },
       onSuccessCallback: () => {
-        tabhandler("next");
+        tabHandler("next");
         setToastMsg("Changes saved successfully!");
       },
     });
@@ -395,7 +395,7 @@ const PreInterviewPreferencesTemplate = ({
               leftIconSource: images.iconArrowLeft,
             }}
             onPress={() => {
-              tabhandler("prev");
+              tabHandler("prev");
             }}
           >
             <CommonText

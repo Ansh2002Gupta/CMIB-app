@@ -143,6 +143,7 @@ export const interviewDetailsFields = (state, roundCenterDetails, intl) => {
         isDropdown: true,
         key: keys.companyAvailableForInterview,
         label: "label.companyAvailableForInterview",
+        isMandatory: true,
         placeholder: "label.companyAvailableForInterview",
         valueField: "value",
         options: interviewTypeOptions.map((option) =>

@@ -6,7 +6,7 @@ export const addDesignationField = (options, data) => [
     cellID: 1,
     key: designation_key.DESIGNATION_DETAILS,
     label: "label.designation",
-    placeholder: "label.enter_designationName",
+    placeholder: "label.designation",
     isDropdown: true,
     isMandatory: true,
     valueField: "id",

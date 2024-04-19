@@ -22,12 +22,14 @@ import images from "../../../../images";
 import ActionPairButton from "../../../../components/ActionPairButton";
 import { useNavigate } from "react-router";
 import commonStyles from "../../../../theme/styles/commonStyles";
+import { TwoRow } from "../../../../core/layouts";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
+import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent";
 
 const CentralDetailsTemplate = ({
   handleContactDetailsChange,
   isEditProfile,
   setErrorWhileUpdating,
-  errorWhileUpdating,
   isErrorWhileUpdating,
   contactDetails,
   interviewDetails,
@@ -55,7 +57,7 @@ const CentralDetailsTemplate = ({
   mapCenterLoading,
   centerListLoading,
   handleInterviewDetailMultiSelect,
-  roundCenterDetailsLoading,
+  innerPageLoading,
   roundCenterDetails,
   roundCenterDetailsError,
 
@@ -72,6 +74,13 @@ const CentralDetailsTemplate = ({
   handleClickOnSelectionProcess,
   selectionProcess,
   tabHandler,
+  selectionFieldError,
+
+  errorWhileUpdating,
+  isPageLoading,
+  fetchErrors,
+  centerListError,
+  saveRoundDetailLoading,
 }) => {
   const {
     fileUploadResult,
@@ -120,7 +129,7 @@ const CentralDetailsTemplate = ({
   };
 
   const renderRoundDetail = () => {
-    if (roundCenterDetailsLoading) {
+    if (innerPageLoading) {
       return (
         <View style={styles.flexContainer}>
           <Spinner />
@@ -138,7 +147,7 @@ const CentralDetailsTemplate = ({
       );
     }
 
-    if (roundCenterDetails) {
+    if (roundCenterDetails && selectedOptions?.[0]) {
       return (
         <View style={styles.roundDetailContainer}>
           <CommonText customTextStyle={styles.roundHeaderText}>
@@ -176,15 +185,20 @@ const CentralDetailsTemplate = ({
             handleMultiSelect={handleInterviewDetailMultiSelect}
           />
           <View style={styles.bottomMargin}>
-            <CommonText
-              customContainerStyle={styles.selectionProcessTextStyle}
-              customTextStyle={styles.selectionProcessStyle}
-              fontWeight="600"
-            >
-              {intl.formatMessage({
-                id: "label.selection_process",
-              })}
-            </CommonText>
+            <View style={styles.selectionProcessTitle}>
+              <CommonText
+                customContainerStyle={styles.selectionProcessTextStyle}
+                customTextStyle={styles.selectionProcessStyle}
+                fontWeight="600"
+              >
+                {intl.formatMessage({
+                  id: "label.selection_process",
+                })}
+              </CommonText>
+              <CommonText customTextStyle={[styles.label, styles.starStyle]}>
+                {" *"}
+              </CommonText>
+            </View>
             {renderSelectionProcess()}
           </View>
           <AddDesignation
@@ -248,37 +262,97 @@ const CentralDetailsTemplate = ({
     );
   };
 
+  if (isPageLoading) {
+    return (
+      <View style={styles.flexContainer}>
+        <Spinner />
+      </View>
+    );
+  }
+
+  if (fetchErrors) {
+    return (
+      <ErrorComponent
+        errorMsg={
+          fetchErrors?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+        }
+      />
+    );
+  }
+
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.topContainer}>
-        <ConfigurableList
-          title={intl.formatMessage({ id: "label.centers" })}
-          searchQuery={configurableListQuery}
-          setSearchQuery={setConfigurableListQuery}
-          selectedOptions={selectedOptions.map((item) => {
-            return item?.id;
-          })}
-          onDelete={handleDelete}
-          handlePressCustom={handlePress}
-          onAdd={handleAdd}
-          nameField="centre_name"
-          idField="centre_id"
-          options={mappedCentersList}
-          menuOptions={menuOptions}
-          setMenuOptions={setMenuOptions}
-          customOuterContianer={styles.configurableStyle}
-          componentContainer={styles.componentContainer}
-          optionFormatter={(option) => ({
-            detailId: option?.id,
-            id: String(option["centre_id"]),
-            name: String(option["centre_name"]),
-          })}
-        />
-        <View style={styles.innerContainerStyle}>{renderRoundDetail()}</View>
-      </View>
-      {!roundCenterDetailsLoading &&
-        roundCenterDetails &&
-        renderBottomSection()}
+      <TwoRow
+        isTopFillSpace={true}
+        topSection={
+          <>
+            <View style={styles.topContainer}>
+              <ConfigurableList
+                title={intl.formatMessage({ id: "label.centers" })}
+                searchQuery={configurableListQuery}
+                setSearchQuery={setConfigurableListQuery}
+                selectedOptions={selectedOptions.map((item) => {
+                  return item?.id;
+                })}
+                onDelete={handleDelete}
+                handlePressCustom={handlePress}
+                onAdd={handleAdd}
+                nameField="centre_name"
+                idField="centre_id"
+                options={mappedCentersList}
+                menuOptions={menuOptions}
+                setMenuOptions={setMenuOptions}
+                customOuterContianer={styles.configurableStyle}
+                componentContainer={styles.componentContainer}
+                optionFormatter={(option) => ({
+                  detailId: option?.id,
+                  id: String(option["centre_id"]),
+                  name: String(option["centre_name"]),
+                })}
+              />
+              <View style={styles.innerContainerStyle}>
+                {renderRoundDetail()}
+              </View>
+            </View>
+            {!innerPageLoading && roundCenterDetails && renderBottomSection()}
+          </>
+        }
+        bottomSection={
+          <View style={styles.actionBtnContainer}>
+            <CustomButton
+              style={styles.buttonStyle}
+              iconLeft={{
+                leftIconSource: images.iconArrowLeft,
+              }}
+              onPress={() => {
+                tabHandler("prev");
+              }}
+            >
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={styles.backButtonStyle}
+              >
+                {intl.formatMessage({ id: "label.back" })}
+              </CommonText>
+            </CustomButton>
+            <ActionPairButton
+              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+              buttonTwoText={intl.formatMessage({ id: "label.save" })}
+              onPressButtonOne={() => navigate(-1)}
+              onPressButtonTwo={() => {
+                handleSave();
+              }}
+              displayLoader={saveRoundDetailLoading}
+              customStyles={{
+                ...isWebProps,
+                customContainerStyle: commonStyles.customContainerStyle,
+              }}
+              isButtonTwoGreen
+            />
+          </View>
+        }
+      />
+
       {showCenterModal && (
         <SingleSelectionModal
           data={centerListData}
@@ -291,41 +365,10 @@ const CentralDetailsTemplate = ({
           onClickCancel={handleCenterCancel}
           isLoading={mapCenterLoading}
           isDataLoading={centerListLoading}
+          centerListError={centerListError}
         />
       )}
-      <View style={styles.actionBtnContainer}>
-        <CustomButton
-          style={styles.buttonStyle}
-          iconLeft={{
-            leftIconSource: images.iconArrowLeft,
-          }}
-          onPress={() => {
-            tabHandler("prev");
-          }}
-        >
-          <CommonText
-            fontWeight={"600"}
-            customTextStyle={styles.backButtonStyle}
-          >
-            {intl.formatMessage({ id: "label.back" })}
-          </CommonText>
-        </CustomButton>
-        <ActionPairButton
-          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-          buttonTwoText={intl.formatMessage({ id: "label.save" })}
-          onPressButtonOne={() => navigate(-1)}
-          onPressButtonTwo={() => {
-            handleSave();
-          }}
-          displayLoader={false}
-          customStyles={{
-            ...isWebProps,
-            customContainerStyle: commonStyles.customContainerStyle,
-          }}
-          isButtonTwoGreen
-        />
-      </View>
-      {isErrorWhileUpdating && !!errorWhileUpdating && (
+      {!!errorWhileUpdating && (
         <ToastComponent
           toastMessage={errorWhileUpdating}
           onDismiss={() => {
