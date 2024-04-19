@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
   containerGridStyle: (columnCount) => ({
     display: "grid",
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",
-    overflowY: "auto",
   }),
   labelStyle: {
     fontSize: 14,

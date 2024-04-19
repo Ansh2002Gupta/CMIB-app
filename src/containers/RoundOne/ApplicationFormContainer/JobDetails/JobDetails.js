@@ -21,6 +21,8 @@ import { formateErrors } from "../../../../utils/util";
 
 const JobDetails = ({ tabHandler }) => {
   const {
+    isButtonLoading,
+    isDisabled,
     desginationItems,
     setRenderJobDetails,
     configurableListQuery,
@@ -60,6 +62,7 @@ const JobDetails = ({ tabHandler }) => {
     onClickAddDesignation,
     isLoading,
     error,
+    validateError,
     selectionProcess,
     startingSalary,
   } = useJobDetailForm({ tabHandler });
@@ -85,6 +88,7 @@ const JobDetails = ({ tabHandler }) => {
           topSection={
             <JobDetailsTemplate
               {...{
+                validateError,
                 desginationItems,
                 menuOptions,
                 setMenuOptions,
@@ -148,7 +152,8 @@ const JobDetails = ({ tabHandler }) => {
                 onPressButtonTwo={() => {
                   handleSaveAndNext();
                 }}
-                displayLoader={false}
+                isDisabled={isDisabled}
+                displayLoader={isButtonLoading}
                 customStyles={{
                   ...isWebProps,
                   customContainerStyle: commonStyles.customContainerStyle,

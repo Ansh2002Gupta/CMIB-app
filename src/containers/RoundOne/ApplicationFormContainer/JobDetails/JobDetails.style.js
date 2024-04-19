@@ -61,11 +61,13 @@ const styles = StyleSheet.create({
     marginTop: 0,
     justifyContent: "space-between",
     flexWrap: "wrap",
+    overflowX: "auto",
   },
   yearlyCustomCardStyle: {
     marginLeft: 0,
     marginRight: 0,
     marginTop: 24,
+    overflowX: "auto",
   },
   bondIfAnyText: {
     fontSize: 16,
@@ -107,8 +109,7 @@ const styles = StyleSheet.create({
   scrollViewStyle: {
     backgroundColor: colors.backgroundColor,
     paddingTop: 16,
-    paddingRight: 16,
-    width: "100%",
+    // width: "100%",
   },
   actionBtnContainer: {
     display: "flex",
@@ -122,6 +123,30 @@ const styles = StyleSheet.create({
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
   backButtonStyle: {
     fontSize: 14,
+  },
+  configurableStyle: {
+    paddingHorizontal: undefined,
+    paddingVertical: undefined,
+    backgroundColor: undefined,
+    marginTop: 24,
+    marginLeft: 16,
+    marginBottom: 16,
+  },
+  componentContainer: {
+    borderWidth: 1,
+    margin: 0,
+    alignItems: "stretch",
+    flex: 1,
+    backgroundColor: colors.white,
+  },
+  innerContainerStyle: {
+    flex: 1,
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 24,
+    borderRadius: 16,
+    width: "60%",
   },
 });
 
