@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingTop: 24,
     paddingBottom: 24,
-    paddingRight: 30,
+    paddingRight: 86,
     backgroundColor: colors.backgroundColor,
   },
   buttonStyle: { maxHeight: 44, maxWidth: 80 },
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   saveAndNextButton: {
-    width: 100,
+    width: 150,
     height: 44,
     paddingLeft: 12,
     paddingRight: 12,

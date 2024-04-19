@@ -29,7 +29,6 @@ import {
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
 import {
-  AREA_CODES,
   COMPANY,
   HEAD_CONTACT,
   MOBILE_CODES,
@@ -64,6 +63,9 @@ const PreInterviewPreferencesTemplate = ({
   const { selectedModule } = sideBarState;
   const [toastMsg, setToastMsg] = useState();
   const [errorOnPage, setErrorOnPage] = useState(false);
+  const [startRowTemplateConfig, setStartRowTemplateConfig] = useState([
+    ...headStartRowConfig,
+  ]);
   const [headContactDetails, setHeadContactDetails] = useState([
     ...headStartRowConfig,
   ]);
@@ -127,7 +129,7 @@ const PreInterviewPreferencesTemplate = ({
         return { ...object, options: options_object };
       return { ...object };
     });
-    setHeadContactDetails(newData);
+    setStartRowTemplateConfig(newData);
   };
 
   useEffect(() => {
@@ -135,7 +137,7 @@ const PreInterviewPreferencesTemplate = ({
       const apiData = await fetchHeadContactData();
       const mobile_code = await getCountryCodes();
       setOptions({
-        data: headContactDetails,
+        data: startRowTemplateConfig,
         options: mobile_code,
         key: HEAD_CONTACT.MOBILE_COUNTRY_CODE,
       });
@@ -159,6 +161,7 @@ const PreInterviewPreferencesTemplate = ({
               ?.map((contact, index) => {
                 return [
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.DESIGNATION,
                     label: "label.designation",
@@ -166,6 +169,7 @@ const PreInterviewPreferencesTemplate = ({
                     value: contact.designation,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.NAME,
                     label: "label.name",
@@ -173,6 +177,7 @@ const PreInterviewPreferencesTemplate = ({
                     value: contact.name,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.EMAIL,
                     label: "label.email",
@@ -180,6 +185,7 @@ const PreInterviewPreferencesTemplate = ({
                     value: contact.email,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.MOBILE_COUNTRY_CODE,
                     label: "label.mobile_country_code",
@@ -191,6 +197,7 @@ const PreInterviewPreferencesTemplate = ({
                     options: options_object,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.MOBILE_NUMBER,
                     label: "label.mobile_number",
@@ -199,17 +206,16 @@ const PreInterviewPreferencesTemplate = ({
                     isNumeric: true,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.AREA_CODE,
                     label: "label.area_code",
                     placeholder: "label.select_area_code",
                     value: contact.std_country_code,
-                    isDropdown: true,
-                    labelField: "label",
-                    valueField: "value",
-                    options: AREA_CODES,
+                    isNumeric: true,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.TELEPHONE_NUMBER,
                     label: "label.telephone_number",
@@ -218,6 +224,7 @@ const PreInterviewPreferencesTemplate = ({
                     isNumeric: true,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     isButton: true,
                     isAdd: index === length - 1 ? true : false,
@@ -240,6 +247,9 @@ const PreInterviewPreferencesTemplate = ({
       if (!acc[item?.cellID]) {
         acc[item?.cellID] = {};
       }
+      if (!!item?.db_row_id) {
+        acc[item?.cellID]["id"] = item?.db_row_id;
+      }
       if (item?.key === "name") {
         acc[item?.cellID]["name"] = item?.value;
       } else if (item?.key === "designation") {
@@ -260,6 +270,7 @@ const PreInterviewPreferencesTemplate = ({
     const payload = Object.keys(groupedData).map((cellID) => {
       const contactInfo = groupedData[cellID];
       return {
+        id: contactInfo?.id,
         name: contactInfo?.name,
         designation: contactInfo?.designation,
         email: contactInfo?.email,
@@ -280,7 +291,6 @@ const PreInterviewPreferencesTemplate = ({
       other_details:
         data?.preInterviewDetails?.preInterviewPrefrences?.[1]?.value,
       contact_details: getRowData({ data: data?.headContactDetails }),
-      participating_for_first_time: "yes",
     };
     return payload;
   };
@@ -365,7 +375,7 @@ const PreInterviewPreferencesTemplate = ({
             ...styles.multiRowTextStyle,
           }}
           customWebContainerStyle={styles.customWebContainerStyle}
-          startRowTemplate={headStartRowConfig}
+          startRowTemplate={startRowTemplateConfig}
           gridTemplate={headContactDetails}
           setGridTemplate={setHeadContactDetails}
           numColsInARow={9}
