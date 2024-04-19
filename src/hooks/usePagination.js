@@ -32,7 +32,7 @@ const usePagination = ({
         pageParam: getValidCurrentPage(
           +urlService.getQueryStringValue(pageParam)
         ),
-        rowPerPageParam: getValidRowPerPage(
+        rowsPerPage: getValidRowPerPage(
           +urlService.getQueryStringValue(rowPerPageParam)
         ),
       };
