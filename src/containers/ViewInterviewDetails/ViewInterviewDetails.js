@@ -22,25 +22,80 @@ import {
   JOB_APPLICANTS,
   INTERVIEW,
   USER_TYPE_COMPANY,
+  USER_TYPE_MEMBER,
+  JOBS,
+  INTERVIEWS,
+  APPLICANT,
 } from "../../services/apiServices/apiEndPoint";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ViewInterviewDetails.style";
 
-const ViewInterviewDetails = ({ onClose, applicant_id }) => {
+const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
   const intl = useIntl();
-
   const [interviewData, setInterviewData] = useState();
-  const { data, isLoading, fetchData, isError, error } = useFetch({
+
+  const { data, setData, isLoading, fetchData, isError, error } = useFetch({
     url: USER_TYPE_COMPANY + JOB_APPLICANTS + INTERVIEW + `/${applicant_id}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+  const {
+    data: interviewDatesData,
+    fetchData: fetchInterviewDates,
+    isLoading: isGettingDatesData,
+    isError: isErrorInDatesData,
+  } = useFetch({
+    url: USER_TYPE_MEMBER + `/${JOBS}` + `/${applicant_id}` + INTERVIEWS,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
   useEffect(async () => {
-    const newData = await fetchData();
-    setInterviewData(newData);
+    if (!interview_id) {
+      const newData = await fetchData();
+      setInterviewData(newData);
+    }
   }, []);
+
+  useEffect(async () => {
+    if (!!interview_id) {
+      const newData = await getInterviewDates();
+      restructureData(newData);
+    }
+  }, [interview_id]);
+
+  const getInterviewDates = async () => {
+    const newData = await fetchInterviewDates({
+      overrideUrl:
+        USER_TYPE_MEMBER +
+        `/${JOBS}` +
+        `/${applicant_id}` +
+        `${APPLICANT}` +
+        `/${interview_id}` +
+        INTERVIEWS,
+    });
+    return newData;
+  };
+
+  const restructureData = (data) => {
+    const restructuredData = {
+      type: data?.[0]?.primary?.type,
+      venue_address: data?.[0]?.primary?.venue,
+      primary_schedule: data?.[0]?.primary?.schedule,
+      remote_meeting_link: data?.[0]?.primary?.meeting_link,
+      alternate_type: data?.[0]?.alternate?.type,
+      alternate_venue_address: data?.[0]?.alternate?.venue,
+      alternate_schedule: data?.[0]?.alternate?.schedule,
+      alternate_remote_meeting_link: data?.[0]?.alternate?.meeting_link,
+    };
+    setInterviewData({ ...restructuredData });
+    setData({
+      type: data?.[0]?.primary?.type,
+      alternate_type: data?.[0]?.alternate?.type,
+    });
+  };
 
   const handlePressLink = (url) => {
     Linking.openURL(getValidUrl(url), "_blank");
@@ -170,22 +225,26 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
         {isLoading && !isError && <LoadingScreen />}
         {!isLoading && !isError && (
           <>
-            <View style={styles.detailsSection}>
-              {interviewDetails.map((item) => {
-                return (
-                  <>
-                    {renderHeadingAndValue({
-                      heading: intl.formatMessage({
-                        id: `label.${item.headingIntl}`,
-                      }),
-                      value: item.value,
-                      isMandatory: true,
-                    })}
-                  </>
-                );
-              })}
-            </View>
-            <View style={commonStyles.horizontalLine} />
+            {!interview_id && (
+              <>
+                <View style={styles.detailsSection}>
+                  {interviewDetails.map((item) => {
+                    return (
+                      <>
+                        {renderHeadingAndValue({
+                          heading: intl.formatMessage({
+                            id: `label.${item.headingIntl}`,
+                          }),
+                          value: item.value,
+                          isMandatory: true,
+                        })}
+                      </>
+                    );
+                  })}
+                </View>
+                <View style={commonStyles.horizontalLine} />
+              </>
+            )}
             <TwoRow
               topSection={
                 <View>
@@ -237,7 +296,7 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
         {isError && (
           <ErrorComponent
             errorMsg={error?.data?.message}
-            onRetry={() => fetchData()}
+            onRetry={() => (!!interview_id ? getInterviewDates() : fetchData())}
           />
         )}
       </ScrollView>
@@ -247,10 +306,12 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
 
 ViewInterviewDetails.defaultProps = {
   onClose: () => {},
+  interview_id: null,
 };
 
 ViewInterviewDetails.propTypes = {
   onClose: PropTypes.func,
+  interview_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default ViewInterviewDetails;

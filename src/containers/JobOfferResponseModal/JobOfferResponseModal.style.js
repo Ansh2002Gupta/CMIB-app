@@ -23,9 +23,17 @@ const styles = StyleSheet.create({
   },
   companyText: {
     fontSize: 14,
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    maxWidth: 200,
   },
   designationText: {
     fontSize: 14,
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    maxWidth: 200,
   },
   inRow: {
     flex: 1,

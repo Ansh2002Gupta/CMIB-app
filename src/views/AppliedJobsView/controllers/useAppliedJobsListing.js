@@ -91,11 +91,12 @@ const useAppliedJobsListing = () => {
   const [showJobOfferResponseModal, setShowJobOfferResponseModal] =
     useState(false);
   const [showInterviewTimeModal, setShowInterviewTimeModal] = useState(false);
+  const [showInterviewDetailModal, setShowInterviewDetailModal] =
+    useState(null);
   const [confirmationModal, setConfirmationModal] = useState({
     isShow: false,
     decision: -1,
   });
-  const [showToast, setShowToast] = useState(true);
 
   useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
 
@@ -117,7 +118,6 @@ const useAppliedJobsListing = () => {
     fetchData: fetchDataAppliedJobs,
   } = useFetch({
     url: MEMBER_JOBS_LISTING,
-    // url: COMPANY_TICKET_LISTING,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -217,6 +217,11 @@ const useAppliedJobsListing = () => {
       onSuccessCallback: (success) => {
         setShowInterviewTimeModal(false);
         setIsPatchingSuccess(isPatchingSuccessSaveInterviewDetails);
+        const requestedParams = {
+          perPage: rowsPerPage,
+          page: currentPage,
+        };
+        updateCurrentRecords(requestedParams);
       },
     });
   };
@@ -367,33 +372,40 @@ const useAppliedJobsListing = () => {
 
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
+    const searchQuery = urlService.getQueryStringValue("search");
     await updateCurrentRecords({
+      search: searchQuery,
       perPage: rowsPerPage,
       page: page,
       multiFacet: 1,
-      work_mode: filterOptions.work_mode,
-      job_type: filterOptions.job_type,
-      experience: filterOptions.experience,
-      location: filterOptions.location,
-      department: filterOptions.department,
+      work_mode: filterOptions?.work_mode,
+      job_type: filterOptions?.job_type,
+      experience: filterOptions?.experience,
+      location: filterOptions?.location,
+      department: filterOptions?.department,
     });
   };
 
   const handleRowPerPageChange = async (option) => {
     handleRowsPerPageChange(option.value);
+    const searchQuery = urlService.getQueryStringValue("search");
     await updateCurrentRecords({
+      search: searchQuery,
       perPage: option.value,
       page: currentPage,
       multiFacet: 1,
-      work_mode: filterOptions.work_mode,
-      job_type: filterOptions.job_type,
-      experience: filterOptions.experience,
-      location: filterOptions.location,
-      department: filterOptions.department,
+      work_mode: filterOptions?.work_mode,
+      job_type: filterOptions?.job_type,
+      experience: filterOptions?.experience,
+      location: filterOptions?.location,
+      department: filterOptions?.department,
     });
   };
 
   const handleSearchResults = async (searchedData) => {
+    !searchedData
+      ? urlService.removeParam("search")
+      : urlService.setQueryStringValue("search", searchedData);
     setIsFirstPageReceived(true);
     setFilterOptions((prev) => ({ ...prev, q: searchedData }));
     if (isMob) {
@@ -402,11 +414,11 @@ const useAppliedJobsListing = () => {
         queryParamsObject: {
           search: searchedData,
           multiFacet: 1,
-          work_mode: filterOptions.work_mode,
-          job_type: filterOptions.job_type,
-          experience: filterOptions.experience,
-          location: filterOptions.location,
-          department: filterOptions.department,
+          work_mode: filterOptions?.work_mode,
+          job_type: filterOptions?.job_type,
+          experience: filterOptions?.experience,
+          location: filterOptions?.location,
+          department: filterOptions?.department,
         },
       });
       setIsFirstPageReceived(false);
@@ -422,11 +434,11 @@ const useAppliedJobsListing = () => {
         perPage: rowsPerPage,
         page: currentPage,
         multiFacet: 1,
-        work_mode: filterOptions.work_mode,
-        job_type: filterOptions.job_type,
-        experience: filterOptions.experience,
-        location: filterOptions.location,
-        department: filterOptions.department,
+        work_mode: filterOptions?.work_mode,
+        job_type: filterOptions?.job_type,
+        experience: filterOptions?.experience,
+        location: filterOptions?.location,
+        department: filterOptions?.department,
       });
     }
   };
@@ -446,6 +458,12 @@ const useAppliedJobsListing = () => {
           intl.formatMessage({ id: "label.select_interview_time" })
         );
         break;
+      case STATUS_OPTIONS.INTERVIEW_SCHEDULED?.trim()?.toLowerCase():
+        setShowPopUpWithID(item?.id);
+        setPopUpMessage(
+          intl.formatMessage({ id: "label.view_interview_details" })
+        );
+        break;
       default:
         setPopUpMessage("-");
     }
@@ -456,7 +474,9 @@ const useAppliedJobsListing = () => {
       item?.status?.trim()?.toLowerCase() ===
         STATUS_OPTIONS.NO_RESPONSE?.trim().toLowerCase() ||
       item?.status?.trim()?.toLowerCase() ===
-        STATUS_OPTIONS.JOB_OFFERED?.trim().toLowerCase()
+        STATUS_OPTIONS.JOB_OFFERED?.trim().toLowerCase() ||
+      item?.status?.trim()?.toLowerCase() ===
+        STATUS_OPTIONS.INTERVIEW_SCHEDULED?.trim().toLowerCase()
     );
   };
 
@@ -483,11 +503,11 @@ const useAppliedJobsListing = () => {
       perPage: rowsPerPage,
       page: currentPage,
       multiFacet: 1,
-      work_mode: currentFilterOptions.work_mode,
-      job_type: currentFilterOptions.job_type,
-      experience: currentFilterOptions.experience,
-      location: currentFilterOptions.location,
-      department: currentFilterOptions.department,
+      work_mode: currentFilterOptions?.work_mode,
+      job_type: currentFilterOptions?.job_type,
+      experience: currentFilterOptions?.experience,
+      location: currentFilterOptions?.location,
+      department: currentFilterOptions?.department,
       search: filterOptions?.q ?? "",
     });
   };
@@ -503,16 +523,19 @@ const useAppliedJobsListing = () => {
   };
 
   const getInterviewDates = ({ rowData }) => {
-    fetchInterviewDates({
-      overrideUrl:
-        USER_TYPE_MEMBER +
-        `/${JOBS}` +
-        `/${rowData?.related_job_id}` +
-        `${APPLICANT}` +
-        `/${rowData?.id}` +
-        INTERVIEWS,
-    });
-    setModalData(interviewDatesData);
+    const forApiCallInterviewDates = async () => {
+      const apiInterviewDates = await fetchInterviewDates({
+        overrideUrl:
+          USER_TYPE_MEMBER +
+          `/${JOBS}` +
+          `/${rowData?.related_job_id}` +
+          `${APPLICANT}` +
+          `/${rowData?.id}` +
+          INTERVIEWS,
+      });
+      setModalData(apiInterviewDates);
+    };
+    forApiCallInterviewDates();
   };
 
   let headingTexts = ["id"];
@@ -562,6 +585,7 @@ const useAppliedJobsListing = () => {
   }
 
   const getColoumConfigs = (item, isHeading) => {
+    const applicant_id = item?.id ?? 0;
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
@@ -571,14 +595,14 @@ const useAppliedJobsListing = () => {
           <TouchableOpacity
             onPress={() => {
               navigate(
-                `${navigations.APPLIED_JOBS_REDIRECT}/${item.related_job_id}`
+                `${navigations.APPLIED_JOBS_REDIRECT}/${item?.related_job_id}`
               );
             }}
             style={styles.cursorStyle}
           >
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-              {item.readable_id || item.job_id
-                ? item.readable_id || item.job_id
+              {item?.readable_id || item?.job_id
+                ? item?.readable_id || item?.job_id
                 : "-"}
             </CommonText>
           </TouchableOpacity>
@@ -668,13 +692,23 @@ const useAppliedJobsListing = () => {
                 <PopupMessage
                   message={popUpMessage}
                   customStyle={styles.popUpMessagePosition}
-                  onPopupClick={() => {
+                  onPopupClick={(option) => {
                     if (
                       popUpMessage ===
                       intl.formatMessage({ id: "label.respond_to_job_offer" })
                     ) {
                       setShowJobOfferResponseModal(true);
                       setModalData(item);
+                    } else if (
+                      popUpMessage ===
+                      intl.formatMessage({
+                        id: "label.view_interview_details",
+                      })
+                    ) {
+                      setShowInterviewDetailModal({
+                        applicant_id: item?.related_job_id,
+                        interview_id: item?.id,
+                      });
                     } else {
                       getInterviewDates({ rowData: item });
                       setShowInterviewTimeModal((prev) => !prev);
@@ -707,6 +741,7 @@ const useAppliedJobsListing = () => {
     confirmationModal,
     currentPage,
     customFilterInfo,
+    fetchInterviewDates,
     filterApplyHandler,
     filterCategory,
     filterState,
@@ -750,6 +785,8 @@ const useAppliedJobsListing = () => {
     setToastMsg,
     setFilterState,
     showPopUpWithID,
+    showInterviewDetailModal,
+    setShowInterviewDetailModal,
     setModalData,
     setShowPopUpWithID,
     patchSelectedInterview,
