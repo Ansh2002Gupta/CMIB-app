@@ -776,6 +776,27 @@ const locale = {
   "label.womenPlacedYears":
     "Percentage of Women Members Placed in the Last 5 Years",
   "label.percentageWomenMembers": "Percentage of Women Members",
+  "label.CTCOfferedDesignation": "CTC Offered for each Designation",
+  "label.CTCOfferedINR": "CTC Offered (in INR)",
+  "label.centersChosenCandidatesInterview":
+    "Centers Chosen by Candidates for Interview",
+  "label.candidatesAcceptingOffersAreasWork":
+    "Candidates Accepting Offers in Areas of Work",
+  "label.recruitmentHistory": "Recruitment History",
+  "label.regionsBasedHighestCTCs": "Regions based on Highest CTCs",
+  "label.topCountriesHighestJobsAcceptedCandidates":
+    "Top 10 Countries based on Highest Number of Jobs Accepted by Candidates",
+  "label.numberJobsAccepted": "Number of Jobs Accepted",
+  "label.companyPreferenceKindIndustry":
+    "Company Preference for Kind of Industry",
+  "label.vacanciesIndustries": "Vacancies in Industries",
+  "label.companies": "Companies",
+  "label.current_package_capital": "CURRENT PACKAGE",
+  "label.topDesignationsBasedCTCOffered":
+    "Top 10 Designations based on CTC Offered",
+  "label.activeJobs": "Active Jobs",
+  "label.candidatesAcceptingOffersIndustries":
+    "Candidates Accepting Offers in Industries",
 };
 
 export default locale;

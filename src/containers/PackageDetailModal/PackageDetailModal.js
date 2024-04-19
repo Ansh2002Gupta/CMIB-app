@@ -18,7 +18,11 @@ import commonStyles from "../../theme/styles/commonStyles";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { useIntl } from "react-intl";
 
-const PackageDetailModal = ({ packageDetailData, isSubscribe, handleSubscribeFromDetailmodal }) => {
+const PackageDetailModal = ({
+  packageDetailData,
+  isSubscribe,
+  handleSubscribeFromDetailmodal,
+}) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const [showPaymentInitiateModal, setShowPaymentInitiateModal] = useState();
@@ -126,7 +130,10 @@ const PackageDetailModal = ({ packageDetailData, isSubscribe, handleSubscribeFro
                 <CustomTouchableOpacity
                   style={styles.subscribePackagesButton}
                   onPress={() => {
-                    handleSubscribeFromDetailmodal(packageDetailData?.price, packageDetailData?.id)
+                    handleSubscribeFromDetailmodal(
+                      packageDetailData?.price,
+                      packageDetailData?.id
+                    );
                     // setShowPaymentInitiateModal(true);
                     // setModalData({
                     //   ...modalData,
@@ -143,7 +150,7 @@ const PackageDetailModal = ({ packageDetailData, isSubscribe, handleSubscribeFro
             </>
           }
         />
-        </ScrollView>
+      </ScrollView>
       {showPaymentInitiateModal && renderPaymentInitiateModal()}
     </View>
   );
