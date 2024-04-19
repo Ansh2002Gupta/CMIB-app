@@ -306,8 +306,8 @@ const locale = {
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
   "label.module_access": "Module Access",
-  "label.srn": "SRN",
-  "label.srn_placeholder": "Enter your SRN number",
+  "label.srnMRN": "SRN/MRN",
+  "label.srn_mrn_placeholder": "Enter your SRN/MRN",
   "label.enter_otp": "Enter OTP",
   "label.otp_text_forgot_password":
     "Please enter the one time password that you have received on your registered mobile number to continue to reset your password.",
