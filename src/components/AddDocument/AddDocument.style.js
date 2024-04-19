@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr",
     overflowY: "auto",
+    overflow: "visible",
   },
 });
 
