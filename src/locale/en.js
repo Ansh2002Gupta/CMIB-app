@@ -887,7 +887,7 @@ const locale = {
   "label.nofJobOffered": "Jobs Offered",
   "label.nofOfferAccepted": "Offers Accepted",
   "label.nofOfferRejected": "Offers Rejected",
-  "label.job_details": "Job Details",
+  "label.job_details": "Job Details"
 };
 
 export default locale;
