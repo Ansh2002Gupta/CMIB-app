@@ -12,17 +12,12 @@ import CustomTextEditor from "../../../../components/CustomTextEditor/CustomText
 import CustomToggleComponent from "../../../../components/CustomToggleComponent/CustomToggleComponent";
 import DetailCard from "../../../../components/DetailCard";
 import MultiRow from "../../../../core/layouts/MultiRow";
-import TwoColumn from "../../../../core/layouts/TwoColumn/TwoColumn";
 import useIsWebView from "../../../../hooks/useIsWebView";
 import { gridStyles } from "../../../../theme/styles/commonStyles";
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
-import {
-  DOCUMENT_TYPE,
-  EXEPERIENCE_RANGE,
-  JOB_TYPE,
-} from "../../../../constants/constants";
+import { EXEPERIENCE_RANGE, JOB_TYPE } from "../../../../constants/constants";
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
 import CustomScrollView from "../../../../components/CustomScrollView";
@@ -255,41 +250,41 @@ const JobDetailsTemplate = ({
               customToggleStyle={styles.customToggleStyle}
               customLabelStyle={styles.customLabelStyle}
             />
-            <CustomTextInput
-              customStyle={isWebView && { ...styles.bondCustomInputStyle }}
-              label={intl.formatMessage({
-                id: "label.months_bond_period",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_months_bond_period",
-              })}
-              isMandatory={
-                renderJobDetails?.bond_details?.is_bond_included === 0
-              }
-              value={renderJobDetails?.bond_details?.bond_period_in_mm}
-              onChangeText={(val) =>
-                numericValidator(val) &&
-                handleInputChange("bond_details", val, "bond_period_in_mm")
-              }
-            />
-            <CustomTextInput
-              customStyle={isWebView && { ...styles.bondCustomInputStyle }}
-              label={intl.formatMessage({
-                id: "label.exit_amount",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_exit_amount",
-              })}
-              isMandatory={
-                renderJobDetails?.bond_details?.is_bond_included === 0
-              }
-              value={renderJobDetails?.bond_details?.exit_amount}
-              onChangeText={(val) =>
-                numericValidator(val) &&
-                handleInputChange("bond_details", val, "exit_amount")
-              }
-              isRupee
-            />
+            {renderJobDetails?.bond_details?.is_bond_included === 0 && (
+              <>
+                <CustomTextInput
+                  customStyle={isWebView && { ...styles.bondCustomInputStyle }}
+                  label={intl.formatMessage({
+                    id: "label.months_bond_period",
+                  })}
+                  placeholder={intl.formatMessage({
+                    id: "label.enter_months_bond_period",
+                  })}
+                  isMandatory
+                  value={renderJobDetails?.bond_details?.bond_period_in_mm}
+                  onChangeText={(val) =>
+                    numericValidator(val) &&
+                    handleInputChange("bond_details", val, "bond_period_in_mm")
+                  }
+                />
+                <CustomTextInput
+                  customStyle={isWebView && { ...styles.bondCustomInputStyle }}
+                  label={intl.formatMessage({
+                    id: "label.exit_amount",
+                  })}
+                  placeholder={intl.formatMessage({
+                    id: "label.enter_exit_amount",
+                  })}
+                  isMandatory
+                  value={renderJobDetails?.bond_details?.exit_amount}
+                  onChangeText={(val) =>
+                    numericValidator(val) &&
+                    handleInputChange("bond_details", val, "exit_amount")
+                  }
+                  isRupee
+                />
+              </>
+            )}
           </View>
         </CardComponent>
       ),
