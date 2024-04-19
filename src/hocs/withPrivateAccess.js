@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useLocation, useNavigate } from "../routes";
+import { useLocation, useNavigate, useSearchParams } from "../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
 import CookieAndStorageService from "../services/cookie-and-storage-service";
@@ -10,7 +10,6 @@ import { UserProfileContext } from "../globalContext/userProfile/userProfileProv
 import useGetUserDetails from "../services/apiServices/hooks/UserProfile/useGetUserDetails";
 import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
 import { getQueryParamsAsAnObject } from "../utils/util";
-import { urlService } from "../services/urlService";
 import { navigations } from "../constants/routeNames";
 import { REDIRECT_URL } from "../constants/constants";
 
@@ -18,6 +17,7 @@ function withPrivateAccess(Component) {
   return (props) => {
     const location = useLocation();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [authState] = useContext(AuthContext);
     const [, routeDispatch] = useContext(RouteContext);
     const [userProfileDetails] = useContext(UserProfileContext);
@@ -56,7 +56,7 @@ function withPrivateAccess(Component) {
         JSON.stringify({
           path: navigations.JOBS,
           data: getQueryParamsAsAnObject(location.search),
-          redirectPath: urlService.getQueryStringValue(REDIRECT_URL) || "",
+          redirectPath: searchParams.get(REDIRECT_URL) || "",
         })
       );
     }

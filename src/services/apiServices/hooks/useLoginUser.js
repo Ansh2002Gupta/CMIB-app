@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLocation, useNavigate } from "../../../routes";
+import { useSearchParams, useLocation, useNavigate } from "../../../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
 import CookieAndStorageService from "../../cookie-and-storage-service";
@@ -8,7 +8,6 @@ import useNavigateScreen from "../../hooks/useNavigateScreen";
 import { AuthContext } from "../../../globalContext/auth/authProvider";
 import { RouteContext } from "../../../globalContext/route/routeProvider";
 import { setAuth } from "../../../globalContext/auth/authActions";
-import { urlService } from "../../urlService";
 import { COMPANY_LOGIN } from "../apiEndPoint";
 import {
   API_STATUS,
@@ -22,6 +21,7 @@ const useLoginUser = () => {
   const [, authDispatch] = useContext(AuthContext);
   const [routeState] = useContext(RouteContext);
   const { navigateScreen } = useNavigateScreen();
+  const [searchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -40,15 +40,10 @@ const useLoginUser = () => {
         await CookieAndStorageService.set({ key: "auth", value: authToken });
         setLoginUserResult(res.data);
         authDispatch(setAuth({ token: authToken }));
-        if (
-          urlService.getQueryStringValue(REDIRECT_URL) ||
-          location?.state?.redirectPath
-        ) {
+        if (searchParams.get(REDIRECT_URL) || location?.state?.redirectPath) {
           if (Platform.OS.toLowerCase() === "web") {
             window.location.replace(
-              `${urlService.getQueryStringValue(
-                REDIRECT_URL
-              )}?isAuthenticated=1`
+              `${searchParams.get(REDIRECT_URL)}?isAuthenticated=1`
             );
           } else {
             navigate(navigations.WEB_VIEW, {
