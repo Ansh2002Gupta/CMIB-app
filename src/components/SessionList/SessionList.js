@@ -71,7 +71,7 @@ const SessionList = ({
           customSearchCriteria={handleSearching}
         />
       </View>
-      {!!searchList.length ? (
+      {!!searchList?.length ? (
         <FlatList
           data={searchList}
           keyExtractor={(session) => session.id}

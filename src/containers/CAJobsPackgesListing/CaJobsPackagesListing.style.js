@@ -39,14 +39,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     padding: 16,
   },
-  webContainerStyle: {
+  webContainerStyle: (currentBreakpoint) => ({
     backgroundColor: colors.backgroundGrey,
     paddingLeft: 16,
     paddingRight: 16,
     gap: 24,
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
-  },
+    gridTemplateColumns: currentBreakpoint === "md" ? "1fr 1fr 1fr" : "1fr 1fr",
+    width: "100%",
+  }),
   buttonStyle: {},
   containerStyle: {
     backgroundColor: colors.backgroundColor,
@@ -60,6 +61,19 @@ const styles = StyleSheet.create({
     overFlow: "hidden",
   },
   addApplicationFormText: {
+    fontSize: 24,
+    color: colors.black,
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: "355px",
+      },
+    }),
+  },
+
+  addApplicationModalFormText: {
     fontSize: 24,
     color: colors.black,
     flexWrap: "wrap",
@@ -82,8 +96,8 @@ const styles = StyleSheet.create({
     // wordBreak: "break-word",
     // overFlow: "hidden",
     // whiteSpace: "break-space",
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     // alignItems: 'flex-end',
     // justifyContent: 'space-between',
   },

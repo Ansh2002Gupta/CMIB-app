@@ -5,6 +5,8 @@ import { View } from "@unthinkable/react-core-components";
 import { TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
+import CAJobsMemberDashboard from "../CAJobsMemberDashboard";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -17,6 +19,8 @@ import CompanyProfileForm from "../../containers/RoundOne/ApplicationFormContain
 function DashboardView() {
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
+  const { isCompany } = useGetCurrentUser();
+
   const { selectedModule } = sideBarState;
   const { isWebView } = useIsWebView();
 
@@ -34,11 +38,17 @@ function DashboardView() {
         }
         isBottomFillSpace
         bottomSection={
-          <>
+          <View>
             {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
-              <CAJobsDashboard />
+              isCompany ? (
+                <CAJobsDashboard />
+              ) : (
+                <View style={{ padding: 24 }}>
+                  <CAJobsMemberDashboard />
+                </View>
+              )
             ) : null}
-          </>
+          </View>
         }
       ></TwoRow>
     </View>

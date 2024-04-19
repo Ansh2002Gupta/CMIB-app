@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import {
   Platform,
   TouchableOpacity,
@@ -19,6 +19,7 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
+import { urlService } from "../../../services/urlService";
 import { COMPANY_LISTING } from "../../../services/apiServices/apiEndPoint";
 import {
   FILTER_TYPE_ENUM,
@@ -42,7 +43,6 @@ const initialFilterState = {
 const useJobSeekers = () => {
   const isMob = Platform.OS.toLowerCase() !== "web";
   const defaultCategory = "Experience";
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -67,11 +67,11 @@ const useJobSeekers = () => {
   });
 
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const {
