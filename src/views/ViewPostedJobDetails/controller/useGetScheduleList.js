@@ -1,32 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "../../../routes";
+import dayjs from "dayjs";
+import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
+
 import CommonText from "../../../components/CommonText";
+import CustomImage from "../../../components/CustomImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import TouchableImage from "../../../components/TouchableImage";
+import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
+import useOutsideClick from "../../../hooks/useOutsideClick";
+import usePagination from "../../../hooks/usePagination";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
+import { urlService } from "../../../services/urlService";
 import {
   DEFAULT_CATEGORY_FOR_FILTER_MODAL,
   FILTER_TYPE_ENUM,
   JOB_STATUS_RESPONSE_CODE,
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
-import usePagination from "../../../hooks/usePagination";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
-import PopupMessage from "../../../components/PopupMessage/PopupMessage";
-import dayjs from "dayjs";
-import { useIntl } from "react-intl";
-import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import CustomImage from "../../../components/CustomImage";
-import TouchableImage from "../../../components/TouchableImage";
-import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -36,7 +37,6 @@ const initialFilterState = {
 
 const useGetScheduleList = (id, onClickAction) => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -56,11 +56,11 @@ const useGetScheduleList = (id, onClickAction) => {
   });
   const [filterState, setFilterState] = useState(initialFilterState);
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const {

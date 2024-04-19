@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
@@ -17,6 +17,7 @@ import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import { urlService } from "../../../services/urlService";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
@@ -27,7 +28,6 @@ const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useGetApplicantList = (id, onEditPress) => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -42,11 +42,11 @@ const useGetApplicantList = (id, onEditPress) => {
 
   const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const navigate = useNavigate();
