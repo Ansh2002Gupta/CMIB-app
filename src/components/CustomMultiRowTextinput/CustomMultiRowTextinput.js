@@ -14,6 +14,7 @@ const CustomMultiRowTextInput = ({
   setGridTemplate,
   setObjectGridTemplate,
   headerId,
+  footerId,
   handleValueChange,
   numColsInARow = 4,
 }) => {
@@ -79,7 +80,7 @@ const CustomMultiRowTextInput = ({
       customCardStyle={customCardStyle}
       cols={numColsInARow}
       details={gridTemplate}
-      footerId={"label.mandatory"}
+      footerId={footerId ?? "label.mandatory"}
       handleChange={handleChange}
       headerId={headerId}
       isRow={false}
