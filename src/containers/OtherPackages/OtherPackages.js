@@ -7,7 +7,10 @@ import IconHeader from "../../components/IconHeader/IconHeader";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./OtherPackages.style";
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import { COMPANY_SUBSCRIPTION_LISTING } from "../../services/apiServices/apiEndPoint";
+import {
+  COMPANY_SUBSCRIPTION_LISTING,
+  COMPANY_SUBSCRIPTION_STATUS,
+} from "../../services/apiServices/apiEndPoint";
 import useFetch from "../../hooks/useFetch";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
@@ -27,6 +30,15 @@ const OtherPackages = () => {
     error: errorSubscriptionListing,
   } = useFetch({
     url: COMPANY_SUBSCRIPTION_LISTING,
+  });
+
+  const {
+    data: subscribedPackageData,
+    isLoading: isPackageSubscribedLoading,
+    isError: isPackageSubscribedError,
+    error: errorPackageSubscribed,
+  } = useFetch({
+    url: `${COMPANY_SUBSCRIPTION_STATUS}`,
   });
 
   return (
@@ -71,6 +83,10 @@ const OtherPackages = () => {
                   <ScrollView style={styles.container}>
                     <CaJobsPackagesListing
                       subscriptionListingData={subscriptionListingData}
+                      isExpired={
+                        subscribedPackageData?.status.toLowerCase() ===
+                        "inactive"
+                      }
                     />
                   </ScrollView>
                 )}
