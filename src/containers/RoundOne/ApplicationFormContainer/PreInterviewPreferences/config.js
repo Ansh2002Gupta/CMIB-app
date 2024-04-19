@@ -51,10 +51,7 @@ export const headStartRowConfig = [
     label: "label.area_code",
     placeholder: "label.select_area_code",
     value: "",
-    isDropdown: true,
-    labelField: "label",
-    valueField: "value",
-    options: AREA_CODES,
+    isNumeric: true,
   },
   {
     cellID: 1,

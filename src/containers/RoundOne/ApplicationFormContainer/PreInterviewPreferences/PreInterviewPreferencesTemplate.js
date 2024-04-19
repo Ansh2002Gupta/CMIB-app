@@ -15,6 +15,7 @@ import CustomButton from "../../../../components/CustomButton";
 import CustomMultiRowTextInput from "../../../../components/CustomMultiRowTextinput";
 import DetailCard from "../../../../components/DetailCard";
 import MultiRow from "../../../../core/layouts/MultiRow";
+import Spinner from "../../../../components/Spinner";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../../../hooks/useFetch";
@@ -28,7 +29,6 @@ import {
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
 import {
-  AREA_CODES,
   COMPANY,
   HEAD_CONTACT,
   MOBILE_CODES,
@@ -48,6 +48,8 @@ const PreInterviewPreferencesTemplate = ({
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const round_id = params?.id;
+  const isMob = Platform.OS.toLowerCase() !== "web";
+  const webProps = !isMob ? { size: "xs" } : {};
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -61,6 +63,9 @@ const PreInterviewPreferencesTemplate = ({
   const { selectedModule } = sideBarState;
   const [toastMsg, setToastMsg] = useState();
   const [errorOnPage, setErrorOnPage] = useState(false);
+  const [startRowTemplateConfig, setStartRowTemplateConfig] = useState([
+    ...headStartRowConfig,
+  ]);
   const [headContactDetails, setHeadContactDetails] = useState([
     ...headStartRowConfig,
   ]);
@@ -119,13 +124,12 @@ const PreInterviewPreferencesTemplate = ({
       label: obj?.["dial_code"],
       value: obj?.["dial_code"],
     }));
-    console.log("options_object:", options_object);
     const newData = data.map((object) => {
       if (object?.key?.trim().toLowerCase() === key?.trim().toLowerCase())
         return { ...object, options: options_object };
       return { ...object };
     });
-    setHeadContactDetails(newData);
+    setStartRowTemplateConfig(newData);
   };
 
   useEffect(() => {
@@ -133,7 +137,7 @@ const PreInterviewPreferencesTemplate = ({
       const apiData = await fetchHeadContactData();
       const mobile_code = await getCountryCodes();
       setOptions({
-        data: headContactDetails,
+        data: startRowTemplateConfig,
         options: mobile_code,
         key: HEAD_CONTACT.MOBILE_COUNTRY_CODE,
       });
@@ -157,6 +161,7 @@ const PreInterviewPreferencesTemplate = ({
               ?.map((contact, index) => {
                 return [
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.DESIGNATION,
                     label: "label.designation",
@@ -164,6 +169,7 @@ const PreInterviewPreferencesTemplate = ({
                     value: contact.designation,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.NAME,
                     label: "label.name",
@@ -171,6 +177,7 @@ const PreInterviewPreferencesTemplate = ({
                     value: contact.name,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.EMAIL,
                     label: "label.email",
@@ -178,6 +185,7 @@ const PreInterviewPreferencesTemplate = ({
                     value: contact.email,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.MOBILE_COUNTRY_CODE,
                     label: "label.mobile_country_code",
@@ -189,6 +197,7 @@ const PreInterviewPreferencesTemplate = ({
                     options: options_object,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.MOBILE_NUMBER,
                     label: "label.mobile_number",
@@ -197,17 +206,16 @@ const PreInterviewPreferencesTemplate = ({
                     isNumeric: true,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.AREA_CODE,
                     label: "label.area_code",
                     placeholder: "label.select_area_code",
                     value: contact.std_country_code,
-                    isDropdown: true,
-                    labelField: "label",
-                    valueField: "value",
-                    options: AREA_CODES,
+                    isNumeric: true,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     key: HEAD_CONTACT.TELEPHONE_NUMBER,
                     label: "label.telephone_number",
@@ -216,6 +224,7 @@ const PreInterviewPreferencesTemplate = ({
                     isNumeric: true,
                   },
                   {
+                    db_row_id: contact.id,
                     cellID: contact.id,
                     isButton: true,
                     isAdd: index === length - 1 ? true : false,
@@ -238,6 +247,9 @@ const PreInterviewPreferencesTemplate = ({
       if (!acc[item?.cellID]) {
         acc[item?.cellID] = {};
       }
+      if (!!item?.db_row_id) {
+        acc[item?.cellID]["id"] = item?.db_row_id;
+      }
       if (item?.key === "name") {
         acc[item?.cellID]["name"] = item?.value;
       } else if (item?.key === "designation") {
@@ -258,6 +270,7 @@ const PreInterviewPreferencesTemplate = ({
     const payload = Object.keys(groupedData).map((cellID) => {
       const contactInfo = groupedData[cellID];
       return {
+        id: contactInfo?.id,
         name: contactInfo?.name,
         designation: contactInfo?.designation,
         email: contactInfo?.email,
@@ -278,7 +291,6 @@ const PreInterviewPreferencesTemplate = ({
       other_details:
         data?.preInterviewDetails?.preInterviewPrefrences?.[1]?.value,
       contact_details: getRowData({ data: data?.headContactDetails }),
-      participating_for_first_time: "yes",
     };
     return payload;
   };
@@ -291,7 +303,7 @@ const PreInterviewPreferencesTemplate = ({
       body: { data: payload },
       onErrorCallback: (error) => {
         const errorMsg = !!error?.errors
-          ? formateErrors(error?.errors)
+          ? formateErrors(error)
           : formateErrors(
               intl.formatMessage({ id: "label.some_error_occured" })
             );
@@ -363,7 +375,7 @@ const PreInterviewPreferencesTemplate = ({
             ...styles.multiRowTextStyle,
           }}
           customWebContainerStyle={styles.customWebContainerStyle}
-          startRowTemplate={headStartRowConfig}
+          startRowTemplate={startRowTemplateConfig}
           gridTemplate={headContactDetails}
           setGridTemplate={setHeadContactDetails}
           numColsInARow={9}
@@ -376,6 +388,7 @@ const PreInterviewPreferencesTemplate = ({
             });
           }}
           headerId={"label.head_contacts"}
+          footerId={"label.at_least_one_mandatory_with_star"}
         />
       ),
     },
@@ -387,7 +400,13 @@ const PreInterviewPreferencesTemplate = ({
         {!!toastMsg && (
           <ToastComponent toastMessage={toastMsg} onDismiss={handleDismiss} />
         )}
-        <MultiRow rows={JobDetailsConfig} />
+        {isLoadingHeadContactData ? (
+          <View style={styles.loaderContainer}>
+            <Spinner thickness={2} {...webProps} />
+          </View>
+        ) : (
+          <MultiRow rows={JobDetailsConfig} />
+        )}
         <View style={styles.actionBtnContainer}>
           <CustomButton
             style={styles.buttonStyle}
@@ -411,10 +430,12 @@ const PreInterviewPreferencesTemplate = ({
             onPressButtonOne={() => navigate(-1)}
             onPressButtonTwo={() => {
               handleSaveAndNext();
+              tabHandler("next");
             }}
             customStyles={{
               ...isWebProps,
               customContainerStyle: commonStyles.customContainerStyle,
+              buttonTwoStyle: styles.saveAndNextButton,
             }}
             displayLoader={isLoadingUpdateContactData}
             isDisabled={errorOnPage || isLoadingUpdateContactData}

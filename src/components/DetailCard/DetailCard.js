@@ -1,12 +1,12 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./DetailCard.style";
-import { useIntl } from "react-intl";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
@@ -102,6 +102,11 @@ const DetailCard = ({
           onPressActionButton={onPressActionButton}
           {...{ isColumnVariableWidth }}
         />
+      )}
+      {!!footerId && (
+        <View style={style.footerContainer}>
+          {intl.formatMessage({ id: footerId })}
+        </View>
       )}
     </CardComponent>
   );
