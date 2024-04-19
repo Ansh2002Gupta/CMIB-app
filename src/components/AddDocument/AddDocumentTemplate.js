@@ -55,7 +55,7 @@ const AddDocumentTemplate = ({
         {isWebView ? (
           <CustomMultiRowTextInput
             customCardStyle={styles.multiRowTextStyle}
-            customWebContainerStyle={{ overflow: "visible" }}
+            customWebContainerStyle={styles.customWebContainerStyle}
             startRowTemplate={addDocumentField}
             gridTemplate={requiredDocumentDetails}
             setObjectGridTemplate={setObjectGridTemplate}

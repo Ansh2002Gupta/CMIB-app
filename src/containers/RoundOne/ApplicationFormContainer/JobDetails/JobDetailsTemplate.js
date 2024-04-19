@@ -333,10 +333,11 @@ const JobDetailsTemplate = ({
       {currentBreakpoint === "xs" ? (
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
-        <TwoColumn
-          leftSection={
+        <View style={{ flexDirection: "row" }}>
+          <View style={{}}>
             <ConfigurableList
-              customOuterContianer={styles.customOuterContianer}
+              customOuterContianer={styles.configurableStyle}
+              componentContainer={styles.componentContainer}
               title={intl.formatMessage({ id: "label.desgination" })}
               searchQuery={configurableListQuery}
               setSearchQuery={setConfigurableListQuery}
@@ -349,17 +350,11 @@ const JobDetailsTemplate = ({
               setMenuOptions={setMenuOptions}
               nameField={"designation"}
             />
-          }
-          isLeftFillSpace={false}
-          isRightFillSpace
-          leftSectionStyle={{
-            width: "25%",
-          }}
-          rightSectionStyle={{
-            width: "75%",
-          }}
-          rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
-        />
+          </View>
+          <View style={styles.innerContainerStyle}>
+            <MultiRow rows={filteredWebJobDetailsConfig} />
+          </View>
+        </View>
       )}
     </CustomScrollView>
   );
