@@ -14,8 +14,8 @@ import CommonText from "../../../../components/CommonText";
 import CustomButton from "../../../../components/CustomButton";
 import CustomMultiRowTextInput from "../../../../components/CustomMultiRowTextinput";
 import DetailCard from "../../../../components/DetailCard";
+import LoadingScreen from "../../../../components/LoadingScreen";
 import MultiRow from "../../../../core/layouts/MultiRow";
-import Spinner from "../../../../components/Spinner";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../../../hooks/useFetch";
@@ -28,11 +28,7 @@ import {
   ROUNDS,
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
-import {
-  COMPANY,
-  HEAD_CONTACT,
-  MOBILE_CODES,
-} from "../../../../constants/constants";
+import { COMPANY, HEAD_CONTACT } from "../../../../constants/constants";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
@@ -401,9 +397,7 @@ const PreInterviewPreferencesTemplate = ({
           <ToastComponent toastMessage={toastMsg} onDismiss={handleDismiss} />
         )}
         {isLoadingHeadContactData ? (
-          <View style={styles.loaderContainer}>
-            <Spinner thickness={2} {...webProps} />
-          </View>
+          <LoadingScreen />
         ) : (
           <MultiRow rows={JobDetailsConfig} />
         )}
