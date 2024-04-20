@@ -458,7 +458,7 @@ const CAJobsDashboard = () => {
             data={candidatesAcceptingAreasData}
           />
         </ScrollView>
-      </View>
+      </View >
     )
   );
 };
