@@ -25,6 +25,7 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const OTHER_INFO_MAX_LENGTH = 400;
 export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const FILE_MAX_SIZE = 5000000;
@@ -204,6 +205,69 @@ export const STEPPER_STATE = {
   INACTIVE: "inActive",
 };
 
+export const DOCUMENT_TYPE = [
+  { label: "Photocopies", value: "copy" },
+  { label: "Original", value: "original" },
+  {
+    label: "Both",
+    value: "both",
+  },
+];
+
+export const EXEPERIENCE_RANGE = [
+  { label: "1-5", value: "1-5" },
+  { label: "5-10", value: "5-10" },
+  {
+    label: "10-20",
+    value: "10-20",
+  },
+  {
+    label: "20 years and above",
+    value: "20 years and above",
+  },
+];
+
+export const JOB_TYPE = [
+  { label: "WFH", value: "WFH" },
+  { label: "Hybrid", value: "Hybrid" },
+  {
+    label: "On-Site",
+    value: "On-Site",
+  },
+];
+
+export const AREA_CODES = [
+  { label: "+01", value: "+01" },
+  { label: "+02", value: "+02" },
+  {
+    label: "+03",
+    value: "+03",
+  },
+];
+
+export const MOBILE_CODES = [
+  { label: "+01", value: "+01" },
+  { label: "+02", value: "+02" },
+  {
+    label: "+03",
+    value: "+03",
+  },
+];
+
+export const ADD_DOCUMENT = {
+  BOTH: "Both",
+  PHOTOCOPIES: "Photocopies",
+  DOCUMENT_NAME: "documentName",
+  DOCUMENT_TYPE: "documentType",
+  COPIESNUMBER: "copiesNumber",
+  ORIGINAL: "Original",
+};
+
+export const PLACE_OF_POSTING = {
+  TOTAL: "total",
+  POSTING_PLACE: "postingPlace",
+};
+
 export const SIGN_UP_STEPPER_OPTION = [
   {
     title: "label.welcome_to_sign_up",
@@ -218,6 +282,28 @@ export const SIGN_UP_STEPPER_OPTION = [
     title: "label.other_details",
   },
 ];
+
+export const document_keys = {
+  DOCUMENT_NAME: "document_name",
+  DOCUMENT_TYPE: "document_type",
+  NUMBER_OF_COPIES: "no_of_copies",
+};
+
+export const HEAD_CONTACT = {
+  DESIGNATION: "designation",
+  NAME: "name",
+  EMAIL: "email",
+  MOBILE_COUNTRY_CODE: "mobile_country_code",
+  MOBILE_NUMBER: "mobile_number",
+  AREA_CODE: "std_country_code",
+  TELEPHONE_NUMBER: "telephone_number",
+};
+
+export const document_keys_with_label = {
+  "label.document_name": "documentName",
+  "label.document_type": "documentType",
+  "label.no_of_copies": "copiesNumber",
+};
 
 export const ZOOM_CONSTANT = {
   MAX_ZOOM: 3,
@@ -245,6 +331,9 @@ export const APPLICATION_FORM_STEPPER_OPTIONS = [
   },
   {
     title: "label.centre_details",
+  },
+  {
+    title: "label.billing_info",
   },
   {
     title: "label.payment",
@@ -297,6 +386,13 @@ export const SCHEDULE_LISTING = {
   type: "Interview Type",
   primary_interview_date: "Primary Interview Date",
   primary_interview_time: "Primary Interview Time",
+  status: "Status",
+};
+export const TRANSACTION_LIST_HEADING = {
+  transaction_id: "Transaction ID",
+  online_offline_transaction: "Offline/Online Transaction",
+  payment_mode: "Payment Mode",
+  date: "Date",
   status: "Status",
 };
 
@@ -831,6 +927,21 @@ export const SAVED_CANDIDATES_TABLE_HEADING = {
   experience: "Total Experience",
   functional_areas: ["Functional Area"],
   designation_applied_for: ["Designation Applied For"],
+};
+
+export const interviewTypeOptions = [
+  { label: "Virtual Interview", value: "online" },
+  { label: "Face to Face", value: "offline" },
+];
+
+export const benefits_key = {
+  BENEFITS_DETAILS: "benefits_details",
+  BENEFITS_AMOUNT: "benefits_amount",
+};
+
+export const designation_key = {
+  DESIGNATION_DETAILS: "designation_details",
+  NUMBER_OF_VACANCIES: "number_of_vacancies",
 };
 
 export const CHART_DATA_TYPE = {

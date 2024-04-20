@@ -25,6 +25,7 @@ const MobileNumberInput = ({
   options,
   urlField,
   valueField,
+  isMandatory = true,
 }) => {
   const isWeb = Platform.OS === "web";
   const intl = useIntl();
@@ -72,7 +73,7 @@ const MobileNumberInput = ({
                 id: "label.country_code",
               })}
               isDropdown
-              isMandatory
+              isMandatory={isMandatory}
               isEditable={isEditable}
               onChangeValue={(val) => onChangeCode(val)}
               placeholder={intl.formatMessage({
@@ -98,7 +99,7 @@ const MobileNumberInput = ({
               isEditable={isEditable}
               isNumeric
               onChangeText={(val) => onChangeMobNumber(val)}
-              isMandatory
+              isMandatory={isMandatory}
               {...{ fieldRef }}
             />
           </View>
@@ -122,7 +123,7 @@ const MobileNumberInput = ({
           isEditable={isEditable}
           errorMessage={mobNumberError}
           isError={!!mobNumberError}
-          isMandatory
+          isMandatory={isMandatory}
           onChangeValue={(val) => onChangeCode(val)}
           labelField="dial_code"
           valueField="dial_code"

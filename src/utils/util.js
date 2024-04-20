@@ -684,6 +684,32 @@ export const doesPathIncludeAnyKey = (pathName) => {
   return pathName.includes(key);
 };
 
+export const formateErrors = (errorResponse) => {
+  if (typeof errorResponse === "string") {
+    return errorResponse;
+  }
+  if (
+    errorResponse &&
+    typeof errorResponse === "object" &&
+    errorResponse.errors
+  ) {
+    const errorPoints = Object.entries(errorResponse.errors).map(
+      ([fieldName, messages]) => {
+        const readableFieldName = fieldName.replace(/\./g, " ");
+
+        return `- ${readableFieldName}: ${messages.join(" ")}`;
+      }
+    );
+    return errorPoints.join("\n");
+  }
+
+  return "An unexpected error occurred.";
+};
+
+export const convertStringtoNumber = (val) => {
+  return +val;
+};
+
 export const convertGraphData = (data) => {
   const formattedData = data.map((item) => {
     return {
@@ -715,4 +741,36 @@ export const convertDonutChartData = (data) => {
     }
   }
   return convertedArray;
+};
+
+export const convertMobileDonutChartData = (data, colors) => {
+  let convertedArray = [];
+  const keys = Object.keys(data);
+  keys.forEach((key, index) => {
+    const colorIndex = index % colors.length;
+    convertedArray.push({
+      name: key,
+      value: data[key],
+      color: colors[colorIndex],
+    });
+  });
+
+  return convertedArray;
+};
+
+export const convertMobileBarData = (data) => {
+  const chartData = {
+    labels: [],
+    datasets: [{ data: [] }],
+  };
+  const sumsByLabel = data.reduce((sums, entry) => {
+    sums[entry.label] = (sums[entry.label] || 0) + entry.value;
+    return sums;
+  }, {});
+  for (const [label, value] of Object.entries(sumsByLabel)) {
+    chartData.labels.push(label);
+    chartData.datasets[0].data.push(value);
+  }
+
+  return chartData;
 };
