@@ -12,10 +12,6 @@ import Pie from 'react-native-pie'
 
 const PieChart = ({ colorScale, data, height, label }) => {
   const screenWidth = Dimensions.get("window").width;
-  const chartConfig = {
-    color: () => { },
-  };
-
 
   const sections = data.map(function (value, index) {
     return { percentage: data[index].value, color: colorScale[index] };
@@ -25,12 +21,6 @@ const PieChart = ({ colorScale, data, height, label }) => {
     return { label: data[index].label, color: colorScale[index] };
   });
 
-  // const labelChart = data.map((el) => {
-  //   return el.label
-  // })
-
-  console.log('colorScale---', colorScale, data)
-  console.log('sections---', sections)
   const labelView = () => {
     return <View style={styles.labelContainer}>
       {labelChart.map((el) =>
