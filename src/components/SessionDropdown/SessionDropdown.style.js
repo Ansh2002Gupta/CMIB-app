@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     color: colors.black,
   },
+  inactiveStyle: {
+    color: colors.lightGray,
+  },
 });
 
 export default styles;

@@ -11,6 +11,8 @@ export const headStartRowConfig = [
     label: "label.designation",
     placeholder: "label.enter_designation",
     value: "",
+    width: 5,
+    customWidthValue: 150,
   },
   {
     cellID: 1,
@@ -18,6 +20,8 @@ export const headStartRowConfig = [
     label: "label.name",
     placeholder: "label.enter_name",
     value: "",
+    width: 5,
+    customWidthValue: 150,
   },
   {
     cellID: 1,
@@ -25,6 +29,8 @@ export const headStartRowConfig = [
     label: "label.email",
     placeholder: "label.enter_email",
     value: "",
+    width: 5,
+    customWidthValue: 150,
   },
   {
     cellID: 1,
@@ -32,6 +38,8 @@ export const headStartRowConfig = [
     label: "label.mobile_country_code",
     placeholder: "label.select_mobile_country_code",
     value: "",
+    width: 5,
+    customWidthValue: 150,
     isDropdown: true,
     labelField: "label",
     valueField: "value",
@@ -43,6 +51,8 @@ export const headStartRowConfig = [
     label: "label.mobile_number",
     placeholder: "label.mobile_number",
     value: "",
+    width: 5,
+    customWidthValue: 150,
     isNumeric: true,
   },
   {
@@ -52,6 +62,8 @@ export const headStartRowConfig = [
     placeholder: "label.select_area_code",
     value: "",
     isNumeric: true,
+    width: 5,
+    customWidthValue: 150,
   },
   {
     cellID: 1,
@@ -60,6 +72,8 @@ export const headStartRowConfig = [
     placeholder: "label.enter_telephone_number",
     value: "",
     isNumeric: true,
+    width: 5,
+    customWidthValue: 150,
   },
   {
     cellID: 1,
