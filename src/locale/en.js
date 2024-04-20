@@ -827,7 +827,11 @@ const locale = {
   "label.other_Benefits": "Other Benefits to be provided apart from above CTC",
   "label.enter_your_info": "Enter your information",
   "label.you_can_add_one_desgination":
-    "You cannot add one desgination at a time",
+    "You cannot add more than one designation at a time.",
+  "label.tabs_removed_data":
+    "Any details corresponding to this in other tabs would also be removed if you remove this.",
+  "label.tabs_changed_data":
+    "Any details corresponding to this in other tabs would also be changed if you change this.",
   "label.designation_name": "Designation name",
   "label.ok": "Ok",
   "label.manageSubscription": "Manage Subscriptions",
@@ -917,6 +921,7 @@ const locale = {
   "label.activeJobs": "Active Jobs",
   "label.candidatesAcceptingOffersIndustries":
     "Candidates Accepting Offers in Industries",
+  "label.click_on_add_button": "Click on (+) to add desgination.",
 };
 
 export default locale;

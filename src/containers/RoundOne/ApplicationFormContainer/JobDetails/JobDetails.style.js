@@ -6,6 +6,10 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
   },
+  twoMainSTyle: { backgroundColor: colors.backgroundColor },
+  mainContainer: {
+    flexDirection: "row",
+  },
   customCardComponentStyle: {
     marginTop: 16,
     backgroundColor: colors.secondaryGrey,
@@ -151,6 +155,12 @@ const styles = StyleSheet.create({
     marginTop: 24,
     borderRadius: 16,
     width: "60%",
+  },
+  emptyCard: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.white,
   },
 });
 
