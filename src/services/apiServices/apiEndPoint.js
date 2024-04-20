@@ -66,6 +66,7 @@ export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
 export const ROUND_ONE_DASHBOARD = `/dashboard`;
+export const ROUND_ONE_BOARD = `/board`;
 export const GLOBAL_SESSIONS = `/sessions`;
 
 /* API Endpoints Members*/
