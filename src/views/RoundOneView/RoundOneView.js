@@ -13,7 +13,7 @@ import {
   CORE,
   GLOBAL_SESSIONS,
   ROUNDS,
-  ROUND_ONE_DASHBOARD,
+  ROUND_ONE_BOARD,
   USER_TYPE_COMPANY,
 } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
@@ -52,7 +52,7 @@ const RoundOneView = () => {
       `/${selectedModule}` +
       ROUNDS +
       `/${roundOneId}` +
-      ROUND_ONE_DASHBOARD,
+      ROUND_ONE_BOARD,
     otherOptions: {
       skipApiCallOnMount: true,
     },
