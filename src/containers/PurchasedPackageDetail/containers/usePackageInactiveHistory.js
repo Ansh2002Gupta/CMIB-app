@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../../../components/BadgeLabel/BadgeLabel";
@@ -28,25 +28,24 @@ import styles from "../PurchasedPackageDetail.style";
 import { COMPANY_INACTIVE_SUBSCRIPTION_LISTING } from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
+import { urlService } from "../../../services/urlService";
 
 const usePackageInactiveHistory = (onViewPress) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
   const defaultCategory = "Experience";
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const navigate = useNavigate();
-  
 
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const {
@@ -133,7 +132,10 @@ const usePackageInactiveHistory = (onViewPress) => {
         setAllDataLoaded(true);
       }
     } catch (error) {
-      console.error("Error fetching Package Subscription History on load more:", error);
+      console.error(
+        "Error fetching Package Subscription History on load more:",
+        error
+      );
     } finally {
       setLoadingMore(false);
     }
@@ -181,7 +183,6 @@ const usePackageInactiveHistory = (onViewPress) => {
       });
     }
   };
-
 
   let headingTexts = ["package_name"];
   let subHeadingText = ["description"];
@@ -307,15 +308,16 @@ const usePackageInactiveHistory = (onViewPress) => {
       },
       {
         content: isHeading ? (
-          <CustomTouchableOpacity
-          >
+          <CustomTouchableOpacity>
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.validity_date ? item.validity_date : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {!!item.validity_date ? formatDate(new Date(item.validity_date)) : "-"}
+            {!!item.validity_date
+              ? formatDate(new Date(item.validity_date))
+              : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),

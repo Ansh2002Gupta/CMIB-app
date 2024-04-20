@@ -9,6 +9,7 @@ import styles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = ({
   customLabelStyle,
+  customLabelViewStyle,
   customToggleStyle,
   customToggleButtonTextStyle,
   customErrorStyle,

@@ -55,7 +55,7 @@ import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg";
 import iconFilter from "../../public/images/svg/iconFilter.svg";
 import iconMore from "../../public/images/svg/iconMore.svg";
-import iconEyeSvg from '../../public/images/svg/iconEyeSvg.svg';
+import iconEyeSvg from "../../public/images/svg/iconEyeSvg.svg";
 import iconFooter from "../../public/images/svg/iconFooter.svg";
 import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
@@ -162,6 +162,8 @@ import iconView from "../../public/images/svg/eyeview.svg";
 import iconCalendarWhite from "../../public/images/svg/iconCalendarWhite.svg";
 import iconTrashSVG from "../../public/images/svg/iconTrash.svg";
 import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile.svg";
+import iconDefaultLogo from "../../public/images/svg/iconDefaultLogo.svg";
+import iconEditBlue from "../../public/images/svg/iconEditBlue.svg";
 import iconWallet from "../../public/images/svg/wallet.svg";
 
 const images = {
@@ -328,7 +330,9 @@ const images = {
   iconView,
   iconTrashSVG,
   iconArchiveSaveMobile,
-  iconWallet
+  iconDefaultLogo,
+  iconEditBlue,
+  iconWallet,
 };
 
 export default images;

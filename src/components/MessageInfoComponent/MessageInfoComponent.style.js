@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  Dimensions,
-  Platform,
-} from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-
-const { width: WIDTH } = Dimensions.get("window");
 
 const getMaxWidth = (currentBreakpoint) => {
   switch (currentBreakpoint) {
