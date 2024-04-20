@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
-import { COMPANY_LOGO, DOCUMENT_UPLOAD } from "../../apiEndPoint";
+import { COMPANY_LOGO } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useSaveLogo = ({ isDocumentUpload } = {}) => {
@@ -30,7 +30,7 @@ const useSaveLogo = ({ isDocumentUpload } = {}) => {
         },
       };
       const res = await Http.post(
-        isDocumentUpload ? DOCUMENT_UPLOAD : COMPANY_LOGO,
+        COMPANY_LOGO,
         file,
         headers,
         otherOptions,
