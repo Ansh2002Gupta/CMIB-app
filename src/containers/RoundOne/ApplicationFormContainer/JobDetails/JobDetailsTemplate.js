@@ -98,6 +98,7 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               isRupee
+              isNumeric
               value={renderJobDetails?.compensation}
               onChangeText={(val) => handleInputChange("compensation", val)}
               customHandleBlur={() => handleBlur("compensation")}
@@ -113,6 +114,7 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               isRupee
+              isNumeric
               value={renderJobDetails?.starting_salary}
               onChangeText={(val) => handleInputChange("starting_salary", val)}
               customHandleBlur={() => handleBlur("starting_salary")}
@@ -328,8 +330,8 @@ const JobDetailsTemplate = ({
       {currentBreakpoint === "xs" ? (
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
-        <View style={{ flexDirection: "row" }}>
-          <View style={{}}>
+        <View style={styles.mainContainer}>
+          <View>
             <ConfigurableList
               customOuterContianer={styles.configurableStyle}
               componentContainer={styles.componentContainer}
@@ -347,7 +349,18 @@ const JobDetailsTemplate = ({
             />
           </View>
           <View style={styles.innerContainerStyle}>
-            <MultiRow rows={filteredWebJobDetailsConfig} />
+            {!!selectedOptions.length ? (
+              <MultiRow rows={filteredWebJobDetailsConfig} />
+            ) : (
+              <CardComponent customStyle={styles.emptyCard}>
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.selectionProcessStyle}
+                >
+                  {intl.formatMessage({ id: "label.click_on_add_button" })}
+                </CommonText>
+              </CardComponent>
+            )}
           </View>
         </View>
       )}
