@@ -22,6 +22,7 @@ import { formateErrors } from "../../../../utils/util";
 const JobDetails = ({ tabHandler }) => {
   const {
     isButtonLoading,
+    deleteDesignationFromList,
     isDisabled,
     desginationItems,
     setRenderJobDetails,
@@ -85,6 +86,7 @@ const JobDetails = ({ tabHandler }) => {
       {isLoading && <LoadingScreen />}
       {!isLoading && !error && (
         <TwoRow
+          style={styles.twoMainSTyle}
           topSection={
             <JobDetailsTemplate
               {...{
@@ -172,7 +174,9 @@ const JobDetails = ({ tabHandler }) => {
         />
       )}
 
-      {modalDetails.isShown && (
+      {(modalDetails.isShown ||
+        modalDetails.isDeleteModal ||
+        modalDetails.isChangeTabModal) && (
         <ConfirmationModal
           severity={"warning"}
           hasSingleButton
@@ -181,12 +185,31 @@ const JobDetails = ({ tabHandler }) => {
             id: "label.ok",
           })}
           icon={images.iconWarning}
-          onPressButtonOne={() =>
-            setModalDetails({
+          onPressButtonOne={() => {
+            if (modalDetails.isDeleteModal) {
+              deleteDesignationFromList(modalDetails?.deleteDetails);
+              setModalDetails((prev) => ({
+                ...prev,
+                isDeleteModal: false,
+                modalMessage: "",
+              }));
+              return;
+            }
+            if (modalDetails.isChangeTabModal) {
+              setModalDetails((prev) => ({
+                ...prev,
+                isChangeTabModal: false,
+                modalMessage: "",
+              }));
+              return;
+            }
+            setModalDetails((prev) => ({
+              ...prev,
               isShown: false,
               modalMessage: "",
-            })
-          }
+            }));
+            return;
+          }}
         />
       )}
     </>

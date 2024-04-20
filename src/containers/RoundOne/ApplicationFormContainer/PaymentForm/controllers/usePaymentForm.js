@@ -6,6 +6,7 @@ import Chip from "../../../../../components/Chip";
 import CommonText from "../../../../../components/CommonText";
 import { mappedDataToUI } from "../mappedData";
 import { formatDate } from "../../../../../utils/util";
+import useGetCurrentUser from "../../../../../hooks/useGetCurrentUser";
 import useIsWebView from "../../../../../hooks/useIsWebView";
 import styles from "../PaymentForm.style";
 
@@ -22,6 +23,7 @@ const apiData = {
 const usePaymentForm = () => {
   const [paymentDetails, setPaymentDetails] = useState();
   const isEditProfile = true;
+  const { currentModule } = useGetCurrentUser();
   const { isWebView } = useIsWebView();
 
   useEffect(() => {
@@ -128,6 +130,7 @@ const usePaymentForm = () => {
   const handleSaveAndNext = () => {};
 
   return {
+    currentModule,
     getStatusStyle,
     getColoumConfigs,
     handleDownload,

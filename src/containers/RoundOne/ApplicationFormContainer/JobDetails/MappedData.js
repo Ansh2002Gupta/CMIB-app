@@ -492,6 +492,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.total",
         value: details.total,
         isNumeric: true,
+        isEditable: false,
         width: 4,
       },
       {
@@ -576,6 +577,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.total",
       value: "",
       isNumeric: true,
+      isEditable: false,
       width: 4,
     },
     {
