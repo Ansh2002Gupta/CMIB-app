@@ -59,19 +59,22 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
     },
   });
 
-  useEffect(async () => {
+  useEffect(() => {
+    if (!!interview_id) runGetInterviewDates();
+    else runFetchData();
+  }, [interview_id]);
+
+  const runFetchData = async () => {
     if (!interview_id) {
       const newData = await fetchData();
       setInterviewData(newData);
     }
-  }, []);
+  };
 
-  useEffect(async () => {
-    if (!!interview_id) {
-      const newData = await getInterviewDates();
-      restructureData(newData);
-    }
-  }, [interview_id]);
+  const runGetInterviewDates = async () => {
+    const newData = await getInterviewDates();
+    restructureData(newData);
+  };
 
   const getInterviewDates = async () => {
     const newData = await fetchInterviewDates({
