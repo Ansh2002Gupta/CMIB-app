@@ -16,7 +16,12 @@ import {
   REMOTE,
   TELEPHONIC,
 } from "./ViewInterviewFieldDetails";
-import { formatDate, formatTime, getValidUrl } from "../../utils/util";
+import {
+  formatDate,
+  formatText,
+  formatTime,
+  getValidUrl,
+} from "../../utils/util";
 import useFetch from "../../hooks/useFetch";
 import {
   JOB_APPLICANTS,
@@ -28,7 +33,9 @@ import {
   APPLICANT,
 } from "../../services/apiServices/apiEndPoint";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./ViewInterviewDetails.style";
+import styles, {
+  getModalInnerContainerHeight,
+} from "./ViewInterviewDetails.style";
 
 const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
   const intl = useIntl();
@@ -220,10 +227,13 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={styles.modalInnerContainer}
+        style={{
+          ...getModalInnerContainerHeight(!!interview_id ? 0.4 : 0.6),
+          ...styles.marginTop,
+        }}
       >
-        {isLoading && !isError && <LoadingScreen />}
-        {!isLoading && !isError && (
+        {(isLoading || isGettingDatesData) && !isError && <LoadingScreen />}
+        {!isLoading && !isGettingDatesData && !isError && (
           <>
             {!interview_id && (
               <>
@@ -258,7 +268,7 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
                     heading: intl.formatMessage({
                       id: "label.interview_type",
                     }),
-                    value: currentPrimaryType,
+                    value: !!data?.type && formatText(currentPrimaryType),
                     isMandatory: true,
                   })}
                 </View>
@@ -268,6 +278,7 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
                 true
               )}
             />
+            <View style={commonStyles.horizontalLine} />
             <TwoRow
               topSection={
                 <View>
@@ -281,7 +292,9 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
                     heading: intl.formatMessage({
                       id: "label.interview_type",
                     }),
-                    value: currentAlternateType,
+                    value:
+                      !!data?.alternate_type &&
+                      formatText(currentAlternateType),
                     isMandatory: false,
                   })}
                 </View>
