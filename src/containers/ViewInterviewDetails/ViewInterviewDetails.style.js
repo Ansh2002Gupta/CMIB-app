@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   },
   detailsSection: {
     flexDirection: "row",
-    paddingBottom: 16,
     flexWrap: "wrap",
     ...Platform.select({
       web: {
@@ -51,14 +50,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 16,
   },
-  modalInnerContainer: {
-    maxHeight: deviceHeight * 0.6,
-  },
   linkText: {
     ...basetextStyle,
     color: colors.darkBlue,
     textDecorationLine: "underline",
   },
+  marginTop: {
+    marginTop: 20,
+  },
 });
+
+export const getModalInnerContainerHeight = (parameter = 0.6) => {
+  return {
+    height: deviceHeight * parameter,
+  };
+};
 
 export default styles;

@@ -39,14 +39,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     padding: 16,
   },
-  webContainerStyle: {
+  webContainerStyle: (currentBreakpoint) => ({
     backgroundColor: colors.backgroundGrey,
     paddingLeft: 16,
     paddingRight: 16,
     gap: 24,
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
-  },
+    gridTemplateColumns: currentBreakpoint === "md" ? "1fr 1fr 1fr" : "1fr 1fr",
+    width: "100%",
+  }),
   buttonStyle: {},
   containerStyle: {
     backgroundColor: colors.backgroundColor,
@@ -62,10 +63,25 @@ const styles = StyleSheet.create({
   addApplicationFormText: {
     fontSize: 24,
     color: colors.black,
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: "355px",
+      },
+    }),
+  },
+
+  addApplicationModalFormText: {
+    fontSize: 24,
+    color: colors.black,
+    flexWrap: "wrap",
+    overFlow: "hidden",
+    whiteSpace: "break-space",
   },
   componentStyle: {
     marginTop: 24,
-    flexDirection: "row",
   },
   addApplicationFormDescriptionText: {
     fontSize: 16,
@@ -76,10 +92,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.black,
     marginTop: 16,
-    flexWrap: "wrap",
-    wordBreak: "break-word",
-    overFlow: "hidden",
-    whiteSpace: "break-space",
+    // flexWrap: "wrap",
+    // wordBreak: "break-word",
+    // overFlow: "hidden",
+    // whiteSpace: "break-space",
+    display: "flex",
+    flexDirection: "row",
+    // alignItems: 'flex-end',
+    // justifyContent: 'space-between',
+  },
+  customButtonTextStyle: {
+    fontSize: 14,
+    color: colors.black,
+    fontWeight: "600",
   },
   borderStyle: {
     borderWidth: 1,
@@ -97,15 +122,38 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  modalWebViewContainer: {
+    ...Platform.select({
+      ios: {
+        height: HEIGHT,
+      },
+      android: {
+        height: HEIGHT,
+      },
+    }),
+  },
   viewPackageText: {
     fontSize: 16,
     color: colors.backgroundColor,
+  },
+  viewPackageTextMob: {
+    fontSize: 16,
+    color: colors.green,
   },
   subscribePackagesButton: {
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8,
     backgroundColor: colors.green,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+
+  subscribePackagesButtonMob: {
+    alignItems: "center",
+    justifyContent: "center",
     paddingTop: 12,
     paddingBottom: 12,
     paddingLeft: 16,

@@ -76,7 +76,7 @@ const Dropdown = ({
             data?.isSelected ||
             (data.index && data.index !== null) ||
             (!isSelected &&
-              selectedItems.findIndex((item) => item.id === data.id) !== -1)
+              selectedItems?.findIndex((item) => item.id === data.id) !== -1)
           }
           title={data?.label}
           isDisabled={isDisabled}

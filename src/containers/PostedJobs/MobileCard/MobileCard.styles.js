@@ -12,11 +12,12 @@ const styles = StyleSheet.create({
     marginRight: 16,
     borderBottomWidth: 0.5,
     borderColor: colors.lightGrey,
-    justifyContent: "center",
+    alignItems: "center",
     flexDirection: "row",
   },
   contentContainer: {
     flex: 1,
+    justifyContent: "center",
   },
   contentContainerMain: {
     flex: 1,
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
   },
   textAlign: {
     textAlign: "left",
+    paddingRight: 0,
   },
   marginRight16: {
     marginRight: 16,

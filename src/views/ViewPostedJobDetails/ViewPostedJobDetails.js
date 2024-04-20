@@ -15,6 +15,7 @@ import ViewScheduleInterview from "../../containers/ViewPostedJobDetails/ViewSch
 import { FormTabs } from "../../components/Tab/FormTabs";
 import { CustomTabs } from "../../components/Tab";
 import useGetEditJobs from "../../services/apiServices/hooks/EditJobs/useGetEditJobs";
+import useChangeJobStatusApi from "../../services/apiServices/hooks/useChangeJobStatusApi";
 import { urlService } from "../../services/urlService";
 import { jobType } from "../../constants/constants";
 import { useIntl } from "react-intl";
@@ -43,6 +44,11 @@ const ViewPostedJobDetails = () => {
   const [activeTab] = useState(
     Number(urlService.getQueryStringValue("activeTab"))
   );
+  const {
+    handleUseChangeJob,
+    isError: ischangeJobStatusError,
+    errorWhileJobChange,
+  } = useChangeJobStatusApi();
   const intl = useIntl();
 
   useEffect(() => {
@@ -111,12 +117,12 @@ const ViewPostedJobDetails = () => {
         [
           {
             label: "label.minimum_experience",
-            value: apiData?.min_experience,
+            value: apiData?.min_experience ?? "-",
             isMandatory: true,
           },
           {
             label: "label.maximum_experience",
-            value: apiData?.max_experience,
+            value: apiData?.max_experience ?? "-",
           },
           {
             label: "label.nationality",
@@ -159,8 +165,7 @@ const ViewPostedJobDetails = () => {
           },
           {
             label: "label.category_preference",
-            value: apiData?.category_prefrence.name ?? "-",
-            isMandatory: true,
+            value: apiData?.category_prefrence?.name ?? "-",
           },
           {},
         ],
@@ -210,7 +215,7 @@ const ViewPostedJobDetails = () => {
             label: "label.flexi_hours",
             value: apiData?.flexi_hours == 1 ? "Yes" : "No" ?? "-",
           },
-          !jobName === jobType.CONTRACTUAL
+          jobName === jobType.REGULAR || jobName === jobType.RETIRED
             ? {
                 label: "label.fullorPartTime",
                 value: apiData?.service_type ?? "-",
@@ -263,9 +268,7 @@ const ViewPostedJobDetails = () => {
           },
           {
             label: "label.maximum_salary",
-            value: apiData?.max_experience
-              ? Math.trunc(apiData?.max_experience)
-              : "-",
+            value: apiData?.max_salary ? Math.trunc(apiData?.max_salary) : "-",
           },
         ],
         [
@@ -315,6 +318,7 @@ const ViewPostedJobDetails = () => {
                 isBorderVisible={false}
                 handleSwitchChange={() => {
                   setActive(!isActive);
+                  handleUseChangeJob(id);
                 }}
               />
               <View style={styles.container}>
@@ -329,7 +333,7 @@ const ViewPostedJobDetails = () => {
                       component: (
                         <View style={styles.innerContainer}>
                           <View style={styles.flex1}>
-                            {!apiIsError ? (
+                            {!apiIsError && !ischangeJobStatusError ? (
                               <View
                                 style={{
                                   ...styles.container,
@@ -367,26 +371,38 @@ const ViewPostedJobDetails = () => {
                             ) : null}
                           </View>
 
-                          {!(isConstantLoading || loading) && apiIsError && (
-                            <ErrorComponent
-                              errorMsg={
-                                apiError?.data?.message ||
-                                GENERIC_GET_API_FAILED_ERROR_MESSAGE
-                              }
-                            />
-                          )}
+                          {!(isConstantLoading || loading) &&
+                            (apiIsError || ischangeJobStatusError) && (
+                              <ErrorComponent
+                                errorMsg={
+                                  apiError?.data?.message ||
+                                  errorWhileJobChange ||
+                                  GENERIC_GET_API_FAILED_ERROR_MESSAGE
+                                }
+                              />
+                            )}
                         </View>
                       ),
                     },
                     {
                       label: intl.formatMessage({ id: "label.applicants" }),
-                      component: <ViewJobApplicants id={id} />,
+                      component: (
+                        <ViewJobApplicants
+                          id={id}
+                          questionaireData={questionnaireData}
+                        />
+                      ),
                     },
                     {
                       label: intl.formatMessage({
                         id: "label.schedule_interview",
                       }),
-                      component: <ViewScheduleInterview id={id} />,
+                      component: (
+                        <ViewScheduleInterview
+                          id={id}
+                          questionaireData={questionnaireData}
+                        />
+                      ),
                     },
                   ]}
                   intialActiveTab={activeTab}

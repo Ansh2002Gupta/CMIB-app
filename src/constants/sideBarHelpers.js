@@ -1,74 +1,6 @@
 import { navigations } from "./routeNames";
 import images from "../images";
 
-export const items = [
-  // TODO data will replace with API data
-  {
-    id: 0,
-    label: "2023 Aug - Sept Campus Placement",
-  },
-  {
-    id: 1,
-    label: "2023 Feb - Mar Campus Placement",
-  },
-  {
-    id: 2,
-    label: "2022 Aug - Sept Campus Placement",
-  },
-  {
-    id: 3,
-    label: "2022 Feb - Mar Campus Placement",
-  },
-  {
-    id: 4,
-    label: "2021 Aug - Sept Campus Placement",
-  },
-  {
-    id: 5,
-    label: "2021 Feb - Mar Campus Placement",
-  },
-  {
-    id: 6,
-    label: "2020 Aug - Sept Campus Placement",
-  },
-  {
-    id: 7,
-    label: "2020 Feb - Mar Campus Placement",
-  },
-  {
-    id: 8,
-    label: "2019 Aug - Sept Campus Placement",
-  },
-  {
-    id: 9,
-    label: "2019 Feb - Mar Campus Placement",
-  },
-  {
-    id: 10,
-    label: "2018 Aug - Sept Campus Placement",
-  },
-  {
-    id: 11,
-    label: "2018 Feb - Mar Campus Placement",
-  },
-  {
-    id: 12,
-    label: "2017 Aug - Sept Campus Placement",
-  },
-  {
-    id: 13,
-    label: "2017 Feb - Mar Campus Placement",
-  },
-  {
-    id: 14,
-    label: "2016 Aug - Sept Campus Placement",
-  },
-  {
-    id: 15,
-    label: "2016 Feb - Mar Campus Placement",
-  },
-];
-
 const newlyQualifiedPlacementsMenu = [
   {
     label: "Dashboard",
@@ -166,7 +98,6 @@ export const getAppModules = ({ isMember }) => {
       label: "Newly Qualified Placements",
       key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
       children: newlyQualifiedPlacementsMenu,
-      session: items,
       visible: false,
       image: images.iconNewlyQualified,
       isExperiencedMember: false,
@@ -175,7 +106,6 @@ export const getAppModules = ({ isMember }) => {
       label: "CA Jobs",
       key: moduleKeys.CA_JOBS_KEY,
       children: isMember ? memberCaJobsMenu : caJobsMenu,
-      session: items,
       visible: false,
       image: images.iconCAJobs,
       isExperiencedMember: false,
@@ -190,7 +120,6 @@ export const getAppModules = ({ isMember }) => {
       label: "Career Ascent",
       key: moduleKeys.CARRER_ASCENT_KEY,
       children: experiencedMembersMenu,
-      session: items,
       visible: false,
       isSubMenu: true,
       image: images.iconCareerAscent,
@@ -200,7 +129,6 @@ export const getAppModules = ({ isMember }) => {
       label: "Women PartTime",
       key: moduleKeys.WOMEN_PARTTIME_KEY,
       children: experiencedMembersMenu,
-      session: items,
       visible: false,
       isSubMenu: true,
       image: images.iconWomanPartTime,
@@ -210,7 +138,6 @@ export const getAppModules = ({ isMember }) => {
       label: "Overseas Chapters",
       key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
       children: experiencedMembersMenu,
-      session: items,
       visible: false,
       isSubMenu: true,
       image: images.iconOverseasChapters,
