@@ -35,7 +35,6 @@ export const COMPANY_INACTIVE_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/inact
 export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`;
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
-export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
 export const DETAIL = `/detail`;
 
 //sub routes
