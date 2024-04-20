@@ -343,9 +343,9 @@ const LoginScreenUI = (props) => {
                   }}
                 >
                   <CustomTextInput
-                    label={intl.formatMessage({ id: "label.srn" })}
+                    label={intl.formatMessage({ id: "label.srnMRN" })}
                     placeholder={intl.formatMessage({
-                      id: "label.srn_placeholder",
+                      id: "label.srn_mrn_placeholder",
                     })}
                     value={srn}
                     onChangeText={(val) => onChangeSRNNumber(val)}

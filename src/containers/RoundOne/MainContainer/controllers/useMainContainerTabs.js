@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { useLocation, useNavigate } from "../../../../routes";
 
@@ -8,13 +8,16 @@ import {
   ROUND_ONE_CARD,
   getCompanyRoundCards,
 } from "../../../../constants/constants";
+import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 
-const useMainContainerTabs = ({ cardsData }) => {
+const useMainContainerTabs = ({ cardsData, roundId }) => {
   const intl = useIntl();
   const { is_editable, is_filled } = cardsData;
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState(null);
+  const [sideBarState] = useContext(SideBarContext);
+  const currentModule = sideBarState?.selectedModule?.key;
 
   const roundOneTabs = getCompanyRoundCards({ is_filled }).map((card) => ({
     title: intl.formatMessage({ id: card.title }),
@@ -27,7 +30,9 @@ const useMainContainerTabs = ({ cardsData }) => {
     setSelectedTab(id);
     switch (id) {
       case 1:
-        navigate(navigations.APPLICATION_FORM);
+        navigate(
+          `/${currentModule}/${navigations.ROUND_ONE}/application-form/${roundId}`
+        );
         break;
       case 2:
         break;

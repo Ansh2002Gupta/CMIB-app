@@ -14,6 +14,7 @@ import CommonText from "../CommonText";
 
 const BarChart = ({
   barColor,
+  barWidth = 10,
   data,
   domainPadding,
   height,
@@ -21,6 +22,7 @@ const BarChart = ({
   toolTipLabel,
   xAxisLabel,
   yAxisLabel,
+  xAxisTickAngle,
   yAxisTickFormat,
   xAxisTickFormat,
 }) => {
@@ -55,7 +57,7 @@ const BarChart = ({
             tickFormat={xAxisTickFormat}
             style={{
               axis: styles.gridLine,
-              tickLabels: styles.tickLabels,
+              tickLabels: { ...styles.tickLabels, angle: xAxisTickAngle },
               axisLabel: styles.axisLabel,
             }}
           />
@@ -72,6 +74,7 @@ const BarChart = ({
           />
 
           <VictoryBar
+            barWidth={barWidth}
             animate={{
               duration: 2000,
               onLoad: { duration: 1000 },

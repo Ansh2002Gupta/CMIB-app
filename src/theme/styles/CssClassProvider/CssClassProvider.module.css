@@ -31,6 +31,14 @@
     var(--white);
 }
 
+.configurableList__item--green:hover {
+  background: var(--greenTwo) !important;
+}
+
+.configurableList__item--green:hover .item--black {
+  color: var(--black) !important;
+}
+
 .module-box_outline--darkBlue:hover {
   border-color: var(--darkBlue) !important;
   background: linear-gradient(
