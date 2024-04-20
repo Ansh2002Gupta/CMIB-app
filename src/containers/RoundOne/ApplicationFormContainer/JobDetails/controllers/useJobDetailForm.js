@@ -99,6 +99,8 @@ const useJobDetailForm = ({ tabHandler }) => {
   const [validateError, setValidateError] = useState(initialState);
   const [modalDetails, setModalDetails] = useState({
     isShown: false,
+    isDeleteModal: false,
+    isChangeTabModal: false,
     modalMessage: "",
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -374,9 +376,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     return monthlyDetail ? monthlyDetail.value : "0";
   }
 
-  console.log("selectedOPtions", menuOptions);
-
-  const handleDelete = ({ itemToBeDeletedId, prevState }) => {
+  const deleteDesignationFromList = ({ itemToBeDeletedId, prevState }) => {
     if (currentDesginationID !== null) {
       setDeleteDesginationId(itemToBeDeletedId);
     }
@@ -394,10 +394,29 @@ const useJobDetailForm = ({ tabHandler }) => {
     } else {
       setMenuOptions([...prevState.current]);
     }
+    setRenderJobDetails(initialState);
+  };
+
+  const handleDelete = ({ itemToBeDeletedId, prevState }) => {
+    setModalDetails((prev) => ({
+      ...prev,
+      isDeleteModal: true,
+      deleteDetails: { itemToBeDeletedId, prevState },
+      modalMessage: intl.formatMessage({
+        id: "label.tabs_removed_data",
+      }),
+    }));
   };
 
   const handlePress = (selectedItemID) => {
-    setIsAddNewJob(false);
+    if (selectedItemID === currentDesginationID) {
+      return;
+    }
+    if (selectedItemID === null) {
+      setIsAddNewJob(true);
+    } else {
+      setIsAddNewJob(false);
+    }
     setCurrentDesginationID(selectedItemID);
     if (isMultiSelect) {
       if (selectedOptions.includes(selectedItemID)) {
@@ -503,6 +522,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     setSelectedOptions,
     modalDetails,
     setModalDetails,
+    deleteDesignationFromList,
     desginationItems,
     handleBlur,
     isLoading,

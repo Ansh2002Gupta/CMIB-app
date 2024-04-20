@@ -133,26 +133,40 @@ const useAddPlaceOfPosting = ({
     cellID,
   }) => {
     setRenderJobDetails((prevDetail) => {
+      let newTotal = 0;
+
       const updatedDetail = prevDetail?.posting_details?.map((item) => {
         if (
-          !value &&
-          value?.length === 0 &&
+          item.isNumeric &&
           item.cellID === cellID &&
-          item.label === propertyName
+          item.label !== "label.total"
         ) {
-          return {
-            ...item,
-            value: value,
-            isError: true,
-            error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
-          };
+          const newValue = item.label === propertyName ? value : item.value;
+          newTotal += Number(newValue) || 0;
         }
 
         if (item.label === propertyName && item.cellID === cellID) {
-          return { ...item, value: value, isError: null, error: null };
+          return {
+            ...item,
+            value: value,
+            isError: !value,
+            error: !value
+              ? intl.formatMessage({ id: "label.error.cannot_be_empty" })
+              : null,
+          };
         }
+
         return item;
       });
+      const totalItemIndex = updatedDetail.findIndex(
+        (item) => item.label === "label.total" && item.cellID === cellID
+      );
+      if (totalItemIndex !== -1) {
+        updatedDetail[totalItemIndex] = {
+          ...updatedDetail[totalItemIndex],
+          value: newTotal.toString(),
+        };
+      }
       return { ...prevDetail, posting_details: updatedDetail };
     });
   };

@@ -16,13 +16,14 @@ import images from "../../../../images";
 import styles from "./PaymentForm.style";
 
 import { transactionList } from "./controllers/usePaymentForm";
-import { TRANSACTION_LIST_HEADING } from "../../../../constants/constants";
+import { TRANSACTION_LIST_HEADING_FOR_NQCA } from "../../../../constants/constants";
 import { TwoRow } from "../../../../core/layouts";
 import ActionPairButton from "../../../../components/ActionPairButton";
 import commonStyles from "../../../../theme/styles/commonStyles";
 
 const PaymentForm = ({ tabHandler }) => {
   const {
+    currentModule,
     paymentDetails,
     handleBlur,
     handleInputChange,
@@ -118,7 +119,8 @@ const PaymentForm = ({ tabHandler }) => {
                   getStatusStyle,
                   isShowPagination: false,
                   isHeading: true,
-                  tableHeading: TRANSACTION_LIST_HEADING,
+                  tableHeading:
+                    TRANSACTION_LIST_HEADING_FOR_NQCA(currentModule),
                 }}
               />
             </CardComponent>

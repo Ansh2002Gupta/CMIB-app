@@ -1,5 +1,6 @@
 import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+import { collectCustomHooksForSignature } from "react-refresh";
 
 const styles = StyleSheet.create({
   customerInnerContainerStyle: {

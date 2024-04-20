@@ -388,12 +388,36 @@ export const SCHEDULE_LISTING = {
   primary_interview_time: "Primary Interview Time",
   status: "Status",
 };
-export const TRANSACTION_LIST_HEADING = {
-  transaction_id: "Transaction ID",
-  online_offline_transaction: "Offline/Online Transaction",
-  payment_mode: "Payment Mode",
-  date: "Date",
-  status: "Status",
+export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
+  const currentModules =
+    currentModule === NEWLY_QUALIFIED
+      ? {
+          psychometric_test_fee: "Psychometric/ Written Test Fee",
+        }
+      : {};
+  return {
+    centre_name: "Center Name",
+    total_vacancies: "Vaccany",
+    interview_dates: "Interview Dates",
+    amount: "Amount",
+    ...currentModules,
+  };
+};
+
+export const TRANSACTION_LIST_HEADING_FOR_NQCA = (currentModule) => {
+  const currentModules =
+    currentModule === NEWLY_QUALIFIED
+      ? {
+          psychometric_test_fee: "Psychometric/ Written Test Fee",
+        }
+      : {};
+  return {
+    centre_name: "Transaction ID",
+    total_vacancies: "Offline/Online Transaction",
+    interview_dates: "Interview Dates",
+    amount: "Amount",
+    ...currentModules,
+  };
 };
 
 export const FEEDBACK_TABLE_HEADING = {
