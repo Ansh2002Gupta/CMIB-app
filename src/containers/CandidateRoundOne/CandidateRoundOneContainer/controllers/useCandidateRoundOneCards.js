@@ -21,11 +21,13 @@ const useCandidateRoundOneCards = ({ hasRoundone }) => {
   const onPressCard = (id) => {
     switch (id) {
       case 1:
-        navigate(`/${navigations.APPLICATION_FORM}`);
+        navigate(`${navigations.APPLICATION_FORM}`);
         break;
       case 2:
         break;
       case 3:
+        navigate(`${navigations.CENTRE_WISE_COMPANY}`);
+        break;
       default:
         break;
     }

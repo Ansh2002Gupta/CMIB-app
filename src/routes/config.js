@@ -4,6 +4,7 @@ import { Platform } from "@unthinkable/react-core-components";
 import Candidates from "../views/Candidates";
 import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 import AppliedJobsView from "../views/AppliedJobsView";
+import CentreWiseCompanyListing from "../views/CentreWiseCompanyListing";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
@@ -228,7 +229,15 @@ const config = [
         element: <RoundOneApplicationForm />,
       },
       {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
+        element: <CentreWiseCompanyListing />,
+      },
+      {
         viewPath: `${navigations.ROUND_TWO}/${navigations.APPLICATION_FORM}`,
+        element: <RoundTwoApplicationForm />,
+      },
+      {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`,
         element: <RoundTwoApplicationForm />,
       },
       {
@@ -343,6 +352,10 @@ const config = [
         viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
         element: <RoundOneApplicationForm />,
       },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
+        element: <CentreWiseCompanyListing />,
+      },
     ],
   },
   {
@@ -361,6 +374,10 @@ const config = [
         viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
         element: <RoundOneApplicationForm />,
       },
+      {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`,
+        element: <RoundTwoApplicationForm />,
+      },
     ],
   },
   {
@@ -378,6 +395,10 @@ const config = [
       {
         viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
         element: <RoundOneApplicationForm />,
+      },
+      {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`,
+        element: <RoundTwoApplicationForm />,
       },
     ],
   },

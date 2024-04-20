@@ -26,6 +26,7 @@ export const navigations = {
   APPLICATION_FORM: "application-form/:id",
   CANDIDATE_DETAILS_SUBROUTE: "candidate-details",
   CANDIDATE_DETAILS: "/candidate-details/:id",
+  CENTRE_WISE_COMPANY: "centre-wise-company",
   APPLIED_JOBS: "applied-jobs",
   CANDIDATES: "candidates",
   JOB_APPLICANTS: "job-applicants",
