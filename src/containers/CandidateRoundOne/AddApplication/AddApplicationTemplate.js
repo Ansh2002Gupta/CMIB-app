@@ -12,6 +12,8 @@ import { ADD_APPLICATION_STEPPER } from "../../../constants/constants";
 import images from "../../../images";
 import styles from "./AddApplication.style";
 import TrainingDetails from "../TrainingDetails";
+import WorkExperienceDetails from "../WorkExperience";
+import HobbiesDetails from "../Hobbies";
 
 const AddApplicationTemplate = ({
   countryCodeData,
@@ -47,6 +49,10 @@ const AddApplicationTemplate = ({
         return <EducationalDetails intl={intl} isWebView={isWebView} />;
       case 3:
         return <TrainingDetails intl={intl} isWebView={isWebView} />;
+      case 4:
+        return <WorkExperienceDetails intl={intl} isWebView={isWebView} />;
+      case 5:
+        return <HobbiesDetails intl={intl} isWebView={isWebView} />;
       default:
         return (
           <View

@@ -696,6 +696,10 @@ const locale = {
   "label.nameOfOrg": "Name of the Organisation",
   "label.natureOfWorkdoneIndustrial": "Nature of Work Done During Industrial Training",
   "label.natureOfWorkdoneIndustrialArticles": "Nature of Work Done During Articles Industry, If Any",
+  "label.grossSalaryDrawnPa": "Gross Salary Drawn (pa)",
+  "label.addWorkExperience": "Add Work Experience",
+  "label.enterOtherAreas": "Enter other areas",
+  "label.selectHobbies": "Select Hobbies",
 };
 
 export default locale;

@@ -9,7 +9,7 @@ import images from "../../../images";
 import CustomButton from "../../../components/CustomButton";
 import { YEARS } from "../../../constants/constants";
 
-const articleShipKeys = {
+const industrialKeys = {
     orgName: '',
     location: '',
     trainingFrom: '',
@@ -21,7 +21,7 @@ const articleShipKeys = {
 }
 const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = () => {}}, ref) => {
   //states
-  const [industrialTrainings, setIndustrialTrainings] = useState([articleShipKeys]);
+  const [industrialTrainings, setIndustrialTrainings] = useState([industrialKeys]);
 
   //custom functions
   const onDataChange = (data, localIndex, key) => {
@@ -40,14 +40,14 @@ const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = (
     }
   }
 
-  const onAddArticle = () => {
-    setIndustrialTrainings([...industrialTrainings,articleShipKeys ]);
+  const onAddIndustrialExperience = () => {
+    setIndustrialTrainings([...industrialTrainings,industrialKeys ]);
   }
 
-  const onDeleteArticle = (LIndex) => {
+  const onDeleteIndustrialExperience = (LIndex) => {
     if (industrialTrainings.length > 1) {
-        let newArticles = industrialTrainings.filter((item, index) => index !== LIndex);
-        setIndustrialTrainings([...newArticles]);
+        let newIndustrialExp = industrialTrainings.filter((item, index) => index !== LIndex);
+        setIndustrialTrainings([...newIndustrialExp]);
     }
   }
 
@@ -107,7 +107,7 @@ const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = (
                         iconLeft={{
                         leftIconSource: images.iconDeleteRed,
                         }}
-                        onPress={() => {onDeleteArticle(index)}}
+                        onPress={() => {onDeleteIndustrialExperience(index)}}
                     />}
                     <View style={isWebView ? styles.gridView : styles.gap}>
                         <CustomTextInput
@@ -213,7 +213,7 @@ const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = (
             );
         })}
         <CustomButton
-            onPress={onAddArticle}
+            onPress={onAddIndustrialExperience}
             style={styles.buttonStyle}
             iconLeft={{
               leftIconSource: images.iconAdd,
