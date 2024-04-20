@@ -14,6 +14,7 @@ import styles from "./AddApplication.style";
 import TrainingDetails from "../TrainingDetails";
 import WorkExperienceDetails from "../WorkExperience";
 import HobbiesDetails from "../Hobbies";
+import JobPreferenceDetails from "../JobPreference";
 
 const AddApplicationTemplate = ({
   countryCodeData,
@@ -53,6 +54,8 @@ const AddApplicationTemplate = ({
         return <WorkExperienceDetails intl={intl} isWebView={isWebView} />;
       case 5:
         return <HobbiesDetails intl={intl} isWebView={isWebView} />;
+      case 6:
+          return <JobPreferenceDetails intl={intl} isWebView={isWebView} />;
       default:
         return (
           <View

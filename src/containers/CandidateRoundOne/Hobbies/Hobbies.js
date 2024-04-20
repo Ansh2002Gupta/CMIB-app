@@ -1,4 +1,4 @@
-import React, {useState, useImperativeHandle, useEffect} from "react";
+import React, {useState, useImperativeHandle} from "react";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../components/CardComponent";
@@ -8,10 +8,16 @@ import styles from "./HobbiesDetails.style";
 import { YEARS } from "../../../constants/constants";
 import CustomChipCard from "../../../components/CustomChipCard/CustomChipCard";
 
-const Hobbies = ({intl, isWebView, isViewMode = false, onValidationChange = () => {}}, ref) => {
+const Hobbies = ({intl, isWebView, isViewMode = false}, ref) => {
   //states
   const [hobbies, setHobbies] = useState([]);
 
+  //custom functions
+  const onHobbieSelect = (val) => {
+    if (!hobbies.includes(val)) {
+      setHobbies(prev => [...prev, val]);
+    }
+  }
 
   useImperativeHandle(ref, () => ({
     getState: () => {
@@ -36,11 +42,7 @@ const Hobbies = ({intl, isWebView, isViewMode = false, onValidationChange = () =
                 isDropdown
                 options={YEARS}
                 isTextInputWithChip
-                onChangeValue={(val) => {
-                  if (!hobbies.includes(val)) {
-                    setHobbies(prev => [...prev, val]);
-                  }
-                }}
+                onChangeValue={onHobbieSelect}
             />
             <View></View>
             <View style={styles.hobbiesChipContainer}>

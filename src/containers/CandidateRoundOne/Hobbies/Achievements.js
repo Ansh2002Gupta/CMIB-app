@@ -7,7 +7,7 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./HobbiesDetails.style";
 import { BOOLEAN_OPTION } from "../../../constants/constants";
 
-const Achievements = ({intl, isWebView, isViewMode = false, onValidationChange = () => {}}, ref) => {
+const Achievements = ({intl, isWebView, isViewMode = false}, ref) => {
   //states
   const [obtainedScholarship, setObtainedScholarship] = useState('');
   const [wonPrizes, setWonPrizes] = useState('');
@@ -56,7 +56,6 @@ const Achievements = ({intl, isWebView, isViewMode = false, onValidationChange =
                 placeholder={intl.formatMessage({ id: "label.won_prizes" })}
                 value={wonPrizes}
                 isDropdown
-                isTextInputWithChip
                 options={BOOLEAN_OPTION}
                 onChangeValue={setWonPrizes}
             />

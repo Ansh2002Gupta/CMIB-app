@@ -700,6 +700,15 @@ const locale = {
   "label.addWorkExperience": "Add Work Experience",
   "label.enterOtherAreas": "Enter other areas",
   "label.selectHobbies": "Select Hobbies",
+  "label.haveYouParticipatedInResidential": "Have you participated in One Month/Four Week residential program conducted by ICAI",
+  "label.ews": "EWS (Economically Weeker Section)",
+  "label.physicallyImpaired": "Physically Impaired",
+  "label.selectIndustryPreference": "Select preference for kinf of industry",
+  "label.selectWorkAreaPreference": "Select preference for area of work",
+  "label.center": "Center",
+  "label.slot": "Slot",
+  "label.mockInterviewSlots": "Mock Interview Slots",
+  "label.desireToAppear": "I desire to appear in Campus Interviews being organised by the Institue in the following city"
 };
 
 export default locale;

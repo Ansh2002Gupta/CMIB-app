@@ -26,6 +26,18 @@ const styles = StyleSheet.create({
     gridTemplateColumns: "1fr 1fr 1fr",
     marginTop: 24,
   },
+  twoColumnSingleElement: {
+    display: "grid",
+    gridTemplateColumns: "2fr 1fr",
+  },
+  oneTwoColumnSingleElement: {
+    display: "grid",
+    gridTemplateColumns: "1fr 2fr",
+  },
+  threeColumnGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+  },
   currentStatusGridView: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
@@ -62,37 +74,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.black,
   },
-  //ArticleTraining Styling
-  articleContainer: {
-    paddingBottom: 24
-  },
-  articleTrainingTitleText: {
-    fontSize: 14,
-    color: colors.black,
-    marginBottom: 16,
-    marginTop: 16,
-  },
-  buttonStyle: {
-    maxWidth: 206,
-    maxHeight: 44,
-  },
-  deleteButton: {
-    maxWidth: 20,
-    maxHeight: 30,
-    borderWidth: 0,
-    alignSelf: 'flex-end'
-  },
-  //Industrial Training
-  industrialContainer: {
-    paddingBottom: 24,
-    borderTopWidth: 1,
-    borderColor: colors.lightGray
-  },
-  //Hobbies
-  hobbiesChipContainer: {
+  //job preference
+  chipContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap'
-  }
+  },
+  textInputContainerWithoutBottomMargin: (isRightMargin) => ({
+    marginRight: isRightMargin ? 16 : 0,
+  }),
 });
 
 export default styles;
