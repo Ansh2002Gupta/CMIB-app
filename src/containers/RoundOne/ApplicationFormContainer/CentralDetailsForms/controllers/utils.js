@@ -1,7 +1,7 @@
 import { addDocumentField } from "../../../../../components/AddBenfits/controllers/useAddBenefit";
 import { addDesignationField } from "../../../../../components/AddDesignation/controllers/useAddDesignation";
 import { interviewTypeOptions } from "../../../../../constants/constants";
-import { formatCountryCode } from "../../../../../utils/util";
+import { formatCountryCode, formatDate } from "../../../../../utils/util";
 import { validateEmail } from "../../../../../utils/validation";
 
 export const addValueOnField = (state, details, isEditable, countryData) => {
@@ -107,7 +107,12 @@ export const contactDetailFields = (countryData, intl) => {
   ];
 };
 
-export const interviewDetailsFields = (state, roundCenterDetails, intl) => {
+export const interviewDetailsFields = (
+  state,
+  roundCenterDetails,
+  intl,
+  showInterviewMode
+) => {
   return [
     [
       {
@@ -123,11 +128,13 @@ export const interviewDetailsFields = (state, roundCenterDetails, intl) => {
         labelField: "label",
         defaultValues: [],
         options: roundCenterDetails?.interview_dates?.map((option) =>
-          createModuleOptions(
+          createInterviewDateModuleOptions(
             option,
             state[keys.campusDates],
             "interview_schedule_date",
-            "id"
+            "id",
+            "id",
+            showInterviewMode
           )
         ),
         isSingleMutliSelect: true,
@@ -139,18 +146,25 @@ export const interviewDetailsFields = (state, roundCenterDetails, intl) => {
           }
         },
       },
-      {
-        isDropdown: true,
-        key: keys.companyAvailableForInterview,
-        label: "label.companyAvailableForInterview",
-        isMandatory: true,
-        placeholder: "label.companyAvailableForInterview",
-        valueField: "value",
-        options: interviewTypeOptions.map((option) =>
-          createModuleOptions(option, state[keys.companyAvailableForInterview])
-        ),
-        isSingleMutliSelect: true,
-      },
+      ...(showInterviewMode
+        ? [
+            {
+              isDropdown: true,
+              key: keys.companyAvailableForInterview,
+              label: "label.companyAvailableForInterview",
+              isMandatory: true,
+              placeholder: "label.companyAvailableForInterview",
+              valueField: "value",
+              options: interviewTypeOptions.map((option) =>
+                createModuleOptions(
+                  option,
+                  state[keys.companyAvailableForInterview]
+                )
+              ),
+              isSingleMutliSelect: true,
+            },
+          ]
+        : []),
     ],
     [],
   ];
@@ -165,9 +179,9 @@ const getDesgnationDetails = (designationDetatils) => {
       designationObject[item.cellID] = temp;
     }
     if (item.key == "designation_details") {
-      designationObject[item.cellID].round_company_job_detail_id = Number(
-        item.value
-      );
+      designationObject[item.cellID].round_company_job_detail_id = item.value
+        ? Number(item.value)
+        : null;
     }
     if (item?.itemId) {
       designationObject[item.cellID].id = item?.itemId;
@@ -240,7 +254,9 @@ export const getFormattedData = (
       telephone_number: contactDetails[keys.telephoneNumber],
     },
     interview_details: {
-      campus_dates: interviewDetailsState?.campusDates,
+      campus_dates: interviewDetailsState?.campusDates?.map((val) =>
+        Number(val)
+      ),
       interview_type: interviewDetailsState?.companyAvailableForInterview,
     },
     selection_process: selectionProcess,
@@ -260,6 +276,25 @@ export const createModuleOptions = (
   return {
     id: module[idKey],
     label: module[labelKey],
+    name: module[labelKey],
+    value: module[valueKey],
+    isSelected: contact?.includes(String(module[valueKey])),
+    selectedIndex: null,
+  };
+};
+export const createInterviewDateModuleOptions = (
+  module,
+  contact,
+  labelKey = "label",
+  valueKey = "value",
+  idKey = "id",
+  showInterviewMode
+) => {
+  return {
+    id: module[idKey],
+    label: showInterviewMode
+      ? formatDate(module[labelKey])
+      : `${formatDate(module[labelKey])} (${module?.interview_type})`,
     name: module[labelKey],
     value: module[valueKey],
     isSelected: contact?.includes(String(module[valueKey])),
