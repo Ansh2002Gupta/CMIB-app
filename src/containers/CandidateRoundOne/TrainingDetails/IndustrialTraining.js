@@ -10,32 +10,30 @@ import CustomButton from "../../../components/CustomButton";
 import { YEARS } from "../../../constants/constants";
 
 const articleShipKeys = {
-    firmName: '',
+    orgName: '',
     location: '',
     trainingFrom: '',
     trainingTo: '',
-    noOfPartners: '',
-    natureOfWork: '',
     comapanyName: '',
     industryName: '',
-    otherAreas: '',
-    secondment: '',
+    natureOfWork: '',
+    natureOfWorkInArticle: ''
 }
-const ArticlesTaining = ({intl, isWebView, isViewMode, onValidationChange = () => {}}, ref) => {
+const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = () => {}}, ref) => {
   //states
-  const [articleShips, setArticleShips] = useState([articleShipKeys]);
+  const [industrialTrainings, setIndustrialTrainings] = useState([articleShipKeys]);
 
   //custom functions
   const onDataChange = (data, localIndex, key) => {
     try {
-        let newArticles = articleShips.map((item, index) => {
+        let newArticles = industrialTrainings.map((item, index) => {
             if(index === localIndex) {
                 return {...item, [key]: data}
             } else {
                 return item;
             }
         });
-        setArticleShips([...newArticles]);
+        setIndustrialTrainings([...newArticles]);
 
     } catch {
         console.log('getting error')
@@ -43,23 +41,23 @@ const ArticlesTaining = ({intl, isWebView, isViewMode, onValidationChange = () =
   }
 
   const onAddArticle = () => {
-    setArticleShips([...articleShips,articleShipKeys ]);
+    setIndustrialTrainings([...industrialTrainings,articleShipKeys ]);
   }
 
   const onDeleteArticle = (LIndex) => {
-    if (articleShips.length > 1) {
-        let newArticles = articleShips.filter((item, index) => index !== LIndex);
-        setArticleShips([...newArticles]);
+    if (industrialTrainings.length > 1) {
+        let newArticles = industrialTrainings.filter((item, index) => index !== LIndex);
+        setIndustrialTrainings([...newArticles]);
     }
   }
 
   // Custom function to validate all fields
   const validateFields = useCallback(() => {
     // Define which fields are optional
-    const optionalFields = ['otherAreas', 'secondment'];
+    const optionalFields = [];
     const dateFields = ['trainingFrom', 'trainingTo'];
     // Check every article to make sure all required fields are filled
-    for (const article of articleShips) {
+    for (const article of industrialTrainings) {
       // Check if any of the properties, except the optional ones, is an empty string
       for (const key in article) {
         const value = article[key];
@@ -80,12 +78,12 @@ const ArticlesTaining = ({intl, isWebView, isViewMode, onValidationChange = () =
     }
     // If we get here, all required fields are filled
     return true;
-  }, [articleShips]);
+  }, [industrialTrainings]);
 
   useImperativeHandle(ref, () => ({
     getState: () => {
       return {
-        articleShips
+        industrialTrainings
       };
     },
   }));
@@ -94,17 +92,17 @@ const ArticlesTaining = ({intl, isWebView, isViewMode, onValidationChange = () =
   useEffect(() => {
     const allFieldsValidated = validateFields();
     onValidationChange(allFieldsValidated);
-  }, [articleShips, onValidationChange, validateFields]);
+  }, [industrialTrainings, onValidationChange, validateFields]);
 
   return (
-    <View style={styles.articleContainer}>
+    <View style={styles.industrialContainer}>
         <CommonText customTextStyle={styles.articleTrainingTitleText} fontWeight={"600"}>
-            {intl.formatMessage({ id: "label.articlesTraining" })}
+            {intl.formatMessage({ id: "label.industrialTraining" })}
         </CommonText>
-        {articleShips.map((item, index) => {
+        {industrialTrainings.map((item, index) => {
             return (
                 <CardComponent customStyle={styles.cardContainer} key={`${index}`}>
-                    {articleShips.length > 1 && <CustomButton
+                    {industrialTrainings.length > 1 && <CustomButton
                         style={styles.deleteButton}
                         iconLeft={{
                         leftIconSource: images.iconDeleteRed,
@@ -114,29 +112,29 @@ const ArticlesTaining = ({intl, isWebView, isViewMode, onValidationChange = () =
                     <View style={isWebView ? styles.gridView : styles.gap}>
                         <CustomTextInput
                             isViewMode={isViewMode}
-                            viewText={articleShips[index]?.firmName}
+                            viewText={industrialTrainings[index]?.orgName}
                             isMandatory={!isViewMode}
                             customStyle={styles.textInputContainer(isWebView)}
                             isPaddingNotRequired
-                            label={intl.formatMessage({ id: "label.nameOfFirm" })}
-                            placeholder={intl.formatMessage({ id: "label.nameOfFirm" })}
-                            value={articleShips[index]?.firmName}
-                            onChangeText={(txt) => onDataChange(txt, index, 'firmName')}
+                            label={intl.formatMessage({ id: "label.nameOfOrg" })}
+                            placeholder={intl.formatMessage({ id: "label.nameOfOrg" })}
+                            value={industrialTrainings[index]?.orgName}
+                            onChangeText={(txt) => onDataChange(txt, index, 'orgName')}
                         />
                         <CustomTextInput
                             isViewMode={isViewMode}
-                            viewText={articleShips[index]?.location}
+                            viewText={industrialTrainings[index]?.location}
                             isMandatory={!isViewMode}
                             customStyle={styles.textInputContainer(isWebView)}
                             isPaddingNotRequired
                             label={intl.formatMessage({ id: "label.location" })}
                             placeholder={intl.formatMessage({ id: "label.location" })}
-                            value={articleShips[index]?.location}
+                            value={industrialTrainings[index]?.location}
                             onChangeText={(txt) => onDataChange(txt, index, 'location')}
                         />
                         <CustomTextInput
                             isViewMode={isViewMode}
-                            viewText={articleShips[index]?.trainingFrom}
+                            viewText={industrialTrainings[index]?.trainingFrom}
                             isMandatory={!isViewMode}
                             customStyle={styles.textInputContainer(isWebView)}
                             isPaddingNotRequired
@@ -144,12 +142,12 @@ const ArticlesTaining = ({intl, isWebView, isViewMode, onValidationChange = () =
                             placeholder={intl.formatMessage({ id: "label.trainingFrom" })}
                             isCalendar
                             format={'DD/MM/YYYY'}
-                            value={articleShips[index]?.trainingFrom}
+                            value={industrialTrainings[index]?.trainingFrom}
                             onChangeValue={(txt) => onDataChange(txt, index, 'trainingFrom')}
                         />
                         <CustomTextInput
                             isViewMode={isViewMode}
-                            viewText={articleShips[index]?.trainingTo}
+                            viewText={industrialTrainings[index]?.trainingTo}
                             isMandatory={!isViewMode}
                             customStyle={styles.textInputContainer(isWebView)}
                             isPaddingNotRequired
@@ -157,80 +155,58 @@ const ArticlesTaining = ({intl, isWebView, isViewMode, onValidationChange = () =
                             placeholder={intl.formatMessage({ id: "label.trainingTo" })}
                             isCalendar
                             format={'DD/MM/YYYY'}
-                            value={articleShips[index]?.trainingTo}
+                            value={industrialTrainings[index]?.trainingTo}
                             onChangeValue={(txt) => onDataChange(txt, index, 'trainingTo')}
                         />
                         <CustomTextInput
                             isViewMode={isViewMode}
-                            viewText={articleShips[index]?.noOfPartners}
-                            isMandatory={!isViewMode}
-                            customStyle={styles.textInputContainer(isWebView)}
-                            isPaddingNotRequired
-                            label={intl.formatMessage({ id: "label.noOfPartnersCaFirm" })}
-                            placeholder={intl.formatMessage({ id: "label.noOfPartnersCaFirm" })}
-                            value={articleShips[index]?.noOfPartners}
-                            isDropdown
-                            options={YEARS}
-                            onChangeValue={(txt) => onDataChange(txt, index, 'noOfPartners')}
-                        />
-                        <CustomTextInput
-                            isViewMode={isViewMode}
-                            viewText={articleShips[index]?.natureOfWork}
-                            isMandatory={!isViewMode}
-                            customStyle={styles.textInputContainer(isWebView)}
-                            isPaddingNotRequired
-                            label={intl.formatMessage({ id: "label.natureOfWorkdone" })}
-                            placeholder={intl.formatMessage({ id: "label.natureOfWorkdone" })}
-                            value={articleShips[index]?.natureOfWork}
-                            isDropdown
-                            options={YEARS}
-                            onChangeValue={(txt) => onDataChange(txt, index, 'natureOfWork')}
-                        />
-                        <CustomTextInput
-                            isViewMode={isViewMode}
-                            viewText={articleShips[index]?.comapanyName}
+                            viewText={industrialTrainings[index]?.comapanyName}
                             isMandatory={!isViewMode}
                             customStyle={styles.textInputContainer(isWebView)}
                             customLabelStyle={{fontSize: 11}}
                             isPaddingNotRequired
                             label={intl.formatMessage({ id: "label.provideCompanyName" })}
                             placeholder={intl.formatMessage({ id: "label.provideCompanyName" })}
-                            value={articleShips[index]?.comapanyName}
+                            value={industrialTrainings[index]?.comapanyName}
                             onChangeText={(txt) => onDataChange(txt, index, 'comapanyName')}
                         />
                         <CustomTextInput
                             isViewMode={isViewMode}
-                            viewText={articleShips[index]?.industryName}
+                            viewText={industrialTrainings[index]?.industryName}
                             isMandatory={!isViewMode}
                             customStyle={styles.textInputContainer(isWebView)}
                             isPaddingNotRequired
                             customLabelStyle={{fontSize: 11}}
                             label={intl.formatMessage({ id: "label.provideIndustryName" })}
                             placeholder={intl.formatMessage({ id: "label.provideIndustryName" })}
-                            value={articleShips[index]?.industryName}
+                            value={industrialTrainings[index]?.industryName}
                             onChangeText={(txt) => onDataChange(txt, index, 'industryName')}
                         />
                         <CustomTextInput
                             isViewMode={isViewMode}
-                            viewText={articleShips[index]?.otherAreas}
+                            viewText={industrialTrainings[index]?.natureOfWork}
                             isMandatory={!isViewMode}
                             customStyle={styles.textInputContainer(isWebView)}
                             isPaddingNotRequired
-                            label={intl.formatMessage({ id: "label.otherAreas" })}
-                            placeholder={intl.formatMessage({ id: "label.otherAreas" })}
-                            value={articleShips[index]?.otherAreas}
-                            onChangeText={(txt) => onDataChange(txt, index, 'otherAreas')}
+                            label={intl.formatMessage({ id: "label.natureOfWorkdoneIndustrial" })}
+                            placeholder={intl.formatMessage({ id: "label.natureOfWorkdoneIndustrial" })}
+                            value={industrialTrainings[index]?.natureOfWork}
+                            isDropdown
+                            options={YEARS}
+                            onChangeValue={(txt) => onDataChange(txt, index, 'natureOfWork')}
                         />
                         <CustomTextInput
                             isViewMode={isViewMode}
-                            viewText={articleShips[index]?.secondment}
+                            viewText={industrialTrainings[index]?.natureOfWorkInArticle}
                             isMandatory={!isViewMode}
                             customStyle={styles.textInputContainer(isWebView)}
                             isPaddingNotRequired
-                            label={intl.formatMessage({ id: "label.secondmentExchange" })}
-                            placeholder={intl.formatMessage({ id: "label.secondmentExchange" })}
-                            value={articleShips[index]?.secondment}
-                            onChangeText={(txt) => onDataChange(txt, index, 'secondment')}
+                            label={intl.formatMessage({ id: "label.natureOfWorkdoneIndustrialArticles" })}
+                            placeholder={intl.formatMessage({ id: "label.natureOfWorkdoneIndustrialArticles" })}
+                            value={industrialTrainings[index]?.natureOfWorkInArticle}
+                            isDropdown
+                            options={YEARS}
+                            onChangeValue={(txt) => onDataChange(txt, index, 'natureOfWorkInArticle')}
                         />
                     </View>
                     </CardComponent>
@@ -245,10 +221,10 @@ const ArticlesTaining = ({intl, isWebView, isViewMode, onValidationChange = () =
             customTextStyle={{fontSize: 14}}
             customStyle={{ textFontWeight: "500", customTextStyle: {fontSize: 14} }}
           >
-            {intl.formatMessage({ id: "label.addArticlesTraining" })}
+            {intl.formatMessage({ id: "label.addIndustrialTraining" })}
           </CustomButton>
     </View>
   )
 };
 
-export default  React.forwardRef(ArticlesTaining);
+export default  React.forwardRef(IndustrialTraining);

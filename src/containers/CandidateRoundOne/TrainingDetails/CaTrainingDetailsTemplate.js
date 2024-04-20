@@ -10,6 +10,7 @@ import CustomLabelView from "../../../components/CustomLabelView";
 import CustomToggleComponent from "../../../components/CustomToggleComponent";
 import { formatDate } from "../../../utils/util";
 import ArticlesTraining from "./ArticlesTraining";
+import IndustrialTraining from "./IndustrialTraining";
 
 const CaTrainingDetailsTemplate = ({intl, isWebView, isViewMode, onValidationChange = () => {}}, ref) => {
   //states
@@ -55,6 +56,7 @@ const CaTrainingDetailsTemplate = ({intl, isWebView, isViewMode, onValidationCha
             {intl.formatMessage({ id: "label.membershipDetails" })}
           </CommonText>
           <ArticlesTraining intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>
+          <IndustrialTraining  intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>
     </CardComponent>
   )
 };

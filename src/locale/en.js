@@ -690,7 +690,12 @@ const locale = {
   "label.provideIndustryName": "Provide the Industry Name for the Completed Assignment",
   "label.otherAreas": "Other Areas, If Any",
   "label.secondmentExchange": "Secondment, Exchange, If Any",
-  "label.addIndustrialTraining": "Add Industrial Training"
+  "label.addArticlesTraining": "Add Articles Training",
+  "label.addIndustrialTraining": "Add Industrial Training",
+  "label.industrialTraining": "Industrial Training",
+  "label.nameOfOrg": "Name of the Organisation",
+  "label.natureOfWorkdoneIndustrial": "Nature of Work Done During Industrial Training",
+  "label.natureOfWorkdoneIndustrialArticles": "Nature of Work Done During Articles Industry, If Any",
 };
 
 export default locale;

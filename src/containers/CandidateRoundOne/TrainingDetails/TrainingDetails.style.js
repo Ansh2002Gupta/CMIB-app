@@ -64,7 +64,19 @@ const styles = StyleSheet.create({
   buttonStyle: {
     maxWidth: 206,
     maxHeight: 44,
-  }
+  },
+  deleteButton: {
+    maxWidth: 20,
+    maxHeight: 30,
+    borderWidth: 0,
+    alignSelf: 'flex-end'
+  },
+  //Industrial Training
+  industrialContainer: {
+    paddingBottom: 24,
+    borderTopWidth: 1,
+    borderColor: colors.lightGray
+  },
 });
 
 export default styles;
