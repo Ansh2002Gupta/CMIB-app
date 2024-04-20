@@ -62,6 +62,8 @@ const CustomTable = ({
   loadingMore,
   onIconPress,
   placeholder,
+  isRenderFooterComponent,
+  renderFooterComponenet,
   rowsLimit,
   rowsPerPage,
   showSearchBar,
@@ -344,6 +346,9 @@ const CustomTable = ({
                               {intl.formatMessage({ id: "label.no_data" })}
                             </CommonText>
                           );
+                        if (isRenderFooterComponent) {
+                          return renderFooterComponenet();
+                        }
                         if (loadingMore && !isFirstPageReceived) {
                           return (
                             <View style={styles.loadingStyle}>
@@ -429,6 +434,8 @@ const CustomTable = ({
 };
 
 CustomTable.defaultProps = {
+  isRenderFooterComponent: false,
+  renderFooterComponenet: () => {},
   addNewTicket: false,
   data: [],
   formatConfig: {},
@@ -473,6 +480,8 @@ CustomTable.propTypes = {
   loadingMore: PropTypes.bool.isRequired,
   onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
+  isRenderFooterComponent: PropTypes.bool,
+  renderFooterComponenet: PropTypes.func,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   showSearchBar: PropTypes.bool,

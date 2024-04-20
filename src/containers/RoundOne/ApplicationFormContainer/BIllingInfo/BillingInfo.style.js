@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     padding: 24,
-    backgroundColor: colors.backgroundGrey,
+    backgroundColor: colors.backgroundColor,
   },
   customTableStyle: {
     backgroundColor: colors.white,
@@ -36,6 +36,15 @@ const styles = StyleSheet.create({
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
   backButtonStyle: {
     fontSize: 14,
+  },
+  interviewDatesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  columnStyleBorder: {
+    backgroundColor: colors.white,
+    borderColor: colors.lightGrey,
+    borderTopWidth: 0.5,
   },
 });
 export default styles;

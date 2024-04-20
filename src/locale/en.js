@@ -265,6 +265,7 @@ const locale = {
   "label.place_posting": "Place of Posting",
   "label.enter_place_posting": "Enter Place of Posting",
   "label.total": "Total",
+  "label.total_amount": "Total Amount",
   "label.general": "General",
   "label.OBC": "OBC",
   "label.SC": "SC",

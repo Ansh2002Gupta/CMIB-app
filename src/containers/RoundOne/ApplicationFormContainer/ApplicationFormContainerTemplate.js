@@ -49,18 +49,18 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   };
 
   let tabConfig = [
-    {
-      component: CompanyProfile,
-    },
-    {
-      component: JobDetails,
-    },
-    {
-      component: PreInterviewPreferences,
-    },
-    {
-      component: CentralDetailsForm,
-    },
+    // {
+    //   component: CompanyProfile,
+    // // },
+    // {
+    //   component: JobDetails,
+    // },
+    // {
+    //   component: PreInterviewPreferences,
+    // },
+    // {
+    //   component: CentralDetailsForm,
+    // },
     {
       component: BillingInfo,
     },
