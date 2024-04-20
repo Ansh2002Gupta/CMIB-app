@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     paddingBottom: 24,
-    minWidth: 250,
   },
   tableHeaderText: {
     color: colors.darkGrey,
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
       gridTemplateColumns: getColumnCount(detail),
     };
   },
-  getFieldWidth: (width, isMobileView) => {
+  getFieldWidth: (width, isMobileView, customWidthValue) => {
     if (isMobileView) {
       return { width: "100%" };
     }
@@ -151,6 +150,16 @@ const styles = StyleSheet.create({
       case 3: {
         return {
           marginRight: 24,
+        };
+      }
+      case 4: {
+        return {
+          width: 200,
+        };
+      }
+      case 5: {
+        return {
+          width: customWidthValue,
         };
       }
       default: {
