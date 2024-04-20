@@ -38,20 +38,29 @@ const SessionDropdown = ({
     <>
       {!!defaultOptions?.length && (
         <View style={styles.modalContent(currentBreakpoint)} ref={sessionRef}>
-          {defaultOptions.map((option, index) => (
-            <CustomTouchableOpacity
-              key={index}
-              style={styles.option}
-              onPress={() => onSelect(option)}
-            >
-              <CommonText
-                customTextStyle={[styles.optionTextStyle, optionStyle]}
-                fontWeight={option.label === selectedItem ? "600" : "500"}
+          {defaultOptions.map((option, index) => {
+            return (
+              <CustomTouchableOpacity
+                key={index}
+                style={styles.option}
+                disabled={!option.participated && option.status === 0}
+                onPress={() => onSelect(option)}
               >
-                {option.label}
-              </CommonText>
-            </CustomTouchableOpacity>
-          ))}
+                <CommonText
+                  customTextStyle={{
+                    ...styles.optionTextStyle,
+                    optionStyle,
+                    ...(!option.participated && option.status === 0
+                      ? styles.inactiveStyle
+                      : {}),
+                  }}
+                  fontWeight={option.label === selectedItem ? "600" : "500"}
+                >
+                  {option.label}
+                </CommonText>
+              </CustomTouchableOpacity>
+            );
+          })}
         </View>
       )}
     </>
