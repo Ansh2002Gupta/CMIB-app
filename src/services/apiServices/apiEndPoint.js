@@ -65,7 +65,7 @@ export const TICKET_REPLIES_SUB_ROUTES = "replies";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
-export const ROUND_ONE_DASHBOARD = `/board`;
+export const ROUND_ONE_DASHBOARD = `/dashboard`;
 export const GLOBAL_SESSIONS = `/sessions`;
 
 /* API Endpoints Members*/
