@@ -28,6 +28,7 @@ export const navigations = {
   CANDIDATE_DETAILS_SUBROUTE: "candidate-details",
   CANDIDATE_DETAILS: "/candidate-details/:id",
   CENTRE_WISE_COMPANY: "centre-wise-company",
+  COMPANY_DETAILS: "company-details",
   CONSENT_MARKING_MANAGEMENT: "consent-marking-management",
   APPLIED_JOBS: "applied-jobs",
   CANDIDATES: "candidates",
