@@ -4,7 +4,9 @@ import { Platform } from "@unthinkable/react-core-components";
 import Candidates from "../views/Candidates";
 import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 import AppliedJobsView from "../views/AppliedJobsView";
+import CampusInterviewManagement from "../views/CampusInterviewManagement";
 import CentreWiseCompanyListing from "../views/CentreWiseCompanyListing";
+import ConsentMarkingManagement from "../views/ConsentMarkingManagement";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
@@ -233,12 +235,28 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        element: <ConsentMarkingManagement />,
+      },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`,
+        element: <CampusInterviewManagement />,
+      },
+      {
         viewPath: `${navigations.ROUND_TWO}/${navigations.APPLICATION_FORM}`,
         element: <RoundTwoApplicationForm />,
       },
       {
         viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`,
-        element: <RoundTwoApplicationForm />,
+        element: <CentreWiseCompanyListing />,
+      },
+      {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        element: <ConsentMarkingManagement />,
+      },
+      {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`,
+        element: <CampusInterviewManagement />,
       },
       {
         viewPath: navigations.ROUND_TWO,
@@ -356,6 +374,14 @@ const config = [
         viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
         element: <CentreWiseCompanyListing />,
       },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        element: <ConsentMarkingManagement />,
+      },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`,
+        element: <CampusInterviewManagement />,
+      },
     ],
   },
   {
@@ -374,9 +400,18 @@ const config = [
         viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
         element: <RoundOneApplicationForm />,
       },
+
       {
-        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`,
-        element: <RoundTwoApplicationForm />,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
+        element: <CentreWiseCompanyListing />,
+      },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        element: <ConsentMarkingManagement />,
+      },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`,
+        element: <CampusInterviewManagement />,
       },
     ],
   },
@@ -397,8 +432,16 @@ const config = [
         element: <RoundOneApplicationForm />,
       },
       {
-        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`,
-        element: <RoundTwoApplicationForm />,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
+        element: <CentreWiseCompanyListing />,
+      },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        element: <ConsentMarkingManagement />,
+      },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`,
+        element: <CampusInterviewManagement />,
       },
     ],
   },

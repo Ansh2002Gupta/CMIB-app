@@ -28,6 +28,12 @@ const useCandidateRoundOneCards = ({ hasRoundone }) => {
       case 3:
         navigate(`${navigations.CENTRE_WISE_COMPANY}`);
         break;
+      case 4:
+        navigate(`${navigations.CONSENT_MARKING_MANAGEMENT}`);
+        break;
+      case 5:
+        navigate(`${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`);
+        break;
       default:
         break;
     }
