@@ -28,11 +28,7 @@ import {
   ROUNDS,
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
-import {
-  COMPANY,
-  HEAD_CONTACT,
-  MOBILE_CODES,
-} from "../../../../constants/constants";
+import { COMPANY, HEAD_CONTACT } from "../../../../constants/constants";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
@@ -142,6 +138,14 @@ const PreInterviewPreferencesTemplate = ({
         options: mobile_code,
         key: HEAD_CONTACT.MOBILE_COUNTRY_CODE,
       });
+      handleInterviewPreferences(
+        "label.participating",
+        !!apiData?.["participating_for_first_time"]
+          ? apiData?.["participating_for_first_time"].toLowerCase() === "yes"
+            ? 0
+            : 1
+          : false
+      );
       handleInterviewPreferences(
         "label.short_listing_criteria",
         !!apiData?.["shortlisting_criteria"]
@@ -301,10 +305,14 @@ const PreInterviewPreferencesTemplate = ({
   const createPayload = ({ data }) => {
     const payload = {
       ps_round_id: round_id,
+      participating_for_first_time:
+        data?.preInterviewDetails?.preInterviewPrefrences?.[0]?.value === 0
+          ? "yes"
+          : "no",
       shortlisting_criteria:
-        data?.preInterviewDetails?.preInterviewPrefrences?.[0]?.value,
-      other_details:
         data?.preInterviewDetails?.preInterviewPrefrences?.[1]?.value,
+      other_details:
+        data?.preInterviewDetails?.preInterviewPrefrences?.[2]?.value,
       contact_details: getRowData({ data: data?.headContactDetails }),
     };
     return payload;

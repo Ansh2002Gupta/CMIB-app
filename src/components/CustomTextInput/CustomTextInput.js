@@ -109,6 +109,7 @@ const CustomTextInput = (props) => {
     isSingleSelection,
     isTextInputWithChip,
     onChipUpdate,
+    useExactToggleValue,
     showMonthYearPicker,
     datePickerContainer,
     checkBoxTextStyle,
@@ -303,7 +304,13 @@ const CustomTextInput = (props) => {
           onValueChange={(item) => {
             onChangeValue(item);
           }}
-          value={typeof value === "boolean" && value === true ? 0 : 1}
+          value={
+            useExactToggleValue
+              ? value
+              : typeof value === "boolean" && value === true
+              ? 0
+              : 1
+          }
         />
       );
     }
