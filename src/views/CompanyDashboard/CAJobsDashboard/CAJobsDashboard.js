@@ -428,35 +428,40 @@ const CAJobsDashboard = () => {
               />
             </View>
           </View>
+          <View style={isWebView ? {} : { width: '100%' }}>
 
-          <BarChart
-            xAxisTickAngle={-20}
-            yAxisLabel={intl.formatMessage({
-              id: "label.candidates",
-            })}
-            domainPadding={20}
-            height={200}
-            label={intl.formatMessage({
-              id: "label.candidatesAcceptingOffersIndustries",
-            })}
-            toolTipLabel={({ datum }) => datum.y}
-            barColor={colors.purple}
-            data={candidatesAcceptingIndustriesData}
-          />
-          <BarChart
-            xAxisTickAngle={-20}
-            yAxisLabel={intl.formatMessage({
-              id: "label.candidates",
-            })}
-            domainPadding={20}
-            height={200}
-            label={intl.formatMessage({
-              id: "label.candidatesAcceptingOffersIndustries",
-            })}
-            toolTipLabel={({ datum }) => datum.y}
-            barColor={colors.babyPink}
-            data={candidatesAcceptingAreasData}
-          />
+            <BarChart
+              xAxisTickAngle={-20}
+              yAxisLabel={intl.formatMessage({
+                id: "label.candidates",
+              })}
+              domainPadding={20}
+              height={200}
+              label={intl.formatMessage({
+                id: "label.candidatesAcceptingOffersIndustries",
+              })}
+              toolTipLabel={({ datum }) => datum.y}
+              barColor={colors.purple}
+              data={candidatesAcceptingIndustriesData}
+            />
+          </View>
+          <View style={isWebView ? {} : { width: '100%' }}>
+
+            <BarChart
+              xAxisTickAngle={-20}
+              yAxisLabel={intl.formatMessage({
+                id: "label.candidates",
+              })}
+              domainPadding={20}
+              height={200}
+              label={intl.formatMessage({
+                id: "label.candidatesAcceptingOffersIndustries",
+              })}
+              toolTipLabel={({ datum }) => datum.y}
+              barColor={colors.babyPink}
+              data={candidatesAcceptingAreasData}
+            />
+          </View>
         </ScrollView>
       </View >
     )
