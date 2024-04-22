@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "../styles";
 import CommonText from "../../../components/CommonText";
 import commonStyles from "../../../theme/styles/commonStyles";
+import useFetch from "../../../hooks/useFetch";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const keys = {
   noOfPosition: "noOfPosition",
@@ -80,7 +82,13 @@ const bondDetail = () => [
   ],
 ];
 
-const usePositionInformation = () => {
+const usePositionInformation = ({ centreId, companyId }) => {
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
+  const { data } = useFetch({
+    url: `member/${selectedModule}/centres/${centreId}/companies/${companyId}/positions`,
+  });
+  console.log(data, "usePositionInformation");
   const getPostingAndCategoriesColumnConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText

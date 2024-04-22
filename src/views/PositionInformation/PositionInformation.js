@@ -8,8 +8,8 @@ const Temp = () => {
   return <View></View>;
 };
 
-const PositionInformation = () => {
-  const positionInformation = usePositionInformation();
+const PositionInformation = ({ centreId, companyId }) => {
+  const positionInformation = usePositionInformation({ centreId, companyId });
 
   return (
     <View>

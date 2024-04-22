@@ -6,21 +6,24 @@ import CompanyProfileDetail from "../CompanyProfileDetail";
 import styles from "./styles";
 import Header from "../../containers/CompanyDetail/Header";
 import { useIntl } from "react-intl";
+import { useParams } from "react-router";
 
 const CompanyDetail = () => {
   const intl = useIntl();
+  const { centerId, companyId } = useParams();
+
   return (
     <View style={styles.containerStyle}>
       <CustomTabs
-        renderHeader={Header}
+        renderHeader={() => <Header />}
         tabs={[
           {
             label: intl.formatMessage({ id: "label.positionInformation" }),
-            component: <PositionInformation />,
+            component: <PositionInformation {...{ centerId, companyId }} />,
           },
           {
             label: intl.formatMessage({ id: "label.companyProfile" }),
-            component: <CompanyProfileDetail />,
+            component: <CompanyProfileDetail {...{ centerId, companyId }} />,
           },
         ]}
       />

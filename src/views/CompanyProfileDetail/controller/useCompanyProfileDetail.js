@@ -1,4 +1,7 @@
 import { useIntl } from "react-intl";
+import useFetch from "../../../hooks/useFetch";
+import { useContext, useEffect, useState } from "react";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const keys = {
   companyName: "companyName",
@@ -86,8 +89,6 @@ const otherDetail = (intl) => [
       label: "label.short_profile_of_the_company",
       placeholder: "label.short_profile_of_the_company",
     },
-    { isEmptyView: true },
-    { isEmptyView: true },
   ],
   [
     {
@@ -125,15 +126,48 @@ const addValueOnField = ({ state, details, isEditable }) => {
   });
 };
 
-const useCompanyProfileDetail = () => {
+const useCompanyProfileDetail = ({ centerId, companyId }) => {
   const intl = useIntl();
+  const [profileData, setProfileData] = useState({});
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
+  const { data, fetchData: fetchCompanyDetail } = useFetch({
+    url: `member/${selectedModule.key}/centres/${centerId}/companies/${companyId}/profile`,
+  });
+
+  const setDataInState = (data) => {
+    setProfileData({
+      [keys.companyName]: data.name,
+      [keys.entity]: data.entity,
+      [keys.firmRegistration]: data.frn_number,
+      [keys.partnersNo]: data.number_of_partners,
+      [keys.current_industry]: data.industry_type?.name,
+      [keys.addressOfCorrespondence]: data.address,
+      [keys.state]: "",
+      [keys.isd_std_code]: data.std_country_code,
+      [keys.telephoneNumber]: data.telephone_number,
+      [keys.short_profile_of_the_company]: data.company_details,
+      [keys.website]: data.website,
+      [keys.nature_of_supplier]: data.nature_of_suppliers,
+      [keys.company_type]: "",
+    });
+  };
+
+  useEffect(() => {
+    if (data) {
+      setDataInState(data);
+    }
+  }, [data]);
 
   return {
     companyDetails: addValueOnField({
-      state: {},
+      state: profileData,
       details: companyDetail(intl),
     }),
-    otherDetails: addValueOnField({ state: {}, details: otherDetail(intl) }),
+    otherDetails: addValueOnField({
+      state: profileData,
+      details: otherDetail(intl),
+    }),
   };
 };
 

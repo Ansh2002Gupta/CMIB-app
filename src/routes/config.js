@@ -6,7 +6,7 @@ import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 import AppliedJobsView from "../views/AppliedJobsView";
 import CampusInterviewManagement from "../views/CampusInterviewManagement";
 import CentreWiseCompanyListing from "../views/CentreWiseCompanyListing";
-import CompanyDetails from "../views/CompanyDetails";
+import CompanyDetail from "../views/CompanyDetail";
 import ConsentMarkingManagement from "../views/ConsentMarkingManagement";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
@@ -236,8 +236,8 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}`,
-        element: <CompanyDetails />,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:centerId/:companyId`,
+        element: <CompanyDetail />,
       },
       {
         viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
@@ -257,7 +257,7 @@ const config = [
       },
       {
         viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}`,
-        element: <CompanyDetails />,
+        element: <CompanyDetail />,
       },
       {
         viewPath: `${navigations.ROUND_TWO}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
@@ -384,8 +384,8 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}`,
-        element: <CompanyDetails />,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:centerId/:companyId`,
+        element: <CompanyDetail />,
       },
       {
         viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
@@ -419,8 +419,8 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}`,
-        element: <CompanyDetails />,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:centerId/:companyId`,
+        element: <CompanyDetail />,
       },
       {
         viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
@@ -453,8 +453,8 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}`,
-        element: <CompanyDetails />,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:centerId/:companyId`,
+        element: <CompanyDetail />,
       },
       {
         viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,

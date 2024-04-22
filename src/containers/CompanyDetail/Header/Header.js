@@ -1,24 +1,44 @@
-import { View, Text, Row } from "@unthinkable/react-core-components";
+import { View, Text, Row, Image } from "@unthinkable/react-core-components";
 import React from "react";
 import styles from "./styles";
 import useIsWebView from "../../../hooks/useIsWebView";
 import { useIntl } from "react-intl";
 import CommonText from "../../../components/CommonText";
 
-const Header = () => {
+const Header = ({ logoUrl = "", companyName = "" }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
+  const companyLogo = (
+    <View style={styles.companyLogo}>
+      <Image
+        source={{
+          uri: logoUrl ?? "",
+        }}
+        style={{
+          ...(isWebView
+            ? styles.webProfileImageStyle
+            : styles.mobileProfileImageStyle),
+        }}
+      />
+    </View>
+  );
+
   return (
     <Row style={styles.headerContainer}>
-      <CommonText
-        fontWeight={isWebView ? "500" : "600"}
-        customTextStyle={{
-          ...(isWebView ? styles.titleText : styles.titleTextMobile),
-        }}
-      >
-        {intl.formatMessage({ id: "label.job_profile" })}
-      </CommonText>
+      {companyLogo}
+
+      <View>
+        <View style={styles.centreView}>
+          <CommonText customTextStyle={styles.centreText}>Centre: </CommonText>
+          <CommonText
+            customTextStyle={{ ...styles.centreText, ...styles.centreValue }}
+          ></CommonText>
+        </View>
+        <CommonText customTextStyle={styles.companyName}>
+          {companyName}
+        </CommonText>
+      </View>
     </Row>
   );
 };
