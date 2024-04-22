@@ -28,11 +28,19 @@ import {
   ROUNDS,
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
-import { COMPANY, HEAD_CONTACT } from "../../../../constants/constants";
+import {
+  API_VERSION_QUERY_PARAM,
+  COMPANY,
+  HEAD_CONTACT,
+  NEWLY_QUALIFIED,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+} from "../../../../constants/constants";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
+import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
 
 const PreInterviewPreferencesTemplate = ({
   tabHandler,
@@ -43,6 +51,7 @@ const PreInterviewPreferencesTemplate = ({
   const intl = useIntl();
   const params = useParams();
   const navigate = useNavigate();
+  const { currentModule } = useGetCurrentUser();
   const windowWidth = useWindowDimensions()?.width;
   const round_id = params?.id;
   const isMob = Platform.OS.toLowerCase() !== "web";
@@ -58,6 +67,7 @@ const PreInterviewPreferencesTemplate = ({
       : {};
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
+  const sessionId = sideBarState?.selectedSession?.value;
   const [toastMsg, setToastMsg] = useState();
   const [errorOnPage, setErrorOnPage] = useState(false);
   const [startRowTemplateConfig, setStartRowTemplateConfig] = useState([
@@ -73,7 +83,12 @@ const PreInterviewPreferencesTemplate = ({
     isError: isErrorHeadContactData,
     isLoading: isLoadingHeadContactData,
   } = useFetch({
-    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}`,
+    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -85,7 +100,12 @@ const PreInterviewPreferencesTemplate = ({
     setError: setErrorUpdateHeadContactData,
     isLoading: isLoadingUpdateContactData,
   } = usePut({
-    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}`,
+    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const {
@@ -303,21 +323,35 @@ const PreInterviewPreferencesTemplate = ({
   };
 
   const createPayload = ({ data }) => {
+    const shortlistingCriteria =
+      data?.preInterviewDetails?.preInterviewPrefrences?.find(
+        (pref) => pref.key === "short_listing_criteria"
+      )?.value;
+    const otherDetails =
+      data?.preInterviewDetails?.preInterviewPrefrences?.find(
+        (pref) => pref.key === "any_other_information"
+      )?.value;
+    const optionalPayload =
+      currentModule !== NEWLY_QUALIFIED
+        ? {
+            participating_for_first_time:
+              data?.preInterviewDetails?.preInterviewPrefrences?.find(
+                (pref) => pref.key === "short_listing_criteria"
+              )?.value
+                ? "yes"
+                : "no",
+          }
+        : {};
     const payload = {
       ps_round_id: round_id,
-      participating_for_first_time:
-        data?.preInterviewDetails?.preInterviewPrefrences?.[0]?.value === 0
-          ? "yes"
-          : "no",
-      shortlisting_criteria:
-        data?.preInterviewDetails?.preInterviewPrefrences?.[1]?.value,
-      other_details:
-        data?.preInterviewDetails?.preInterviewPrefrences?.[2]?.value,
+      ...optionalPayload,
+      shortlisting_criteria: shortlistingCriteria,
+      other_details: otherDetails,
       contact_details: getRowData({ data: data?.headContactDetails }),
     };
+
     return payload;
   };
-
   const handleSaveAndNext = () => {
     const payload = createPayload({
       data: { ...{ headContactDetails, preInterviewDetails } },

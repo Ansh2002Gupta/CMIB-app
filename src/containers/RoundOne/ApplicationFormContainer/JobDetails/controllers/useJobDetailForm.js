@@ -132,9 +132,14 @@ const useJobDetailForm = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      JOB_DETAILS,
+      `${JOB_DETAILS}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -170,9 +175,14 @@ const useJobDetailForm = ({ tabHandler }) => {
       `/${id}` +
       APPLICATION +
       JOB_DETAILS +
-      `/${currentDesginationID}`,
+      `/${currentDesginationID}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -185,7 +195,12 @@ const useJobDetailForm = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      JOB_DETAILS,
+      `${JOB_DETAILS}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const {
@@ -199,7 +214,12 @@ const useJobDetailForm = ({ tabHandler }) => {
       `/${id}` +
       APPLICATION +
       JOB_DETAILS +
-      `/${deleteDesginationId}`,
+      `/${deleteDesginationId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const { makeRequest: handleUpdateDetails, isLoading: isLoadingOnUpdating } =
@@ -211,7 +231,12 @@ const useJobDetailForm = ({ tabHandler }) => {
         `/${id}` +
         APPLICATION +
         JOB_DETAILS +
-        `/${currentDesginationID}`,
+        `/${currentDesginationID}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+      apiOptions: {
+        headers: {
+          [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+        },
+      },
     });
 
   const isButtonLoading =
