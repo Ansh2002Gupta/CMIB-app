@@ -322,8 +322,6 @@ const PreInterviewPreferencesTemplate = ({
   };
 
   const createPayload = ({ data }) => {
-    console.log("data", data);
-
     const shortlistingCriteria =
       data?.preInterviewDetails?.preInterviewPrefrences?.find(
         (pref) => pref.key === "short_listing_criteria"
@@ -337,10 +335,10 @@ const PreInterviewPreferencesTemplate = ({
         ? {
             participating_for_first_time:
               data?.preInterviewDetails?.preInterviewPrefrences?.find(
-                (pref) => pref.key === "short_listing_criteria"
+                (pref) => pref.key === "participating"
               )?.value
-                ? "yes"
-                : "no",
+                ? "no"
+                : "yes",
           }
         : {};
     const payload = {
