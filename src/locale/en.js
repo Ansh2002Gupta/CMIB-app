@@ -817,8 +817,8 @@ const locale = {
   "label.selectCompany": "Select Company",
   "label.companyDates": "Campus Dates",
   "label.companyDates": "Campus Dates",
-  "label.centers": "Centers",
-  "label.selectCenters": "Add Centers",
+  "label.centers": "Centres",
+  "label.selectCenters": "Add Centres",
   "label.benefit_details": "Benefits Details",
   "label.enter_benefit_details": "Enter benefits details",
   "label.amount": "Amount",
@@ -857,7 +857,7 @@ const locale = {
   "label.work_experience_range": "Experience Range",
   "label.select_work_experience_range": "Select work experience range",
   "label.fexi_hours": "Flexi Hours",
-  "label.selectCenterMessage": "Select 'Centers' in the left section.",
+  "label.selectCenterMessage": "Select 'Centres' in the left section.",
   "label.groupDiscussion": "Group Discussion",
   "label.psychometricWrittenTest": "Psychometric Test/ Written Test",
   "label.personalInterview": "Personal Interview",
@@ -902,7 +902,7 @@ const locale = {
   "label.CTCOfferedDesignation": "CTC Offered for each Designation",
   "label.CTCOfferedINR": "CTC Offered (in INR)",
   "label.centersChosenCandidatesInterview":
-    "Centers Chosen by Candidates for Interview",
+    "Centres Chosen by Candidates for Interview",
   "label.candidatesAcceptingOffersAreasWork":
     "Candidates Accepting Offers in Areas of Work",
   "label.recruitmentHistory": "Recruitment History",
@@ -922,9 +922,13 @@ const locale = {
     "Candidates Accepting Offers in Industries",
   "label.click_on_add_button": "Click on (+) to add desgination.",
   "label.amount_to_pay": "Amount to pay ",
-  "label.previous_amount": "Previous Amount",
+  "label.amount_paid": "Amount Paid",
   "label.error.cannot_be_negative": "Amount cannot be negative",
   "label.choose_a_payment_method": "Choose a payment method",
+  "label.payment_mode": "Payment Mode",
+  "label.cheque_no_or_dd_no_or_transaction_id":
+    "Cheque No./ DD No./ Transaction ID",
+  "label.payment_date": "Payment Date",
 };
 
 export default locale;

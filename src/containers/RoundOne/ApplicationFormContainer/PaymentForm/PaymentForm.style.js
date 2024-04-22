@@ -1,6 +1,12 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import {
+  StyleSheet,
+  Platform,
+  Dimensions,
+} from "@unthinkable/react-core-components";
 import colors from "../../../../assets/colors";
 import { baseChipStyle } from "../../../../theme/styles/commonStyles";
+
+const { height: deviceHeight } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -96,6 +102,36 @@ const styles = StyleSheet.create({
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
   backButtonStyle: {
     fontSize: 14,
+  },
+  customToggleStyle: {
+    marginTop: 16,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 8,
+  },
+  customSubOptionsTextStyle: {
+    marginTop: 8,
+    color: colors.darkGrey,
+  },
+  customInnerContainerStyle: {
+    justifyContent: "space-between",
+    ...Platform.select({
+      ios: {
+        maxHeight: deviceHeight / 1.5,
+      },
+      android: {
+        maxHeight: deviceHeight / 2,
+      },
+      web: {
+        height: deviceHeight * 0.7,
+      },
+    }),
+  },
+  datePickerContainerStyle: {
+    paddingRight: 0,
+    paddingLeftt: 0,
+    paddingBottom: 0,
+    margin: 4,
   },
 });
 
