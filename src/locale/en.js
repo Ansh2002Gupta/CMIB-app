@@ -921,6 +921,7 @@ const locale = {
   "label.candidatesAcceptingOffersIndustries":
     "Candidates Accepting Offers in Industries",
   "label.click_on_add_button": "Click on (+) to add desgination.",
+  "label.viewCompanyDetails": "View Company Details",
   "label.amount_to_pay": "Amount to pay ",
   "label.amount_paid": "Amount Paid",
   "label.error.cannot_be_negative": "Amount cannot be negative",
