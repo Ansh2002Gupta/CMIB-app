@@ -22,6 +22,11 @@ import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo
 import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import { formateErrors } from "../../../../../utils/util";
 import { moduleKeys } from "../../../../../constants/sideBarHelpers";
+import {
+  API_VERSION_QUERY_PARAM,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+} from "../../../../../constants/constants";
 
 const useCentralDetails = ({ tabHandler }) => {
   const [contactDetailsState, setContactDetailsState] = useState({});
@@ -34,6 +39,7 @@ const useCentralDetails = ({ tabHandler }) => {
 
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
+  const sessionId = sideBarState?.selectedSession?.value;
   const [configurableListQuery, setConfigurableListQuery] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [menuOptions, setMenuOptions] = useState([]);
@@ -108,9 +114,14 @@ const useCentralDetails = ({ tabHandler }) => {
     fetchData: fetchCenterList,
     error: centerListError,
   } = useFetch({
-    url: `core/${selectedModule.key}/rounds/${roundId}`,
+    url: `core/${selectedModule.key}/rounds/${roundId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
