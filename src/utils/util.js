@@ -697,7 +697,7 @@ export const formateErrors = (errorResponse) => {
       ([fieldName, messages]) => {
         const readableFieldName = fieldName.replace(/\./g, " ");
 
-        return `- ${readableFieldName}: ${messages.join(" ")}`;
+        return `- ${messages.join(" ")}`;
       }
     );
     return errorPoints.join("\n");

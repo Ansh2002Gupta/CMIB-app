@@ -14,6 +14,9 @@ export const urlRegex =
 
 export const TOAST_TIMEOUT = 5000;
 export const API_VERSION_NUMBER = "1.0.0";
+export const UPDATED_API_VERSION = "1.0.1";
+export const API_VERSION_QUERY_PARAM = "api-version";
+export const SESSION_ID_QUERY_PARAM = "session-id";
 export const FIELD_MIN_LENGTH = 6;
 export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
