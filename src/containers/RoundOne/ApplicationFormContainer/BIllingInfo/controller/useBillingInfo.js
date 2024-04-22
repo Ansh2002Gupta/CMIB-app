@@ -112,7 +112,7 @@ const useBillingInfo = () => {
             {item.total_vacancies}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: commonStyles.columnStyle("10%"),
         isFillSpace: true,
       },
       {
@@ -142,7 +142,7 @@ const useBillingInfo = () => {
             })}
           </View>
         ),
-        style: commonStyles.columnStyle("25%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
@@ -157,7 +157,7 @@ const useBillingInfo = () => {
             {item.amount}&nbsp;INR
           </CommonText>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("30%"),
         isFillSpace: true,
       },
     ];

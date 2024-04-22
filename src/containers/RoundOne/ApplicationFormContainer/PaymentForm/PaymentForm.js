@@ -190,6 +190,7 @@ const PaymentForm = ({ tabHandler }) => {
       )}
       {errorWhilePaymentInit && (
         <ToastComponent
+          customToastStyle={styles.toastMessageStyle}
           toastMessage={formateErrors(errorWhilePaymentInit)}
           onDismiss={() => setErrorWhilePayment("")}
         />

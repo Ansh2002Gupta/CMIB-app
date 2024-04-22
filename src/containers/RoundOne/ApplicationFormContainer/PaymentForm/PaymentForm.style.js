@@ -133,6 +133,23 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     margin: 4,
   },
+  toastMessageStyle: {
+    alignSelf: "center",
+    backgroundColor: colors.black,
+    borderRadius: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    top: 50,
+    bottom: undefined,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+    marginLeft: 8,
+    marginRight: 8,
+    zIndex: 1,
+  },
 });
 
 export default styles;
