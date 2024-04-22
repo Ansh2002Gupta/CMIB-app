@@ -90,7 +90,8 @@ const locale = {
   "label.supported_type": "Supported formats: JPEG, PNG, SVG",
   "label.all_format": "Supported formats: JPEG, PNG, SVG, MP4, PDF",
   "label.supported_image_pdf": "Supported formats: JPEG, PNG, SVG, PDF",
-  "label.supported_document": "Supported formats: PDF",
+  "label.supported_document": "Supported formats: PDF, PPT, Word",
+  "label.supported_document_mobile": "Supported formats: PDF",
   "label.supported_video": "Supported formats: MP4",
   "label.signup_success": "Thank You for Signing Up!",
   "label.signup_info":
@@ -196,7 +197,7 @@ const locale = {
   "label.company_logo": "Company Logo",
   "label.contact_person_info": "Contact Person Information",
   "label.balance_credit": "Balance Credit",
-  "label.otp_recieved": "Haven’t received the OTP?",
+  "label.otp_recieved": "Haven't received the OTP?",
   "label.request_otp": "You have requested OTP for ",
   "label.request_otp_next": "You can resend the next OTP after",
   "label.request_otp_again": "Send Again (",
@@ -206,7 +207,9 @@ const locale = {
   "label.fileTooLargeError": "Uploaded file must be less than 5MB",
   "label.videoTooLargeError": "Uploaded video must be less than 50MB",
   "label.allowedFileFormatsError": "Only JPEG, PNG, SVG formats are allowed",
-  "label.allowedDocumentFormatsError": "Only PDF format is allowed",
+  "label.allowedDocumentFormatsError":
+    "Only PDF, PPT or Word format is allowed",
+  "label.allowedDocumentFormatsMobileError": "Only PDF format is allowed",
   "label.allowedVideoFormatsError": "Only MP4 format is allowed",
   "label.nonUploadableImageError":
     "Failed to upload this file, please try uploading a different image",
