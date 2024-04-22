@@ -20,6 +20,8 @@ const usePreInterviewForm = () => {
     }));
   };
 
+  console.log("preInterviewDetails", preInterviewDetails);
+
   return {
     handleInterviewPreferences,
     preInterviewDetails,

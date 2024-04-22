@@ -58,8 +58,8 @@ const JobDetailsTemplate = ({
 
   const EXPERIENCE_RANGE = workExperienceOptions.map((item) => {
     return {
-      label: `${item.work_experience_min || "-"} - ${
-        item.work_experience_max || "-"
+      label: `${item.work_experience_min || ""} - ${
+        item.work_experience_max || "above"
       }`,
       value: item.id,
     };
