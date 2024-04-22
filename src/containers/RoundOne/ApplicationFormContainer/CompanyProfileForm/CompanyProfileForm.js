@@ -194,7 +194,9 @@ const CompanyProfileForm = ({ tabHandler }) => {
             <View style={styles.actionBtnContainer}>
               <ActionPairButton
                 buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                buttonTwoText={intl.formatMessage({ id: "label.save" })}
+                buttonTwoText={intl.formatMessage({
+                  id: "label.save_and_next",
+                })}
                 onPressButtonOne={() => navigate(-1)}
                 onPressButtonTwo={() => {
                   handleSaveAndNext();

@@ -1,4 +1,8 @@
-import { DOCUMENT_TYPE, document_keys } from "../../../../constants/constants";
+import {
+  DOCUMENT_TYPE,
+  NEWLY_QUALIFIED,
+  document_keys,
+} from "../../../../constants/constants";
 import { convertStringtoNumber } from "../../../../utils/util";
 
 export const mapMonthyApiToUI = () => {
@@ -619,7 +623,7 @@ const mapPostingDetailsToPayload = (fieldsArray) => {
 
 export const mapDataToPayload = (data, currentModule) => {
   const overSeasProps =
-    currentModule === "overseas-chapters"
+    currentModule !== NEWLY_QUALIFIED
       ? {
           job_type: data?.job_type,
           flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",
