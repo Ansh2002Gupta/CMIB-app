@@ -139,7 +139,8 @@ const locale = {
   "label.remove": "Remove",
   "label.company_profile": "Company Profile",
   "label.cancel": "Cancel",
-  "label.save": "Save & Next",
+  "label.save": "Save",
+  "label.save_and_next": "Save & Next",
   "label.change_password": "Change Password",
   "label.tickets": "Tickets",
   "label.notification_settings": "Notification Settings",
@@ -851,8 +852,6 @@ const locale = {
   "label.enter_telephone_number": "Enter Telephone Number",
   "label.at_least_one_mandatory": "At least one mandatory",
   "label.at_least_one_mandatory_with_star": "*At least one mandatory",
-  "label.error.cannot_be_empty": "Cannot be empty!",
-  "label.head_contacts": "Director/VP/HR Head Contacts",
   "label.mobile_country_code": "Mobile Country Code",
   "label.select_mobile_country_code": "Code",
   "label.work_experience_range": "Experience Range",
@@ -869,7 +868,7 @@ const locale = {
   "label.enter_po_number": "Enter PO Number",
   "label.enter_address_for_hard_copy": "Enter ther address for hard copy",
   "label.total_tds_number": "Total TDS Added",
-  "label.enter_total_tds_number": "Enter total TDS number",
+  "label.enter_total_tds_number": "Enter total TDS amount",
   "label.final_amount": "Final Amount",
   "label.select_final_amount": "Enter final amount",
   "label.pay_amount": "Pay amount",
@@ -922,6 +921,10 @@ const locale = {
   "label.candidatesAcceptingOffersIndustries":
     "Candidates Accepting Offers in Industries",
   "label.click_on_add_button": "Click on (+) to add desgination.",
+  "label.amount_to_pay": "Amount to pay ",
+  "label.previous_amount": "Previous Amount",
+  "label.error.cannot_be_negative": "Amount cannot be negative",
+  "label.choose_a_payment_method": "Choose a payment method",
 };
 
 export default locale;
