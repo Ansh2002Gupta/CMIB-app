@@ -923,6 +923,14 @@ const locale = {
     "Candidates Accepting Offers in Industries",
   "label.click_on_add_button": "Click on (+) to add desgination.",
   "label.viewCompanyDetails": "View Company Details",
+  "label.positionInformation": "Position Information",
+  "label.companyProfile": "Company Profile",
+  "label.firmRegistration":'Firm Registration No. [FRN]',
+  "label.partnersNo":'Partners (No.)',
+  "label.addressOfCorrespondence":'Address of Correspondence',
+  "label.noOfPositionsOrVacancy":'No. of Positions/expected vacancy',
+  "label.detailsOfRequiredDocuments":'Details of Required Documents',
+  "label.numberOfCopies":'Number of Photocopies'
 };
 
 export default locale;

@@ -231,7 +231,7 @@ const CustomTable = ({
                       ...containerStyle,
                     }}
                   >
-                    {isWebView && (
+                    {isWebView && tableHeading && (
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
                         style={
@@ -261,7 +261,10 @@ const CustomTable = ({
                                   !isHeading,
                                   index
                                 )}
-                                style={styles.columnStyleBorder}
+                                style={{
+                                  ...((tableHeading || index > 0) &&
+                                    styles.columnStyleBorder),
+                                }}
                               />
                             ) : (
                               <>
