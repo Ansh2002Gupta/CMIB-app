@@ -323,8 +323,6 @@ const PreInterviewPreferencesTemplate = ({
   };
 
   const createPayload = ({ data }) => {
-    console.log("data", data);
-
     const shortlistingCriteria =
       data?.preInterviewDetails?.preInterviewPrefrences?.find(
         (pref) => pref.key === "short_listing_criteria"
