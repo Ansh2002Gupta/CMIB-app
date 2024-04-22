@@ -1,13 +1,3 @@
-import { Text, View } from '@unthinkable/react-core-components'
-import React from 'react'
+import SavedCandidatesView from "./SavedCandidatesView";
 
-const SavedCandidates = () => {
-  return (
-    <View>
-      <Text>SavedCandidates</Text>
-    </View>
-  )
-}
-
-export default SavedCandidates
-
+export default SavedCandidatesView;

@@ -112,6 +112,7 @@ const CustomTextInput = (props) => {
     showMonthYearPicker,
     datePickerContainer,
     checkBoxTextStyle,
+    customErrorViewStyle,
     ...remainingProps
   } = props;
 
@@ -506,6 +507,7 @@ const CustomTextInput = (props) => {
         <View
           style={{
             ...style.errorAndCountLimitBox,
+            ...customErrorViewStyle,
             ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
           }}
         >
@@ -518,9 +520,9 @@ const CustomTextInput = (props) => {
             </CommonText>
           )}
           {isMultiline && (
-            <CommonText
-              customTextStyle={style.limitStyle}
-            >{`${value?.length}/${maxLength}`}</CommonText>
+            <CommonText customTextStyle={style.limitStyle}>{`${
+              value?.length ?? 0
+            }/${maxLength}`}</CommonText>
           )}
         </View>
       )}

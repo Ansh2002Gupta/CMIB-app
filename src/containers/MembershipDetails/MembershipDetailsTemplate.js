@@ -1,7 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
+import CustomScrollView from "../../components/CustomScrollView";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import style from "./MembershipDetails.style";
@@ -30,6 +31,11 @@ const MembershipDetailsTemplate = ({
 }) => {
   const intl = useIntl();
 
+  const scrollViewMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { showsVerticalScrollIndicator: false }
+      : {};
+
   if (isLoadingPage) {
     return (
       <View style={style.loaderStyle}>
@@ -42,13 +48,13 @@ const MembershipDetailsTemplate = ({
     isErrorLoadingPage &&
     isErrorLoadingPage?.code !== STATUS_CODES.UNAUTHORIZED_USER
   ) {
-    return <ErrorComponent errorMsg={isErrorLoadingPage.message} />;
+    return <ErrorComponent errorMsg={isErrorLoadingPage?.data?.message} />;
   }
 
   return (
     <>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
+      <CustomScrollView
+        {...scrollViewMobileProps}
         style={style.contentContainerStyle}
       >
         <View style={style.innerContainerStyle}>
@@ -60,21 +66,18 @@ const MembershipDetailsTemplate = ({
             isEditProfile={isEditable}
             handleChange={onChangeValue(membership_detail)}
             handleBlur={handleMembershipDetailBlur}
-            datePickerContainer={style.datePickerContainer}
           />
           <DetailCard
             details={fellow_member_detail}
             isEditProfile={isEditable}
             handleChange={onChangeValue(fellow_member_detail)}
             handleBlur={handleFellowMemberDetailBlur}
-            datePickerContainer={style.datePickerContainer}
           />
           <DetailCard
             details={practice_detail}
             isEditProfile={isEditable}
             handleChange={onChangeValue(practice_detail)}
             handleBlur={handlePracticeDetailBlur}
-            datePickerContainer={style.datePickerContainer}
           />
         </View>
         <SaveCancelButton
@@ -84,7 +87,7 @@ const MembershipDetailsTemplate = ({
           onClickCancel={onClickCancel}
           isValidAllFields={isValidAllFields}
         />
-      </ScrollView>
+      </CustomScrollView>
       {!!error && (
         <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
       )}

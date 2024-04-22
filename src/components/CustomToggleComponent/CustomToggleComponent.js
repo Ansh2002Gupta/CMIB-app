@@ -9,9 +9,12 @@ import styles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = ({
   customLabelStyle,
+  customLabelViewStyle,
   customToggleStyle,
   customToggleButtonTextStyle,
+  customErrorStyle,
   isMandatory,
+  errorMessage,
   containerStyle,
   label,
   onValueChange,
@@ -19,6 +22,11 @@ const CustomToggleComponent = ({
   value,
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
+  useEffect(() => {
+    if (typeof value !== "undefined") {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
   const { isWebView } = useIsWebView();
 
   useEffect(() => {
@@ -26,13 +34,17 @@ const CustomToggleComponent = ({
       setSelectedToggleOption(value);
     }
   }, [value]);
-  
+
   const handleOptionSelect = (option) => {
     if (onValueChange) {
       onValueChange(option);
     }
     setSelectedToggleOption(option);
   };
+
+  useEffect(() => {
+    selectedToggleOption != -1 && onValueChange(selectedToggleOption);
+  }, [selectedToggleOption]);
 
   return (
     <View style={containerStyle}>
@@ -89,6 +101,14 @@ const CustomToggleComponent = ({
             </>
           ))}
       </View>
+      {!!errorMessage && (
+        <CommonText
+          customTextStyle={[styles.errorMsg, customErrorStyle]}
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
+      )}
     </View>
   );
 };

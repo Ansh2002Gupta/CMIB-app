@@ -20,5 +20,13 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingBottom: 16,
   },
+  cardStyle: {
+    backgroundColor: colors.offWhite,
+    paddingRight: 0,
+    paddingLeft: 0,
+    borderRadius: 0,
+    borderWidth: 0,
+    paddingTop: 0,
+  },
 });
 export default styles;

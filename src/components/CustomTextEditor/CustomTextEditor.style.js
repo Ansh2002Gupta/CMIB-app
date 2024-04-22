@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   },
   quillStyling: {
     height: "508px",
+    width: "100%",
     backgroundColor: colors.white,
     borderRadius: 15,
   },
@@ -15,10 +16,10 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flexDirection: "row",
-    marginBottom: 8,
   },
   label: {
     color: colors.darkGrey,
+    marginBottom: 4,
   },
   starStyle: {
     color: colors.errorRed,
@@ -57,6 +58,16 @@ const styles = StyleSheet.create({
   errorMsg: {
     color: colors.errorRed,
     lineHeight: 18,
+  },
+  customButtonTextStyle: {
+    fontSize: 14,
+    color: colors.black,
+    fontWeight: "600",
+  },
+  buttonStyle: {
+    borderWidth: 0,
+    padding: 0,
+    justifyContent: "flex-end",
   },
 });
 

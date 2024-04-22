@@ -1,41 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import dayjs from "dayjs";
+import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
 
-import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
+import CustomImage from "../../../components/CustomImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import TouchableImage from "../../../components/TouchableImage";
+import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 import usePagination from "../../../hooks/usePagination";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import { urlService } from "../../../services/urlService";
+import {
+  DEFAULT_CATEGORY_FOR_FILTER_MODAL,
+  FILTER_TYPE_ENUM,
+  JOB_STATUS_RESPONSE_CODE,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
-import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import colors from "../../../assets/colors";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const useGetScheduleList = (id) => {
+const initialFilterState = {
+  selectedDate: [],
+};
+
+const useGetScheduleList = (id, onClickAction) => {
   const { isWebView } = useIsWebView();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
+  const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.GetSchedule;
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+  const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
+  const popupRef = useRef(null);
+  useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
+
+  const intl = useIntl();
 
   const [filterOptions, setFilterOptions] = useState({
-    activeorInctive: "",
-    approvedorNot: "",
+    status: "",
+    date: "",
     searchData: "",
   });
+  const [filterState, setFilterState] = useState(initialFilterState);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -45,10 +64,10 @@ const useGetScheduleList = (id) => {
   );
 
   const {
-    data: postedJobData,
-    isLoading: isTicketListingLoading,
-    fetchData: fetchPostedJobs,
-    isError: isErrorGetPostedJob,
+    data: scheduleInterviewData,
+    isLoading: isScheduleInterviewLoading,
+    fetchData: fetchScheduleInterviews,
+    isError: isErrorGetScheduleInterview,
     error: errorGetPostedJobs,
   } = useFetch({
     url: `company/jobs/${id}/schedule-interview`,
@@ -56,21 +75,19 @@ const useGetScheduleList = (id) => {
       skipApiCallOnMount: true,
     },
   });
+  const {
+    handleUseApplicantStatus,
+    isLoading,
+    isError: isErrorApplicantStatusChange,
+    errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
+  } = useChangeApplicantStatusApi();
 
   const statusData = [];
 
-  const queryTypeData = [
-    {
-      id: 1,
-      name: "Active",
-    },
-    {
-      id: 2,
-      name: "InActive",
-    },
-  ];
+  const queryTypeData = [];
   const getErrorDetails = () => {
-    if (isErrorGetPostedJob) {
+    if (isErrorGetScheduleInterview) {
       let errorMessage = "";
       if (errorGetPostedJobs === GENERIC_GET_API_FAILED_ERROR_MESSAGE) {
         errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
@@ -80,16 +97,18 @@ const useGetScheduleList = (id) => {
       return {
         errorMessage,
         onRetry: () => {
-          fetchPostedJobs({});
+          fetchScheduleInterviews({});
         },
       };
     }
-    if (isErrorGetPostedJob)
+    if (isErrorGetScheduleInterview)
       return {
         errorMessage: errorGetPostedJobs?.data?.message,
-        onRetry: () => fetchPostedJobs({}),
+        onRetry: () => fetchScheduleInterviews({}),
       };
   };
+  const isTicketListingLoading = isScheduleInterviewLoading;
+  const isError = isErrorGetScheduleInterview;
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -103,7 +122,7 @@ const useGetScheduleList = (id) => {
         perPage: rowsPerPage,
         page: currentPage,
       };
-      const initialData = await fetchPostedJobs({
+      const initialData = await fetchScheduleInterviews({
         queryParamsObject: requestedParams,
       });
       if (initialData && initialData?.records?.length > 0) {
@@ -118,8 +137,48 @@ const useGetScheduleList = (id) => {
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
+    setFilterState((prevState) => {
+      const filterObj = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterObj?.name}`;
+      const existingSelectedOptions = prevState[filterKey];
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter?.[keyName]
+          )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
+            : [selectedFilter?.[keyName]];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
+      }
+
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
+  };
+
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "Date",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: statusData,
+      selectedOptions: filterState?.selectedDate,
+      handler: handleFilterChange,
+    },
+  ];
+
   const updateCurrentRecords = async (params) => {
-    const newData = await fetchPostedJobs({
+    const newData = await fetchScheduleInterviews({
       queryParamsObject: params,
     });
     setCurrentRecords(newData.records);
@@ -130,12 +189,12 @@ const useGetScheduleList = (id) => {
     setLoadingMore(true);
     const nextPage = currentPage + 1;
     try {
-      const newData = await fetchPostedJobs({
+      const newData = await fetchScheduleInterviews({
         queryParamsObject: {
           perPage: rowsPerPage,
           page: nextPage,
-          status: filterOptions.activeorInctive,
-          queryType: filterOptions.approvedorNot,
+          status: filterOptions.status,
+          date: filterOptions.date,
         },
       });
       if (newData && newData?.records?.length > 0) {
@@ -156,34 +215,34 @@ const useGetScheduleList = (id) => {
   };
 
   const handlePageChange = async (page) => {
-    // handlePagePerChange(page);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: page,
-    //   status: filterOptions.activeorInctive,
-    //   queryType: filterOptions.approvedorNot,
-    // });
+    handlePagePerChange(page);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: page,
+      status: filterOptions.status,
+      date: filterOptions.date,
+    });
   };
 
   const handleRowPerPageChange = async (option) => {
-    // handleRowsPerPageChange(option.value);
-    // await updateCurrentRecords({
-    //   perPage: option.value,
-    //   page: currentPage,
-    //   status: filterOptions.activeorInctive,
-    //   queryType: filterOptions.approvedorNot,
-    // });
+    handleRowsPerPageChange(option.value);
+    await updateCurrentRecords({
+      perPage: option.value,
+      page: currentPage,
+      status: filterOptions.status,
+      date: filterOptions.date,
+    });
   };
 
   const handleSearchResults = async (searchedData) => {
     setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
     if (isMob) {
       setCurrentPage(1);
-      const newData = await fetchPostedJobs({
+      const newData = await fetchScheduleInterviews({
         queryParamsObject: {
           search: searchedData,
-          status: filterOptions.activeorInctive,
-          queryType: filterOptions.approvedorNot,
+          status: filterOptions.status,
+          date: filterOptions.date,
         },
       });
       setCurrentRecords(newData?.records);
@@ -197,25 +256,37 @@ const useGetScheduleList = (id) => {
         search: searchedData,
         perPage: rowsPerPage,
         page: currentPage,
-        status: filterOptions.activeorInctive,
-        queryType: filterOptions.approvedorNot,
+        status: filterOptions.status,
+        date: filterOptions.date,
       });
     }
   };
 
-  const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    setFilterOptions((prev) => ({
-      ...prev,
-      query_type: selectedQueryType,
-    }));
+  const returnSelectedFilterOption = (filterInfo, filterName) => {
+    const filterObj = filterInfo?.find((obj) => obj.name === filterName);
+    return filterObj?.selectedOptions;
+  };
+
+  const filterApplyHandler = async (filterInfo) => {
+    const currentFilterOptions = {
+      date: returnSelectedFilterOption(filterInfo, "Date").length
+        ? dayjs(returnSelectedFilterOption(filterInfo, "Date")[0]).format(
+            "YYYY-MM-DD"
+          )
+        : [],
+    };
+    setFilterOptions((prev) => {
+      return {
+        ...prev,
+        ...currentFilterOptions,
+      };
+    });
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);
-      const newData = await fetchPostedJobs({
+      const newData = await fetchScheduleInterviews({
         queryParamsObject: {
-          search: filterOptions.searchData,
-          status: selectedStatus,
-          queryType: selectedQueryType,
+          date: currentFilterOptions.date,
         },
       });
       setCurrentRecords(newData?.records);
@@ -226,28 +297,28 @@ const useGetScheduleList = (id) => {
       }
     } else {
       await updateCurrentRecords({
-        status: selectedStatus,
-        queryType: selectedQueryType,
+        date: currentFilterOptions.date,
         perPage: rowsPerPage,
         page: currentPage,
       });
     }
   };
-  const onDateSorting = async (sortField) => {
-    // setIsAscendingOrder((prev) => !prev);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   sortField: sortField,
-    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
-    // });
+
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortField: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
   };
 
   let headingTexts = ["name"];
   let subHeadingText = ["applicant_id"];
   let statusText = ["status"];
   let tableIcon = images.iconMore;
-  let filterCategory = ["Date", "Status"];
+  let filterCategory = ["Date"];
   let isHeading = true;
 
   function getStatusStyle(status) {
@@ -266,20 +337,72 @@ const useGetScheduleList = (id) => {
         return styles.cellTextStyle(12);
     }
   }
+  function tConvert(time) {
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      time = time.slice(1);
+      time[5] = +time[0] < 12 ? " AM" : " PM";
+      time[0] = +time[0] % 12 || 12;
+    }
+    return time.join("");
+  }
+  function convertDateFormat(dateStr) {
+    return dateStr.split(".").join("/");
+  }
+  const onIconPress = (item) => {
+    setCurrentPopupMessage(item.application_id);
+  };
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
+    const optionArray = [
+      {
+        name: intl.formatMessage({ id: "label.view_interview_details" }),
+        id: item.application_id,
+      },
+      {
+        name: intl.formatMessage({ id: "label.edit_interview_details" }),
+        id: item.application_id,
+      },
+    ];
+    if (
+      item.is_primary_schedule_accepted ||
+      item.is_alternate_schedule_accepted
+    ) {
+      optionArray.push({
+        name: intl.formatMessage({ id: "label.offer_job" }),
+        id: item.application_id,
+      });
+    }
     return [
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {item?.name ?? "-"}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
             {item?.name ?? "-"}
           </CommonText>
         ),
+
         style: {
-          ...commonStyles.columnStyle("18%"),
+          ...commonStyles.columnStyle("25%"),
           ...styles.justifyContentCenter,
           ...{ paddingLeft: 24, paddingRight: 5 },
         }, // isFillSpace: true,
@@ -291,27 +414,12 @@ const useGetScheduleList = (id) => {
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("17%"),
+          ...commonStyles.columnStyle("25%"),
           ...styles.justifyContentCenter,
           ...{ paddingLeft: 5, paddingRight: 5 },
         }, // isFillSpace: true,
       },
-      {
-        content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-            }}
-          >
-            {item?.status ?? "-"}
-          </CommonText>
-        ),
-        style: {
-          ...commonStyles.columnStyle("13%"),
-          ...styles.justifyContentCenter,
-          ...{ paddingLeft: 5, paddingRight: 5 },
-        },
-      },
+
       {
         content: (
           <CommonText
@@ -330,13 +438,27 @@ const useGetScheduleList = (id) => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-            }}
-          >
-            {item?.primary_interview_date ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_date ?? "-"}
+              </CommonText>
+            ) : (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_date
+                  ? convertDateFormat(item?.primary_interview_date)
+                  : "-"}
+              </CommonText>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("15%"),
@@ -346,16 +468,30 @@ const useGetScheduleList = (id) => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-            }}
-          >
-            {item?.primary_interview_time ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_time ?? "-"}
+              </CommonText>
+            ) : (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_time
+                  ? tConvert(item?.primary_interview_time)
+                  : "-"}
+              </CommonText>
+            )}
+          </>
         ),
         style: {
-          ...commonStyles.columnStyle("16%"),
+          ...commonStyles.columnStyle("15%"),
           ...styles.justifyContentCenter,
           ...{ paddingLeft: 5, paddingRight: 5 },
         },
@@ -365,9 +501,47 @@ const useGetScheduleList = (id) => {
         content: (
           <View>
             {!isHeading && (
-              <PopupMessage
-                message={["Download Profile and Resume", "View Details"]}
-              />
+              <>
+                <TouchableImage
+                  onPress={() => {
+                    onIconPress(item);
+                  }}
+                  source={images.iconMore}
+                  imageStyle={{ height: 20, width: 20 }}
+                  isSvg={true}
+                />
+                {currentPopUpMessage == item.application_id && (
+                  <View ref={popupRef}>
+                    <PopupMessage
+                      message={optionArray}
+                      onPopupClick={(selectedItem) => {
+                        setCurrentPopupMessage(-1);
+                        if (
+                          selectedItem.name ===
+                          intl.formatMessage({ id: "label.offer_job" })
+                        ) {
+                          const request = {
+                            status: JOB_STATUS_RESPONSE_CODE[selectedItem.name],
+                          };
+                          handleUseApplicantStatus(
+                            item.application_id,
+                            request
+                          );
+                        } else {
+                          onClickAction(selectedItem.name, item);
+                        }
+                      }}
+                      labelName={"name"}
+                      customStyle={{
+                        ...styles.popupContainer,
+                        ...{ right: 130 },
+                      }}
+                      isPopupModal
+                      onPopUpClose={() => setCurrentPopupMessage(-1)}
+                    />
+                  </View>
+                )}
+              </>
             )}
           </View>
         ),
@@ -383,9 +557,12 @@ const useGetScheduleList = (id) => {
   return {
     allDataLoaded,
     currentPage,
-    fetchPostedJobs,
+    customFilterInfo,
+    defaultCategory,
+    fetchScheduleInterviews,
     filterApplyHandler,
     filterCategory,
+    filterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -394,7 +571,7 @@ const useGetScheduleList = (id) => {
     handleSearchResults,
     headingTexts,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isError,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
@@ -403,12 +580,16 @@ const useGetScheduleList = (id) => {
     loadingMore,
     queryTypeData,
     rowsPerPage,
+    initialFilterState,
+    setFilterState,
     statusData,
     statusText,
     subHeadingText,
+    errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
     tableIcon,
-    postedJobData: currentRecords,
-    totalcards: postedJobData?.meta?.total,
+    scheduleInterviewData: currentRecords,
+    totalcards: scheduleInterviewData?.meta?.total,
   };
 };
 
