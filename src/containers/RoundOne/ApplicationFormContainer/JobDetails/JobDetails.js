@@ -29,7 +29,6 @@ const JobDetails = ({ tabHandler }) => {
     configurableListQuery,
     setConfigurableListQuery,
     selectedOptions,
-    setSelectedOptions,
     modalDetails,
     setModalDetails,
     handleDelete,
@@ -39,33 +38,17 @@ const JobDetails = ({ tabHandler }) => {
     handlePress,
     handleAdd,
     handleInputChange,
-    addDocumentField,
     addDesignation,
-    bondPeriod,
-    compensation,
-    CTCDetail,
-    designationName,
-    exitAmount,
-    handleBondPeriod,
-    handleCompensation,
-    handleTextEditorValue,
     handleBlur,
-    handleCTCDetail,
-    handleDesignationName,
-    handleExitAmount,
     handleMonthlyData,
-    handleStartingSalary,
     handleYearlyData,
     currentError,
     setCurrentError,
-    jobDetailData,
     handleSaveAndNext,
     onClickAddDesignation,
     isLoading,
     error,
     validateError,
-    selectionProcess,
-    startingSalary,
   } = useJobDetailForm({ tabHandler });
 
   const isWebProps =
@@ -91,40 +74,23 @@ const JobDetails = ({ tabHandler }) => {
             <JobDetailsTemplate
               {...{
                 validateError,
-                desginationItems,
+                renderJobDetails,
+                handleInputChange,
+                configurableListQuery,
+                setConfigurableListQuery,
                 menuOptions,
                 setMenuOptions,
                 handlePress,
                 handleAdd,
-                selectedOptions,
-                setSelectedOptions,
                 handleDelete,
-                configurableListQuery,
-                setConfigurableListQuery,
-                setRenderJobDetails,
-                renderJobDetails,
-                handleInputChange,
-                addDocumentField,
-                addDesignation,
-                bondPeriod,
-                compensation,
-                CTCDetail,
                 handleBlur,
-                designationName,
-                exitAmount,
-                handleBondPeriod,
-                handleCompensation,
-                handleCTCDetail,
-                handleDesignationName,
-                handleExitAmount,
+                selectedOptions,
+                desginationItems,
+                setRenderJobDetails,
+                addDesignation,
                 handleMonthlyData,
-                handleStartingSalary,
                 handleYearlyData,
-                handleTextEditorValue,
-                jobDetailData,
                 onClickAddDesignation,
-                selectionProcess,
-                startingSalary,
               }}
             />
           }
@@ -149,7 +115,9 @@ const JobDetails = ({ tabHandler }) => {
               </CustomButton>
               <ActionPairButton
                 buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                buttonTwoText={intl.formatMessage({ id: "label.save" })}
+                buttonTwoText={intl.formatMessage({
+                  id: "label.save_and_next",
+                })}
                 onPressButtonOne={() => navigate(-1)}
                 onPressButtonTwo={() => {
                   handleSaveAndNext();
