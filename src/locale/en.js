@@ -922,6 +922,7 @@ const locale = {
   "label.candidatesAcceptingOffersIndustries":
     "Candidates Accepting Offers in Industries",
   "label.click_on_add_button": "Click on (+) to add desgination.",
+  "label.viewCompanyDetails": "View Company Details",
 };
 
 export default locale;
