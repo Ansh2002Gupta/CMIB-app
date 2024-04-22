@@ -370,6 +370,7 @@ export const mapDocsToUI = (data) => {
         placeholder: "label.select_no_of_copies",
         value: docs?.no_of_photocopies,
         isNumeric: true,
+        isEditable: true,
       },
       {
         cellID: index + 1,
@@ -410,6 +411,7 @@ export const getDocumentField = () => {
       placeholder: "label.select_no_of_copies",
       value: "",
       isNumeric: true,
+      isEditable: true,
     },
     {
       cellID: 1,

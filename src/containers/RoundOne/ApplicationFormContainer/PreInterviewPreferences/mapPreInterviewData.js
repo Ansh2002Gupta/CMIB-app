@@ -26,7 +26,7 @@ export const mapApiDataToUI = (currentModule) => {
       maxLength: COMPANY_DETAIL_MAX_LENGTH,
     },
     {
-      key: "short_listing_criteria",
+      key: "any_other_information",
       label: "label.any_other_information",
       value: "",
       placeholder: "label.enter_any_other_information",
