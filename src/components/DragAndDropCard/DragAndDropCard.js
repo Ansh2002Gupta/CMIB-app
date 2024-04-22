@@ -50,7 +50,7 @@ const DragAndDropCard = ({
   }
   const getAcceptedFiles = () => {
     if (isDocumentUpload) {
-      return ".pdf";
+      return ".pdf, .ppt, .pptx, .doc, .docx";
     }
     if (isVideoUpload) {
       return ".mp4";
@@ -59,8 +59,12 @@ const DragAndDropCard = ({
   };
 
   const getSupportedFilesLabel = () => {
-    if (isDocumentUpload)
-      return intl.formatMessage({ id: "label.supported_document" });
+    if (isDocumentUpload) {
+      if (isPlatformWeb) {
+        return intl.formatMessage({ id: "label.supported_document" });
+      }
+      return intl.formatMessage({ id: "label.supported_document_mobile" });
+    }
     if (isVideoUpload)
       return intl.formatMessage({ id: "label.supported_video" });
 

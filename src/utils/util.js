@@ -1,7 +1,14 @@
 import { Platform } from "@unthinkable/react-core-components";
-
 import dayjs from "dayjs";
+
 import { ANONYMOUS, jobType, questionType } from "../constants/constants";
+import {
+  DOCUMENT_ACCEPTABLE_FORMAT_REGEX,
+  DOCX_ACCEPTABLE_FORMAT_REGEX,
+  DOC_ACCEPTABLE_FORMAT_REGEX,
+  PPTX_ACCEPTABLE_FORMAT_REGEX,
+  PPT_ACCEPTABLE_FORMAT_REGEX,
+} from "../constants/Regex";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
@@ -580,4 +587,29 @@ const isObjectFilled = (obj) => {
 
 export const areAllValuesFilled = (objects) => {
   return Object.values(objects).some(isObjectFilled);
+};
+
+export const getFileExtension = ({ fileName }) => {
+  const fileExtensionArray = fileName?.split(".");
+  return fileExtensionArray?.[fileExtensionArray?.length - 1];
+};
+
+export const getDocumentMimeType = ({ extension }) => {
+  switch (extension) {
+    case "doc": {
+      return DOC_ACCEPTABLE_FORMAT_REGEX;
+    }
+    case "docx": {
+      return DOCX_ACCEPTABLE_FORMAT_REGEX;
+    }
+    case "ppt": {
+      return PPT_ACCEPTABLE_FORMAT_REGEX;
+    }
+    case "pptx": {
+      return PPTX_ACCEPTABLE_FORMAT_REGEX;
+    }
+    default: {
+      return DOCUMENT_ACCEPTABLE_FORMAT_REGEX;
+    }
+  }
 };
