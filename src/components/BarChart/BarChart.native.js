@@ -1,6 +1,5 @@
 import React from "react";
 import { Dimensions, View } from "@unthinkable/react-core-components";
-import { BarChart as BarChartComponent } from "react-native-chart-kit";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -8,7 +7,7 @@ import { convertMobileBarData } from "../../utils/util";
 import CommonText from "../CommonText";
 import colors from "../../assets/colors";
 import styles from "./BarChart.style";
-import { BarChart as BC } from "react-native-gifted-charts";
+import { BarChart as BarChartComponent } from "react-native-gifted-charts";
 
 const BarChart = ({ barColor, data, label, height }) => {
   return (
@@ -21,7 +20,7 @@ const BarChart = ({ barColor, data, label, height }) => {
       }
       bottomSection={
         <View style={{}}>
-          <BC
+          <BarChartComponent
             horizontal
             barWidth={22}
             barBorderRadius={4}
