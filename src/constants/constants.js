@@ -379,6 +379,9 @@ export const POSTED_JOB_LISTING = {
   number_of_applications: "Applicants",
   approve: "Approved/Not Approved by Admin",
 };
+export const COMPANY_NAME_LISTING = {
+  name: "Company",
+};
 export const APPLICANT_LISTING = {
   name: "Applicant Name",
   applicant_id: "Applicant ID",
