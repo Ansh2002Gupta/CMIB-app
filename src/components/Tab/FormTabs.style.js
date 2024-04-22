@@ -66,6 +66,9 @@ const style = {
   activeItemText: {
     color: colors.white,
   },
+  flex1: {
+    flex: 1,
+  },
 };
 
 export default style;

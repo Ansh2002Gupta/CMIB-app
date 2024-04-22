@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { useNavigate } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
 import styles from "./FooterComponent.styles";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import { DEBOUNCE_TIME } from "../../../constants/constants";
 
 const FooterComponent = ({
   isWebView,
@@ -17,11 +18,13 @@ const FooterComponent = ({
   onSubmit,
   submitButtonText = "label.post",
   onCancelPress,
+  disabled = false,
 }) => {
   const navigate = useNavigate();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const intl = useIntl();
+  const debounceTimeout = useRef(null);
   return (
     <View style={styles.containerStyle(isWebView)}>
       <View style={styles.firstViewStyles}>
@@ -33,6 +36,7 @@ const FooterComponent = ({
             }}
             id={`isCheckList${isCheckList}`}
             isSelected={isCheckList}
+            style={styles.checkBoxHeight(isWebView)}
           />
         </View>
       </View>
@@ -41,22 +45,50 @@ const FooterComponent = ({
         <View style={styles.buttonViewStyle}>
           <CustomButton
             onPress={() => {
-              if (onCancelPress) {
-                onCancelPress(false);
-              } else {
-                navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
-                  replace: true,
-                });
+              if (debounceTimeout.current) {
+                clearTimeout(debounceTimeout.current);
               }
+              debounceTimeout.current = setTimeout(() => {
+                if (onCancelPress) {
+                  onCancelPress(false);
+                } else {
+                  navigate(
+                    `/${selectedModule?.key}/${navigations.POSTED_JOBS}`,
+                    {
+                      replace: true,
+                    }
+                  );
+                }
+              }, DEBOUNCE_TIME);
+            }}
+            customStyle={{
+              textFontWeight: "500",
+              customTextStyle: {
+                fontSize: 14,
+              },
             }}
             style={styles.cancelButtonStyle(isWebView)}
           >
             {intl.formatMessage({ id: "label.cancel" })}
           </CustomButton>
           <CustomButton
-            onPress={() => onSubmit()}
+            onPress={() => {
+              if (debounceTimeout.current) {
+                clearTimeout(debounceTimeout.current);
+              }
+              debounceTimeout.current = setTimeout(() => {
+                onSubmit();
+              }, DEBOUNCE_TIME);
+            }}
             style={styles.postButtonStyle(isWebView)}
+            disabled={disabled}
             withGreenBackground
+            customStyle={{
+              textFontWeight: "500",
+              customTextStyle: {
+                fontSize: 14,
+              },
+            }}
             disabledContainerStyle={{ opacity: 0.5 }}
           >
             {intl.formatMessage({ id: submitButtonText })}

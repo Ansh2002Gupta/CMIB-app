@@ -35,12 +35,15 @@ const CustomTextEditor = ({
   return (
     <View style={styles.componentView}>
       <View style={styles.labelContainer}>
-        <CommonText
-          customTextStyle={[styles.label, customLabelStyle]}
-          fontWeight={customLabelStyle?.fontWeight}
-        >
-          {label}
-        </CommonText>
+        {!!label && (
+          <CommonText
+            customTextStyle={[styles.label, customLabelStyle]}
+            fontWeight={customLabelStyle?.fontWeight}
+          >
+            {label}
+          </CommonText>
+        )}
+
         {isMandatory && (
           <CommonText customTextStyle={[styles.label, styles.starStyle]}>
             {"*"}
@@ -55,21 +58,23 @@ const CustomTextEditor = ({
         ]}
       >
         <View>
-          <RichToolbar
-            editor={richText}
-            actions={[
-              actions.setBold,
-              actions.setItalic,
-              actions.setUnderline,
-              actions.heading1,
-              actions.insertBulletsList,
-              actions.insertLink,
-              actions.checkboxList,
-              actions.undo,
-              actions.redo,
-            ]}
-            iconMap={{ [actions.heading1]: handleHead }}
-          />
+          {!disabled && (
+            <RichToolbar
+              editor={richText}
+              actions={[
+                actions.setBold,
+                actions.setItalic,
+                actions.setUnderline,
+                actions.heading1,
+                actions.insertBulletsList,
+                actions.insertLink,
+                actions.checkboxList,
+                actions.undo,
+                actions.redo,
+              ]}
+              iconMap={{ [actions.heading1]: handleHead }}
+            />
+          )}
           <ScrollView>
             <RichEditor
               ref={richText}

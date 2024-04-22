@@ -48,6 +48,7 @@ const DragAndDropCard = ({
         : {}),
     };
   }
+
   const getAcceptedFiles = () => {
     if (isDocumentUpload) {
       return ".pdf, .ppt, .pptx, .doc, .docx";

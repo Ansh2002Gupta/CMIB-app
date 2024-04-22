@@ -20,6 +20,16 @@ const styles = StyleSheet.create({
   inputStyle: {
     paddingBottom: 24,
   },
+  tableHeaderText: {
+    color: colors.darkGrey,
+    fontSize: 16,
+    paddingBottom: 24,
+  },
+  footerText: {
+    fontSize: 14,
+    fontStyle: "italic",
+    paddingBottom: 24,
+  },
   headerText: {
     fontSize: 16,
     paddingBottom: 24,
@@ -59,7 +69,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
   },
   containerStyle: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
     flexWrap: "wrap",
   },
@@ -122,7 +132,7 @@ const styles = StyleSheet.create({
       gridTemplateColumns: getColumnCount(detail),
     };
   },
-  getFieldWidth: (width, isMobileView) => {
+  getFieldWidth: (width, isMobileView, customWidthValue) => {
     if (isMobileView) {
       return { width: "100%" };
     }
@@ -140,6 +150,16 @@ const styles = StyleSheet.create({
       case 3: {
         return {
           marginRight: 24,
+        };
+      }
+      case 4: {
+        return {
+          width: 200,
+        };
+      }
+      case 5: {
+        return {
+          width: customWidthValue,
         };
       }
       default: {

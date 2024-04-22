@@ -13,6 +13,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
 import images from "../../images";
 import styles from "./IconHeader.style";
+import { useIntl } from "react-intl";
 
 const IconHeader = ({
   actionButtonIcon,
@@ -35,8 +36,10 @@ const IconHeader = ({
   onPressRightIcon,
   subHeading,
   showInWeb,
+  showHeaderContent = true,
 }) => {
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
   const navigate = useNavigate();
 
   const onGoBack = () => {
@@ -84,78 +87,91 @@ const IconHeader = ({
             )}
           </View>
         )}
-        <View
-          style={!isWebView ? styles.titleContainer : styles.titleContainerWeb}
-        >
-          <View style={styles.headingContainer}>
-            <CommonText
-              customTextStyle={
-                !isWebView ? styles.formHeaderStyle : styles.formHeaderStyleWeb
-              }
-              fontWeight="600"
-            >
-              {headerText}
-            </CommonText>
-            {!!subHeading && (
-              <Chip
-                customTextStyle={
-                  !isWebView
+        {showHeaderContent && (
+          <View
+            style={
+              !isWebView ? styles.titleContainer : styles.titleContainerWeb
+            }
+          >
+            <View style={styles.headingContainer}>
+              <CommonText
+                customTextStyle={{
+                  ...(!isWebView
                     ? styles.formHeaderStyle
-                    : styles.formHeaderStyleWeb
-                }
+                    : styles.formHeaderStyleWeb),
+                }}
+                customContainerStyle={styles.width100}
+                customTextProps={styles.iconTextStyle}
                 fontWeight="600"
-                label={subHeading}
-                {...getStatusColors(subHeading)}
-              />
+              >
+                {headerText}
+              </CommonText>
+              {!!subHeading && (
+                <Chip
+                  customTextStyle={
+                    !isWebView
+                      ? styles.formHeaderStyle
+                      : styles.formHeaderStyleWeb
+                  }
+                  fontWeight="600"
+                  label={subHeading}
+                  {...getStatusColors(subHeading)}
+                />
+              )}
+            </View>
+            {!!mobActionButton && !isWebView && (
+              <CustomTouchableOpacity
+                style={{ ...styles.editContainer, ...iconStyle }}
+                onPress={handleButtonClick}
+              >
+                <Image source={mobActionButton} />
+              </CustomTouchableOpacity>
+            )}
+            {hasActionButton && showInWeb && (
+              <CustomTouchableOpacity onPress={handleButtonClick}>
+                <CardComponent
+                  customStyle={{
+                    ...styles.cardContainer,
+                    ...customActionButtonStyle,
+                  }}
+                >
+                  <View style={styles.editContainer}>
+                    <CustomImage
+                      style={styles.iconStyle}
+                      source={actionButtonIcon}
+                      Icon={actionButtonIcon}
+                      isSvg
+                      alt={"edit icon"}
+                    />
+                    <CommonText
+                      customTextStyle={{
+                        ...styles.textStyle,
+                        ...customActionButtonText,
+                      }}
+                    >
+                      {buttonTitle}
+                    </CommonText>
+                  </View>
+                </CardComponent>
+              </CustomTouchableOpacity>
+            )}
+            {isSwitchVisible && (
+              <View style={styles.flexRowAlignCenter}>
+                <Switch
+                  isToggled={isActive}
+                  onChange={() => {
+                    handleSwitchChange && handleSwitchChange();
+                  }}
+                />
+                <CommonText customContainerStyle={styles.marginLeft8}>
+                  {isActive
+                    ? intl.formatMessage({ id: "label.active" })
+                    : intl.formatMessage({ id: "label.inactive" })}
+                </CommonText>
+              </View>
             )}
           </View>
-          {!!mobActionButton && !isWebView && (
-            <CustomTouchableOpacity
-              style={{ ...styles.editContainer, ...iconStyle }}
-              onPress={handleButtonClick}
-            >
-              <Image source={mobActionButton} />
-            </CustomTouchableOpacity>
-          )}
-          {hasActionButton && showInWeb && (
-            <CustomTouchableOpacity onPress={handleButtonClick}>
-              <CardComponent
-                customStyle={{
-                  ...styles.cardContainer,
-                  ...customActionButtonStyle,
-                }}
-              >
-                <View style={styles.editContainer}>
-                  <CustomImage
-                    style={styles.iconStyle}
-                    source={actionButtonIcon}
-                    Icon={actionButtonIcon}
-                    isSvg
-                    alt={"edit icon"}
-                  />
-                  <CommonText
-                    customTextStyle={{
-                      ...styles.textStyle,
-                      ...customActionButtonText,
-                    }}
-                  >
-                    {buttonTitle}
-                  </CommonText>
-                </View>
-              </CardComponent>
-            </CustomTouchableOpacity>
-          )}
-          {isSwitchVisible && (
-            <View>
-              <Switch
-                isToggled={isActive}
-                onChange={() => {
-                  handleSwitchChange && handleSwitchChange();
-                }}
-              />
-            </View>
-          )}
-        </View>
+        )}
       </>
       {isBorderVisible && <View style={styles.borderStyle} />}
     </View>
