@@ -930,6 +930,8 @@ const locale = {
   "label.cheque_no_or_dd_no_or_transaction_id":
     "Cheque No./ DD No./ Transaction ID",
   "label.payment_date": "Payment Date",
+  "label.participating":
+    "Are you participating first time in Campus Placement program",
 };
 
 export default locale;
