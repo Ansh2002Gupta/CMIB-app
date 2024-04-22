@@ -36,7 +36,7 @@ const styles = {
     color: colors.errorRed,
   },
   buttonStyle: {
-    width: 80,
+    minWidth: 125,
   },
   additionalStyles: {
     ...Platform.select({
