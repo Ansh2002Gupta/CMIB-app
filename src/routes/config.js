@@ -35,6 +35,7 @@ import { navigations } from "../constants/routeNames";
 import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
+import ShortlistingConsentInterviewDiagram from "../containers/ShortlistingConsentInterviewDiagram/ShortlistingConsentInterviewDiagram";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -222,6 +223,10 @@ const config = [
       {
         viewPath: navigations.ROUND_TWO,
         element: <RoundTwo />,
+      },
+      {
+        viewPath: navigations.DUMMY,
+        element: <ShortlistingConsentInterviewDiagram />,
       },
     ],
   },

@@ -13,6 +13,7 @@ const darkBlue = "#00137E";
 const darkBlueShade = "#000833";
 const lightBlue = "#269AD4";
 const skyBlueDark = "#0099CA";
+const medicineBlue = "#2FA5CB";
 const skyBlueLight = "#E8FCFF";
 const skyBlueLightSecond = "#E7EAFC";
 
@@ -24,6 +25,7 @@ const lightGreen = "#DFFFDC";
 const darkSecondGreen = "#258B01";
 
 /* Greys */
+const init_background = "#DBDBDB";
 const backgroundGrey = "#F6F8F9";
 const backgroundSecondGrey = "#E5E7F2";
 const darkGrey = "#616C82";
@@ -59,15 +61,22 @@ const offWhite = "#FFFFFF14";
 
 /* Yellows */
 const yellow = "#FABB00";
+const paleYellow = "#C7A705";
 
 /* Oranges */
 const orange = "#D76200";
+const ambientOrange = "#E88532";
 const lightOrange = "#FFEFE5";
 const lightOrangeSecond = "#F9DED6";
 
 /* Purple */
 const lightPurple = "#E3E2F5";
 const darkPurple = "#6F6AC4";
+const glowingPurple = "#A126A1";
+const extraDarkPurple = "#4B1FAA";
+
+/* Pink */
+const hotPink = "#FB5581";
 
 const colors = {
   darkBlueShade,
@@ -123,5 +132,11 @@ const colors = {
   greySix,
   lightOrangeSecond,
   skyBlueLightSecond,
+  extraDarkPurple,
+  glowingPurple,
+  medicineBlue,
+  hotPink,
+  ambientOrange,
+  paleYellow,
 };
 export default colors;

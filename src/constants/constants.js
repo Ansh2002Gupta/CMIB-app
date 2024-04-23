@@ -665,4 +665,78 @@ export const progressData = {
   },
 };
 
+export const cardConfigOverRectangle = [
+  {
+    data: { count: 500, text: "Availbale for Round 1" },
+    position: { top: "-15%", left: "-15%" },
+    style: { color: colors.darkBlue },
+  },
+  {
+    data: { count: 120, text: "Round 1 shortlist" },
+    position: { top: "-15%", right: "25%" },
+    style: { color: colors.glowingPurple },
+  },
+  {
+    data: { count: 90, text: "Availbale for Round 2" },
+    position: { bottom: "-15%", left: "-15%" },
+    style: { color: colors.extraDarkPurple },
+  },
+  {
+    data: { count: 10, text: "Round 2 shortlist" },
+    position: { bottom: "-15%", right: "25%" },
+    style: { color: colors.medicineBlue },
+  },
+];
+
+export const cardConfigOverLine = [
+  {
+    data: { count: 500, text: "Availbale for Round 1" },
+    position: { top: -65, left: -75 },
+    style: { color: colors.hotPink },
+  },
+  {
+    data: { count: 120, text: "Round 1 shortlist" },
+    position: { top: -65, left: "24%" },
+    style: { color: colors.ambientOrange },
+  },
+  {
+    data: { count: 90, text: "Availbale for Round 2" },
+    position: { top: -65, left: "60%" },
+    style: { color: colors.paleYellow },
+  },
+  {
+    data: { count: 10, text: "Round 2 shortlist" },
+    position: { top: -65, left: "96%" },
+    style: { color: colors.green },
+  },
+];
+
+export const lineSegmentStylesForRectangle = [
+  "topFirstHalf",
+  "topSecondHalf",
+  "bottomFirstHalf",
+  "bottomSecondHalf",
+  "leftFirstHalf",
+  "leftSecondHalf",
+  "rightFirstHalf",
+  "rightSecondHalf",
+];
+
+export const lineSegmentStylesForLine = [
+  "firstLineSegment",
+  "secondLineSegment",
+  "thirdLineSegment",
+];
+
+export const dataCircleConfig = [
+  {
+    data: 10,
+    styleKey: "dataCircle1",
+  },
+  {
+    data: 11,
+    styleKey: "dataCircle2",
+  },
+];
+
 export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];
