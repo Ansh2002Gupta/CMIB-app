@@ -1,5 +1,6 @@
 import { useIntl } from "react-intl";
 import { useEffect, useState } from "react";
+import { COMPANY_TYPE_OPTIONS_KEYS } from "../../../constants/constants";
 
 const keys = {
   companyName: "companyName",
@@ -188,7 +189,7 @@ const useCompanyProfileDetail = ({ data }) => {
       [keys.short_profile_of_the_company]: data?.company_details ?? "",
       [keys.website]: data?.website ?? "",
       [keys.nature_of_supplier]: data?.nature_of_suppliers ?? "",
-      [keys.company_type]: data?.type ?? "",
+      [keys.company_type]: COMPANY_TYPE_OPTIONS_KEYS[data?.type] ?? "",
       [keys.contactPersonName]: data?.contact_person_details?.[0]?.name ?? "",
       [keys.contactPersonEmail]: data?.contact_person_details?.[0]?.email ?? "",
       [keys.contactPersonDesignation]:
