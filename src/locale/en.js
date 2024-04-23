@@ -91,6 +91,7 @@ const locale = {
   "label.all_format": "Supported formats: JPEG, PNG, SVG, MP4, PDF",
   "label.supported_image_pdf": "Supported formats: JPEG, PNG, SVG, PDF",
   "label.supported_document": "Supported formats: PDF, PPT, Word",
+  "label.supported_document_PPT_PDF": "Supported formats: PDF, PPT",
   "label.supported_document_mobile": "Supported formats: PDF",
   "label.supported_video": "Supported formats: MP4",
   "label.signup_success": "Thank You for Signing Up!",
@@ -935,6 +936,9 @@ const locale = {
   "label.payment_date": "Payment Date",
   "label.participating":
     "Are you participating first time in Campus Placement program",
+  "label.viewDoc": "View Doc",
+  "label.viewPPT": "View PPT",
+  "label.view": "View",
 };
 
 export default locale;

@@ -250,6 +250,8 @@ const CentralDetailsTemplate = ({
                   uploadPercentage,
                   hideIconDelete: false,
                   isDocumentUpload: true,
+                  fileTypes: ".pdf, .ppt, .pptx",
+                  fileLabel: "label.supported_document_PPT_PDF",
                 }}
               />
             </View>
