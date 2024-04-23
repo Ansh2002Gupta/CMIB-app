@@ -17,9 +17,12 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../../../services/apiServices/apiEndPoint";
 import {
+  API_VERSION_QUERY_PARAM,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   INTEREST_OPTIONS,
   NUMBER_OF_PARTNERS_LENGTH,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
 } from "../../../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
 import { gridStyles } from "../../../../../theme/styles/commonStyles";
@@ -33,6 +36,7 @@ const useCompanyProfile = ({ tabHandler }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const { id } = useParams();
+  const sessionId = sideBarState?.selectedSession?.value;
 
   const [formDetails, setFormDetails] = useState();
   const [options, setOptions] = useState(
@@ -86,9 +90,14 @@ const useCompanyProfile = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      PROFILE,
+      `${PROFILE}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
   const {
@@ -104,7 +113,12 @@ const useCompanyProfile = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      PROFILE,
+      `${PROFILE}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
@@ -142,10 +156,10 @@ const useCompanyProfile = ({ tabHandler }) => {
       }));
       setOptions(updatedInfoOptions);
     };
-    if (currentModule) {
+    if (currentModule && sessionId) {
       fetchPersonalData();
     }
-  }, [currentModule]);
+  }, [currentModule, sessionId]);
 
   const handleInputChange = (fieldName, value) => {
     if (fieldName === "label.entity") {

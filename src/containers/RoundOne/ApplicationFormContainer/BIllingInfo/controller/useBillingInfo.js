@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { View } from "@unthinkable/react-core-components";
 
@@ -14,14 +14,22 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
-import { NEWLY_QUALIFIED } from "../../../../../constants/constants";
+import {
+  API_VERSION_QUERY_PARAM,
+  NEWLY_QUALIFIED,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+} from "../../../../../constants/constants";
 import styles from "../BillingInfo.style";
+import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
 
 const useBillingInfo = () => {
   const intl = useIntl();
   const { id } = useParams();
   const { currentModule } = useGetCurrentUser();
   const [billingListData, setBillingListData] = useState([]);
+  const [sideBarState] = useContext(SideBarContext);
+  const sessionId = sideBarState?.selectedSession?.value;
   const [totalAmount, setTotalAmount] = useState({
     totalPsychometricTestFee: 0,
     totalAmount: 0,
@@ -40,7 +48,12 @@ const useBillingInfo = () => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      BILLING_INFO,
+      `${BILLING_INFO}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -51,7 +64,7 @@ const useBillingInfo = () => {
       let totalPsychometricTestFee = 0;
       let totalAmount = 0;
       let finalAmount = 0;
-      if (currentModule) {
+      if (currentModule && sessionId) {
         const newData = await fetchData();
         if (!!newData && newData.length) {
           newData.forEach((item) => {
@@ -71,7 +84,7 @@ const useBillingInfo = () => {
       }
     };
     fetchBillingData();
-  }, [currentModule]);
+  }, [currentModule, sessionId]);
 
   const getColoumConfigs = (
     item,
@@ -112,7 +125,7 @@ const useBillingInfo = () => {
             {item.total_vacancies}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: commonStyles.columnStyle("10%"),
         isFillSpace: true,
       },
       {
@@ -142,7 +155,7 @@ const useBillingInfo = () => {
             })}
           </View>
         ),
-        style: commonStyles.columnStyle("25%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
@@ -157,7 +170,7 @@ const useBillingInfo = () => {
             {item.amount}&nbsp;INR
           </CommonText>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("30%"),
         isFillSpace: true,
       },
     ];

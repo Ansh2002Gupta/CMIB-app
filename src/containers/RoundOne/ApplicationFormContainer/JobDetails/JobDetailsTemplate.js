@@ -17,7 +17,7 @@ import { gridStyles } from "../../../../theme/styles/commonStyles";
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
-import { EXEPERIENCE_RANGE, JOB_TYPE } from "../../../../constants/constants";
+import { JOB_TYPE, NEWLY_QUALIFIED } from "../../../../constants/constants";
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
 import CustomScrollView from "../../../../components/CustomScrollView";
@@ -31,6 +31,7 @@ const JobDetailsTemplate = ({
   handleInputChange,
   configurableListQuery,
   setConfigurableListQuery,
+  workExperienceOptions,
   menuOptions,
   setMenuOptions,
   handlePress,
@@ -54,6 +55,15 @@ const JobDetailsTemplate = ({
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
+
+  const EXPERIENCE_RANGE = workExperienceOptions.map((item) => {
+    return {
+      label: `${item.work_experience_min || ""} - ${
+        item.work_experience_max || "above"
+      }`,
+      value: item.id,
+    };
+  });
 
   const JobDetailsConfig = [
     {
@@ -150,7 +160,7 @@ const JobDetailsTemplate = ({
             errorMessage={validateError?.ctc_details}
           />
           <View style={styles.overseasContainerStyles}>
-            {currentModule === "overseas-chapters" && (
+            {currentModule !== NEWLY_QUALIFIED && (
               <>
                 <CustomTextInput
                   customStyle={styles.dropdownInputStyle}
@@ -161,7 +171,7 @@ const JobDetailsTemplate = ({
                     id: "label.select_work_experience_range",
                   })}
                   isDropdown
-                  options={EXEPERIENCE_RANGE}
+                  options={EXPERIENCE_RANGE}
                   value={renderJobDetails?.work_exp_range_id}
                   onChangeValue={(val) =>
                     handleInputChange("work_exp_range_id", val)

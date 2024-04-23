@@ -1,6 +1,7 @@
 :root {
-  --green: #00873e;
+  --black: #000833;
   --blueOne: rgba(63, 81, 181, 0.16);
+  --green: #00873e;
   --white: #fff;
 }
 
@@ -25,7 +26,7 @@
 /***** Chrome, Safari, Opera and Edge Chromium styles *****/
 /* slider track */
 .range::-webkit-slider-runnable-track {
-  background-color: #04af55;
+  background-color: var(--black);
   border-radius: 0.5rem;
   height: 0.4rem;
 }
@@ -49,9 +50,13 @@
 /******** Firefox styles ********/
 /* slider track */
 .range::-moz-range-track {
-  background-color: var(--green);
+  background-color: var(--black);
   border-radius: 0.5rem;
   height: 0.4rem;
+}
+
+.greenTrack::-moz-range-track {
+  background-color: var(--green);
 }
 
 /* slider thumb */
