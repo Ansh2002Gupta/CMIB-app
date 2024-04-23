@@ -184,7 +184,7 @@ const usePaymentForm = () => {
     const payload = mappedPayload(paymentDetails);
     makeRequest({
       body: payload,
-      onSuccessCallback: (data) => {
+      onSuccessCallback: async (data) => {
         if (isWebView) {
           if (data?.data && data?.data?.url) {
             window.open(data?.data?.url, "_self");
@@ -192,6 +192,8 @@ const usePaymentForm = () => {
             window.location.reload();
           }
         }
+        await fetchPaymentDetails({});
+        await fetchTransactionList({});
       },
     });
   };
