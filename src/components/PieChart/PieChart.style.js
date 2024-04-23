@@ -57,6 +57,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.black,
   },
+  labelContainer: { flexDirection: 'column' },
+  labelView: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
+  labelColorView: { height: 12, width: 12, borderRadius: 12, marginHorizontal: 10 },
+  labelText: { color: colors.black },
+  pieChartView: { flexDirection: 'row', alignItems: 'center', marginTop: 16 }
 });
 
 export default styles;

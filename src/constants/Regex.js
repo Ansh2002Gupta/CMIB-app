@@ -7,6 +7,12 @@ export const indianPhoneRegex = /^(?:(?:\+?91|0)?[ -]?)?[6-9]\d{9}$/;
 export const tanNumberRegex = /^[A-Z]{4}[0-9]{5}[A-Z]$/;
 export const IMAGE_ACCEPTABLE_FORMAT_REGEX = /image\/(png|jpg|jpeg|svg)/i;
 export const DOCUMENT_ACCEPTABLE_FORMAT_REGEX = /application\/(pdf)/i;
+export const DOC_ACCEPTABLE_FORMAT_REGEX = /application\/msword/i;
+export const DOCX_ACCEPTABLE_FORMAT_REGEX =
+  /application\/vnd.openxmlformats-officedocument.wordprocessingml.document/i;
+export const PPT_ACCEPTABLE_FORMAT_REGEX = /application\/vnd.ms-powerpoint/i;
+export const PPTX_ACCEPTABLE_FORMAT_REGEX =
+  /application\/vnd.openxmlformats-officedocument.presentationml.presentation/i;
 export const VIDEO_ACCEPTABLE_FORMAT_REGEX = /video\/(mp4)/i;
 export const NEW_PASSWORD_VALIDATIONS = {
   numeric: /\d/,

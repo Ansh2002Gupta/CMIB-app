@@ -132,7 +132,7 @@ CustomMultiRowTextInput.defaultProps = {
 };
 CustomMultiRowTextInput.propTypes = {
   startRowHeaderList: PropTypes.array,
-  startRowTemplate: PropTypes.array,
+  startRowTemplate: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   headerId: PropTypes.string,
   getColoumConfigs: PropTypes.func,
 };
