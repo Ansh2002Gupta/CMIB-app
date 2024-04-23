@@ -8,6 +8,7 @@ import styles from "./CustomMultiRowTextinput.style";
 const CustomMultiRowTextInput = ({
   customWebContainerStyle,
   customCardStyle,
+  isEditable,
   startRowHeaderList,
   startRowTemplate,
   gridTemplate,
@@ -86,7 +87,7 @@ const CustomMultiRowTextInput = ({
       handleChange={handleChange}
       headerId={headerId}
       isRow={false}
-      isEditProfile={true}
+      isEditProfile={isEditable}
       onAdd={handleAddNewRow}
       customErrorViewStyle={styles.detailErrorViewStyle}
       onDelete={handleDeleteRow}
@@ -103,11 +104,13 @@ const CustomMultiRowTextInput = ({
   );
 };
 CustomMultiRowTextInput.defaultProps = {
+  isEditable: true,
   startRowHeaderList: [],
   startRowTemplate: [],
   headerId: "",
 };
 CustomMultiRowTextInput.propTypes = {
+  isEditable: PropTypes.bool,
   startRowHeaderList: PropTypes.array,
   startRowTemplate: PropTypes.array,
   headerId: PropTypes.string,

@@ -146,19 +146,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginTop: 24,
   },
-  actionBtnContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 16,
-    padding: 24,
-    backgroundColor: colors.backgroundColor,
-  },
-  buttonStyle: { maxHeight: 44, maxWidth: 80 },
+
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
   backButtonStyle: {
     fontSize: 14,
   },
+  nextButtonStyle: { fontSize: 14, color: colors.white },
   starStyle: { color: colors.errorRed },
   selectionProcessTitle: {
     flexDirection: "row",

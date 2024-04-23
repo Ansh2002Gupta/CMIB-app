@@ -17,6 +17,7 @@ import styles from "./AddDesignation.style";
 const AddDesignationTemplate = ({
   addDocumentModal,
   documentDetail,
+  isEditable,
   multiDocumentDetail,
   setMultiDocumentDetail,
   addDocumentField,
@@ -47,6 +48,7 @@ const AddDesignationTemplate = ({
       {isWebView ? (
         <CustomMultiRowTextInput
           customCardStyle={styles.multiRowTextStyle}
+          isEditable={isEditable}
           startRowTemplate={addDocumentField}
           gridTemplate={multiDocumentDetail}
           setGridTemplate={setMultiDocumentDetail}

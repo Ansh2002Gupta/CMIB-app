@@ -84,7 +84,9 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
               activeStep={activeStep}
             />
           }
-          bottomSection={<ActiveTabComponent tabHandler={onHandleTab} />}
+          bottomSection={
+            <ActiveTabComponent tabHandler={onHandleTab} isEditable={false} />
+          }
           isBottomFillSpace
         />
       </CustomScrollView>

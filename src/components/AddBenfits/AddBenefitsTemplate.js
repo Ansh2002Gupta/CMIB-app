@@ -17,6 +17,7 @@ import styles from "./AddBenefits.style";
 const AddBenefitsTemplate = ({
   addDocumentModal,
   documentDetail,
+  isEditable,
   multiDocumentDetail,
   setMultiDocumentDetail,
   addDocumentField,
@@ -47,6 +48,7 @@ const AddBenefitsTemplate = ({
       {isWebView ? (
         <CustomMultiRowTextInput
           customCardStyle={styles.multiRowTextStyle}
+          isEditable={isEditable}
           startRowTemplate={addDocumentField}
           gridTemplate={multiDocumentDetail}
           setGridTemplate={setMultiDocumentDetail}
