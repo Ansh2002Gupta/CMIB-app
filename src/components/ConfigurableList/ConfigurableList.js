@@ -12,6 +12,7 @@ import images from "../../images";
 import styles from "./ConfigurableListStyle";
 
 const ConfigurableList = ({
+  isEditable,
   options,
   customOuterContianer,
   menuOptions,
@@ -73,11 +74,13 @@ const ConfigurableList = ({
       <View style={{ ...styles.componentContainer, ...componentContainer }}>
         <View style={styles.header}>
           <CommonText customTextStyle={styles.titleStyles}>{title}</CommonText>
-          <TouchableImage
-            onPress={onAdd}
-            parentStyle={styles.iconAdd}
-            source={images.iconAdd}
-          />
+          {isEditable && (
+            <TouchableImage
+              onPress={onAdd}
+              parentStyle={styles.iconAdd}
+              source={images.iconAdd}
+            />
+          )}
         </View>
         <View style={styles.outerSearchWrapper}>
           <CustomImage style={styles.iconSearch} source={images.iconSearch} />
@@ -125,7 +128,7 @@ const ConfigurableList = ({
                   >
                     {item.name}
                   </CommonText>
-                  {selectedOptions.includes(item.id) && (
+                  {selectedOptions.includes(item.id) && isEditable && (
                     <TouchableImage
                       className={classes["iconTrash"]}
                       onPress={() =>
@@ -153,6 +156,7 @@ const ConfigurableList = ({
 };
 
 ConfigurableList.defaultProps = {
+  isEditable: true,
   onAdd: () => {},
   onDelete: () => {},
   onPress: () => {},
@@ -167,6 +171,7 @@ ConfigurableList.defaultProps = {
 };
 
 ConfigurableList.protoTypes = {
+  isEditable: PropTypes.bool,
   onAdd: PropTypes.func,
   onDelete: PropTypes.func,
   onPress: PropTypes.func,

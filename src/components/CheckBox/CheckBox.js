@@ -15,6 +15,7 @@ const CheckBox = ({
   handleCheckbox,
   id,
   isDisabled,
+  isEditable,
   isPartial,
   isSelected,
   title,
@@ -50,7 +51,7 @@ const CheckBox = ({
           <TouchableImage
             hitSlop={hitSlop}
             Icon={getCheckBoxIcon()}
-            style={styles.iconStyle}
+            style={isEditable ? styles.iconStyle : styles.disabledIconStyle}
             source={getCheckBoxIcon()}
             isSvg
             disabled={isDisabled}
@@ -83,6 +84,7 @@ const CheckBox = ({
 CheckBox.defaultProps = {
   customTextStyle: {},
   isDisabled: false,
+  isEditable: true,
   isPartial: false,
   isSelected: false,
   iconCheck: Images.iconCheckbox,
@@ -95,6 +97,7 @@ CheckBox.propTypes = {
   handleCheckbox: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isDisabled: PropTypes.bool,
+  isEditable: PropTypes.bool,
   isPartial: PropTypes.bool,
   isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,

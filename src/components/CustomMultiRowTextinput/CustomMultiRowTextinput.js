@@ -10,6 +10,7 @@ import CustomTable from "../CustomTable";
 const CustomMultiRowTextInput = ({
   customWebContainerStyle,
   customCardStyle,
+  isEditable,
   startRowHeaderList,
   startRowTemplate,
   gridTemplate,
@@ -125,12 +126,14 @@ const CustomMultiRowTextInput = ({
   );
 };
 CustomMultiRowTextInput.defaultProps = {
+  isEditable: true,
   startRowHeaderList: [],
   startRowTemplate: [],
   headerId: "",
   getColoumConfigs: () => {},
 };
 CustomMultiRowTextInput.propTypes = {
+  isEditable: PropTypes.bool,
   startRowHeaderList: PropTypes.array,
   startRowTemplate: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   headerId: PropTypes.string,
