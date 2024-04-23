@@ -70,6 +70,11 @@ const styles = StyleSheet.create({
   backButtonStyle: {
     fontSize: 14,
   },
+  companyLogoStyle: {
+    minWidth: 250,
+    minHeight: 150,
+    borderRadius: 16,
+  },
 });
 
 export default styles;
