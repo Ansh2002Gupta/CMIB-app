@@ -48,11 +48,12 @@ const styles = StyleSheet.create({
   actionBtnContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     gap: 16,
     padding: 24,
     backgroundColor: colors.backgroundGrey,
   },
+  nextButtonStyle: { fontSize: 14, color: colors.white },
   valueStyle: {
     marginLeft: 4,
     fontSize: 16,
@@ -68,6 +69,11 @@ const styles = StyleSheet.create({
   },
   backButtonStyle: {
     fontSize: 14,
+  },
+  companyLogoStyle: {
+    minWidth: 250,
+    minHeight: 150,
+    borderRadius: 16,
   },
 });
 

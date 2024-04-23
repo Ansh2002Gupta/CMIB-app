@@ -4,6 +4,7 @@ import useAddDesignation from "./controllers/useAddDesignation.js";
 import AddDesignationTemplate from "./AddDesignationTemplate.js";
 
 const AddDesignation = ({
+  isEditable,
   requiredDocumentDetails,
   setRequiredDocumentDetails,
   options,
@@ -34,6 +35,7 @@ const AddDesignation = ({
       {...{
         addDocumentModal,
         documentDetail,
+        isEditable,
         multiDocumentDetail,
         setMultiDocumentDetail,
         addDocumentField,

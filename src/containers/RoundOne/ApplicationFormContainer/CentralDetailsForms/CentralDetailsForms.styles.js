@@ -138,7 +138,16 @@ const styles = StyleSheet.create({
   customToggleStyle: { marginTop: 12 },
   customLabelStyle: { color: colors.gray },
   toggleComponent: { marginBottom: 24 },
-  checkBoxStyle: { marginTop: 8 },
+  checkBoxStyle: {
+    marginTop: 8,
+  },
+  viewCheckBoxStyle: {
+    marginTop: 8,
+    flex: 1,
+    flexDirection: "row",
+    display: "flex",
+    gap: 8,
+  },
   selectionProcessStyle: {
     color: colors.black,
     fontSize: 16,
@@ -155,11 +164,11 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginTop: 24,
   },
-  buttonStyle: { maxHeight: 44, maxWidth: 80 },
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
   backButtonStyle: {
     fontSize: 14,
   },
+  nextButtonStyle: { fontSize: 14, color: colors.white },
   starStyle: { color: colors.errorRed },
   selectionProcessTitle: {
     flexDirection: "row",

@@ -165,6 +165,11 @@ import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile
 import iconDefaultLogo from "../../public/images/svg/iconDefaultLogo.svg";
 import iconEditBlue from "../../public/images/svg/iconEditBlue.svg";
 import iconWallet from "../../public/images/svg/wallet.svg";
+import iconDocument from "../../public/images/svg/iconDocument.svg";
+import iconPPT from "../../public/images/svg/iconPPT.svg";
+import iconPDF from "../../public/images/svg/iconPDF.svg";
+import iconDoc from "../../public/images/svg/iconDoc.svg";
+import defaultImage from "../../public/images/svg/defaultImage.svg";
 
 const images = {
   iconArrowUp,
@@ -333,6 +338,11 @@ const images = {
   iconDefaultLogo,
   iconEditBlue,
   iconWallet,
+  iconDocument,
+  iconPPT,
+  iconPDF,
+  iconDoc,
+  defaultImage,
 };
 
 export default images;

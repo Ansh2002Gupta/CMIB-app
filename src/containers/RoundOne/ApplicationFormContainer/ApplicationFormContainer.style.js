@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
     cursor: "pointer",
   },
+
   editContainer: {
     flexDirection: "row",
     justifyContent: "center",
