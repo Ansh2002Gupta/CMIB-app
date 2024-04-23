@@ -1,7 +1,5 @@
 import { useIntl } from "react-intl";
-import useFetch from "../../../hooks/useFetch";
-import { useContext, useEffect, useState } from "react";
-import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import { useEffect, useState } from "react";
 
 const keys = {
   companyName: "companyName",
@@ -13,13 +11,20 @@ const keys = {
   state: "state",
   isd_std_code: "isd_std_code",
   telephoneNumber: "telephoneNumber",
+
   short_profile_of_the_company: "short_profile_of_the_company",
   website: "website",
   nature_of_supplier: "nature_of_supplier",
   company_type: "company_type",
+
+  contactPersonName: "contactPersonName",
+  contactPersonEmail: "contactPersonEmail",
+  contactPersonDesignation: "contactPersonDesignation",
+  contactPersonCountryCode: "contactPersonCountryCode",
+  contactPersonMobileNo: "contactPersonMobileNo",
 };
 
-const companyDetail = (intl) => [
+const companyDetail = () => [
   [
     {
       key: keys.companyName,
@@ -81,7 +86,7 @@ const companyDetail = (intl) => [
     },
   ],
 ];
-const otherDetail = (intl) => [
+const otherDetail = () => [
   [
     {
       key: keys.short_profile_of_the_company,
@@ -112,6 +117,44 @@ const otherDetail = (intl) => [
   ],
 ];
 
+const contactPersonDetail = () => [
+  [
+    {
+      key: keys.contactPersonName,
+      isMandatory: true,
+      label: "label.name",
+      placeholder: "label.name",
+    },
+    {
+      key: keys.contactPersonEmail,
+      isMandatory: true,
+      label: "label.email",
+      placeholder: "label.email",
+    },
+    {
+      key: keys.contactPersonDesignation,
+      isMandatory: true,
+      label: "label.designation",
+      placeholder: "label.designation",
+    },
+  ],
+  [
+    {
+      key: keys.contactPersonCountryCode,
+      isMandatory: true,
+      label: "label.country_code",
+      placeholder: "label.country_code",
+    },
+    {
+      key: keys.contactPersonMobileNo,
+      isMandatory: true,
+      label: "label.mobile_number",
+      placeholder: "label.mobile_number",
+    },
+    { isEmptyView: true },
+  ],
+];
+
 const addValueOnField = ({ state, details, isEditable }) => {
   return details.map((row, index) => {
     return row.map((item) => {
@@ -126,30 +169,33 @@ const addValueOnField = ({ state, details, isEditable }) => {
   });
 };
 
-const useCompanyProfileDetail = ({ centerId, companyId }) => {
+const useCompanyProfileDetail = ({ data }) => {
   const intl = useIntl();
   const [profileData, setProfileData] = useState({});
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState;
-  const { data, fetchData: fetchCompanyDetail } = useFetch({
-    url: `member/${selectedModule.key}/centres/${centerId}/companies/${companyId}/profile`,
-  });
 
   const setDataInState = (data) => {
     setProfileData({
-      [keys.companyName]: data.name,
-      [keys.entity]: data.entity,
-      [keys.firmRegistration]: data.frn_number,
-      [keys.partnersNo]: data.number_of_partners,
-      [keys.current_industry]: data.industry_type?.name,
-      [keys.addressOfCorrespondence]: data.address,
-      [keys.state]: "",
-      [keys.isd_std_code]: data.std_country_code,
-      [keys.telephoneNumber]: data.telephone_number,
-      [keys.short_profile_of_the_company]: data.company_details,
-      [keys.website]: data.website,
-      [keys.nature_of_supplier]: data.nature_of_suppliers,
-      [keys.company_type]: "",
+      [keys.companyName]: data?.name ?? "",
+      [keys.entity]: data?.entity ?? "",
+      [keys.firmRegistration]: data?.frn_number,
+      [keys.partnersNo]: data?.number_of_partners ?? "",
+      [keys.current_industry]: data?.industry_type?.name ?? "",
+      [keys.addressOfCorrespondence]: data?.address ?? "",
+      [keys.state]: data?.state ?? "",
+      [keys.isd_std_code]: data?.std_country_code ?? "",
+      [keys.telephoneNumber]: data?.telephone_number ?? "",
+      [keys.short_profile_of_the_company]: data?.company_details ?? "",
+      [keys.website]: data?.website ?? "",
+      [keys.nature_of_supplier]: data?.nature_of_suppliers ?? "",
+      [keys.company_type]: data?.type ?? "",
+      [keys.contactPersonName]: data?.contact_person_details?.[0]?.name ?? "",
+      [keys.contactPersonEmail]: data?.contact_person_details?.[0]?.email ?? "",
+      [keys.contactPersonDesignation]:
+        data?.contact_person_details?.[0]?.designation ?? "",
+      [keys.contactPersonCountryCode]:
+        data?.contact_person_details?.[0]?.mobile_country_code ?? "",
+      [keys.contactPersonMobileNo]:
+        data?.contact_person_details?.[0]?.mobile_number ?? "",
     });
   };
 
@@ -167,6 +213,10 @@ const useCompanyProfileDetail = ({ centerId, companyId }) => {
     otherDetails: addValueOnField({
       state: profileData,
       details: otherDetail(intl),
+    }),
+    contactPersonDetail: addValueOnField({
+      state: profileData,
+      details: contactPersonDetail(intl),
     }),
   };
 };

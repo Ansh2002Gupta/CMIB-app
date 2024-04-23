@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
   },
   twoColumn: {
     flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "stretch",
     gap: 16,
     marginLeft: 16,
     marginRight: 16,
@@ -84,6 +87,20 @@ const styles = StyleSheet.create({
   },
   badgeContainer: {
     marginTop: 24,
+  },
+  loaderStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.backgroundColor,
+  },
+  commonTable: { flex: 1 },
+  noDataFound: {
+    fontSize: 16,
+    fontWeight: "600",
+    lineHeight: 20,
+    color: colors.black,
   },
 });
 

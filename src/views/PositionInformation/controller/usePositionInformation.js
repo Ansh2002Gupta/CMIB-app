@@ -88,7 +88,7 @@ const usePositionInformation = ({ centerId, companyId }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const [positionTabs, setPositionTabs] = useState([]);
-  const { data } = useFetch({
+  const { data, isLoading, error } = useFetch({
     url: `member/${selectedModule.key}/centres/${centerId}/companies/${companyId}/positions`,
   });
 
@@ -292,31 +292,33 @@ const usePositionInformation = ({ centerId, companyId }) => {
   };
 
   const getTabData = () => {
-    setPositionTabs(
-      dummy.map((item) => {
-        return {
-          designation: item?.designation,
-          compensation: item?.compensation,
-          starting_salary: item?.starting_salary,
-          role_responsibility: item?.role_responsibility,
-          monthlyData: formatMonthlyData(item.monthly, intl),
-          yearlyData: formatYearlyData(item.yearly, intl),
-          requiredDocuments: item.required_docs,
-          postingAndVaccancyData: formatPostinAndVaccanyData(
-            item.posting_details[0]
-          ),
-          selectionProcess: item?.selection_process,
-          postionDetail: addValueOnField({
-            state: formatPositionDetail(item),
-            details: positionInfoDetails(),
-          }),
-          bondDetail: addValueOnField({
-            state: formatBondDetail(item?.bond_details),
-            details: bondDetail(),
-          }),
-        };
-      })
-    );
+    if (data) {
+      setPositionTabs(
+        data?.map((item) => {
+          return {
+            designation: item?.designation,
+            compensation: item?.compensation,
+            starting_salary: item?.starting_salary,
+            role_responsibility: item?.role_responsibility,
+            monthlyData: formatMonthlyData(item.monthly, intl),
+            yearlyData: formatYearlyData(item.yearly, intl),
+            requiredDocuments: item.required_docs,
+            postingAndVaccancyData: formatPostinAndVaccanyData(
+              item.posting_details[0]
+            ),
+            selectionProcess: item?.selection_process,
+            postionDetail: addValueOnField({
+              state: formatPositionDetail(item),
+              details: positionInfoDetails(),
+            }),
+            bondDetail: addValueOnField({
+              state: formatBondDetail(item?.bond_details),
+              details: bondDetail(),
+            }),
+          };
+        })
+      );
+    }
   };
 
   useEffect(() => {
@@ -328,6 +330,8 @@ const usePositionInformation = ({ centerId, companyId }) => {
     getColoumConfigs: getColoumConfigs,
     getRequiredDocumentsColumnConfigs,
     getPostingAndCategoriesColumnConfigs,
+    isLoading,
+    error: error?.data,
   };
 };
 

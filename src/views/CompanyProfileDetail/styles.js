@@ -1,3 +1,5 @@
+import colors from "../../assets/colors";
+
 const styles = {
   customCardStyle: {
     marginTop: 0,
@@ -9,6 +11,16 @@ const styles = {
     borderWidth: 0,
     borderRadius: 0,
     backgroundColor: "transparent",
+  },
+  detailCard: {
+    marginBottom: 24,
+  },
+  loaderStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.backgroundColor,
   },
 };
 

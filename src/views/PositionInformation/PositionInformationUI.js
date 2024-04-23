@@ -4,7 +4,6 @@ import DetailCard from "../../components/DetailCard";
 import { useIntl } from "react-intl";
 import CustomTable from "../../components/CustomTable";
 import styles from "./styles";
-import { TwoColumn } from "../../core/layouts";
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
 import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
@@ -13,7 +12,7 @@ const CommonTable = ({ data = [], tableName, getColoumConfigs }) => {
   const intl = useIntl();
 
   return (
-    <CardComponent>
+    <CardComponent customStyle={styles.commonTable}>
       <CommonText customTextStyle={styles.tableTitleText}>
         {tableName}
       </CommonText>
@@ -150,35 +149,28 @@ const PositionInformationUI = ({
       <DetailCard
         details={postionDetail}
         headerId={intl.formatMessage({
-          id: "Assistant Finance Manager",
+          id: data?.designation ?? "",
         })}
         isColumnVariableWidth
       />
-      <TwoColumn
-        style={styles.twoColumn}
-        leftSection={
-          <CommonTable
-            {...{
-              data: monthlyData,
-              isHeading: false,
-              getColoumConfigs,
-              tableName: intl.formatMessage({ id: "label.monthly" }),
-            }}
-          />
-        }
-        isLeftFillSpace={true}
-        isRightFillSpace={true}
-        rightSection={
-          <CommonTable
-            {...{
-              data: yearlyData,
-              isHeading: false,
-              getColoumConfigs,
-              tableName: intl.formatMessage({ id: "label.yearly" }),
-            }}
-          />
-        }
-      />
+      <View style={styles.twoColumn}>
+        <CommonTable
+          {...{
+            data: monthlyData,
+            isHeading: false,
+            getColoumConfigs,
+            tableName: intl.formatMessage({ id: "label.monthly" }),
+          }}
+        />
+        <CommonTable
+          {...{
+            data: yearlyData,
+            isHeading: false,
+            getColoumConfigs,
+            tableName: intl.formatMessage({ id: "label.yearly" }),
+          }}
+        />
+      </View>
       <RequriedDocuments
         {...{
           data: requiredDocuments,

@@ -5,7 +5,7 @@ import useIsWebView from "../../../hooks/useIsWebView";
 import { useIntl } from "react-intl";
 import CommonText from "../../../components/CommonText";
 
-const Header = ({ logoUrl = "", companyName = "" }) => {
+const Header = ({ centreName, comanyLogo = "", companyName }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
@@ -13,7 +13,7 @@ const Header = ({ logoUrl = "", companyName = "" }) => {
     <View style={styles.companyLogo}>
       <Image
         source={{
-          uri: logoUrl ?? "",
+          uri: comanyLogo ?? "",
         }}
         style={{
           ...(isWebView
@@ -30,7 +30,9 @@ const Header = ({ logoUrl = "", companyName = "" }) => {
 
       <View>
         <View style={styles.centreView}>
-          <CommonText customTextStyle={styles.centreText}>Centre: </CommonText>
+          <CommonText customTextStyle={styles.centreText}>
+            {intl.formatMessage({ id: "label.centre" })}: {centreName ?? "-"}
+          </CommonText>
           <CommonText
             customTextStyle={{ ...styles.centreText, ...styles.centreValue }}
           ></CommonText>

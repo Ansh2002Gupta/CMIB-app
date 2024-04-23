@@ -6,6 +6,13 @@ const styles = {
     overflow: "hidden",
     backgroundColor: colors.white,
   },
+  loaderStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.backgroundColor,
+  },
 };
 
 export default styles;
