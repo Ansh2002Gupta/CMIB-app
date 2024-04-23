@@ -739,6 +739,7 @@ export const formateErrors = (errorResponse) => {
 };
 
 export const convertStringtoNumber = (val) => {
+  if (!val) return 0;
   return +val;
 };
 
