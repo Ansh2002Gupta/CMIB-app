@@ -29,6 +29,8 @@ const ShortlistingConsentInterviewDiagram = () => {
         {lineSegmentStylesForRectangle.map((styleKey) => {
           return <View style={[styles?.borderSegment, styles[styleKey]]} />;
         })}
+        <View style={styles.tempBox1}></View>
+        <View style={styles.tempBox2}></View>
         {cardConfigOverRectangle.map((cardInfo, index) => {
           return (
             <DataCard

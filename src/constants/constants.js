@@ -713,13 +713,9 @@ export const cardConfigOverLine = [
 
 export const lineSegmentStylesForRectangle = [
   "topFirstHalf",
-  "topSecondHalf",
   "bottomFirstHalf",
-  "bottomSecondHalf",
   "leftFirstHalf",
   "leftSecondHalf",
-  "rightFirstHalf",
-  "rightSecondHalf",
 ];
 
 export const lineSegmentStylesForLine = [
