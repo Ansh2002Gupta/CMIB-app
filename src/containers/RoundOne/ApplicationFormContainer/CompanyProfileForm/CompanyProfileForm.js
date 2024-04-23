@@ -18,6 +18,7 @@ import { DEFAULT_BALANCE_CREDIT } from "../../../../constants/constants";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./CompanyProfileForm.style";
 import { useNavigate } from "../../../../routes";
+import CustomButton from "../../../../components/CustomButton";
 
 const CompanyProfileForm = ({ tabHandler, isEditable }) => {
   const {
@@ -192,22 +193,39 @@ const CompanyProfileForm = ({ tabHandler, isEditable }) => {
               </View>
             </CardComponent>
             <View style={styles.actionBtnContainer}>
-              <ActionPairButton
-                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                buttonTwoText={intl.formatMessage({
-                  id: "label.save_and_next",
-                })}
-                onPressButtonOne={() => navigate(-1)}
-                onPressButtonTwo={() => {
-                  handleSaveAndNext();
-                }}
-                displayLoader={isProfileUpdating}
-                customStyles={{
-                  ...isWebProps,
-                  customContainerStyle: commonStyles.customContainerStyle,
-                }}
-                isButtonTwoGreen
-              />
+              {isEditable ? (
+                <ActionPairButton
+                  buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+                  buttonTwoText={intl.formatMessage({
+                    id: "label.save_and_next",
+                  })}
+                  onPressButtonOne={() => navigate(-1)}
+                  onPressButtonTwo={() => {
+                    handleSaveAndNext();
+                  }}
+                  displayLoader={isProfileUpdating}
+                  customStyles={{
+                    ...isWebProps,
+                    customContainerStyle: commonStyles.customContainerStyle,
+                  }}
+                  isButtonTwoGreen
+                />
+              ) : (
+                <CustomButton
+                  withGreenBackground
+                  style={styles.buttonStyle}
+                  onPress={() => {
+                    tabHandler("next");
+                  }}
+                >
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={styles.nextButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.next" })}
+                  </CommonText>
+                </CustomButton>
+              )}
             </View>
           </View>
         )}

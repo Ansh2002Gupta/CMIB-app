@@ -475,6 +475,7 @@ const JobDetailsTemplate = ({
               menuOptions={menuOptions}
               setMenuOptions={setMenuOptions}
               nameField={"designation"}
+              isEditable={isEditable}
             />
           </View>
           <View style={styles.innerContainerStyle}>

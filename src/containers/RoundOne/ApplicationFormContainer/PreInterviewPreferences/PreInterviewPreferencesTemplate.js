@@ -42,6 +42,7 @@ import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
+import CardComponent from "../../../../components/CardComponent";
 
 const PreInterviewPreferencesTemplate = ({
   isEditable,
@@ -62,9 +63,9 @@ const PreInterviewPreferencesTemplate = ({
     Platform.OS.toLowerCase() === "web"
       ? {
           buttonOneStyle: styles.buttonStyle,
-          buttonTwoStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonTwoStyle,
           buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyle,
         }
       : {};
   const [sideBarState] = useContext(SideBarContext);
@@ -510,6 +511,41 @@ const PreInterviewPreferencesTemplate = ({
     ];
   };
 
+  const renderCustomMultiRowComponent = () => {
+    return (
+      <CustomMultiRowTextInput
+        customCardStyle={{
+          ...styles.multiRowTextStyle,
+        }}
+        customTableStyle={styles.tableStyle}
+        customWebContainerStyle={
+          isEditable
+            ? styles.customWebContainerStyle
+            : styles.customViewModeStyle
+        }
+        startRowTemplate={[...startRowTemplateConfig.current]}
+        gridTemplate={headContactDetails}
+        setGridTemplate={setHeadContactDetails}
+        numColsInARow={9}
+        isEditProfile={isEditable}
+        handleValueChange={({ propertyName, value, id, cellID }) => {
+          handleHeadContactDetails({
+            propertyName,
+            value,
+            id,
+            cellID,
+          });
+        }}
+        getColoumConfigs={getColoumConfigs}
+        tableData={nonEditableData}
+        tableHeading={ADD_PREINTERVIEW_PREFERNCES_HEADING}
+        isHeading
+        headerId={"label.head_contacts"}
+        footerId={"label.at_least_one_mandatory_with_star"}
+      />
+    );
+  };
+
   const JobDetailsConfig = [
     {
       content: (
@@ -524,37 +560,15 @@ const PreInterviewPreferencesTemplate = ({
       ),
     },
     {
-      content: (
-        <CustomMultiRowTextInput
-          customCardStyle={{
-            ...styles.multiRowTextStyle,
-          }}
-          customTableStyle={styles.tableStyle}
-          customWebContainerStyle={
-            isEditable
-              ? styles.customWebContainerStyle
-              : styles.customViewModeStyle
-          }
-          startRowTemplate={[...startRowTemplateConfig.current]}
-          gridTemplate={headContactDetails}
-          setGridTemplate={setHeadContactDetails}
-          numColsInARow={9}
-          isEditProfile={isEditable}
-          handleValueChange={({ propertyName, value, id, cellID }) => {
-            handleHeadContactDetails({
-              propertyName,
-              value,
-              id,
-              cellID,
-            });
-          }}
-          getColoumConfigs={getColoumConfigs}
-          tableData={nonEditableData}
-          tableHeading={ADD_PREINTERVIEW_PREFERNCES_HEADING}
-          isHeading
-          headerId={"label.head_contacts"}
-          footerId={"label.at_least_one_mandatory_with_star"}
-        />
+      content: isEditable ? (
+        renderCustomMultiRowComponent()
+      ) : (
+        <CardComponent customStyle={styles.CardComponentStyle}>
+          <CommonText customTextStyle={commonStyles.headingStyle}>
+            {intl.formatMessage({ id: "label.head_contacts" })}
+          </CommonText>
+          {renderCustomMultiRowComponent()}
+        </CardComponent>
       ),
     },
   ];
@@ -589,23 +603,58 @@ const PreInterviewPreferencesTemplate = ({
               {intl.formatMessage({ id: "label.back" })}
             </CommonText>
           </CustomButton>
-          <ActionPairButton
-            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            buttonTwoText={intl.formatMessage({ id: "label.save_and_next" })}
-            onPressButtonOne={() => navigate(-1)}
-            onPressButtonTwo={() => {
-              handleSaveAndNext();
-            }}
-            customStyles={{
-              ...isWebProps,
-              customContainerStyle: commonStyles.customContainerStyle,
-              buttonTwoStyle: styles.saveAndNextButton,
-            }}
-            displayLoader={isLoadingUpdateContactData}
-            isDisabled={errorOnPage || isLoadingUpdateContactData}
-            isLoading={isLoadingUpdateContactData}
-            isButtonTwoGreen
-          />
+          {isEditable ? (
+            // <ActionPairButton
+            //   buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+            //   buttonTwoText={intl.formatMessage({ id: "label.save_and_next" })}
+            //   onPressButtonOne={() => navigate(-1)}
+            //   onPressButtonTwo={() => {
+            //     handleSaveAndNext();
+            //   }}
+            //   customStyles={{
+            //     ...isWebProps,
+            //     customContainerStyle: commonStyles.customContainerStyle,
+            //     buttonTwoStyle: styles.saveAndNextButton,
+            //   }}
+            //   displayLoader={isLoadingUpdateContactData}
+            //   isDisabled={errorOnPage || isLoadingUpdateContactData}
+            //   isLoading={isLoadingUpdateContactData}
+            //   isButtonTwoGreen
+            // />
+            <ActionPairButton
+              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+              buttonTwoText={intl.formatMessage({
+                id: "label.save_and_next",
+              })}
+              onPressButtonOne={() => navigate(-1)}
+              onPressButtonTwo={() => {
+                handleSaveAndNext();
+              }}
+              customStyles={{
+                ...isWebProps,
+                customContainerStyle: commonStyles.customContainerStyle,
+              }}
+              displayLoader={isLoadingUpdateContactData}
+              isButtonTwoGreen
+              isLoading={isLoadingUpdateContactData}
+              isDisabled={errorOnPage || isLoadingUpdateContactData}
+            />
+          ) : (
+            <CustomButton
+              withGreenBackground
+              style={styles.buttonStyle}
+              onPress={() => {
+                tabHandler("next");
+              }}
+            >
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={commonStyles.nextButtonStyle}
+              >
+                {intl.formatMessage({ id: "label.next" })}
+              </CommonText>
+            </CustomButton>
+          )}
         </View>
       </ScrollView>
     </>
