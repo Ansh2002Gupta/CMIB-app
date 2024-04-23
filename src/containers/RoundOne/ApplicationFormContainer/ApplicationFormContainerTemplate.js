@@ -30,6 +30,7 @@ import {
 } from "../../../constants/constants";
 import useFetch from "../../../hooks/useFetch";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import { getValidMode } from "../../../utils/validation";
 import CardComponent from "../../../components/CardComponent";
 import CustomImage from "../../../components/CustomImage";
 import CommonText from "../../../components/CommonText";
@@ -39,11 +40,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const sessionId = sideBarState?.selectedSession?.value;
   const { currentModule } = useGetCurrentUser();
   const [isEditable, setIsEditable] = useState();
-  const [applicationFormData, setApplicationFormData] = useState({
-    isEditable: true,
-    isFilled: false,
-    isSubmitted: false,
-  });
+  const [applicationFormData, setApplicationFormData] = useState(null);
 
   const intl = useIntl();
   const { id } = useParams();
@@ -80,20 +77,45 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   }, [sessionId, currentModule]);
 
   useEffect(() => {
-    if (applicationFormData?.isSubmitted) {
-      urlService.setQueryStringValue(
-        PAGINATION_PROPERTIES?.MODE,
-        FORM_STATES.VIEW_ONLY
-      );
-      setIsEditable(false);
-    } else {
-      urlService.setQueryStringValue(
-        PAGINATION_PROPERTIES?.MODE,
-        FORM_STATES.EDITABLE
-      );
-      setIsEditable(true);
+    if (applicationFormData) {
+      if (!applicationFormData?.isSubmitted) {
+        urlService.setQueryStringValue(
+          PAGINATION_PROPERTIES?.MODE,
+          FORM_STATES.EDITABLE
+        );
+        setIsEditable(false);
+      } else {
+        if (
+          getValidMode(
+            urlService.getQueryStringValue(PAGINATION_PROPERTIES?.MODE)
+          )
+        ) {
+          if (
+            urlService.getQueryStringValue(PAGINATION_PROPERTIES?.MODE) ===
+            FORM_STATES.EDITABLE
+          ) {
+            urlService.setQueryStringValue(
+              PAGINATION_PROPERTIES?.MODE,
+              FORM_STATES.EDITABLE
+            );
+            setIsEditable(true);
+          } else {
+            urlService.setQueryStringValue(
+              PAGINATION_PROPERTIES?.MODE,
+              FORM_STATES.VIEW_ONLY
+            );
+            setIsEditable(false);
+          }
+        } else {
+          urlService.setQueryStringValue(
+            PAGINATION_PROPERTIES?.MODE,
+            FORM_STATES.VIEW_ONLY
+          );
+          setIsEditable(false);
+        }
+      }
     }
-  }, [applicationFormData]);
+  }, [applicationFormData?.isSubmitted]);
 
   const renderEditButton = ({ handleButtonClick, buttonTitle }) => {
     return (

@@ -604,23 +604,6 @@ const PreInterviewPreferencesTemplate = ({
             </CommonText>
           </CustomButton>
           {isEditable ? (
-            // <ActionPairButton
-            //   buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            //   buttonTwoText={intl.formatMessage({ id: "label.save_and_next" })}
-            //   onPressButtonOne={() => navigate(-1)}
-            //   onPressButtonTwo={() => {
-            //     handleSaveAndNext();
-            //   }}
-            //   customStyles={{
-            //     ...isWebProps,
-            //     customContainerStyle: commonStyles.customContainerStyle,
-            //     buttonTwoStyle: styles.saveAndNextButton,
-            //   }}
-            //   displayLoader={isLoadingUpdateContactData}
-            //   isDisabled={errorOnPage || isLoadingUpdateContactData}
-            //   isLoading={isLoadingUpdateContactData}
-            //   isButtonTwoGreen
-            // />
             <ActionPairButton
               buttonOneText={intl.formatMessage({ id: "label.cancel" })}
               buttonTwoText={intl.formatMessage({
