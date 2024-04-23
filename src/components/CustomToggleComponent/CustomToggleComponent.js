@@ -127,7 +127,7 @@ CustomToggleComponent.propTypes = {
   label: PropTypes.string,
   onValueChange: PropTypes.func,
   options: PropTypes.array,
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
 };
 
 export default CustomToggleComponent;
