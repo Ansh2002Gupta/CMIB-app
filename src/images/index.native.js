@@ -165,6 +165,7 @@ import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile
 import iconDefaultLogo from "../../public/images/svg/iconDefaultLogo.svg";
 import iconEditBlue from "../../public/images/svg/iconEditBlue.svg";
 import iconWallet from "../../public/images/svg/wallet.svg";
+import defaultImage from "../../public/images/svg/defaultImage.svg";
 
 const images = {
   iconArrowUp,
@@ -333,6 +334,7 @@ const images = {
   iconDefaultLogo,
   iconEditBlue,
   iconWallet,
+  defaultImage,
 };
 
 export default images;

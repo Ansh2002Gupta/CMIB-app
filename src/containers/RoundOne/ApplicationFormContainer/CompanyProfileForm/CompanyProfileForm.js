@@ -16,9 +16,11 @@ import useIsWebView from "../../../../hooks/useIsWebView";
 import useCompanyProfile from "./controllers/useCompanyProfileForm";
 import { DEFAULT_BALANCE_CREDIT } from "../../../../constants/constants";
 import commonStyles from "../../../../theme/styles/commonStyles";
-import styles from "./CompanyProfileForm.style";
 import { useNavigate } from "../../../../routes";
 import CustomButton from "../../../../components/CustomButton";
+import CustomImage from "../../../../components/CustomImage";
+import styles from "./CompanyProfileForm.style";
+import images from "../../../../images";
 
 const CompanyProfileForm = ({ tabHandler, isEditable }) => {
   const {
@@ -148,7 +150,6 @@ const CompanyProfileForm = ({ tabHandler, isEditable }) => {
                 profileResult={formDetails?.sourceOfInfo}
               />
             </CardComponent>
-
             <CardComponent customStyle={styles.cardStyle}>
               <DetailComponent
                 headerText={intl.formatMessage({
@@ -162,18 +163,29 @@ const CompanyProfileForm = ({ tabHandler, isEditable }) => {
                 })}
               </CommonText>
               <View style={styles.imageContainer}>
-                <UploadImage
-                  {...{
-                    onDeleteImage,
-                    errorWhileUpload,
-                    fileUploadResult: updatedFileUploadResult,
-                    handleFileUpload,
-                    isUploadingImageToServer,
-                    setFileUploadResult,
-                    uploadPercentage,
-                    hideIconDelete: false,
-                  }}
-                />
+                {isEditable ? (
+                  <UploadImage
+                    {...{
+                      onDeleteImage,
+                      errorWhileUpload,
+                      fileUploadResult: updatedFileUploadResult,
+                      handleFileUpload,
+                      isUploadingImageToServer,
+                      setFileUploadResult,
+                      uploadPercentage,
+                      hideIconDelete: false,
+                    }}
+                  />
+                ) : (
+                  <CustomImage
+                    source={
+                      !!formDetails?.companyLogo
+                        ? { uri: formDetails?.companyLogo }
+                        : images.defaultImage
+                    }
+                    style={styles.companyLogoStyle}
+                  />
+                )}
               </View>
             </CardComponent>
 

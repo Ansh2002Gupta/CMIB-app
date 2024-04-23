@@ -269,6 +269,7 @@ const iconCircleCross = appendAppBaseURl("/images/svg/close-circle.svg");
 const handShakeIcon = appendAppBaseURl("/images/svg/handShakeIcon.svg");
 const iconDefaultLogo = appendAppBaseURl("/images/svg/iconDefaultLogo.svg");
 const iconEditBlue = appendAppBaseURl("/images/svg/iconEditBlue.svg");
+const defaultImage = appendAppBaseURl("/images/svg/defaultImage.svg");
 
 const images = {
   iconArrowUp,
@@ -462,6 +463,7 @@ const images = {
   iconView,
   iconDefaultLogo,
   iconEditBlue,
+  defaultImage,
 };
 
 export default images;
