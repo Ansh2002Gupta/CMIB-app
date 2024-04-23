@@ -19,7 +19,7 @@ import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./CompanyProfileForm.style";
 import { useNavigate } from "../../../../routes";
 
-const CompanyProfileForm = ({ tabHandler }) => {
+const CompanyProfileForm = ({ tabHandler, isEditable }) => {
   const {
     columnCount,
     errorWhileUpload,
@@ -61,7 +61,7 @@ const CompanyProfileForm = ({ tabHandler }) => {
       }
     : null;
 
-  const updatedFileUploadResult = isEditProfile
+  const updatedFileUploadResult = isEditable
     ? fileUploadResult || defaultUploadResult
     : defaultUploadResult;
 
@@ -99,7 +99,7 @@ const CompanyProfileForm = ({ tabHandler }) => {
               handleChange={(fieldName, value) => {
                 handleInputChange(fieldName, value);
               }}
-              isEditProfile={isEditProfile}
+              isEditProfile={isEditable}
             />
             {formDetails?.contactPersonInfo.map((details, index) => {
               return (
@@ -115,7 +115,7 @@ const CompanyProfileForm = ({ tabHandler }) => {
                   }
                   handleBlur={handleBlur}
                   index={index}
-                  isEditProfile={isEditProfile}
+                  isEditProfile={isEditable}
                   otherDetails={details?.contactInfo}
                 />
               );
@@ -129,7 +129,7 @@ const CompanyProfileForm = ({ tabHandler }) => {
               isRow
               details={formDetails?.companyProfile}
               otherDetails={formDetails?.otherDetails}
-              isEditProfile={isEditProfile}
+              isEditProfile={isEditable}
             />
             <CardComponent customStyle={styles.cardStyle}>
               <DetailComponent
@@ -140,7 +140,7 @@ const CompanyProfileForm = ({ tabHandler }) => {
               />
               <RenderSourceOfInfo
                 badgeStyle={styles.badgeContainer}
-                isEditProfile
+                isEditProfile={isEditable}
                 options={options}
                 containerStyle={containerStyle}
                 handleToggle={handleToggle}
