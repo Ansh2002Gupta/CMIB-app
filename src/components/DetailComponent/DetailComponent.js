@@ -195,6 +195,7 @@ const DetailComponent = ({
           value={detail?.value}
           disabled
           quilStyle={styles.quilStyle}
+          removePadding={detail?.removePadding}
           quillContainerStyle={styles.quillContainerStyle}
         />
       );

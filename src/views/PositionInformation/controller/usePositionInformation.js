@@ -63,6 +63,7 @@ const positionInfoDetails = (intl) => [
       label: "label.roles_and_responsibility",
       placeholder: "label.roles_and_responsibility",
       isHtmlDescription: true,
+      removePadding: true,
     },
     { isEmptyField: true },
     { isEmptyField: true },

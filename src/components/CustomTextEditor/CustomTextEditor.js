@@ -33,6 +33,7 @@ const CustomTextEditor = (props) => {
     value,
     quilStyle,
     quillContainerStyle,
+    removePadding,
   } = props;
 
   const modules = {
@@ -86,9 +87,11 @@ const CustomTextEditor = (props) => {
           <ReactQuill
             theme="snow"
             value={isExpanded ? value : getPreviewContent(value)}
-            className={[getTextEditorStyles(), isViewMore && "custom"].join(
-              " "
-            )}
+            className={[
+              getTextEditorStyles(),
+              isViewMore && "custom",
+              removePadding && "removePadding",
+            ].join(" ")}
             modules={modules}
             onBlur={customHandleBlur}
             formats={FORMAT}
