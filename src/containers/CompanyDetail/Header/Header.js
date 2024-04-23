@@ -31,11 +31,13 @@ const Header = ({ centreName, comanyLogo = "", companyName }) => {
       <View>
         <View style={styles.centreView}>
           <CommonText customTextStyle={styles.centreText}>
-            {intl.formatMessage({ id: "label.centre" })}: {centreName ?? "-"}
+            {intl.formatMessage({ id: "label.centre" })}:
           </CommonText>
           <CommonText
             customTextStyle={{ ...styles.centreText, ...styles.centreValue }}
-          ></CommonText>
+          >
+            {centreName ?? "-"}
+          </CommonText>
         </View>
         <CommonText customTextStyle={styles.companyName}>
           {companyName}
