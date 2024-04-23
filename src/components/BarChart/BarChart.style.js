@@ -55,6 +55,9 @@ const styles = StyleSheet.create({
   bottomSectionStyle: {
     marginTop: 12,
   },
+  topLabelTextStyle: {
+    fontWeight: 'bold', color: colors.black
+  }
 });
 
 export default styles;

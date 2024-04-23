@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router";
 import { useIntl } from "react-intl";
@@ -71,9 +71,7 @@ const PreInterviewPreferencesTemplate = ({
   const sessionId = sideBarState?.selectedSession?.value;
   const [toastMsg, setToastMsg] = useState();
   const [errorOnPage, setErrorOnPage] = useState(false);
-  const [startRowTemplateConfig, setStartRowTemplateConfig] = useState([
-    ...headStartRowConfig,
-  ]);
+  const startRowTemplateConfig = useRef([...headStartRowConfig]);
   const [headContactDetails, setHeadContactDetails] = useState([
     ...headStartRowConfig,
   ]);
@@ -147,7 +145,8 @@ const PreInterviewPreferencesTemplate = ({
         return { ...object, options: options_object };
       return { ...object };
     });
-    setStartRowTemplateConfig(newData);
+    startRowTemplateConfig.current = newData;
+    setHeadContactDetails(newData);
   };
 
   useEffect(() => {
@@ -155,7 +154,7 @@ const PreInterviewPreferencesTemplate = ({
       const apiData = await fetchHeadContactData();
       const mobile_code = await getCountryCodes();
       setOptions({
-        data: startRowTemplateConfig,
+        data: startRowTemplateConfig.current,
         options: mobile_code,
         key: HEAD_CONTACT.MOBILE_COUNTRY_CODE,
       });
@@ -274,7 +273,7 @@ const PreInterviewPreferencesTemplate = ({
               .flat();
       !!pre_interview_preference_data
         ? setHeadContactDetails([...pre_interview_preference_data])
-        : setHeadContactDetails([...headStartRowConfig]);
+        : setHeadContactDetails([...startRowTemplateConfig.current]);
     };
     if (!!selectedModule?.key) {
       fetchData();
@@ -337,10 +336,10 @@ const PreInterviewPreferencesTemplate = ({
         ? {
             participating_for_first_time:
               data?.preInterviewDetails?.preInterviewPrefrences?.find(
-                (pref) => pref.key === "short_listing_criteria"
+                (pref) => pref.key === "participating"
               )?.value
-                ? "yes"
-                : "no",
+                ? "no"
+                : "yes",
           }
         : {};
     const payload = {
@@ -415,9 +414,7 @@ const PreInterviewPreferencesTemplate = ({
     {
       content: (
         <DetailCard
-          headerId={intl.formatMessage({
-            id: "label.pre_interview_prefrences",
-          })}
+          headerId={"label.pre_interview_prefrences"}
           details={preInterviewDetails?.preInterviewPrefrences}
           handleChange={handleInterviewPreferences}
           isEditProfile={isEditable}
