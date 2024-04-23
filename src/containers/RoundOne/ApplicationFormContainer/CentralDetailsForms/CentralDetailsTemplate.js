@@ -362,45 +362,55 @@ const CentralDetailsTemplate = ({
         }
         bottomSection={
           <View style={styles.actionBtnContainer}>
-            <View
-              style={{
-                ...(!isEditable && { flex: 1 }),
+            <CustomButton
+              style={styles.buttonStyle}
+              iconLeft={{
+                leftIconSource: images.iconArrowLeft,
+              }}
+              onPress={() => {
+                tabHandler("prev");
               }}
             >
-              <CustomButton
-                style={styles.buttonStyle}
-                iconLeft={{
-                  leftIconSource: images.iconArrowLeft,
-                }}
-                onPress={() => {
-                  tabHandler("prev");
-                }}
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={styles.backButtonStyle}
               >
-                <CommonText
-                  fontWeight={"600"}
-                  customTextStyle={styles.backButtonStyle}
-                >
-                  {intl.formatMessage({ id: "label.back" })}
-                </CommonText>
-              </CustomButton>
-            </View>
+                {intl.formatMessage({ id: "label.back" })}
+              </CommonText>
+            </CustomButton>
             {isEditable ? (
-              <ActionPairButton
-                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                buttonTwoText={intl.formatMessage({
-                  id: "label.save_and_next",
-                })}
-                onPressButtonOne={() => navigate(-1)}
-                onPressButtonTwo={() => {
-                  handleSave();
-                }}
-                displayLoader={saveRoundDetailLoading}
-                customStyles={{
-                  ...isWebProps,
-                  customContainerStyle: commonStyles.customContainerStyle,
-                }}
-                isButtonTwoGreen
-              />
+              <View style={styles.rightSection}>
+                <CustomButton
+                  style={styles.buttonStyle}
+                  onPress={() => navigate(-1)}
+                >
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={styles.backButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.cancel" })}
+                  </CommonText>
+                </CustomButton>
+                <ActionPairButton
+                  buttonOneText={intl.formatMessage({ id: "label.save" })}
+                  buttonTwoText={intl.formatMessage({
+                    id: "label.next",
+                  })}
+                  onPressButtonOne={() => handleSave()}
+                  onPressButtonTwo={() => {
+                    tabHandler("next");
+                  }}
+                  disableLeftStyle={styles.disabled}
+                  isButtonOneDisabled={buttonDisabled}
+                  isDisabled={buttonDisabled}
+                  displayLoaderLeft={saveRoundDetailLoading}
+                  customStyles={{
+                    ...isWebProps,
+                    customContainerStyle: commonStyles.customContainerStyle,
+                  }}
+                  isButtonTwoGreen
+                />
+              </View>
             ) : (
               <CustomButton
                 withGreenBackground

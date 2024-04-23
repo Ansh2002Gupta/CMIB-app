@@ -11,6 +11,7 @@ const CustomMultiRowTextInput = ({
   customWebContainerStyle,
   customCardStyle,
   isEditable,
+  customTableStyle,
   startRowHeaderList,
   startRowTemplate,
   gridTemplate,
@@ -111,7 +112,7 @@ const CustomMultiRowTextInput = ({
   ) : (
     <CustomTable
       {...{
-        customTableStyle: styles.customTableStyle,
+        customTableStyle: { ...styles.customTableStyle, ...customTableStyle },
         showSearchBar: false,
         currentRecords: tableData,
         data: tableData,
@@ -131,6 +132,7 @@ CustomMultiRowTextInput.defaultProps = {
   startRowTemplate: [],
   headerId: "",
   getColoumConfigs: () => {},
+  customTableStyle: {},
 };
 CustomMultiRowTextInput.propTypes = {
   isEditable: PropTypes.bool,
@@ -138,5 +140,6 @@ CustomMultiRowTextInput.propTypes = {
   startRowTemplate: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   headerId: PropTypes.string,
   getColoumConfigs: PropTypes.func,
+  customTableStyle: PropTypes.object,
 };
 export default CustomMultiRowTextInput;
