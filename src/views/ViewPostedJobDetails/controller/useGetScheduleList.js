@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
+
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import TouchableImage from "../../../components/TouchableImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
+import usePagination from "../../../hooks/usePagination";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import usePagination from "../../../hooks/usePagination";
+import { urlService } from "../../../services/urlService";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
+import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import colors from "../../../assets/colors";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
-import colors from "../../../assets/colors";
-import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
-import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useGetScheduleList = (id) => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -37,11 +37,11 @@ const useGetScheduleList = (id) => {
     searchData: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const {

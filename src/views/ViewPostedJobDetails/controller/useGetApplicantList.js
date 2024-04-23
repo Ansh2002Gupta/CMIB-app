@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
@@ -28,12 +28,12 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
 import colors from "../../../assets/colors";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import { urlService } from "../../../services/urlService";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useGetApplicantList = (id) => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -44,11 +44,11 @@ const useGetApplicantList = (id) => {
     query_type: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const navigate = useNavigate();

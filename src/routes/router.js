@@ -3,6 +3,7 @@ import {
   Navigate,
   Outlet,
   useNavigate,
+  useParams,
   useRoutes,
   useLocation,
   useSearchParams,
@@ -14,6 +15,7 @@ export {
   Outlet,
   useLocation,
   useNavigate,
+  useParams,
   useRoutes,
   useSearchParams,
 };

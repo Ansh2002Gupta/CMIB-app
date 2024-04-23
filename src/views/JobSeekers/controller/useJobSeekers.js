@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "../../../routes";
 
 import BadgeLabel from "../../../components/BadgeLabel/BadgeLabel";
 import CommonText from "../../../components/CommonText";
@@ -11,6 +10,7 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
+import { urlService } from "../../../services/urlService";
 import { JobSeekersData } from "../dummyData";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import images from "../../../images";
@@ -18,7 +18,6 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../JobSeekers.style";
 
 const useJobSeekers = () => {
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -42,11 +41,11 @@ const useJobSeekers = () => {
   // });
 
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   //TODO: API Call to get listing

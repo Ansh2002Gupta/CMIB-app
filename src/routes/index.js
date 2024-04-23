@@ -4,6 +4,7 @@ import {
   Outlet,
   useLocation,
   useNavigate,
+  useParams,
   useRoutes,
   useSearchParams,
 } from "./router";
@@ -16,6 +17,7 @@ export {
   Outlet,
   useLocation,
   useNavigate,
+  useParams,
   useRoutes,
   useSearchParams,
 };
