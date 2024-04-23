@@ -24,7 +24,7 @@ import commonStyles from "../../../../theme/styles/commonStyles";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { formateErrors } from "../../../../utils/util";
 
-const PaymentForm = ({ isEditable, tabHandler }) => {
+const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
   const {
     currentModule,
     errorWhilePaymentInit,
@@ -177,7 +177,9 @@ const PaymentForm = ({ isEditable, tabHandler }) => {
                     id: "label.submit",
                   })}
                   displayLoader={isSubmitting}
-                  onPressButtonOne={() => navigate(-1)}
+                  onPressButtonOne={() => {
+                    isEditable ? setIsEditable(false) : navigate(-1);
+                  }}
                   onPressButtonTwo={() => {
                     handleSaveAndNext();
                   }}

@@ -20,7 +20,7 @@ import images from "../../../../images";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./BillingInfo.style";
 
-const BillingInfo = ({ isEditable, tabHandler }) => {
+const BillingInfo = ({ isEditable, tabHandler, setIsEditable }) => {
   const {
     currentModule,
     fetchData,
@@ -132,7 +132,9 @@ const BillingInfo = ({ isEditable, tabHandler }) => {
                   buttonTwoText={intl.formatMessage({
                     id: "label.save_and_next",
                   })}
-                  onPressButtonOne={() => navigate(-1)}
+                  onPressButtonOne={() => {
+                    isEditable ? setIsEditable(false) : navigate(-1);
+                  }}
                   onPressButtonTwo={() => {
                     tabHandler("next");
                   }}

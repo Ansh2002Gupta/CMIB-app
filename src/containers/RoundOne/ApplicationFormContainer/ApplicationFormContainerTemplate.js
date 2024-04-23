@@ -6,6 +6,7 @@ import { TwoRow } from "../../../core/layouts";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
 import CompanyProfile from "./CompanyProfileForm/CompanyProfileForm";
+import CustomButton from "../../../components/CustomButton";
 import JobDetails from "./JobDetails";
 import PreInterviewPreferences from "./PreInterviewPreferences";
 import CustomScrollView from "../../../components/CustomScrollView";
@@ -18,6 +19,7 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import useNavigateScreen from "../../../services/hooks/useNavigateScreen";
 import { urlService } from "../../../services/urlService";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { useParams } from "react-router";
@@ -29,17 +31,20 @@ import {
   UPDATED_API_VERSION,
 } from "../../../constants/constants";
 import useFetch from "../../../hooks/useFetch";
+import images from "../../../images";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import { getValidMode } from "../../../utils/validation";
 import CardComponent from "../../../components/CardComponent";
 import CustomImage from "../../../components/CustomImage";
 import CommonText from "../../../components/CommonText";
+import { View } from "@unthinkable/react-core-components";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const [sideBarState] = useContext(SideBarContext);
   const sessionId = sideBarState?.selectedSession?.value;
   const { currentModule } = useGetCurrentUser();
   const [isEditable, setIsEditable] = useState();
+  const { navigateScreen } = useNavigateScreen();
   const [applicationFormData, setApplicationFormData] = useState(null);
 
   const intl = useIntl();
@@ -83,7 +88,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
           PAGINATION_PROPERTIES?.MODE,
           FORM_STATES.EDITABLE
         );
-        setIsEditable(false);
+        setIsEditable(true);
       } else {
         if (
           getValidMode(
@@ -117,11 +122,14 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
     }
   }, [applicationFormData?.isSubmitted]);
 
-  const renderEditButton = ({ handleButtonClick, buttonTitle }) => {
+  const renderEditButton = ({ handleButtonClick }) => {
     return (
-      <CustomTouchableOpacity onPress={handleButtonClick}>
-        <></>
-      </CustomTouchableOpacity>
+      <CustomButton
+        iconLeft={{ leftIconSource: images.iconEdit }}
+        onPress={handleButtonClick}
+      >
+        {intl.formatMessage({ id: "label.edit" })}
+      </CustomButton>
     );
   };
 
@@ -149,6 +157,21 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const activeTabIndex = Math.min(activeStep, tabConfig.length - 1);
   const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
+  const handleEditClick = () => {
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES?.MODE,
+      FORM_STATES.EDITABLE
+    );
+    setIsEditable(true);
+  };
+
+  const handleCancel = (val) => {
+    if (applicationFormData?.isSubmitted) {
+      setIsEditable(true);
+    }
+    navigateScreen(-1);
+  };
+
   return (
     <>
       <CustomScrollView style={{ flex: 1 }}>
@@ -159,13 +182,20 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
                 id: "label.add_application_form",
               })}
               activeStep={activeStep}
-              // webActionButton={() => renderEditButton()}
+              webActionButton={
+                !isEditable && (
+                  <View>
+                    {renderEditButton({ handleButtonClick: handleEditClick })}
+                  </View>
+                )
+              }
             />
           }
           bottomSection={
             <ActiveTabComponent
               tabHandler={onHandleTab}
               isEditable={isEditable}
+              setIsEditable={handleCancel}
             />
           }
           isBottomFillSpace

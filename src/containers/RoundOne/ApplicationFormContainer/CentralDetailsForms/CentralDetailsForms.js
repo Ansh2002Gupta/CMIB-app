@@ -5,10 +5,12 @@ import useCentralDetailsForm from "./controllers/useCentralDetailsForm";
 import CentralDetailsTemplate from "./CentralDetailsTemplate";
 import useCentralDetails from "./controllers/useCentralDetails";
 
-const CentralDetailsForm = ({ isEditable, tabHandler }) => {
+const CentralDetailsForm = ({ isEditable, tabHandler, setIsEditable }) => {
   const centerDetails = useCentralDetails({ tabHandler });
   return (
-    <CentralDetailsTemplate {...{ ...centerDetails, isEditable, tabHandler }} />
+    <CentralDetailsTemplate
+      {...{ ...centerDetails, isEditable, setIsEditable, tabHandler }}
+    />
   );
 };
 
