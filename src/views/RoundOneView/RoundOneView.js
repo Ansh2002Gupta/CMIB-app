@@ -111,7 +111,7 @@ const RoundOneView = () => {
           )}
           {!isCardsDataLoading && !isErrorOnCardsData && !!cardsData && (
             <RoundOneContainer
-              cardsData={cardsData}
+              cardsData={cardsData?.application_form}
               hasRoundone
               roundId={roundOneId}
             />

@@ -323,6 +323,33 @@ export const SCREEN_NAMES = {
   ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
 };
 
+export const ADD_DOCUMENT_HEADING = {
+  doc_name: "Document Name",
+  doc_type: "Document Type",
+  no_of_copies: "Number of Copies",
+};
+
+export const ADD_DESIGNATION_HEADING = {
+  designation_details: "Designation",
+  number_of_vacancies: "No. of Vacancy",
+};
+
+export const OTHER_BENEFIT_HEADING = {
+  benefits_details: "Benefits Details",
+  benefits_amount: "Amount",
+};
+
+export const ADD_PLACE_OF_POSTING_HEADING = {
+  place_of_posting: "Place of Posting",
+  general: "General",
+  obc: "OBC",
+  sc: "SC",
+  st: "ST",
+  ph: "PH",
+  others: "Others",
+  total: "Total",
+};
+
 export const APPLICATION_FORM_STEPPER_OPTIONS = [
   {
     title: "label.company_profile",

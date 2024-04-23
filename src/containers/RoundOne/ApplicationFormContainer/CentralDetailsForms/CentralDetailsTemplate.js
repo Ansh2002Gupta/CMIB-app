@@ -1,16 +1,20 @@
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import React from "react";
 import styles from "./CentralDetailsForms.styles";
+import colors from "../../../../assets/colors";
+import Chip from "../../../../components/Chip";
 import DetailCard from "../../../../components/DetailCard";
 import { useIntl } from "react-intl";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import ConfigurableList from "../../../../components/ConfigurableList";
+import PreviewImage from "../../../../components/PreviewImage";
 import SaveCancelButton from "../../../../components/SaveCancelButton";
 import { keys } from "./controllers/utils";
 import CommonText from "../../../../components/CommonText";
 import SingleSelectionModal from "../../../../components/SingleSelectionModal";
 import Spinner from "../../../../components/Spinner";
 import CardComponent from "../../../../components/CardComponent";
+import CustomLabelView from "../../../../components/CustomLabelView";
 import DetailComponent from "../../../../components/DetailComponent";
 import CustomToggleComponent from "../../../../components/CustomToggleComponent";
 import UploadImage from "../../../../components/UploadImage";
@@ -81,6 +85,7 @@ const CentralDetailsTemplate = ({
   fetchErrors,
   centerListError,
   saveRoundDetailLoading,
+  isEditable,
 }) => {
   const {
     fileUploadResult,
@@ -110,20 +115,32 @@ const CentralDetailsTemplate = ({
         }
       : {};
 
-  const renderSelectionProcess = () => {
+  const renderSelectionProcess = ({ isEditable }) => {
     return (
-      <View style={styles.checkBoxStyle}>
-        {selectionProcess?.map((item, index) => (
-          <CheckBox
-            key={item.key}
-            id={item.key}
-            index={index}
-            title={item.label}
-            isSelected={item.isSelected}
-            handleCheckbox={handleClickOnSelectionProcess}
-            isFillSpace={true}
-          />
-        ))}
+      <View>
+        <View
+          style={isEditable ? styles.checkBoxStyle : styles.viewCheckBoxStyle}
+        >
+          {selectionProcess?.map((item, index) =>
+            isEditable ? (
+              <CheckBox
+                key={item.key}
+                id={item.key}
+                index={index}
+                title={item.label}
+                isSelected={item.isSelected}
+                handleCheckbox={handleClickOnSelectionProcess}
+                isFillSpace={true}
+              />
+            ) : (
+              <Chip
+                label={item.key}
+                bgColor={colors.secondaryGrey}
+                textColor={colors.black}
+              />
+            )
+          )}
+        </View>
       </View>
     );
   };
@@ -163,7 +180,7 @@ const CentralDetailsTemplate = ({
             }}
             customCardStyle={styles.customCardStyle}
             isColumnVariableWidth
-            isEditProfile={isEditProfile}
+            isEditProfile={isEditable}
             customContainerStyle={styles.customContainerStyle}
             handleBlur={(key, index) => {
               handleBlur(key, keys.contactDetails);
@@ -180,7 +197,7 @@ const CentralDetailsTemplate = ({
               handleInterviewDetailChange(fieldName, value, codeValue);
             }}
             isColumnVariableWidth
-            isEditProfile={isEditProfile}
+            isEditProfile={isEditable}
             customContainerStyle={styles.customContainerStyle}
             handleMultiSelect={handleInterviewDetailMultiSelect}
           />
@@ -199,9 +216,10 @@ const CentralDetailsTemplate = ({
                 {" *"}
               </CommonText>
             </View>
-            {renderSelectionProcess()}
+            {renderSelectionProcess({ isEditable })}
           </View>
           <AddDesignation
+            isEditable={isEditable}
             options={desginationData}
             requiredDocumentDetails={designationDetatils}
             setRequiredDocumentDetails={setDesignationDetatils}
@@ -219,7 +237,7 @@ const CentralDetailsTemplate = ({
     );
   };
 
-  const renderBottomSection = () => {
+  const renderBottomSection = ({ isEditable }) => {
     return (
       <View>
         <CardComponent customStyle={styles.cardStyle}>
@@ -228,34 +246,56 @@ const CentralDetailsTemplate = ({
             headerTextCustomStyles={styles.headerTextStyle}
           />
           <View style={styles.toggleComponent}>
-            <CustomToggleComponent
-              label={intl.formatMessage({ id: "label.company_ppt" })}
-              value={isCompanyPPt}
-              onValueChange={(item) => setIsCompanyPPT(item)}
-              customToggleStyle={styles.customToggleStyle}
-              customLabelStyle={styles.customLabelStyle}
-            />
+            {isEditable ? (
+              <CustomToggleComponent
+                label={intl.formatMessage({ id: "label.company_ppt" })}
+                value={isCompanyPPt}
+                onValueChange={(item) => setIsCompanyPPT(item)}
+                customToggleStyle={styles.customToggleStyle}
+                customLabelStyle={styles.customLabelStyle}
+              />
+            ) : (
+              <CustomLabelView
+                label={intl.formatMessage({ id: "label.company_ppt" })}
+              >
+                {intl.formatMessage({ id: `toggle.${isCompanyPPt ? 0 : 1}` })}
+              </CustomLabelView>
+            )}
           </View>
 
           {!isCompanyPPt && (
             <View style={styles.imageContainer}>
-              <UploadImage
-                {...{
-                  onDeleteImage,
-                  errorWhileUpload,
-                  fileUploadResult: updatedFileUploadResult,
-                  handleFileUpload,
-                  isUploadingImageToServer,
-                  setFileUploadResult,
-                  uploadPercentage,
-                  hideIconDelete: false,
-                  isDocumentUpload: true,
-                }}
-              />
+              {isEditable ? (
+                <UploadImage
+                  {...{
+                    onDeleteImage,
+                    errorWhileUpload,
+                    fileUploadResult: updatedFileUploadResult,
+                    handleFileUpload,
+                    isUploadingImageToServer,
+                    setFileUploadResult,
+                    uploadPercentage,
+                    hideIconDelete: false,
+                    isDocumentUpload: true,
+                  }}
+                />
+              ) : (
+                updatedFileUploadResult?.data?.url && (
+                  <PreviewImage
+                    fileUrl={updatedFileUploadResult?.data?.url}
+                    isDocumentUpload
+                    hideIconDelete
+                  />
+                )
+              )}
             </View>
           )}
           <AddBenefits
-            {...{ setRequiredDocumentDetails, requiredDocumentDetails }}
+            {...{
+              isEditable,
+              setRequiredDocumentDetails,
+              requiredDocumentDetails,
+            }}
           />
         </CardComponent>
       </View>
@@ -309,46 +349,74 @@ const CentralDetailsTemplate = ({
                   id: String(option["centre_id"]),
                   name: String(option["centre_name"]),
                 })}
+                isEditable={isEditable}
               />
               <View style={styles.innerContainerStyle}>
                 {renderRoundDetail()}
               </View>
             </View>
-            {!innerPageLoading && roundCenterDetails && renderBottomSection()}
+            {!innerPageLoading &&
+              roundCenterDetails &&
+              renderBottomSection({ isEditable })}
           </>
         }
         bottomSection={
           <View style={styles.actionBtnContainer}>
-            <CustomButton
-              style={styles.buttonStyle}
-              iconLeft={{
-                leftIconSource: images.iconArrowLeft,
-              }}
-              onPress={() => {
-                tabHandler("prev");
+            <View
+              style={{
+                ...(!isEditable && { flex: 1 }),
               }}
             >
-              <CommonText
-                fontWeight={"600"}
-                customTextStyle={styles.backButtonStyle}
+              <CustomButton
+                style={styles.buttonStyle}
+                iconLeft={{
+                  leftIconSource: images.iconArrowLeft,
+                }}
+                onPress={() => {
+                  tabHandler("prev");
+                }}
               >
-                {intl.formatMessage({ id: "label.back" })}
-              </CommonText>
-            </CustomButton>
-            <ActionPairButton
-              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-              buttonTwoText={intl.formatMessage({ id: "label.save_and_next" })}
-              onPressButtonOne={() => navigate(-1)}
-              onPressButtonTwo={() => {
-                handleSave();
-              }}
-              displayLoader={saveRoundDetailLoading}
-              customStyles={{
-                ...isWebProps,
-                customContainerStyle: commonStyles.customContainerStyle,
-              }}
-              isButtonTwoGreen
-            />
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.backButtonStyle}
+                >
+                  {intl.formatMessage({ id: "label.back" })}
+                </CommonText>
+              </CustomButton>
+            </View>
+            {isEditable ? (
+              <ActionPairButton
+                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+                buttonTwoText={intl.formatMessage({
+                  id: "label.save_and_next",
+                })}
+                onPressButtonOne={() => navigate(-1)}
+                onPressButtonTwo={() => {
+                  handleSave();
+                }}
+                displayLoader={saveRoundDetailLoading}
+                customStyles={{
+                  ...isWebProps,
+                  customContainerStyle: commonStyles.customContainerStyle,
+                }}
+                isButtonTwoGreen
+              />
+            ) : (
+              <CustomButton
+                withGreenBackground
+                style={styles.buttonStyle}
+                onPress={() => {
+                  tabHandler("next");
+                }}
+              >
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.nextButtonStyle}
+                >
+                  {intl.formatMessage({ id: "label.next" })}
+                </CommonText>
+              </CustomButton>
+            )}
           </View>
         }
       />

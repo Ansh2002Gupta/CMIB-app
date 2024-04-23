@@ -1,4 +1,6 @@
 import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
+
 const styles = StyleSheet.create({
   customWebContainerStyle: {
     display: "grid",
@@ -14,6 +16,17 @@ const styles = StyleSheet.create({
   customContainerStyle: {
     flexDirection: "row",
     flexWrap: "unwrap",
+  },
+  customTableStyle: {
+    backgroundColor: colors.white,
+    padding: 0,
+    marginBottom: 16,
+    borderWidth: 0.5,
+    marginTop: 16,
+    borderRadius: 16,
+    overflow: "hidden",
+    borderColor: colors.lightGrey,
+    flex: undefined,
   },
 });
 export default styles;

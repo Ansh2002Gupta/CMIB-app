@@ -20,7 +20,7 @@ import images from "../../../../images";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./BillingInfo.style";
 
-const BillingInfo = ({ tabHandler }) => {
+const BillingInfo = ({ isEditable, tabHandler }) => {
   const {
     currentModule,
     fetchData,
@@ -104,37 +104,60 @@ const BillingInfo = ({ tabHandler }) => {
           isTopFillSpace
           bottomSection={
             <View style={styles.actionBtnContainer}>
-              <CustomButton
-                style={styles.buttonStyle}
-                iconLeft={{
-                  leftIconSource: images.iconArrowLeft,
-                }}
-                onPress={() => {
-                  tabHandler("prev");
+              <View
+                style={{
+                  ...(!isEditable && { flex: 1 }),
                 }}
               >
-                <CommonText
-                  fontWeight={"600"}
-                  customTextStyle={styles.backButtonStyle}
+                <CustomButton
+                  style={styles.buttonStyle}
+                  iconLeft={{
+                    leftIconSource: images.iconArrowLeft,
+                  }}
+                  onPress={() => {
+                    tabHandler("prev");
+                  }}
                 >
-                  {intl.formatMessage({ id: "label.back" })}
-                </CommonText>
-              </CustomButton>
-              <ActionPairButton
-                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                buttonTwoText={intl.formatMessage({
-                  id: "label.save_and_next",
-                })}
-                onPressButtonOne={() => navigate(-1)}
-                onPressButtonTwo={() => {
-                  tabHandler("next");
-                }}
-                customStyles={{
-                  ...isWebProps,
-                  customContainerStyle: commonStyles.customContainerStyle,
-                }}
-                isButtonTwoGreen
-              />
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={styles.backButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.back" })}
+                  </CommonText>
+                </CustomButton>
+              </View>
+              {isEditable ? (
+                <ActionPairButton
+                  buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+                  buttonTwoText={intl.formatMessage({
+                    id: "label.save_and_next",
+                  })}
+                  onPressButtonOne={() => navigate(-1)}
+                  onPressButtonTwo={() => {
+                    tabHandler("next");
+                  }}
+                  customStyles={{
+                    ...isWebProps,
+                    customContainerStyle: commonStyles.customContainerStyle,
+                  }}
+                  isButtonTwoGreen
+                />
+              ) : (
+                <CustomButton
+                  withGreenBackground
+                  style={styles.buttonStyle}
+                  onPress={() => {
+                    tabHandler("next");
+                  }}
+                >
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={styles.nextButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.next" })}
+                  </CommonText>
+                </CustomButton>
+              )}
             </View>
           }
         />

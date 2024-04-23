@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.white,
   },
+  customQuilStyle: { height: undefined, borderWidth: 0 },
 });
 
 export default styles;
