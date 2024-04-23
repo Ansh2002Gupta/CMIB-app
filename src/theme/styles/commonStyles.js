@@ -101,6 +101,10 @@ const commonStyles = {
     fontSize: 16,
     fontWeight: "600",
   },
+  nextButtonStyle: {
+    fontSize: 14,
+    color: colors.white,
+  },
 };
 
 export const gridStyles = {

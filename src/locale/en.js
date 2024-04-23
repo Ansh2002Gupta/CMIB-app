@@ -935,7 +935,6 @@ const locale = {
   "label.payment_date": "Payment Date",
   "label.participating":
     "Are you participating first time in Campus Placement program",
-  "label.done": "Done",
 };
 
 export default locale;
