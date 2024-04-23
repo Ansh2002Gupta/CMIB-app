@@ -401,7 +401,7 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
       : {};
   return {
     centre_name: "Centre Name",
-    total_vacancies: "Vacany",
+    total_vacancies: "Vacancy",
     interview_dates: "Interview Dates",
     amount: "Amount",
     ...currentModules,
