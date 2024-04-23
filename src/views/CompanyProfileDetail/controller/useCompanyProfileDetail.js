@@ -196,7 +196,7 @@ const useCompanyProfileDetail = ({ data }) => {
       [keys.contactPersonCountryCode]:
         data?.contact_person_details?.[0]?.mobile_country_code ?? "",
       [keys.contactPersonMobileNo]:
-        data?.contact_person_details?.[0]?.mobile_number ?? "",
+        data?.contact_person_details?.[0]?.mobile ?? "",
     });
   };
 
