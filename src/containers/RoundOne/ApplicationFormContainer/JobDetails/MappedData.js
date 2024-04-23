@@ -1,4 +1,8 @@
-import { DOCUMENT_TYPE, document_keys } from "../../../../constants/constants";
+import {
+  DOCUMENT_TYPE,
+  NEWLY_QUALIFIED,
+  document_keys,
+} from "../../../../constants/constants";
 import { convertStringtoNumber } from "../../../../utils/util";
 
 export const mapMonthyApiToUI = () => {
@@ -366,6 +370,7 @@ export const mapDocsToUI = (data) => {
         placeholder: "label.select_no_of_copies",
         value: docs?.no_of_photocopies,
         isNumeric: true,
+        isEditable: true,
       },
       {
         cellID: index + 1,
@@ -406,6 +411,7 @@ export const getDocumentField = () => {
       placeholder: "label.select_no_of_copies",
       value: "",
       isNumeric: true,
+      isEditable: true,
     },
     {
       cellID: 1,
@@ -619,7 +625,7 @@ const mapPostingDetailsToPayload = (fieldsArray) => {
 
 export const mapDataToPayload = (data, currentModule) => {
   const overSeasProps =
-    currentModule === "overseas-chapters"
+    currentModule !== NEWLY_QUALIFIED
       ? {
           job_type: data?.job_type,
           flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",

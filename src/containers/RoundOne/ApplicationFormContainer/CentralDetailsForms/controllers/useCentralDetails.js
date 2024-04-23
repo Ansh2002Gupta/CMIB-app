@@ -22,6 +22,11 @@ import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo
 import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import { formateErrors } from "../../../../../utils/util";
 import { moduleKeys } from "../../../../../constants/sideBarHelpers";
+import {
+  API_VERSION_QUERY_PARAM,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+} from "../../../../../constants/constants";
 
 const useCentralDetails = ({ tabHandler }) => {
   const [contactDetailsState, setContactDetailsState] = useState({});
@@ -49,6 +54,7 @@ const useCentralDetails = ({ tabHandler }) => {
   const [selectionProcess, setSelectionProcess] = useState([
     ...selectionProcessFields(intl),
   ]);
+  const sessionId = sideBarState?.selectedSession?.value;
 
   const [selectionFieldError, setSelectionFieldError] = useState("");
   const [error, setError] = useState("");
@@ -65,8 +71,15 @@ const useCentralDetails = ({ tabHandler }) => {
     fetchData: fetchMappedCentersList,
     error: mappedCenterListError,
   } = useFetch({
-    url: `/company/${selectedModule.key}/rounds/${roundId}/application/centres`,
-    otherOptions: { skipApiCallOnMount: true },
+    url: `/company/${selectedModule.key}/rounds/${roundId}/application/centres?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   //used to fetch application detail based on center id
@@ -80,6 +93,11 @@ const useCentralDetails = ({ tabHandler }) => {
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const {
@@ -90,6 +108,11 @@ const useCentralDetails = ({ tabHandler }) => {
   } = useFetch({
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -108,9 +131,14 @@ const useCentralDetails = ({ tabHandler }) => {
     fetchData: fetchCenterList,
     error: centerListError,
   } = useFetch({
-    url: `core/${selectedModule.key}/rounds/${roundId}`,
+    url: `core/${selectedModule.key}/rounds/${roundId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -120,9 +148,14 @@ const useCentralDetails = ({ tabHandler }) => {
     fetchData: fetchDesignationData,
     error: designationDataError,
   } = useFetch({
-    url: `/company/${selectedModule.key}/rounds/${roundId}/application/job-detail`,
+    url: `/company/${selectedModule.key}/rounds/${roundId}/application/job-detail?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       fetchMappedCentersList: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -130,6 +163,11 @@ const useCentralDetails = ({ tabHandler }) => {
     usePut({
       url: ``,
       otherOptions: {},
+      apiOptions: {
+        headers: {
+          [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+        },
+      },
     });
 
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
@@ -282,7 +320,7 @@ const useCentralDetails = ({ tabHandler }) => {
 
   const handleDelete = ({ itemToBeDeletedId, prevState }) => {
     unMapCenter({
-      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${itemToBeDeletedId}`,
+      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${itemToBeDeletedId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
       onSuccessCallback: () => {
         setDeleteDesginationId(itemToBeDeletedId);
         prevState.current = prevState.current.filter(
@@ -318,10 +356,10 @@ const useCentralDetails = ({ tabHandler }) => {
     if (centerData?.id !== selectedOptions?.[0]?.id) {
       resetForm();
       fetchRoundCenterDetails({
-        overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}`,
+        overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
       });
       fetchApplicationDetail({
-        overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${centerData?.detailId}`,
+        overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${centerData?.detailId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
       });
     }
   };
@@ -340,7 +378,7 @@ const useCentralDetails = ({ tabHandler }) => {
 
   const handleSaveCenter = () => {
     mapCenter({
-      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedCenterData?.id}`,
+      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedCenterData?.id}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
       onSuccessCallback: () => {
         handleCenterCancel();
         fetchMappedCentersList();
@@ -372,7 +410,7 @@ const useCentralDetails = ({ tabHandler }) => {
     );
 
     saveRoundDetails({
-      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedOptions[0]?.detailId}`,
+      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedOptions[0]?.detailId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
       body,
       onSuccessCallback: () => {
         console.log("onSuccessCallback,onSuccessCallback");

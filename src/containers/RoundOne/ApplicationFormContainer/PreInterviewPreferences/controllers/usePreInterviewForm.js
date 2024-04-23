@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 
 import { mapApiDataToUI } from "../mapPreInterviewData";
+import useGetCurrentUser from "../../../../../hooks/useGetCurrentUser";
 
 const usePreInterviewForm = () => {
-  const [preInterviewDetails, setPreInterviewDetails] = useState(null);
+  const [preInterviewDetails, setPreInterviewDetails] = useState({});
+  const { currentModule } = useGetCurrentUser();
 
   useEffect(() => {
-    setPreInterviewDetails(mapApiDataToUI);
-  }, []);
+    setPreInterviewDetails(mapApiDataToUI(currentModule));
+  }, [currentModule]);
 
   const handleInterviewPreferences = (fieldName, value) => {
     setPreInterviewDetails((prevDetails) => ({

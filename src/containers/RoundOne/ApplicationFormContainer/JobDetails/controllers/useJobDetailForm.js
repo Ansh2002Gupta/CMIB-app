@@ -9,10 +9,17 @@ import {
   mapMonthyApiToUI,
   mapYearlyApiToUI,
 } from "../MappedData";
-import { document_keys } from "../../../../../constants/constants";
+import {
+  API_VERSION_QUERY_PARAM,
+  NEWLY_QUALIFIED,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+  document_keys,
+} from "../../../../../constants/constants";
 import { useDelete, usePost, usePut } from "../../../../../hooks/useApiRequest";
 import {
   APPLICATION,
+  CORE,
   JOB_DETAILS,
   ROUNDS,
   USER_TYPE_COMPANY,
@@ -83,6 +90,8 @@ const useJobDetailForm = ({ tabHandler }) => {
 
   const [startingSalary, setStartingSalary] = useState(null);
   const currentModule = sideBarState?.selectedModule?.key;
+  const sessionId = sideBarState?.selectedSession?.value;
+
   const { id } = useParams();
 
   const [isAddNewJob, setIsAddNewJob] = useState(false);
@@ -96,6 +105,7 @@ const useJobDetailForm = ({ tabHandler }) => {
   const [desginationItems, setDesginationItems] = useState([]);
   const [deleteDesginationId, setDeleteDesginationId] = useState(null);
   const [currentDesginationID, setCurrentDesginationID] = useState(null);
+  const [workExperienceOptions, setWorkExperienceOptions] = useState([]);
   const [validateError, setValidateError] = useState(initialState);
   const [modalDetails, setModalDetails] = useState({
     isShown: false,
@@ -122,9 +132,34 @@ const useJobDetailForm = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      JOB_DETAILS,
+      `${JOB_DETAILS}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
+  });
+
+  const {
+    fetchData: fetchingWorkExperience,
+    isLoading: isLoadingWorkExperience,
+    error: errorInWorkExperience,
+  } = useFetch({
+    url:
+      CORE +
+      `/${currentModule}` +
+      ROUNDS +
+      `/${id}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -140,9 +175,14 @@ const useJobDetailForm = ({ tabHandler }) => {
       `/${id}` +
       APPLICATION +
       JOB_DETAILS +
-      `/${currentDesginationID}`,
+      `/${currentDesginationID}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -155,7 +195,12 @@ const useJobDetailForm = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      JOB_DETAILS,
+      `${JOB_DETAILS}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const {
@@ -169,7 +214,12 @@ const useJobDetailForm = ({ tabHandler }) => {
       `/${id}` +
       APPLICATION +
       JOB_DETAILS +
-      `/${deleteDesginationId}`,
+      `/${deleteDesginationId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const { makeRequest: handleUpdateDetails, isLoading: isLoadingOnUpdating } =
@@ -181,7 +231,12 @@ const useJobDetailForm = ({ tabHandler }) => {
         `/${id}` +
         APPLICATION +
         JOB_DETAILS +
-        `/${currentDesginationID}`,
+        `/${currentDesginationID}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+      apiOptions: {
+        headers: {
+          [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+        },
+      },
     });
 
   const isButtonLoading =
@@ -189,8 +244,12 @@ const useJobDetailForm = ({ tabHandler }) => {
 
   useEffect(() => {
     const fetchListing = async () => {
-      if (currentModule) {
+      if (currentModule && sessionId) {
         const newList = await fetchDesginationList();
+        if (currentModule !== NEWLY_QUALIFIED) {
+          const workExperienceOptions = await fetchingWorkExperience({});
+          setWorkExperienceOptions([...workExperienceOptions?.experiences]);
+        }
         if (!!newList?.length) {
           setDesginationItems([...newList]);
           setSelectedOptions([String(newList[0]?.id)]);
@@ -206,7 +265,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     if (!!error) {
       setIsLoading(false);
     }
-  }, [currentModule]);
+  }, [currentModule, sessionId]);
 
   useEffect(() => {
     setRenderJobDetails((prev) => ({
@@ -232,7 +291,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     const fetchProfileData = async () => {
       if (!!currentDesginationID) {
         const newProfileData = await fetchJobDetailsData({});
-        setEditJobDetails(mapDataToUI(newProfileData));
+        setEditJobDetails(mapDataToUI(newProfileData, workExperienceOptions));
         setIsLoading(false);
       }
     };
@@ -345,24 +404,26 @@ const useJobDetailForm = ({ tabHandler }) => {
           : detail;
       }
     });
-    const monthlyGrossSalary = getMonthlyGrossSalary();
-    updatedYearly = updatedYearly.map((detail) =>
-      detail.key === "yearly_total_gross_salary"
-        ? { ...detail, value: monthlyGrossSalary.toString() }
-        : detail
-    );
-    if (
-      fieldName === "label.oneTimePayment" ||
-      fieldName === "label.totalGrossSalary"
-    ) {
-      const oneTimePayment =
-        updatedYearly.find((detail) => detail.key === "yearly_one_time_payment")
-          .value || "0";
-      const ctc = +monthlyGrossSalary + +oneTimePayment;
-      updatedYearly = updatedYearly.map((detail) =>
-        detail.key === "ctc" ? { ...detail, value: ctc.toString() } : detail
+    if (fieldName === "label.oneTimePayment") {
+      const totalGrossSalaryDetail = updatedYearly.find(
+        (detail) => detail.key === "yearly_total_gross_salary"
       );
+      const totalGrossSalary = totalGrossSalaryDetail
+        ? parseFloat(totalGrossSalaryDetail.value) || 0
+        : 0;
+
+      const oneTimePayment = parseFloat(value) || 0;
+
+      const newCtc = totalGrossSalary + oneTimePayment;
+
+      updatedYearly = updatedYearly.map((detail) => {
+        if (detail.key === "yearly_ctc") {
+          return { ...detail, value: newCtc.toString() };
+        }
+        return detail;
+      });
     }
+
     setRenderJobDetails({
       ...renderJobDetails,
       yearly: updatedYearly,
@@ -535,6 +596,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     menuOptions,
     setMenuOptions,
     handleMonthlyData,
+    workExperienceOptions,
     handleYearlyData,
     handleSaveAndNext,
     currentError,

@@ -33,7 +33,7 @@ const PaymentForm = ({ tabHandler }) => {
     handleBlur,
     handlePay,
     handleInputChange,
-    // isDisabled,
+    isDisabled,
     paymentList,
     isEditProfile,
     handleDownload,
@@ -107,7 +107,7 @@ const PaymentForm = ({ tabHandler }) => {
                   style={styles.buttonstyle}
                   onPress={handlePay}
                   isLoading={isLoadingPaymentInit}
-                  // disabled={isDisabled}
+                  disabled={isDisabled}
                 >
                   <CommonText customTextStyle={styles.buttonText}>
                     {intl.formatMessage({ id: "label.pay_amount" })}
@@ -170,8 +170,6 @@ const PaymentForm = ({ tabHandler }) => {
                 onPressButtonTwo={() => {
                   handleSaveAndNext();
                 }}
-                // isDisabled={isDisabled}
-                // displayLoader={isButtonLoading}
                 customStyles={{
                   ...isWebProps,
                   customContainerStyle: commonStyles.customContainerStyle,
