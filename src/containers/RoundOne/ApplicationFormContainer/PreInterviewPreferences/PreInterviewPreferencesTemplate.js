@@ -434,7 +434,7 @@ const PreInterviewPreferencesTemplate = ({
               ? styles.customWebContainerStyle
               : styles.customViewModeStyle
           }
-          startRowTemplate={startRowTemplateConfig}
+          startRowTemplate={[...startRowTemplateConfig.current]}
           gridTemplate={headContactDetails}
           setGridTemplate={setHeadContactDetails}
           numColsInARow={9}

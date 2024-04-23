@@ -198,13 +198,18 @@ const usePaymentForm = () => {
     const payload = mappedPayload(paymentDetails);
     makeRequest({
       body: payload,
-      onSuccessCallback: (data) => {
-        if (isWebView) {
-          if (data?.data && data?.data?.url) {
-            window.open(data?.data?.url, "_self");
-          } else {
-            window.location.reload();
+      onSuccessCallback: async (data) => {
+        if (payload?.payment_mode.toLowerCase() === "online") {
+          if (isWebView) {
+            if (data?.data && data?.data?.url) {
+              window.open(data?.data?.url, "_self");
+            } else {
+              window.location.reload();
+            }
           }
+        } else {
+          await fetchPaymentDetails({});
+          await fetchTransactionList({});
         }
       },
     });

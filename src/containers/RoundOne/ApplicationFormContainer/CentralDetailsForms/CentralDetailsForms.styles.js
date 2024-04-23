@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
   actionBtnContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     gap: 16,
     padding: 24,
-    backgroundColor: colors.backgroundGrey,
+    backgroundColor: colors.backgroundColor,
   },
   valueStyle: {
     marginLeft: 4,
@@ -63,6 +63,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  rightSection: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  disabled: {
+    opacity: 0.5,
+    backgroundColor: colors.white,
+    cursor: Platform.OS.toLowerCase() === "web" ? "not-allowed" : "",
   },
 
   innerContainerStyle: {
@@ -155,7 +164,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginTop: 24,
   },
-
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
   backButtonStyle: {
     fontSize: 14,

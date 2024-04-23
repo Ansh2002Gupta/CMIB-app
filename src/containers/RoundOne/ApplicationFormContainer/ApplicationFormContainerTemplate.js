@@ -72,7 +72,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
         setApplicationFormData({
           isEditable: newData?.application_form?.is_editable,
           isFilled: newData?.application_form?.is_filled,
-          isSubmitted: true,
+          isSubmitted: newData?.application_form?.is_submitted,
         });
       }
     };
