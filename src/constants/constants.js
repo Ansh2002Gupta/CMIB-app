@@ -350,26 +350,44 @@ export const ADD_PLACE_OF_POSTING_HEADING = {
   total: "Total",
 };
 
-export const APPLICATION_FORM_STEPPER_OPTIONS = [
-  {
-    title: "label.company_profile",
-  },
-  {
-    title: "label.job_details",
-  },
-  {
-    title: "label.pre_interview_preferences",
-  },
-  {
-    title: "label.centre_details",
-  },
-  {
-    title: "label.billing_info",
-  },
-  {
-    title: "label.payment",
-  },
-];
+export const APPLICATION_FORM_STEPPER_OPTIONS = (hasRoundTwo) => {
+  const roundOneSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+    {
+      title: "label.billing_info",
+    },
+    {
+      title: "label.payment",
+    },
+  ];
+  const roundTwoSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+  ];
+
+  return hasRoundTwo ? roundTwoSteps : roundOneSteps;
+};
 
 export const ROWS_PER_PAGE_ARRAY = [
   { value: 10, label: "10" },

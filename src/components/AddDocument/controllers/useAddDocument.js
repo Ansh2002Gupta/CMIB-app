@@ -75,7 +75,7 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
               isEditable: isEditable,
               isError: false,
               error: null,
-              value,
+              value: isEditable ? value : 0,
             };
           }
         }

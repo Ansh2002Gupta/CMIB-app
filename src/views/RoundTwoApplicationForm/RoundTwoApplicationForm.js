@@ -1,11 +1,14 @@
 import React from "react";
-import { Text, View } from "@unthinkable/react-core-components";
+
+import { Base } from "../../core/layouts";
+
+import ApplicationFormContainer from "../../containers/RoundOne/ApplicationFormContainer";
 
 const RoundTwoApplicationForm = () => {
   return (
-    <View>
-      <Text>RoundTwoApplicationForm</Text>
-    </View>
+    <Base>
+      <ApplicationFormContainer />
+    </Base>
   );
 };
 
