@@ -941,6 +941,7 @@ const locale = {
     "Cheque No./ DD No./ Transaction ID",
   "label.payment_date": "Payment Date",
   "label.centre": "Centre",
+  "label.copies": "Copies",
 };
 
 export default locale;

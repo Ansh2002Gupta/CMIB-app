@@ -296,7 +296,7 @@ const useGetCenterWiseCompanyList = (id) => {
                       onPopupClick={(selectedItem) => {
                         setCurrentPopupMessage(-1);
                         navigate(
-                          `${navigations.COMPANY_DETAILS}/${selectedId.current}/${item.id}`
+                          `${navigations.COMPANY_DETAILS}/${id}/${selectedId.current}/${item.id}`
                         );
                       }}
                       labelName={"name"}

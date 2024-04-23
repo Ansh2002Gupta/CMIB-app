@@ -237,7 +237,9 @@ const usePositionInformation = ({ centerId, companyId }) => {
             customTextStyle={tableStyle}
             customContainerStyle={tableContainerStyle}
           >
-            {item?.no_of_photocopies}
+            {`${item?.no_of_photocopies} ${intl.formatMessage({
+              id: "label.copies",
+            })}`}
           </CommonText>
         ),
         style: { ...commonStyles.columnStyle("15%"), ...tableContainerStyle },
@@ -292,21 +294,20 @@ const usePositionInformation = ({ centerId, companyId }) => {
   };
 
   const getTabData = () => {
-    if (data) {
+    if (data?.[0]?.length) {
       setPositionTabs(
-        data?.map((item) => {
+        data?.[0]?.map((item) => {
           return {
-            designation: item?.designation,
-            compensation: item?.compensation,
-            starting_salary: item?.starting_salary,
-            role_responsibility: item?.role_responsibility,
-            monthlyData: formatMonthlyData(item.monthly, intl),
-            yearlyData: formatYearlyData(item.yearly, intl),
-            requiredDocuments: item.required_docs,
-            postingAndVaccancyData: formatPostinAndVaccanyData(
-              item.posting_details[0]
-            ),
-            selectionProcess: item?.selection_process,
+            designation: item?.designation ?? "",
+            compensation: item?.compensation ?? "",
+            starting_salary: item?.starting_salary ?? "",
+            role_responsibility: item?.role_responsibility ?? "",
+            monthlyData: formatMonthlyData(item?.monthly, intl) ?? [],
+            yearlyData: formatYearlyData(item?.yearly, intl) ?? [],
+            requiredDocuments: item?.required_docs ?? "",
+            postingAndVaccancyData:
+              formatPostinAndVaccanyData(item?.posting_details ?? {}) ?? "",
+            selectionProcess: item?.selection_process ?? "",
             postionDetail: addValueOnField({
               state: formatPositionDetail(item),
               details: positionInfoDetails(),
@@ -323,7 +324,7 @@ const usePositionInformation = ({ centerId, companyId }) => {
 
   useEffect(() => {
     getTabData();
-  }, []);
+  }, [data]);
 
   return {
     positionTabs,

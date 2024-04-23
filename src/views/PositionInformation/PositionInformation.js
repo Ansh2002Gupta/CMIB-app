@@ -30,6 +30,7 @@ const PositionInformation = ({ centerId, companyId }) => {
       </View>
     );
   }
+
   if (!positionTabs.length) {
     return (
       <View style={styles.loaderStyle}>

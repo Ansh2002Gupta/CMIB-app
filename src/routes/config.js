@@ -236,7 +236,7 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:centerId/:companyId`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:roundId/:centerId/:companyId`,
         element: <CompanyDetail />,
       },
       {
@@ -256,7 +256,7 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}`,
+        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:roundId/:centerId/:companyId`,
         element: <CompanyDetail />,
       },
       {
@@ -384,7 +384,7 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:centerId/:companyId`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:roundId/:centerId/:companyId`,
         element: <CompanyDetail />,
       },
       {
@@ -419,7 +419,7 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:centerId/:companyId`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:roundId/:centerId/:companyId`,
         element: <CompanyDetail />,
       },
       {
@@ -453,7 +453,7 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:centerId/:companyId`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:roundId/:centerId/:companyId`,
         element: <CompanyDetail />,
       },
       {

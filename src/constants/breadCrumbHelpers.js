@@ -1,7 +1,8 @@
 import { navigations } from "./routeNames";
 
 const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
-  const { job_id, id } = params;
+  const { job_id, id, centerId, companyId, roundId } = params;
+
   switch (path) {
     case `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}`: {
       return [
@@ -24,6 +25,19 @@ const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
         {
           path: navigations.APPLICANT_DETAILS,
           label: "View Job Applicant Details",
+        },
+      ];
+    }
+    case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}`: {
+      return [
+        { path: navigations.ROUND_ONE, label: "Round 1" },
+        {
+          path: `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}?id=${roundId}`,
+          label: "Centre wise Company detail",
+        },
+        {
+          path: navigations.COMPANY_DETAILS,
+          label: "View Company detail",
         },
       ];
     }
