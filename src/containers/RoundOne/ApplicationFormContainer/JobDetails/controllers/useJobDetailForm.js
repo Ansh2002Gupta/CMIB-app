@@ -561,7 +561,6 @@ const useJobDetailForm = ({ tabHandler }) => {
             });
           });
           setCurrentDesginationID(newId);
-          tabHandler("next");
         },
         onErrorCallback: (errorMessage) => {
           setCurrentError(errorMessage);

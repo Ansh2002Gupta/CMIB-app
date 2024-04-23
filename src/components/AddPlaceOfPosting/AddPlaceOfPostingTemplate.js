@@ -101,7 +101,7 @@ const AddPlaceOfPostingTemplate = ({
     return [
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {item?.place_of_posting || "-"}
           </CommonText>
         ),
@@ -110,7 +110,7 @@ const AddPlaceOfPostingTemplate = ({
       },
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {item?.general || "-"}
           </CommonText>
         ),
@@ -119,7 +119,7 @@ const AddPlaceOfPostingTemplate = ({
       },
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {item?.obc || "-"}
           </CommonText>
         ),
@@ -128,7 +128,7 @@ const AddPlaceOfPostingTemplate = ({
       },
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {item?.sc || "-"}
           </CommonText>
         ),
@@ -137,7 +137,7 @@ const AddPlaceOfPostingTemplate = ({
       },
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {item?.st || "-"}
           </CommonText>
         ),
@@ -146,7 +146,7 @@ const AddPlaceOfPostingTemplate = ({
       },
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {item?.ph || "-"}
           </CommonText>
         ),
@@ -155,7 +155,7 @@ const AddPlaceOfPostingTemplate = ({
       },
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {item?.others || "-"}
           </CommonText>
         ),
@@ -164,7 +164,7 @@ const AddPlaceOfPostingTemplate = ({
       },
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {item?.total || "-"}
           </CommonText>
         ),
