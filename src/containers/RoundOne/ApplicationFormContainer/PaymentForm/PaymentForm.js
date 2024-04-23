@@ -28,8 +28,9 @@ const PaymentForm = ({ isEditable, tabHandler }) => {
   const {
     currentModule,
     errorWhilePaymentInit,
-
+    errorWhileSubmitting,
     setErrorWhilePayment,
+    setErrorWhileSubmiting,
     paymentDetails,
     handleBlur,
     handlePay,
@@ -41,6 +42,7 @@ const PaymentForm = ({ isEditable, tabHandler }) => {
     getStatusStyle,
     getColoumConfigs,
     getErrorDetails,
+    isSubmitting,
     isLoading,
     isLoadingPaymentInit,
     handleSaveAndNext,
@@ -174,6 +176,7 @@ const PaymentForm = ({ isEditable, tabHandler }) => {
                   buttonTwoText={intl.formatMessage({
                     id: "label.submit",
                   })}
+                  displayLoader={isSubmitting}
                   onPressButtonOne={() => navigate(-1)}
                   onPressButtonTwo={() => {
                     handleSaveAndNext();
@@ -210,13 +213,19 @@ const PaymentForm = ({ isEditable, tabHandler }) => {
           onRetry={() => getErrorDetails().onRetry()}
         />
       )}
-      {errorWhilePaymentInit && (
-        <ToastComponent
-          customToastStyle={styles.toastMessageStyle}
-          toastMessage={formateErrors(errorWhilePaymentInit)}
-          onDismiss={() => setErrorWhilePayment("")}
-        />
-      )}
+      {errorWhilePaymentInit ||
+        (errorWhileSubmitting && (
+          <ToastComponent
+            customToastStyle={styles.toastMessageStyle}
+            toastMessage={formateErrors(
+              errorWhilePaymentInit || errorWhileSubmitting
+            )}
+            onDismiss={() => {
+              setErrorWhilePayment("");
+              setErrorWhileSubmiting("");
+            }}
+          />
+        ))}
     </CustomScrollView>
   );
 };

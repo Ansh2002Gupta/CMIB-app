@@ -14,6 +14,7 @@ import {
   PAY,
   PAYMENT_INFO,
   ROUNDS,
+  SUBMIT,
   TRANSACTIONS,
   USER_TYPE_COMPANY,
 } from "../../../../../services/apiServices/apiEndPoint";
@@ -25,7 +26,7 @@ import {
   validatePAN,
   validateTAN,
 } from "../../../../../utils/validation";
-import { usePost } from "../../../../../hooks/useApiRequest";
+import { usePatch, usePost } from "../../../../../hooks/useApiRequest";
 import CustomTouchableOpacity from "../../../../../components/CustomTouchableOpacity";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
 import {
@@ -112,6 +113,16 @@ const usePaymentForm = () => {
         [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
       },
     },
+  });
+
+  const {
+    makeRequest: submitApplication,
+    isLoading: isSubmitting,
+    error: errorWhileSubmitting,
+    setError: setErrorWhileSubmiting,
+  } = usePatch({
+    url:
+      USER_TYPE_COMPANY + `/${currentModule}` + APPLICATION + `/${id}` + SUBMIT,
   });
 
   const isLoading = isLoadingTransactionList || isLoadingPaymentDetails;
@@ -409,7 +420,9 @@ const usePaymentForm = () => {
       },
     ];
   };
-  const handleSaveAndNext = () => {};
+  const handleSaveAndNext = () => {
+    submitApplication({});
+  };
 
   return {
     currentModule,
@@ -424,8 +437,11 @@ const usePaymentForm = () => {
     handleSaveAndNext,
     getErrorDetails,
     isLoading,
+    isSubmitting,
+    errorWhileSubmitting,
     errorWhilePaymentInit,
     setErrorWhilePayment,
+    setErrorWhileSubmiting,
     isLoadingPaymentInit,
     isEditProfile,
     paymentDetails,
