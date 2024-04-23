@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "@unthinkable/react-core-components";
+import { Text, TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 
@@ -16,6 +16,9 @@ import {
 } from "../../constants/constants";
 import colors from "../../assets/colors";
 import AddTicketModal from "../../components/AddTicketModal/AddTicketModal";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
+import Chip from "../../components/Chip";
+import TouchableImage from "../../components/TouchableImage";
 
 const ConsentMarketingManagementTemplate = ({
 
@@ -53,7 +56,55 @@ const ConsentMarketingManagementTemplate = ({
         headingTexts,
         tableIcon,
         isHeading,
+        onIconPress,
+        showCurrentPopupmessage,
+        setCurrentPopupMessage
     } = useContentMarketingManagement(onViewPress);
+
+
+    const getMobileView = (item, index) => {
+        console.log('item----', item)
+        return (
+            <View style={styles.mobileContainer} key={index}>
+                <View>
+                    <CommonText
+                        fontWeight={"600"}
+                        customTextStyle={styles.cellTextStyle()}
+                    >
+                        {item.employer_name || "-"}
+                    </CommonText>
+                    <CommonText customTextStyle={styles.tableQueryText}>
+                        {item?.interview_dates || "-"}
+                    </CommonText>
+                </View>
+                <View style={styles.rowsPerPageWeb}>
+                    <TouchableImage
+                        onPress={() => {
+                            onIconPress(item);
+                        }}
+                        source={tableIcon}
+                        style={styles.iconTicket}
+                        isSvg={true}
+                    />
+                    {showCurrentPopupmessage === item?.employer_id && (
+                        <PopupMessage
+                            popUpHeaderText={intl.formatMessage({
+                                id: "label.actions",
+                            })}
+                            message={[{ id: 1, name: 'abc' }, { id: 1, name: 'abc' }, { id: 1, name: 'abc' },]}
+                            customStyle={styles.popupMessageStyle}
+                            onPopupClick={(action) => { setCurrentPopupMessage(-1) }}
+                            isPopupModal={true}
+                            onPopUpClose={() => setCurrentPopupMessage(-1)}
+                        />
+                    )}
+                </View>
+
+            </View>
+        );
+    };
+
+
 
     const CommonTableComponent = () => {
         return <View style={{ backgroundColor: colors.backgroundGrey, height: !isWebView && '100%' }}>
@@ -69,16 +120,16 @@ const ConsentMarketingManagementTemplate = ({
                     allDataLoaded,
                     currentPage,
                     currentRecords: [
-                        { employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
-                        { employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
-                        { employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
-                        { employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' }
+                        { employer_id: 1, employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
+                        { employer_id: 2, employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
+                        { employer_id: 3, employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
+                        { employer_id: 4, employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' }
                     ],
                     data: [
-                        { employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
-                        { employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
-                        { employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
-                        { employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' }
+                        { employer_id: 1, employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
+                        { employer_id: 2, employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
+                        { employer_id: 3, employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' },
+                        { employer_id: 4, employer_name: 'Basic', interview_type: 'random', mode: 'Offline', interview_dates: '18/7/2023', shortlisting_round: '2' }
                     ],
                     setCurrentRecords,
                     defaultCategory,
@@ -108,9 +159,10 @@ const ConsentMarketingManagementTemplate = ({
                     extraDetailsKey,
                     showSearchBar: false,
                     totalcards,
+                    onIconPress,
+                    mobileComponentToRender: getMobileView,
 
                 }}
-
             />
 
         </View>

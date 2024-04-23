@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
 import { useNavigate } from "../../../routes";
@@ -21,6 +21,8 @@ import {
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
+import useOutsideClick from "../../../hooks/useOutsideClick";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 
 const useContentMarketingManagement = (onViewPress) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
@@ -39,6 +41,8 @@ const useContentMarketingManagement = (onViewPress) => {
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
+  const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(0);
+
   const {
     data: inactiveSubscriptionListData,
     isLoading: isInactiveSubscriptionListLoading,
@@ -57,6 +61,9 @@ const useContentMarketingManagement = (onViewPress) => {
     setCurrentPage,
     setRowPerPage,
   });
+  const popMessageRef = useRef(null);
+
+  useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
 
   const getErrorDetails = () => {
     //TODO: Api error handling
@@ -163,10 +170,20 @@ const useContentMarketingManagement = (onViewPress) => {
     }
   };
 
-  let headingTexts = ["package_name"];
-  let subHeadingText = ["description"];
-  let extraDetailsText = ["Experience"];
-  let extraDetailsKey = ["total_experience"];
+  const onIconPress = (item) => {
+    console.log('*******', item)
+    // setCurrentPopupMessage(1)
+    showCurrentPopupmessage !== item?.employer_id &&
+      item?.job_applicantion_id !== null
+      ? setCurrentPopupMessage(item?.employer_id)
+      : setCurrentPopupMessage(-1);
+  };
+
+
+  let headingTexts = ["employer_name"];
+  let subHeadingText = ["interview_dates"];
+  let extraDetailsText = [""];
+  let extraDetailsKey = [""];
   let tableIcon = images.iconMore;
   let isHeading = true;
   const onNameSorting = async (sortField) => {
@@ -200,7 +217,7 @@ const useContentMarketingManagement = (onViewPress) => {
           </CustomTouchableOpacity>
         ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {!!item.employer_name ? item.employer_name : "-"}
+            {!!item.employer_name ? item.employer_name : "!!-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -266,6 +283,7 @@ const useContentMarketingManagement = (onViewPress) => {
         style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
+
     ];
   };
 
@@ -296,6 +314,9 @@ const useContentMarketingManagement = (onViewPress) => {
     extraDetailsKey,
     tableIcon,
     totalcards: inactiveSubscriptionListData?.meta?.total,
+    onIconPress,
+    showCurrentPopupmessage,
+    setCurrentPopupMessage
   };
 };
 
