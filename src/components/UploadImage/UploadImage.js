@@ -20,6 +20,8 @@ const UploadImage = ({
   setFileUploadResult,
   uploadPercentage,
   customContentContainerStyle,
+  fileTypes,
+  fileLabel,
 }) => {
   const fileInputRef = useRef(null);
 
@@ -128,6 +130,8 @@ const UploadImage = ({
             isLoading: isUploadingImageToServer,
             uploadPercentage,
             customContentContainerStyle: customContentContainerStyle,
+            fileTypes,
+            fileLabel,
           }}
         />
       )}

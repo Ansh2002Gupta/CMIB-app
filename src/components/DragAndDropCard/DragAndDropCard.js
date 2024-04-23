@@ -27,6 +27,8 @@ const DragAndDropCard = ({
   isLoading,
   uploadPercentage,
   customContentContainerStyle,
+  fileTypes,
+  fileLabel,
 }) => {
   const isPlatformWeb = Platform.OS.toLowerCase() === "web";
 
@@ -50,6 +52,9 @@ const DragAndDropCard = ({
   }
 
   const getAcceptedFiles = () => {
+    if (fileTypes) {
+      return fileTypes;
+    }
     if (isDocumentUpload) {
       return ".pdf, .ppt, .pptx, .doc, .docx";
     }
@@ -60,6 +65,9 @@ const DragAndDropCard = ({
   };
 
   const getSupportedFilesLabel = () => {
+    if (fileLabel) {
+      return intl.formatMessage({ id: fileLabel });
+    }
     if (isDocumentUpload) {
       if (isPlatformWeb) {
         return intl.formatMessage({ id: "label.supported_document" });
@@ -124,7 +132,7 @@ const DragAndDropCard = ({
               type="file"
               ref={fileInputRef}
               name="fileUpload"
-              accept={getAcceptedFiles()}
+              accept={fileTypes ?? getAcceptedFiles()}
               onChange={(event) => fileUploadHandler(event)}
               style={styles.hideRawInputField}
             />
