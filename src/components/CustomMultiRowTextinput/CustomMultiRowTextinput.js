@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import DetailCard from "../DetailCard/DetailCard";
 import styles from "./CustomMultiRowTextinput.style";
+import { document_keys } from "../../constants/constants";
+import CustomTable from "../CustomTable";
 
 const CustomMultiRowTextInput = ({
   customWebContainerStyle,
@@ -13,7 +15,12 @@ const CustomMultiRowTextInput = ({
   startRowTemplate,
   gridTemplate,
   setGridTemplate,
+  isEditProfile = true,
   setObjectGridTemplate,
+  tableData,
+  getColoumConfigs,
+  renderFooterComponenet,
+  tableHeading,
   headerId,
   footerId,
   handleValueChange,
@@ -78,7 +85,7 @@ const CustomMultiRowTextInput = ({
       : setGridTemplate([...newGridTemplate]);
   };
 
-  return (
+  return isEditProfile ? (
     <DetailCard
       customCardStyle={customCardStyle}
       cols={numColsInARow}
@@ -87,7 +94,7 @@ const CustomMultiRowTextInput = ({
       handleChange={handleChange}
       headerId={headerId}
       isRow={false}
-      isEditProfile={isEditable}
+      isEditProfile={isEditProfile}
       onAdd={handleAddNewRow}
       customErrorViewStyle={styles.detailErrorViewStyle}
       onDelete={handleDeleteRow}
@@ -101,6 +108,21 @@ const CustomMultiRowTextInput = ({
         ...customWebContainerStyle,
       }}
     />
+  ) : (
+    <CustomTable
+      {...{
+        customTableStyle: styles.customTableStyle,
+        showSearchBar: false,
+        currentRecords: tableData,
+        data: tableData,
+        getColoumConfigs,
+        isShowPagination: false,
+        isHeading: true,
+        tableHeading: tableHeading,
+        isRenderFooterComponent: true,
+        renderFooterComponenet,
+      }}
+    />
   );
 };
 CustomMultiRowTextInput.defaultProps = {
@@ -108,11 +130,13 @@ CustomMultiRowTextInput.defaultProps = {
   startRowHeaderList: [],
   startRowTemplate: [],
   headerId: "",
+  getColoumConfigs: () => {},
 };
 CustomMultiRowTextInput.propTypes = {
   isEditable: PropTypes.bool,
   startRowHeaderList: PropTypes.array,
   startRowTemplate: PropTypes.array,
   headerId: PropTypes.string,
+  getColoumConfigs: PropTypes.func,
 };
 export default CustomMultiRowTextInput;

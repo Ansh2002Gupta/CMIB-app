@@ -19,7 +19,7 @@ import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { formateErrors } from "../../../../utils/util";
 
-const JobDetails = ({ tabHandler }) => {
+const JobDetails = ({ tabHandler, isEditable }) => {
   const {
     isButtonLoading,
     deleteDesignationFromList,
@@ -74,6 +74,7 @@ const JobDetails = ({ tabHandler }) => {
           topSection={
             <JobDetailsTemplate
               {...{
+                isEditable,
                 validateError,
                 renderJobDetails,
                 handleInputChange,

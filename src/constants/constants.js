@@ -323,6 +323,23 @@ export const SCREEN_NAMES = {
   ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
 };
 
+export const ADD_DOCUMENT_HEADING = {
+  doc_name: "Document Name",
+  doc_type: "Document Type",
+  no_of_copies: "Number of Copies",
+};
+
+export const ADD_PLACE_OF_POSTING_HEADING = {
+  place_of_posting: "Place of Posting",
+  general: "General",
+  obc: "OBC",
+  sc: "SC",
+  st: "ST",
+  ph: "PH",
+  others: "Others",
+  total: "Total",
+};
+
 export const APPLICATION_FORM_STEPPER_OPTIONS = [
   {
     title: "label.company_profile",
@@ -401,7 +418,7 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
       : {};
   return {
     centre_name: "Centre Name",
-    total_vacancies: "Vacany",
+    total_vacancies: "Vacancy",
     interview_dates: "Interview Dates",
     amount: "Amount",
     ...currentModules,
