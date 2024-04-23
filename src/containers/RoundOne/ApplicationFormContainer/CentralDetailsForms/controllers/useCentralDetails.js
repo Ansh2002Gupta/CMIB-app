@@ -39,7 +39,6 @@ const useCentralDetails = ({ tabHandler }) => {
 
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-  const sessionId = sideBarState?.selectedSession?.value;
   const [configurableListQuery, setConfigurableListQuery] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [menuOptions, setMenuOptions] = useState([]);
