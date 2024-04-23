@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontSize: 14,
     padding: 0,
+    height: 30,
   },
   counterUp: {
     height: 14,

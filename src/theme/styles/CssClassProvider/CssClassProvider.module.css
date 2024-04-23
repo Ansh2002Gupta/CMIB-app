@@ -7,6 +7,7 @@
   /* Greens */
   --green: #04af55;
   --greenOne: rgba(4, 175, 85, 0.04);
+  --greenTwo: #cdefdd;
 
   /* Greys */
   --secondaryGrey: #f2f4fc;
@@ -15,6 +16,9 @@
 
   /* Whites */
   --white: #fff;
+
+  /* Blacks */
+  --black: #000;
 }
 
 .account-dropdown__base:hover {
@@ -25,6 +29,14 @@
   border-color: var(--green) !important;
   background: linear-gradient(0deg, var(--greenOne) 0%, var(--greenOne) 100%),
     var(--white);
+}
+
+.configurableList__item--green:hover {
+  background: var(--greenTwo) !important;
+}
+
+.configurableList__item--green:hover .item--black {
+  color: var(--black) !important;
 }
 
 .module-box_outline--darkBlue:hover {
@@ -62,6 +74,13 @@
   color: var(--darkGrey);
 }
 
+.configurableList__item--green:hover {
+  background: var(--greenTwo) !important;
+}
+
+.configurableList__item--green:hover .item--black {
+  color: var(--black) !important;
+}
 .input_placeholder::placeholder {
   color: var(--darkGrey);
 }

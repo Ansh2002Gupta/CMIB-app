@@ -4,7 +4,11 @@ import { useIntl } from "react-intl";
 import CookieAndStorageService from "../services/cookie-and-storage-service";
 import Config from "../components/ReactConfig/ReactConfig";
 import { useHeader } from "../hooks/useHeader";
-import { API_VERSION_NUMBER, STATUS_CODES } from "../constants/constants";
+import {
+  API_VERSION_NUMBER,
+  API_VERSION_QUERY_PARAM,
+  STATUS_CODES,
+} from "../constants/constants";
 
 const useAxiosInstance = () => {
   const { onLogout } = useHeader();
@@ -17,8 +21,9 @@ const useAxiosInstance = () => {
   });
 
   axiosInstance.interceptors.request.use(async (request) => {
-    request.headers["api-version"] = API_VERSION_NUMBER;
-    request.headers["ngrok-skip-browser-warning"] = true;
+    if (!request.headers[API_VERSION_QUERY_PARAM]) {
+      request.headers[API_VERSION_QUERY_PARAM] = API_VERSION_NUMBER;
+    }
     const token = (await CookieAndStorageService.get({ key: "auth" })) || null;
     if (token) {
       request.headers.Authorization = `Bearer ${token}`;
@@ -34,7 +39,7 @@ const useAxiosInstance = () => {
         (response?.data?.message ===
           intl.formatMessage({ id: "label.login_with_new_email" }) ||
           response?.data?.message ===
-          intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
+            intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
       ) {
         onLogout({
           message: response?.data?.message,
@@ -59,7 +64,7 @@ const useAxiosInstance = () => {
         (error.response?.data?.message ===
           intl.formatMessage({ id: "label.login_with_new_email" }) ||
           error.response?.data?.message ===
-          intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
+            intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
       ) {
         onLogout({
           message: error.response?.data?.message,

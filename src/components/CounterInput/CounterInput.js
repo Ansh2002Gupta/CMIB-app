@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View, TextInput, Platform } from "@unthinkable/react-core-components";
 
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import CustomLabelView from "../CustomLabelView";
 import CommonText from "../CommonText";
 import MultiRow from "../../core/layouts/MultiRow";
 import MultiColumn from "../../core/layouts/MultiColumn";
@@ -17,11 +18,13 @@ const CounterInput = ({
   minCount = 0,
   maxCount = Infinity,
   step = 1,
-  initialCount = 0,
   onCountChange,
   style,
+  isMandatory,
+  label,
+  selectedValue,
 }) => {
-  const [count, setCount] = useState(initialCount);
+  const [count, setCount] = useState(selectedValue || 0);
   const textInputRef = useRef(null);
   const ArrowUp = images.iconArrowUp;
   const ArrowDown = images.iconArrowDown;
@@ -109,6 +112,7 @@ const CounterInput = ({
 
   return (
     <View>
+      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       <MultiColumn
         columns={counterView}
         style={{ ...styles.counterMainView, ...style }}
@@ -126,12 +130,18 @@ const CounterInput = ({
 };
 
 CounterInput.propTypes = {
+  customErrorStyle: {},
+  errorMessage: "",
+  isError: false,
+  isMandatory: false,
+  label: "",
   initialCount: PropTypes.number,
   maxCount: PropTypes.number,
   minCount: PropTypes.number,
   onCountChange: PropTypes.func,
   step: PropTypes.number,
   style: PropTypes.object,
+  selectedValue: 0,
 };
 
 CounterInput.defaultProps = {

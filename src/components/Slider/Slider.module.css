@@ -1,6 +1,7 @@
 :root {
   --black: #000833;
   --blueOne: rgba(63, 81, 181, 0.16);
+  --green: #00873e;
   --white: #fff;
 }
 
@@ -30,6 +31,10 @@
   height: 0.4rem;
 }
 
+.greenTrack::-webkit-slider-runnable-track {
+  background-color: var(--green);
+}
+
 /* slider thumb */
 .range::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -48,6 +53,10 @@
   background-color: var(--black);
   border-radius: 0.5rem;
   height: 0.4rem;
+}
+
+.greenTrack::-moz-range-track {
+  background-color: var(--green);
 }
 
 /* slider thumb */

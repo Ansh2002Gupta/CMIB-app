@@ -109,11 +109,13 @@ const CustomTextInput = (props) => {
     isSingleSelection,
     isTextInputWithChip,
     onChipUpdate,
+    useExactToggleValue,
     showMonthYearPicker,
     datePickerContainer,
     checkBoxTextStyle,
     isViewMode = false,
     viewText,
+    customErrorViewStyle,
     ...remainingProps
   } = props;
 
@@ -304,7 +306,13 @@ const CustomTextInput = (props) => {
           onValueChange={(item) => {
             onChangeValue(item);
           }}
-          value={typeof value === "boolean" && value === true ? 0 : 1}
+          value={
+            useExactToggleValue
+              ? value
+              : typeof value === "boolean" && value === true
+              ? 0
+              : 1
+          }
         />
       );
     }
@@ -505,28 +513,29 @@ const CustomTextInput = (props) => {
       )}
       {isViewMode ? <CommonText>{viewText}</CommonText> : <>
       {renderTextInput()}
-        {(isError || isMultiline) && (
-          <View
-            style={{
-              ...style.errorAndCountLimitBox,
-              ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
-            }}
-          >
-            {isError && (
-              <CommonText
-                customTextStyle={[style.errorMsg, customErrorStyle]}
-                fontWeight={customErrorStyle?.fontWeight || "600"}
-              >
-                {errorMessage}
-              </CommonText>
-            )}
-            {isMultiline && (
-              <CommonText
-                customTextStyle={style.limitStyle}
-              >{`${value?.length}/${maxLength}`}</CommonText>
-            )}
-          </View>
-        )}
+      {(isError || isMultiline) && (
+        <View
+          style={{
+            ...style.errorAndCountLimitBox,
+            ...customErrorViewStyle,
+            ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
+          }}
+        >
+          {isError && (
+            <CommonText
+              customTextStyle={[style.errorMsg, customErrorStyle]}
+              fontWeight={customErrorStyle?.fontWeight || "600"}
+            >
+              {errorMessage}
+            </CommonText>
+          )}
+          {isMultiline && (
+            <CommonText customTextStyle={style.limitStyle}>{`${
+              value?.length ?? 0
+            }/${maxLength}`}</CommonText>
+          )}
+        </View>
+      )}
       </>}
     </View>
   );
