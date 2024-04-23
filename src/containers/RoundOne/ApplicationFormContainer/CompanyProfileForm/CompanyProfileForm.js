@@ -22,7 +22,7 @@ import CustomImage from "../../../../components/CustomImage";
 import styles from "./CompanyProfileForm.style";
 import images from "../../../../images";
 
-const CompanyProfileForm = ({ tabHandler, isEditable }) => {
+const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
   const {
     columnCount,
     errorWhileUpload,
@@ -211,7 +211,9 @@ const CompanyProfileForm = ({ tabHandler, isEditable }) => {
                   buttonTwoText={intl.formatMessage({
                     id: "label.save_and_next",
                   })}
-                  onPressButtonOne={() => navigate(-1)}
+                  onPressButtonOne={() => {
+                    isEditable ? setIsEditable(false) : navigate(-1);
+                  }}
                   onPressButtonTwo={() => {
                     handleSaveAndNext();
                   }}
