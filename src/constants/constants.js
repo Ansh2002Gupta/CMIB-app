@@ -1022,6 +1022,16 @@ export const PAGINATION_PROPERTIES = {
   MODE: "mode",
 };
 
+export const ADD_PREINTERVIEW_PREFERNCES_HEADING = {
+  designation: "Desgination",
+  name: "Name",
+  email: "Email",
+  mobile_country_code: "Mobile Country Code",
+  mobile_number: "Mobile Number",
+  std_country_code: "Area Code",
+  telephone_number: "Telephone Number",
+};
+
 export const FORM_STATES = {
   VIEW_ONLY: "view",
   EDITABLE: "edit",

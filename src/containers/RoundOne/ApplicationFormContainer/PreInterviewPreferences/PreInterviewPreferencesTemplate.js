@@ -29,6 +29,7 @@ import {
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
 import {
+  ADD_PREINTERVIEW_PREFERNCES_HEADING,
   API_VERSION_QUERY_PARAM,
   COMPANY,
   HEAD_CONTACT,
@@ -410,6 +411,105 @@ const PreInterviewPreferencesTemplate = ({
     setErrorUpdateHeadContactData(null);
   };
 
+  function mapDocuments(dataArray) {
+    const groupedData = {};
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "designation":
+          groupedData[item.cellID].designation = item.value;
+          break;
+        case "name":
+          groupedData[item.cellID].name = item.value;
+          break;
+        case "email":
+          groupedData[item.cellID].email = item.value;
+          break;
+        case "mobile_country_code":
+          groupedData[item.cellID].mobile_country_code = item.value;
+          break;
+        case "mobile_number":
+          groupedData[item.cellID].mobile_number = item.value;
+          break;
+        case "std_country_code":
+          groupedData[item.cellID].std_country_code = item.value;
+          break;
+        case "telephone_number":
+          groupedData[item.cellID].telephone_number = item.value;
+          break;
+      }
+    });
+    const result = Object.keys(groupedData).map((key) => {
+      return groupedData[key];
+    });
+    return result;
+  }
+  const nonEditableData = mapDocuments(headContactDetails);
+
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.designation || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.name || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.email || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.mobile_country_code || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.std_country_code || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.telephone_number || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+    ];
+  };
+
   const JobDetailsConfig = [
     {
       content: (
@@ -429,6 +529,7 @@ const PreInterviewPreferencesTemplate = ({
           customCardStyle={{
             ...styles.multiRowTextStyle,
           }}
+          customTableStyle={styles.tableStyle}
           customWebContainerStyle={
             isEditable
               ? styles.customWebContainerStyle
@@ -447,6 +548,10 @@ const PreInterviewPreferencesTemplate = ({
               cellID,
             });
           }}
+          getColoumConfigs={getColoumConfigs}
+          tableData={nonEditableData}
+          tableHeading={ADD_PREINTERVIEW_PREFERNCES_HEADING}
+          isHeading
           headerId={"label.head_contacts"}
           footerId={"label.at_least_one_mandatory_with_star"}
         />

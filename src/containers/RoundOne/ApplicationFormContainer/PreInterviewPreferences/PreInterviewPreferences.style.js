@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
     paddingRight: windowWidth > 1200 ? 0 : 24,
     maxWidth: windowWidth > 1200 ? "66%" : "100%",
   }),
+  tableStyle: {
+    marginLeft: 16,
+    marginRight: 16,
+  },
   customWebContainerStyle: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
