@@ -5,7 +5,7 @@ import { getCandidatesRoundCards } from "../../../../constants/constants";
 import { navigations } from "../../../../constants/routeNames";
 import images from "../../../../images";
 
-const useCandidateRoundOneCards = ({ hasRoundone }) => {
+const useCandidateRoundOneCards = ({ hasRoundone, savedRoundId }) => {
   const intl = useIntl();
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const useCandidateRoundOneCards = ({ hasRoundone }) => {
       case 2:
         break;
       case 3:
-        navigate(`${navigations.CENTRE_WISE_COMPANY}`);
+        navigate(`${navigations.CENTRE_WISE_COMPANY}?id=${savedRoundId}`);
         break;
       case 4:
         navigate(`${navigations.CONSENT_MARKING_MANAGEMENT}`);

@@ -14,7 +14,7 @@ import styles from "./Breadcrumbs.style";
 const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { job_id, id } = useParams();
+  const { job_id, id, centerId, companyId, roundId } = useParams();
   const windowDimensions = useWindowDimensions();
   const isMdOrGreater = windowDimensions.width >= 900;
   const { currentModule } = useGetCurrentUser();
@@ -36,7 +36,7 @@ const Breadcrumbs = () => {
   const breadcrumbs = getBreadCrumbDetails({
     path: location.pathname,
     isEditMode: urlService.getQueryStringValue("mode") === EDIT,
-    params: { job_id, id },
+    params: { job_id, id, centerId, companyId, roundId },
     currentModule,
   });
 
@@ -45,7 +45,9 @@ const Breadcrumbs = () => {
       pathname === `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}` ||
       (pathname === navigations.COMPANY_PROFILE && isMdOrGreater) ||
       pathname ===
-        `/${currentModule}/${navigations.JOB_APPLICANTS}/${job_id}/applicant-details/${id}`
+        `/${currentModule}/${navigations.JOB_APPLICANTS}/${job_id}/applicant-details/${id}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}`
     );
   };
 

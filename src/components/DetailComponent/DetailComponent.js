@@ -23,6 +23,7 @@ import styles, {
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
 import colors from "../../assets/colors";
+import CustomTextEditor from "../CustomTextEditor";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -185,6 +186,17 @@ const DetailComponent = ({
           isSingleSelection={detail?.isSingleSelection}
           value={detail?.value}
           checkBoxTextStyle={detail?.checkBoxTextStyle}
+        />
+      );
+    }
+    if (detail?.isHtmlDescription) {
+      return (
+        <CustomTextEditor
+          value={detail?.value}
+          disabled
+          quilStyle={styles.quilStyle}
+          removePadding={detail?.removePadding}
+          quillContainerStyle={styles.quillContainerStyle}
         />
       );
     }
