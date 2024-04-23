@@ -272,7 +272,7 @@ export const dummy = [
 
 export const formatPositionDetail = (data) => {
   return {
-    [keys.noOfPosition]: data?.noOfPosition ?? "",
+    [keys.noOfPosition]: String(data?.no_of_vacancy) ?? "",
     [keys.compensation]: data?.compensation ?? "",
     [keys.startingSalaryIncludingPerks]: data?.starting_salary ?? "",
     [keys.roleAndResponsibility]: data?.role_responsibility ?? "",

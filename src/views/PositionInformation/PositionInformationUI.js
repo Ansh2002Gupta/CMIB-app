@@ -140,14 +140,14 @@ const PositionInformationUI = ({
     requiredDocuments,
     postingAndVaccancyData,
     selectionProcess,
-    postionDetail,
+    positionDetail,
     bondDetail,
   } = data ?? {};
 
   return (
     <View>
       <DetailCard
-        details={postionDetail}
+        details={positionDetail}
         headerId={intl.formatMessage({
           id: data?.designation ?? "",
         })}

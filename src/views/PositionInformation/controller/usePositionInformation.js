@@ -308,7 +308,7 @@ const usePositionInformation = ({ centerId, companyId }) => {
             postingAndVaccancyData:
               formatPostinAndVaccanyData(item?.posting_details ?? {}) ?? "",
             selectionProcess: item?.selection_process ?? "",
-            postionDetail: addValueOnField({
+            positionDetail: addValueOnField({
               state: formatPositionDetail(item),
               details: positionInfoDetails(),
             }),
