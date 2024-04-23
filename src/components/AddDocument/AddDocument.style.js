@@ -145,8 +145,6 @@ const styles = StyleSheet.create({
   },
   notBorderStyle: {
     marginBottom: 16,
-    marginLeft: 16,
-    marginRight: 16,
   },
   customAddIconTextStyle: {
     paddingBottom: 24,
