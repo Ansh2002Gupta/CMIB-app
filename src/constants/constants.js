@@ -329,6 +329,16 @@ export const ADD_DOCUMENT_HEADING = {
   no_of_copies: "Number of Copies",
 };
 
+export const ADD_DESIGNATION_HEADING = {
+  designation_details: "Designation",
+  number_of_vacancies: "No. of Vacancy",
+};
+
+export const OTHER_BENEFIT_HEADING = {
+  benefits_details: "Benefits Details",
+  benefits_amount: "Amount",
+};
+
 export const ADD_PLACE_OF_POSTING_HEADING = {
   place_of_posting: "Place of Posting",
   general: "General",

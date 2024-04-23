@@ -10,8 +10,13 @@ import CustomTextInput from "../CustomTextInput";
 import EditDeleteAction from "../EditDeleteAction/EditDeleteAction";
 import useIsWebView from "../../hooks/useIsWebView";
 import ModalWithTitleButton from "../ModalWithTitleButton";
-import { ADD_DOCUMENT, DOCUMENT_TYPE } from "../../constants/constants";
+import {
+  ADD_DESIGNATION_HEADING,
+  ADD_DOCUMENT,
+  DOCUMENT_TYPE,
+} from "../../constants/constants";
 import { numericValidator } from "../../utils/validation";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./AddDesignation.style";
 
 const AddDesignationTemplate = ({
@@ -34,6 +39,53 @@ const AddDesignationTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  function mapDocuments(dataArray) {
+    const groupedData = {};
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "designation_details":
+          groupedData[item.cellID].designation_details = item.value;
+          break;
+        case "number_of_vacancies":
+          groupedData[item.cellID].number_of_vacancies = item.value;
+          break;
+      }
+    });
+    const result = Object.keys(groupedData).map((key) => {
+      return groupedData[key];
+    });
+    return result;
+  }
+  const nonEditableData = mapDocuments(requiredDocumentDetails);
+
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.designation_details || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("20%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.number_of_vacancies || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("20%"),
+        isFillSpace: true,
+      },
+    ];
+  };
 
   return (
     <View>
@@ -48,7 +100,7 @@ const AddDesignationTemplate = ({
       {isWebView ? (
         <CustomMultiRowTextInput
           customCardStyle={styles.multiRowTextStyle}
-          isEditable={isEditable}
+          isEditProfile={isEditable}
           startRowTemplate={addDocumentField}
           gridTemplate={multiDocumentDetail}
           setGridTemplate={setMultiDocumentDetail}
@@ -58,6 +110,9 @@ const AddDesignationTemplate = ({
           }}
           customContainerStyle={styles.customContainerStyle}
           customWebContainerStyle={styles.customWebContainerStyle}
+          getColoumConfigs={getColoumConfigs}
+          tableData={nonEditableData}
+          tableHeading={ADD_DESIGNATION_HEADING}
         />
       ) : (
         <>
