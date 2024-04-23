@@ -1,34 +1,35 @@
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import React from "react";
-import styles from "./CentralDetailsForms.styles";
-import colors from "../../../../assets/colors";
-import Chip from "../../../../components/Chip";
-import DetailCard from "../../../../components/DetailCard";
 import { useIntl } from "react-intl";
-import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
-import ConfigurableList from "../../../../components/ConfigurableList";
-import PreviewImage from "../../../../components/PreviewImage";
-import SaveCancelButton from "../../../../components/SaveCancelButton";
-import { keys } from "./controllers/utils";
-import CommonText from "../../../../components/CommonText";
-import SingleSelectionModal from "../../../../components/SingleSelectionModal";
-import Spinner from "../../../../components/Spinner";
-import CardComponent from "../../../../components/CardComponent";
-import CustomLabelView from "../../../../components/CustomLabelView";
-import DetailComponent from "../../../../components/DetailComponent";
-import CustomToggleComponent from "../../../../components/CustomToggleComponent";
-import UploadImage from "../../../../components/UploadImage";
+import { useNavigate } from "../../../../routes";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+
+import { TwoRow } from "../../../../core/layouts";
+
+import ActionPairButton from "../../../../components/ActionPairButton";
 import AddBenefits from "../../../../components/AddBenfits";
 import AddDesignation from "../../../../components/AddDesignation";
+import CardComponent from "../../../../components/CardComponent";
+import Chip from "../../../../components/Chip";
 import CheckBox from "../../../../components/CheckBox";
+import CommonText from "../../../../components/CommonText";
+import ConfigurableList from "../../../../components/ConfigurableList";
 import CustomButton from "../../../../components/CustomButton";
-import images from "../../../../images";
-import ActionPairButton from "../../../../components/ActionPairButton";
-import { useNavigate } from "react-router";
-import commonStyles from "../../../../theme/styles/commonStyles";
-import { TwoRow } from "../../../../core/layouts";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
+import CustomToggleComponent from "../../../../components/CustomToggleComponent";
+import CustomLabelView from "../../../../components/CustomLabelView";
+import DetailCard from "../../../../components/DetailCard";
+import DetailComponent from "../../../../components/DetailComponent";
 import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent";
+import PreviewImage from "../../../../components/PreviewImage";
+import SingleSelectionModal from "../../../../components/SingleSelectionModal";
+import Spinner from "../../../../components/Spinner";
+import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
+import UploadImage from "../../../../components/UploadImage";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
+import { keys } from "./controllers/utils";
+import images from "../../../../images";
+import colors from "../../../../assets/colors";
+import commonStyles from "../../../../theme/styles/commonStyles";
+import styles from "./CentralDetailsForms.styles";
 
 const CentralDetailsTemplate = ({
   handleContactDetailsChange,
@@ -78,8 +79,10 @@ const CentralDetailsTemplate = ({
   handleClickOnSelectionProcess,
   selectionProcess,
   tabHandler,
+  handleSubmit,
   selectionFieldError,
-
+  hasRoundTwo,
+  submitApplications,
   errorWhileUpdating,
   isPageLoading,
   fetchErrors,
@@ -106,13 +109,16 @@ const CentralDetailsTemplate = ({
   const intl = useIntl();
   const navigate = useNavigate();
 
+  const { isSubmitting, errorWhileSubmitting, setErrorWhileSubmiting } =
+    submitApplications();
+
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
           buttonOneStyle: styles.buttonStyle,
           buttonTwoStyle: styles.buttonTwoStyle,
           buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonTwoStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyleContainer,
         }
       : {};
 
@@ -394,25 +400,59 @@ const CentralDetailsTemplate = ({
                     {intl.formatMessage({ id: "label.cancel" })}
                   </CommonText>
                 </CustomButton>
-                <ActionPairButton
-                  buttonOneText={intl.formatMessage({ id: "label.save" })}
-                  buttonTwoText={intl.formatMessage({
-                    id: "label.next",
-                  })}
-                  onPressButtonOne={() => handleSave()}
-                  onPressButtonTwo={() => {
-                    tabHandler("next");
-                  }}
-                  disableLeftStyle={styles.disabled}
-                  isButtonOneDisabled={buttonDisabled}
-                  isDisabled={buttonDisabled}
-                  displayLoaderLeft={saveRoundDetailLoading}
-                  customStyles={{
-                    ...isWebProps,
-                    customContainerStyle: commonStyles.customContainerStyle,
-                  }}
-                  isButtonTwoGreen
-                />
+                {hasRoundTwo ? (
+                  <ActionPairButton
+                    buttonOneText={
+                      isEditable
+                        ? intl.formatMessage({
+                            id: "label.save",
+                          })
+                        : ""
+                    }
+                    buttonTwoText={
+                      isEditable
+                        ? intl.formatMessage({
+                            id: "label.submit",
+                          })
+                        : intl.formatMessage({ id: "label.done" })
+                    }
+                    onPressButtonOne={() => handleSave()}
+                    onPressButtonTwo={() => {
+                      if (isEditable) {
+                        handleSubmit();
+                      } else {
+                        navigate(-1);
+                      }
+                    }}
+                    disableLeftStyle={styles.disabled}
+                    isButtonOneDisabled={buttonDisabled}
+                    isDisabled={buttonDisabled}
+                    displayLoaderLeft={isSubmitting}
+                    customStyles={{
+                      ...isWebProps,
+                      customContainerStyle: commonStyles.customContainerStyle,
+                    }}
+                    isButtonTwoGreen
+                  />
+                ) : (
+                  <ActionPairButton
+                    buttonOneText={intl.formatMessage({ id: "label.save" })}
+                    buttonTwoText={intl.formatMessage({
+                      id: "label.next",
+                    })}
+                    onPressButtonOne={() => handleSave()}
+                    onPressButtonTwo={() => tabHandler("next")}
+                    disableLeftStyle={styles.disabled}
+                    isButtonOneDisabled={buttonDisabled}
+                    isDisabled={buttonDisabled}
+                    displayLoaderLeft={saveRoundDetailLoading}
+                    customStyles={{
+                      ...isWebProps,
+                      customContainerStyle: commonStyles.customContainerStyle,
+                    }}
+                    isButtonTwoGreen
+                  />
+                )}
               </View>
             ) : (
               <CustomButton
@@ -449,11 +489,12 @@ const CentralDetailsTemplate = ({
           centerListError={centerListError}
         />
       )}
-      {!!errorWhileUpdating && (
+      {(!!errorWhileUpdating || !!errorWhileSubmitting) && (
         <ToastComponent
-          toastMessage={errorWhileUpdating}
+          toastMessage={errorWhileUpdating || errorWhileSubmitting}
           onDismiss={() => {
             setErrorWhileUpdating("");
+            setDesignationDetatils("");
           }}
         />
       )}
