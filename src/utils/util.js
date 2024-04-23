@@ -707,7 +707,8 @@ export const formateErrors = (errorResponse) => {
 };
 
 export const convertStringtoNumber = (val) => {
-  return !!val ? +val : 0;
+  if (!val) return 0;
+  return +val;
 };
 
 export const convertGraphData = (data) => {
