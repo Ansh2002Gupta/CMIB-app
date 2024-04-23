@@ -12,6 +12,32 @@ const usePersonalDetailsAPI = () => {
 
   const { Http } = useHttpService();
 
+  const fetchPersonalDetails = async ({ successCallback, errorCallback }) => {
+    try {
+      setApiStatus(API_STATUS.LOADING);
+      apiError && setApiError("");
+      const res = await Http.get('api/member/{module}/rounds/{roundId}/personal');
+      if (
+        res.status === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_STATUS
+      ) {
+        setApiStatus(API_STATUS.SUCCESS);
+        setPersonalDetails(res.data);
+        successCallback && successCallback(res.data);
+        return;
+      }
+      errorCallback && errorCallback();
+      setApiStatus(API_STATUS.ERROR);
+      setApiError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+    } catch (err) {
+      setApiStatus(API_STATUS.ERROR);
+      setApiError(
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+      );
+      errorCallback && errorCallback();
+    }
+  };
+
   const handlePersonalDetails = async ({ successCallback, errorCallback }) => {
     try {
       setApiStatus(API_STATUS.LOADING);
