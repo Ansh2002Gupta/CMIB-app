@@ -49,6 +49,7 @@ const PreInterviewPreferencesTemplate = ({
   tabHandler,
   handleInterviewPreferences,
   preInterviewDetails,
+  setIsEditable,
 }) => {
   let options_object = [];
   const intl = useIntl();
@@ -609,7 +610,9 @@ const PreInterviewPreferencesTemplate = ({
               buttonTwoText={intl.formatMessage({
                 id: "label.save_and_next",
               })}
-              onPressButtonOne={() => navigate(-1)}
+              onPressButtonOne={() => {
+                isEditable ? setIsEditable(false) : navigate(-1);
+              }}
               onPressButtonTwo={() => {
                 handleSaveAndNext();
               }}

@@ -19,7 +19,7 @@ import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { formateErrors } from "../../../../utils/util";
 
-const JobDetails = ({ tabHandler, isEditable }) => {
+const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
   const {
     isButtonLoading,
     deleteDesignationFromList,
@@ -120,7 +120,9 @@ const JobDetails = ({ tabHandler, isEditable }) => {
                 <View style={styles.rightSection}>
                   <CustomButton
                     style={styles.buttonStyle}
-                    onPress={() => navigate(-1)}
+                    onPress={() => {
+                      isEditable ? setIsEditable(false) : navigate(-1);
+                    }}
                   >
                     <CommonText
                       fontWeight={"600"}
