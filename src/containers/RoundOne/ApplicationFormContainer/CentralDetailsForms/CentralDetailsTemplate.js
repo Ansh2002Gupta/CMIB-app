@@ -86,6 +86,7 @@ const CentralDetailsTemplate = ({
   centerListError,
   saveRoundDetailLoading,
   isEditable,
+  setIsEditable,
 }) => {
   const {
     fileUploadResult,
@@ -382,7 +383,9 @@ const CentralDetailsTemplate = ({
               <View style={styles.rightSection}>
                 <CustomButton
                   style={styles.buttonStyle}
-                  onPress={() => navigate(-1)}
+                  onPress={() => {
+                    isEditable ? setIsEditable(false) : navigate(-1);
+                  }}
                 >
                   <CommonText
                     fontWeight={"600"}
