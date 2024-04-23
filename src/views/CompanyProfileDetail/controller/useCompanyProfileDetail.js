@@ -101,6 +101,7 @@ const otherDetail = () => [
       isMandatory: true,
       label: "label.website",
       placeholder: "label.website",
+      isLink: true,
     },
     {
       key: keys.nature_of_supplier,
@@ -177,7 +178,7 @@ const useCompanyProfileDetail = ({ data }) => {
     setProfileData({
       [keys.companyName]: data?.name ?? "",
       [keys.entity]: data?.entity ?? "",
-      [keys.firmRegistration]: data?.frn_number,
+      [keys.firmRegistration]: data?.frn_number ?? "",
       [keys.partnersNo]: data?.number_of_partners ?? "",
       [keys.current_industry]: data?.industry_type?.name ?? "",
       [keys.addressOfCorrespondence]: data?.address ?? "",
