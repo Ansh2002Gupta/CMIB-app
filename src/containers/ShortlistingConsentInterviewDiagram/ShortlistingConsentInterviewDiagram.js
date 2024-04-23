@@ -16,10 +16,6 @@ import styles, {
 
 const ShortlistingConsentInterviewDiagram = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  console.log(
-    "style:",
-    getStylesAsPerWidth(currentBreakpoint, "outerContainer")
-  );
   return (
     <ScrollView
       style={{
