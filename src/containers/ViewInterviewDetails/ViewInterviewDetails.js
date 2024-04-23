@@ -187,7 +187,7 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
           </View>
         }
         bottomSection={
-          label === "link" ? (
+          label === "link" && value !== "-" ? (
             <CustomTouchableOpacity onPress={() => handlePressLink(value)}>
               <CommonText customTextStyle={styles.linkText}>{value}</CommonText>
             </CustomTouchableOpacity>
