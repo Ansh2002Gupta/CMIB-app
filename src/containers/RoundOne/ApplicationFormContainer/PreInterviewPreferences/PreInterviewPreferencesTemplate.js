@@ -43,6 +43,7 @@ import styles from "./PreInterviewPreferences.style";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
 
 const PreInterviewPreferencesTemplate = ({
+  isEditable,
   tabHandler,
   handleInterviewPreferences,
   preInterviewDetails,
@@ -416,7 +417,7 @@ const PreInterviewPreferencesTemplate = ({
           headerId={"label.pre_interview_prefrences"}
           details={preInterviewDetails?.preInterviewPrefrences}
           handleChange={handleInterviewPreferences}
-          isEditProfile
+          isEditProfile={isEditable}
           customCardStyle={styles.cardStyle}
           customContainerStyle={styles.customContainerStyle(windowWidth)}
         />
@@ -428,11 +429,16 @@ const PreInterviewPreferencesTemplate = ({
           customCardStyle={{
             ...styles.multiRowTextStyle,
           }}
-          customWebContainerStyle={styles.customWebContainerStyle}
+          customWebContainerStyle={
+            isEditable
+              ? styles.customWebContainerStyle
+              : styles.customViewModeStyle
+          }
           startRowTemplate={[...startRowTemplateConfig.current]}
           gridTemplate={headContactDetails}
           setGridTemplate={setHeadContactDetails}
           numColsInARow={9}
+          isEditProfile={isEditable}
           handleValueChange={({ propertyName, value, id, cellID }) => {
             handleHeadContactDetails({
               propertyName,

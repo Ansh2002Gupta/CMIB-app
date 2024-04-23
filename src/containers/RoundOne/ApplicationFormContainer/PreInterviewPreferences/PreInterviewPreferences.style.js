@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
     gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
     overflowX: "auto",
   },
+  customViewModeStyle: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr",
+    overflowX: "auto",
+  },
   actionBtnContainer: {
     display: "flex",
     flexDirection: "row",
