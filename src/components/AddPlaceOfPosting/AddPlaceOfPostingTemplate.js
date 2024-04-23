@@ -13,14 +13,18 @@ import EditDeleteAction from "../../components/EditDeleteAction/EditDeleteAction
 import ModalWithTitleButton from "../../components/ModalWithTitleButton";
 import { numericValidator } from "../../utils/validation";
 import {
+  ADD_PLACE_OF_POSTING_HEADING,
   OTHER_INFO_MAX_LENGTH,
   PLACE_OF_POSTING,
 } from "../../constants/constants";
 import styles from "./AddPlaceOfPosting.style";
 import useIsWebView from "../../hooks/useIsWebView";
 import CustomMultiRowTextInput from "../CustomMultiRowTextinput";
+import RenderHeadingAndValue from "../RenderHeadingAndValue/RenderHeadingAndValue";
+import commonStyles from "../../theme/styles/commonStyles";
 
 const AddPlaceOfPostingTemplate = ({
+  isEditable,
   addPostingDetailsField,
   isSpecificPerformaRequired,
   handleInputChange,
@@ -50,20 +54,151 @@ const AddPlaceOfPostingTemplate = ({
     }));
   };
 
+  function mapPosting(dataArray) {
+    const groupedData = {};
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "place_of_posting":
+          groupedData[item.cellID].place_of_posting = item.value;
+          break;
+        case "general":
+          groupedData[item.cellID].general = item.value;
+          break;
+        case "obc":
+          groupedData[item.cellID].obc = item.value;
+          break;
+        case "sc":
+          groupedData[item.cellID].sc = item.value;
+          break;
+        case "st":
+          groupedData[item.cellID].st = item.value;
+          break;
+        case "ph":
+          groupedData[item.cellID].ph = item.value;
+          break;
+        case "others":
+          groupedData[item.cellID].others = item.value;
+          break;
+        case "total":
+          groupedData[item.cellID].total = item.value;
+          break;
+      }
+    });
+    const result = Object.keys(groupedData).map((key) => {
+      return groupedData[key];
+    });
+    return result;
+  }
+  const nonEditableData = mapPosting(requiredPostingPlaceDetail);
+
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.place_of_posting || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.general || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.obc || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.sc || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.st || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.ph || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.others || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.total || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+    ];
+  };
+
   return (
     <View>
       <CardComponent customStyle={styles.bottomMargin}>
-        <CustomToggleComponent
-          label={intl.formatMessage({
-            id: "label.company_require_any_other_perfoma",
-          })}
-          customToggleStyle={styles.companyRequireToggleStyle}
-          customLabelViewStyle={styles.toggleLabelViewStyle}
-          value={isSpecificPerformaRequired}
-          onValueChange={(val) => {
-            handleInputChange("specific_performa_required", val);
-          }}
-        />
+        {isEditable ? (
+          <CustomToggleComponent
+            label={intl.formatMessage({
+              id: "label.company_require_any_other_perfoma",
+            })}
+            customToggleStyle={styles.companyRequireToggleStyle}
+            customLabelViewStyle={styles.toggleLabelViewStyle}
+            value={isSpecificPerformaRequired}
+            onValueChange={(val) => {
+              handleInputChange("specific_performa_required", val);
+            }}
+          />
+        ) : (
+          <RenderHeadingAndValue
+            label={intl.formatMessage({
+              id: "label.company_require_any_other_perfoma",
+            })}
+            value={isSpecificPerformaRequired === 0 ? "Yes" : "No"}
+            isMandatory={true}
+          />
+        )}
+
         <CommonText
           fontWeight="600"
           customTextStyle={styles.otherInformationTextStyle}
@@ -72,17 +207,28 @@ const AddPlaceOfPostingTemplate = ({
             id: "label.any_other_information",
           })}
         </CommonText>
-        <CustomTextInput
-          placeholder={intl.formatMessage({
-            id: "label.enter_your_info",
-          })}
-          isMandatory
-          isMultiline
-          maxLength={OTHER_INFO_MAX_LENGTH}
-          value={otherInfo}
-          onChangeText={(val) => handleInputChange("otherInfo", val)}
-          customHandleBlur={(val) => {}}
-        />
+        {isEditable ? (
+          <CustomTextInput
+            placeholder={intl.formatMessage({
+              id: "label.enter_your_info",
+            })}
+            isMandatory
+            isMultiline
+            maxLength={OTHER_INFO_MAX_LENGTH}
+            value={otherInfo}
+            onChangeText={(val) => handleInputChange("otherInfo", val)}
+            customHandleBlur={(val) => {}}
+          />
+        ) : (
+          <RenderHeadingAndValue
+            label={intl.formatMessage({
+              id: "label.enter_your_info",
+            })}
+            value={otherInfo}
+            isMandatory={true}
+          />
+        )}
+
         <CommonText
           fontWeight="600"
           customTextStyle={styles.postingPlaceTextStyle}
@@ -97,10 +243,15 @@ const AddPlaceOfPostingTemplate = ({
             customCardStyle={styles.multiRowTextStyle}
             startRowTemplate={addPostingDetailsField}
             gridTemplate={requiredPostingPlaceDetail}
+            isEditProfile={isEditable}
             setObjectGridTemplate={setObjectGridTemplate}
             handleValueChange={(type, inputValue, cellId) => {
               handleMultiRowDocumentDetails(type, inputValue, cellId);
             }}
+            getColoumConfigs={getColoumConfigs}
+            tableData={nonEditableData}
+            tableHeading={ADD_PLACE_OF_POSTING_HEADING}
+            isHeading
           />
         ) : (
           <>

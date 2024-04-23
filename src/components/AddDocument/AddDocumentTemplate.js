@@ -11,9 +11,14 @@ import CustomTextInput from "../CustomTextInput";
 import EditDeleteAction from "../../components/EditDeleteAction/EditDeleteAction";
 import useIsWebView from "../../hooks/useIsWebView";
 import ModalWithTitleButton from "../ModalWithTitleButton";
-import { ADD_DOCUMENT, DOCUMENT_TYPE } from "../../constants/constants";
+import {
+  ADD_DOCUMENT,
+  ADD_DOCUMENT_HEADING,
+  DOCUMENT_TYPE,
+} from "../../constants/constants";
 import { numericValidator } from "../../utils/validation";
 import styles from "./AddDocument.style";
+import commonStyles from "../../theme/styles/commonStyles";
 
 const AddDocumentTemplate = ({
   addDocumentField,
@@ -23,6 +28,7 @@ const AddDocumentTemplate = ({
   handleDocumentDetailChange,
   handleMultiRowDocumentDetails,
   isFormValid,
+  isEditable,
   onClickAddDocument,
   onClickAddDocumentCancelButton,
   onClickAddDocumentSaveButton,
@@ -39,6 +45,66 @@ const AddDocumentTemplate = ({
       ...prev,
       required_docs: [...updatedDocs],
     }));
+  };
+
+  function mapDocuments(dataArray) {
+    const groupedData = {};
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "document_name":
+          groupedData[item.cellID].doc_name = item.value;
+          break;
+        case "document_type":
+          groupedData[item.cellID].doc_type = item.value;
+          break;
+        case "no_of_copies":
+          groupedData[item.cellID].no_of_copies = item.value;
+          break;
+      }
+    });
+    const result = Object.keys(groupedData).map((key) => {
+      return groupedData[key];
+    });
+    return result;
+  }
+  const nonEditableData = mapDocuments(requiredDocumentDetails);
+
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.doc_name || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.doc_type || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.no_of_copies || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+    ];
   };
 
   return (
@@ -59,10 +125,15 @@ const AddDocumentTemplate = ({
             startRowTemplate={addDocumentField}
             gridTemplate={requiredDocumentDetails}
             setObjectGridTemplate={setObjectGridTemplate}
+            isEditProfile={isEditable}
             numColsInARow={4}
             handleValueChange={(type, inputValue, cellId) => {
               handleMultiRowDocumentDetails(type, inputValue, cellId);
             }}
+            getColoumConfigs={getColoumConfigs}
+            tableData={nonEditableData}
+            tableHeading={ADD_DOCUMENT_HEADING}
+            isHeading
           />
         ) : (
           <>

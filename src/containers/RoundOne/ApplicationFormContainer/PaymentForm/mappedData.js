@@ -7,8 +7,7 @@ import {
 export const mappedDataToUI = (data) => {
   const finalAmount =
     convertStringtoNumber(data?.amount_to_pay) -
-    (convertStringtoNumber(data?.amount_paid) +
-      convertStringtoNumber(data?.tds));
+    convertStringtoNumber(data?.amount_paid);
 
   return [
     {
@@ -73,7 +72,7 @@ export const mappedDataToUI = (data) => {
     {
       key: "totaltdsNumber",
       label: "label.total_tds_number",
-      value: convertStringtoNumber(data?.tds) || null,
+      value: null,
       placeholder: "label.enter_total_tds_number",
       isMandatory: true,
       isRupee: true,
@@ -83,7 +82,7 @@ export const mappedDataToUI = (data) => {
     {
       key: "final_amount",
       label: "label.final_amount",
-      value: finalAmount || null,
+      value: finalAmount || 0,
       placeholder: "label.select_final_amount",
       isMandatory: true,
       isRupee: true,
