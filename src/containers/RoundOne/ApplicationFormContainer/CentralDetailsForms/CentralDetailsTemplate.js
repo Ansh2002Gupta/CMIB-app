@@ -1,6 +1,8 @@
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import React from "react";
 import styles from "./CentralDetailsForms.styles";
+import colors from "../../../../assets/colors";
+import Chip from "../../../../components/Chip";
 import DetailCard from "../../../../components/DetailCard";
 import { useIntl } from "react-intl";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
@@ -115,21 +117,30 @@ const CentralDetailsTemplate = ({
 
   const renderSelectionProcess = ({ isEditable }) => {
     return (
-      <View style={styles.checkBoxStyle}>
-        {selectionProcess?.map((item, index) => (
-          <CheckBox
-            key={item.key}
-            id={item.key}
-            index={index}
-            title={item.label}
-            isSelected={item.isSelected}
-            handleCheckbox={
-              isEditable ? handleClickOnSelectionProcess : () => {}
-            }
-            isFillSpace={true}
-            isEditable={isEditable}
-          />
-        ))}
+      <View>
+        <View
+          style={isEditable ? styles.checkBoxStyle : styles.viewCheckBoxStyle}
+        >
+          {selectionProcess?.map((item, index) =>
+            isEditable ? (
+              <CheckBox
+                key={item.key}
+                id={item.key}
+                index={index}
+                title={item.label}
+                isSelected={item.isSelected}
+                handleCheckbox={handleClickOnSelectionProcess}
+                isFillSpace={true}
+              />
+            ) : (
+              <Chip
+                label={item.key}
+                bgColor={colors.secondaryGrey}
+                textColor={colors.black}
+              />
+            )
+          )}
+        </View>
       </View>
     );
   };
