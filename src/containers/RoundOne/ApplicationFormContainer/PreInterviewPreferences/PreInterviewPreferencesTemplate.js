@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router";
 import { useIntl } from "react-intl";
@@ -29,16 +29,21 @@ import {
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
 import {
+  API_VERSION_QUERY_PARAM,
   COMPANY,
   HEAD_CONTACT,
-  MOBILE_CODES,
+  NEWLY_QUALIFIED,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
 } from "../../../../constants/constants";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
+import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
 
 const PreInterviewPreferencesTemplate = ({
+  isEditable,
   tabHandler,
   handleInterviewPreferences,
   preInterviewDetails,
@@ -47,6 +52,7 @@ const PreInterviewPreferencesTemplate = ({
   const intl = useIntl();
   const params = useParams();
   const navigate = useNavigate();
+  const { currentModule } = useGetCurrentUser();
   const windowWidth = useWindowDimensions()?.width;
   const round_id = params?.id;
   const isMob = Platform.OS.toLowerCase() !== "web";
@@ -62,11 +68,10 @@ const PreInterviewPreferencesTemplate = ({
       : {};
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
+  const sessionId = sideBarState?.selectedSession?.value;
   const [toastMsg, setToastMsg] = useState();
   const [errorOnPage, setErrorOnPage] = useState(false);
-  const [startRowTemplateConfig, setStartRowTemplateConfig] = useState([
-    ...headStartRowConfig,
-  ]);
+  const startRowTemplateConfig = useRef([...headStartRowConfig]);
   const [headContactDetails, setHeadContactDetails] = useState([
     ...headStartRowConfig,
   ]);
@@ -77,7 +82,12 @@ const PreInterviewPreferencesTemplate = ({
     isError: isErrorHeadContactData,
     isLoading: isLoadingHeadContactData,
   } = useFetch({
-    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}`,
+    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -89,7 +99,12 @@ const PreInterviewPreferencesTemplate = ({
     setError: setErrorUpdateHeadContactData,
     isLoading: isLoadingUpdateContactData,
   } = usePut({
-    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}`,
+    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const {
@@ -130,7 +145,8 @@ const PreInterviewPreferencesTemplate = ({
         return { ...object, options: options_object };
       return { ...object };
     });
-    setStartRowTemplateConfig(newData);
+    startRowTemplateConfig.current = newData;
+    setHeadContactDetails(newData);
   };
 
   useEffect(() => {
@@ -138,10 +154,18 @@ const PreInterviewPreferencesTemplate = ({
       const apiData = await fetchHeadContactData();
       const mobile_code = await getCountryCodes();
       setOptions({
-        data: startRowTemplateConfig,
+        data: startRowTemplateConfig.current,
         options: mobile_code,
         key: HEAD_CONTACT.MOBILE_COUNTRY_CODE,
       });
+      handleInterviewPreferences(
+        "label.participating",
+        !!apiData?.["participating_for_first_time"]
+          ? apiData?.["participating_for_first_time"].toLowerCase() === "yes"
+            ? 0
+            : 1
+          : false
+      );
       handleInterviewPreferences(
         "label.short_listing_criteria",
         !!apiData?.["shortlisting_criteria"]
@@ -249,7 +273,7 @@ const PreInterviewPreferencesTemplate = ({
               .flat();
       !!pre_interview_preference_data
         ? setHeadContactDetails([...pre_interview_preference_data])
-        : setHeadContactDetails([...headStartRowConfig]);
+        : setHeadContactDetails([...startRowTemplateConfig.current]);
     };
     if (!!selectedModule?.key) {
       fetchData();
@@ -299,17 +323,35 @@ const PreInterviewPreferencesTemplate = ({
   };
 
   const createPayload = ({ data }) => {
+    const shortlistingCriteria =
+      data?.preInterviewDetails?.preInterviewPrefrences?.find(
+        (pref) => pref.key === "short_listing_criteria"
+      )?.value;
+    const otherDetails =
+      data?.preInterviewDetails?.preInterviewPrefrences?.find(
+        (pref) => pref.key === "any_other_information"
+      )?.value;
+    const optionalPayload =
+      currentModule !== NEWLY_QUALIFIED
+        ? {
+            participating_for_first_time:
+              data?.preInterviewDetails?.preInterviewPrefrences?.find(
+                (pref) => pref.key === "participating"
+              )?.value
+                ? "no"
+                : "yes",
+          }
+        : {};
     const payload = {
       ps_round_id: round_id,
-      shortlisting_criteria:
-        data?.preInterviewDetails?.preInterviewPrefrences?.[0]?.value,
-      other_details:
-        data?.preInterviewDetails?.preInterviewPrefrences?.[1]?.value,
+      ...optionalPayload,
+      shortlisting_criteria: shortlistingCriteria,
+      other_details: otherDetails,
       contact_details: getRowData({ data: data?.headContactDetails }),
     };
+
     return payload;
   };
-
   const handleSaveAndNext = () => {
     const payload = createPayload({
       data: { ...{ headContactDetails, preInterviewDetails } },
@@ -372,12 +414,10 @@ const PreInterviewPreferencesTemplate = ({
     {
       content: (
         <DetailCard
-          headerId={intl.formatMessage({
-            id: "label.pre_interview_prefrences",
-          })}
+          headerId={"label.pre_interview_prefrences"}
           details={preInterviewDetails?.preInterviewPrefrences}
           handleChange={handleInterviewPreferences}
-          isEditProfile
+          isEditProfile={isEditable}
           customCardStyle={styles.cardStyle}
           customContainerStyle={styles.customContainerStyle(windowWidth)}
         />
@@ -389,11 +429,16 @@ const PreInterviewPreferencesTemplate = ({
           customCardStyle={{
             ...styles.multiRowTextStyle,
           }}
-          customWebContainerStyle={styles.customWebContainerStyle}
-          startRowTemplate={startRowTemplateConfig}
+          customWebContainerStyle={
+            isEditable
+              ? styles.customWebContainerStyle
+              : styles.customViewModeStyle
+          }
+          startRowTemplate={[...startRowTemplateConfig.current]}
           gridTemplate={headContactDetails}
           setGridTemplate={setHeadContactDetails}
           numColsInARow={9}
+          isEditProfile={isEditable}
           handleValueChange={({ propertyName, value, id, cellID }) => {
             handleHeadContactDetails({
               propertyName,

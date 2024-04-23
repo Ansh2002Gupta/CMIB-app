@@ -24,9 +24,11 @@ import CustomScrollView from "../../../../components/CustomScrollView";
 import ConfigurableList from "../../../../components/ConfigurableList";
 import { getDocumentField, getPlaceOfPostingDetails } from "./MappedData";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
+import RenderHeadingAndValue from "../../../../components/RenderHeadingAndValue/RenderHeadingAndValue";
 
 const JobDetailsTemplate = ({
   validateError,
+  isEditable,
   renderJobDetails,
   handleInputChange,
   configurableListQuery,
@@ -58,8 +60,8 @@ const JobDetailsTemplate = ({
 
   const EXPERIENCE_RANGE = workExperienceOptions.map((item) => {
     return {
-      label: `${item.work_experience_min || "-"} - ${
-        item.work_experience_max || "-"
+      label: `${item.work_experience_min || ""} - ${
+        item.work_experience_max || "above"
       }`,
       value: item.id,
     };
@@ -87,50 +89,79 @@ const JobDetailsTemplate = ({
     {
       content: (
         <CardComponent customStyle={styles.bottomMargin}>
-          <CustomTextInput
-            label={intl.formatMessage({ id: "label.designation_name" })}
-            placeholder={intl.formatMessage({
-              id: "label.enter_designation_name",
-            })}
-            isMandatory
-            value={renderJobDetails?.designation}
-            onChangeText={(val) => handleInputChange("designation", val)}
-            customHandleBlur={() => handleBlur("designation")}
-            isError={!!validateError?.designation}
-            errorMessage={validateError?.designation}
-          />
+          {isEditable ? (
+            <CustomTextInput
+              label={intl.formatMessage({ id: "label.designation_name" })}
+              placeholder={intl.formatMessage({
+                id: "label.enter_designation_name",
+              })}
+              isMandatory
+              value={renderJobDetails?.designation}
+              onChangeText={(val) => handleInputChange("designation", val)}
+              customHandleBlur={() => handleBlur("designation")}
+              isError={!!validateError?.designation}
+              errorMessage={validateError?.designation}
+            />
+          ) : (
+            <RenderHeadingAndValue
+              label={intl.formatMessage({ id: "label.designation" })}
+              value={renderJobDetails?.designation}
+              isMandatory={true}
+            />
+          )}
+
           <View style={containerStyle}>
-            <CustomTextInput
-              customStyle={isWebView && { ...styles.bondCustomInputStyle }}
-              label={intl.formatMessage({ id: "label.compensation" })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_compensation",
-              })}
-              isMandatory
-              isRupee
-              isNumeric
-              value={renderJobDetails?.compensation}
-              onChangeText={(val) => handleInputChange("compensation", val)}
-              customHandleBlur={() => handleBlur("compensation")}
-              isError={!!validateError?.compensation}
-              errorMessage={validateError?.compensation}
-            />
-            <CustomTextInput
-              label={intl.formatMessage({
-                id: "label.starting_salary_including_perks",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_starting_salary_including_perks",
-              })}
-              isMandatory
-              isRupee
-              isNumeric
-              value={renderJobDetails?.starting_salary}
-              onChangeText={(val) => handleInputChange("starting_salary", val)}
-              customHandleBlur={() => handleBlur("starting_salary")}
-              isError={!!validateError?.starting_salary}
-              errorMessage={validateError?.starting_salary}
-            />
+            {isEditable ? (
+              <CustomTextInput
+                customStyle={isWebView && { ...styles.bondCustomInputStyle }}
+                label={intl.formatMessage({ id: "label.compensation" })}
+                placeholder={intl.formatMessage({
+                  id: "label.enter_compensation",
+                })}
+                isMandatory
+                isRupee
+                isNumeric
+                value={renderJobDetails?.compensation}
+                onChangeText={(val) => handleInputChange("compensation", val)}
+                customHandleBlur={() => handleBlur("compensation")}
+                isError={!!validateError?.compensation}
+                errorMessage={validateError?.compensation}
+              />
+            ) : (
+              <RenderHeadingAndValue
+                label={intl.formatMessage({ id: "label.compensation" })}
+                value={renderJobDetails?.compensation}
+                isMandatory={true}
+              />
+            )}
+            {isEditable ? (
+              <CustomTextInput
+                label={intl.formatMessage({
+                  id: "label.starting_salary_including_perks",
+                })}
+                placeholder={intl.formatMessage({
+                  id: "label.enter_starting_salary_including_perks",
+                })}
+                isMandatory
+                isRupee
+                isNumeric
+                value={renderJobDetails?.starting_salary}
+                onChangeText={(val) =>
+                  handleInputChange("starting_salary", val)
+                }
+                customHandleBlur={() => handleBlur("starting_salary")}
+                isError={!!validateError?.starting_salary}
+                errorMessage={validateError?.starting_salary}
+              />
+            ) : (
+              <RenderHeadingAndValue
+                label={intl.formatMessage({
+                  id: "label.starting_salary_including_perks",
+                })}
+                value={renderJobDetails?.starting_salary}
+                isMandatory={true}
+              />
+            )}
           </View>
           <CustomTextEditor
             label={intl.formatMessage({
@@ -141,67 +172,110 @@ const JobDetailsTemplate = ({
             onChangeText={(val) =>
               handleInputChange("role_responsibility", val)
             }
+            disabled={!isEditable}
+            isViewMore
             customHandleBlur={() => handleBlur("role_responsibility")}
             errorMessage={validateError?.role_responsibility}
           />
-          <CustomTextInput
-            customStyle={styles.ctcTextInputStyle}
-            label={intl.formatMessage({
-              id: "label.details_of_ctc",
-            })}
-            placeholder={intl.formatMessage({
-              id: "label.enter_details_of_ctc",
-            })}
-            isMandatory
-            value={renderJobDetails?.ctc_details}
-            onChangeText={(val) => handleInputChange("ctc_details", val)}
-            customHandleBlur={() => handleBlur("ctc_details")}
-            isError={!!validateError?.ctc_details}
-            errorMessage={validateError?.ctc_details}
-          />
+          {isEditable ? (
+            <CustomTextInput
+              customStyle={styles.ctcTextInputStyle}
+              label={intl.formatMessage({
+                id: "label.details_of_ctc",
+              })}
+              placeholder={intl.formatMessage({
+                id: "label.enter_details_of_ctc",
+              })}
+              isMandatory
+              value={renderJobDetails?.ctc_details}
+              onChangeText={(val) => handleInputChange("ctc_details", val)}
+              customHandleBlur={() => handleBlur("ctc_details")}
+              isError={!!validateError?.ctc_details}
+              errorMessage={validateError?.ctc_details}
+            />
+          ) : (
+            <RenderHeadingAndValue
+              label={intl.formatMessage({
+                id: "label.details_of_ctc",
+              })}
+              value={renderJobDetails?.ctc_details}
+              isMandatory={true}
+            />
+          )}
+
           <View style={styles.overseasContainerStyles}>
             {currentModule !== NEWLY_QUALIFIED && (
               <>
-                <CustomTextInput
-                  customStyle={styles.dropdownInputStyle}
-                  label={intl.formatMessage({
-                    id: "label.work_experience_range",
-                  })}
-                  placeholder={intl.formatMessage({
-                    id: "label.select_work_experience_range",
-                  })}
-                  isDropdown
-                  options={EXPERIENCE_RANGE}
-                  value={renderJobDetails?.work_exp_range_id}
-                  onChangeValue={(val) =>
-                    handleInputChange("work_exp_range_id", val)
-                  }
-                />
-                <CustomToggleComponent
-                  label={intl.formatMessage({
-                    id: "label.fexi_hours",
-                  })}
-                  value={renderJobDetails?.flexi_hours}
-                  onValueChange={(val) => {
-                    handleInputChange("flexi_hours", val);
-                  }}
-                  isMandatory
-                  customToggleStyle={styles.customToggleStyle}
-                  customLabelStyle={styles.customLabelStyle}
-                />
-                <CustomTextInput
-                  customStyle={styles.dropdownInputStyle}
-                  label={intl.formatMessage({
-                    id: "label.job_type",
-                  })}
-                  isDropdown
-                  options={JOB_TYPE}
-                  placeholder={intl.formatMessage({
-                    id: "label.select_job_type",
-                  })}
-                  value={renderJobDetails?.job_type}
-                  onChangeValue={(val) => handleInputChange("job_type", val)}
-                />
+                {isEditable ? (
+                  <CustomTextInput
+                    customStyle={styles.dropdownInputStyle}
+                    label={intl.formatMessage({
+                      id: "label.work_experience_range",
+                    })}
+                    placeholder={intl.formatMessage({
+                      id: "label.select_work_experience_range",
+                    })}
+                    isDropdown
+                    options={EXPERIENCE_RANGE}
+                    value={renderJobDetails?.work_exp_range_id}
+                    onChangeValue={(val) =>
+                      handleInputChange("work_exp_range_id", val)
+                    }
+                  />
+                ) : (
+                  <RenderHeadingAndValue
+                    label={intl.formatMessage({
+                      id: "label.work_experience_range",
+                    })}
+                    value={renderJobDetails?.work_exp_range_id}
+                    isMandatory={true}
+                  />
+                )}
+                {isEditable ? (
+                  <CustomToggleComponent
+                    label={intl.formatMessage({
+                      id: "label.fexi_hours",
+                    })}
+                    value={renderJobDetails?.flexi_hours}
+                    onValueChange={(val) => {
+                      handleInputChange("flexi_hours", val);
+                    }}
+                    isMandatory
+                    customToggleStyle={styles.customToggleStyle}
+                    customLabelStyle={styles.customLabelStyle}
+                  />
+                ) : (
+                  <RenderHeadingAndValue
+                    label={intl.formatMessage({
+                      id: "label.fexi_hours",
+                    })}
+                    value={renderJobDetails?.flexi_hours}
+                    isMandatory={true}
+                  />
+                )}
+                {isEditable ? (
+                  <CustomTextInput
+                    customStyle={styles.dropdownInputStyle}
+                    label={intl.formatMessage({
+                      id: "label.job_type",
+                    })}
+                    isDropdown
+                    options={JOB_TYPE}
+                    placeholder={intl.formatMessage({
+                      id: "label.select_job_type",
+                    })}
+                    value={renderJobDetails?.job_type}
+                    onChangeValue={(val) => handleInputChange("job_type", val)}
+                  />
+                ) : (
+                  <RenderHeadingAndValue
+                    label={intl.formatMessage({
+                      id: "label.job_type",
+                    })}
+                    value={renderJobDetails?.job_type}
+                    isMandatory={true}
+                  />
+                )}
               </>
             )}
           </View>
@@ -215,14 +289,14 @@ const JobDetailsTemplate = ({
             headerId={intl.formatMessage({ id: "label.monthly" })}
             details={renderJobDetails?.monthly}
             handleChange={handleMonthlyData}
-            isEditProfile
+            isEditProfile={isEditable}
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
             headerId={intl.formatMessage({ id: "label.yearly" })}
             details={renderJobDetails?.yearly}
             handleChange={handleYearlyData}
-            isEditProfile
+            isEditProfile={isEditable}
             customCardStyle={styles.yearlyCustomCardStyle}
           />
         </View>
@@ -232,6 +306,7 @@ const JobDetailsTemplate = ({
       content: (
         <AddDocument
           {...{
+            isEditable,
             requiredDocumentDetails: renderJobDetails?.required_docs,
             setRenderJobDetails,
             addDocumentField: getDocumentField(),
@@ -250,51 +325,94 @@ const JobDetailsTemplate = ({
             </CommonText>
           </View>
           <View style={containerStyle}>
-            <CustomToggleComponent
-              label={intl.formatMessage({
-                id: "label.bond_required",
-              })}
-              value={renderJobDetails?.bond_details?.is_bond_included}
-              onValueChange={(val) => {
-                handleInputChange("bond_details", val, "is_bond_included");
-              }}
-              isMandatory
-              customToggleStyle={styles.customToggleStyle}
-              customLabelStyle={styles.customLabelStyle}
-            />
+            {isEditable ? (
+              <CustomToggleComponent
+                label={intl.formatMessage({
+                  id: "label.bond_required",
+                })}
+                value={renderJobDetails?.bond_details?.is_bond_included}
+                onValueChange={(val) => {
+                  handleInputChange("bond_details", val, "is_bond_included");
+                }}
+                isMandatory
+                customToggleStyle={styles.customToggleStyle}
+                customLabelStyle={styles.customLabelStyle}
+              />
+            ) : (
+              <RenderHeadingAndValue
+                label={intl.formatMessage({
+                  id: "label.bond_required",
+                })}
+                value={
+                  renderJobDetails?.bond_details?.is_bond_included === 0
+                    ? "Yes"
+                    : "No"
+                }
+                isMandatory={true}
+              />
+            )}
+
             {renderJobDetails?.bond_details?.is_bond_included === 0 && (
               <>
-                <CustomTextInput
-                  customStyle={isWebView && { ...styles.bondCustomInputStyle }}
-                  label={intl.formatMessage({
-                    id: "label.months_bond_period",
-                  })}
-                  placeholder={intl.formatMessage({
-                    id: "label.enter_months_bond_period",
-                  })}
-                  isMandatory
-                  value={renderJobDetails?.bond_details?.bond_period_in_mm}
-                  onChangeText={(val) =>
-                    numericValidator(val) &&
-                    handleInputChange("bond_details", val, "bond_period_in_mm")
-                  }
-                />
-                <CustomTextInput
-                  customStyle={isWebView && { ...styles.bondCustomInputStyle }}
-                  label={intl.formatMessage({
-                    id: "label.exit_amount",
-                  })}
-                  placeholder={intl.formatMessage({
-                    id: "label.enter_exit_amount",
-                  })}
-                  isMandatory
-                  value={renderJobDetails?.bond_details?.exit_amount}
-                  onChangeText={(val) =>
-                    numericValidator(val) &&
-                    handleInputChange("bond_details", val, "exit_amount")
-                  }
-                  isRupee
-                />
+                {isEditable ? (
+                  <CustomTextInput
+                    customStyle={
+                      isWebView && { ...styles.bondCustomInputStyle }
+                    }
+                    label={intl.formatMessage({
+                      id: "label.months_bond_period",
+                    })}
+                    placeholder={intl.formatMessage({
+                      id: "label.enter_months_bond_period",
+                    })}
+                    isMandatory
+                    value={renderJobDetails?.bond_details?.bond_period_in_mm}
+                    onChangeText={(val) =>
+                      numericValidator(val) &&
+                      handleInputChange(
+                        "bond_details",
+                        val,
+                        "bond_period_in_mm"
+                      )
+                    }
+                  />
+                ) : (
+                  <RenderHeadingAndValue
+                    label={intl.formatMessage({
+                      id: "label.months_bond_period",
+                    })}
+                    value={renderJobDetails?.bond_details?.bond_period_in_mm}
+                    isMandatory={true}
+                  />
+                )}
+                {isEditable ? (
+                  <CustomTextInput
+                    customStyle={
+                      isWebView && { ...styles.bondCustomInputStyle }
+                    }
+                    label={intl.formatMessage({
+                      id: "label.exit_amount",
+                    })}
+                    placeholder={intl.formatMessage({
+                      id: "label.enter_exit_amount",
+                    })}
+                    isMandatory
+                    value={renderJobDetails?.bond_details?.exit_amount}
+                    onChangeText={(val) =>
+                      numericValidator(val) &&
+                      handleInputChange("bond_details", val, "exit_amount")
+                    }
+                    isRupee
+                  />
+                ) : (
+                  <RenderHeadingAndValue
+                    label={intl.formatMessage({
+                      id: "label.exit_amount",
+                    })}
+                    value={renderJobDetails?.bond_details?.exit_amount}
+                    isMandatory={true}
+                  />
+                )}
               </>
             )}
           </View>
@@ -305,6 +423,7 @@ const JobDetailsTemplate = ({
       content: (
         <AddPlaceOfPosting
           {...{
+            isEditable,
             handleInputChange,
             jobDetailData: renderJobDetails?.posting_details,
             requiredPostingPlaceDetail: renderJobDetails?.posting_details,

@@ -290,6 +290,7 @@ const DetailComponent = ({
           maxLength={detail.maxLength}
           isNumeric={detail.isNumeric}
           isToggle={detail.isToggle}
+          useExactToggleValue={detail.useExactToggleValue}
           isTextInputWithChip={detail?.isTextInputWithChip}
           onChipUpdate={(chipData) =>
             handleChange(detail.label, chipData, index, detail)

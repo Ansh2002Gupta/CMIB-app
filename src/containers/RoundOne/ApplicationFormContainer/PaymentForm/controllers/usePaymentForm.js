@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View } from "@unthinkable/react-core-components";
 
 import commonStyles from "../../../../../theme/styles/commonStyles";
@@ -28,16 +28,24 @@ import {
 import { usePost } from "../../../../../hooks/useApiRequest";
 import CustomTouchableOpacity from "../../../../../components/CustomTouchableOpacity";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
+import {
+  API_VERSION_QUERY_PARAM,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+} from "../../../../../constants/constants";
+import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
 
 const usePaymentForm = () => {
-  const [paymentDetails, setPaymentDetails] = useState();
+  const [paymentDetails, setPaymentDetails] = useState([]);
   const [paymentList, setPaymentList] = useState();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const isEditProfile = true;
   const intl = useIntl();
-  // const { id } = useParams();
-  const id = 261;
+  const { id } = useParams();
   const { currentModule } = useGetCurrentUser();
   const { isWebView } = useIsWebView();
+  const [sideBarState] = useContext(SideBarContext);
+  const sessionId = sideBarState?.selectedSession?.value;
 
   const {
     data,
@@ -52,7 +60,12 @@ const usePaymentForm = () => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      PAYMENT_INFO,
+      `${PAYMENT_INFO}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -70,7 +83,12 @@ const usePaymentForm = () => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      TRANSACTIONS,
+      `${TRANSACTIONS}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -88,9 +106,11 @@ const usePaymentForm = () => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      PAY,
-    otherOptions: {
-      skipApiCallOnMount: true,
+      `${PAY}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -134,7 +154,7 @@ const usePaymentForm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (currentModule) {
+      if (currentModule && sessionId) {
         const newData = await fetchPaymentDetails();
         const newTransactionList = await fetchTransactionList();
         setPaymentList([...newTransactionList]);
@@ -142,38 +162,43 @@ const usePaymentForm = () => {
       }
     };
     fetchData();
-  }, [currentModule]);
+  }, [currentModule, sessionId]);
 
-  // const handleValidation = () => {
-  //   // const isValid = !paymentDetails.some((detail) => {
-  //   //   const isMandatoryAndEmpty =
-  //   //     detail.isMandatory && (detail.value === "" || detail.value === null);
-  //   //   const hasError = detail.isError === true;
-  //   //   return isMandatoryAndEmpty || hasError;
-  //   // });
-  //   // return isValid;
-  // };
+  function isButtonEnabled(fieldsArray) {
+    for (let field of fieldsArray) {
+      if (field.isMandatory && (field.value === null || field.value === "")) {
+        return false;
+      }
+      if (field.isError) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-  // const isDisabled = !handleValidation();
+  useEffect(() => {
+    setIsButtonDisabled(!isButtonEnabled(paymentDetails));
+  }, [paymentDetails]);
 
   const handlePay = () => {
-    // const isValid = handleValidation();
-
-    // if (isValid) {
     const payload = mappedPayload(paymentDetails);
     makeRequest({
       body: payload,
-      onSuccessCallback: (data) => {
-        if (isWebView) {
-          if (data?.data && data?.data?.url) {
-            window.open(data?.data?.url, "_self");
-          } else {
-            window.location.reload();
+      onSuccessCallback: async (data) => {
+        if (payload?.payment_mode.toLowerCase() === "online") {
+          if (isWebView) {
+            if (data?.data && data?.data?.url) {
+              window.open(data?.data?.url, "_self");
+            } else {
+              window.location.reload();
+            }
           }
+        } else {
+          await fetchPaymentDetails({});
+          await fetchTransactionList({});
         }
       },
     });
-    // }
   };
 
   const handleInputChange = (fieldName, value) => {
@@ -281,9 +306,6 @@ const usePaymentForm = () => {
             validationError = !!detail.value ? validateTAN(detail.value) : "";
             break;
           case "pan":
-            validationError = !!detail.value ? validatePAN(detail.value) : "";
-            break;
-          case "poNumber":
             validationError = !!detail.value ? validatePAN(detail.value) : "";
             break;
           default:
@@ -402,12 +424,11 @@ const usePaymentForm = () => {
     handlePay,
     handleBlur,
     paymentList,
-    // isDisabled,
+    isDisabled: isButtonDisabled,
     handleInputChange,
     handleSaveAndNext,
     getErrorDetails,
     isLoading,
-    // handleValidation,
     errorWhilePaymentInit,
     setErrorWhilePayment,
     isLoadingPaymentInit,

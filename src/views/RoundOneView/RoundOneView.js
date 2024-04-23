@@ -7,7 +7,13 @@ import RoundOneContainer from "../../containers/RoundOne/MainContainer";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { API_STATUS, USER_TYPE_CANDIDATE } from "../../constants/constants";
+import {
+  API_STATUS,
+  API_VERSION_QUERY_PARAM,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+  USER_TYPE_CANDIDATE,
+} from "../../constants/constants";
 import useFetch from "../../hooks/useFetch";
 import {
   CORE,
@@ -52,7 +58,12 @@ const RoundOneView = () => {
       `/${selectedModule}` +
       ROUNDS +
       `/${roundOneId}` +
-      ROUND_ONE_BOARD,
+      `${ROUND_ONE_BOARD}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -100,7 +111,7 @@ const RoundOneView = () => {
           )}
           {!isCardsDataLoading && !isErrorOnCardsData && !!cardsData && (
             <RoundOneContainer
-              cardsData={cardsData}
+              cardsData={cardsData?.application_form}
               hasRoundone
               roundId={roundOneId}
             />

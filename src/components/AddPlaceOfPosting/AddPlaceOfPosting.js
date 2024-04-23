@@ -4,6 +4,7 @@ import AddPlaceOfPostingTemplate from "./AddPlaceOfPostingTemplate";
 import useAddPlaceOfPosting from "./controllers/useAddPlaceOfPosting.js";
 
 const AddPlaceOfPosting = ({
+  isEditable,
   addPostingDetailsField,
   handleInputChange,
   jobDetailData,
@@ -31,6 +32,7 @@ const AddPlaceOfPosting = ({
   return (
     <AddPlaceOfPostingTemplate
       {...{
+        isEditable,
         otherInfo,
         isSpecificPerformaRequired,
         addPostingDetailsField,
