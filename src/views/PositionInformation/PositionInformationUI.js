@@ -142,6 +142,7 @@ const PositionInformationUI = ({
     selectionProcess,
     positionDetail,
     bondDetail,
+    interviewDetail,
   } = data ?? {};
 
   return (
@@ -186,6 +187,12 @@ const PositionInformationUI = ({
           id: "label.bond_if_any",
         })}
         isColumnVariableWidth
+      />
+      <DetailCard
+        details={interviewDetail}
+        headerId={intl.formatMessage({
+          id: "label.bond_if_any",
+        })}
       />
       <SelectionProcess data={selectionProcess} />
       <PostingAndCategories

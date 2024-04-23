@@ -5,8 +5,10 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import useFetch from "../../../hooks/useFetch";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import {
+  addValueOnInterviewField,
   dummy,
   formatBondDetail,
+  formatInterviewDetails,
   formatMonthlyData,
   formatPositionDetail,
   formatPostinAndVaccanyData,
@@ -15,6 +17,23 @@ import {
 } from "./utils";
 import { useIntl } from "react-intl";
 import { addValueOnField } from "./utils";
+
+const interviewDetails = () => [
+  {
+    isMultiSelect: true,
+    showBadgeLabel: true,
+    key: keys.interviewDates,
+    isMandatory: true,
+    label: "label.campusDates",
+    placeholder: "label.campusDates",
+  },
+  {
+    key: keys.companyAvailablity,
+    isMandatory: true,
+    label: "label.companyAvailableForInterview",
+    placeholder: "label.companyAvailableForInterview",
+  },
+];
 
 const positionInfoDetails = (intl) => [
   [
@@ -294,9 +313,9 @@ const usePositionInformation = ({ centerId, companyId }) => {
   };
 
   const getTabData = () => {
-    if (data?.[0]?.length) {
+    if (data?.length) {
       setPositionTabs(
-        data?.[0]?.map((item) => {
+        data?.map((item) => {
           return {
             designation: item?.designation ?? "",
             compensation: item?.compensation ?? "",
@@ -315,6 +334,10 @@ const usePositionInformation = ({ centerId, companyId }) => {
             bondDetail: addValueOnField({
               state: formatBondDetail(item?.bond_details),
               details: bondDetail(),
+            }),
+            interviewDetail: addValueOnInterviewField({
+              state: formatInterviewDetails(item),
+              details: interviewDetails(),
             }),
           };
         })

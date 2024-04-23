@@ -9,6 +9,8 @@ export const keys = {
   bondRequired: "bondRequired",
   monthsBondPeriod: "monthsBondPeriod",
   exitAmount: "exitAmount",
+  interviewDates: "interviewDates",
+  companyAvailablity: "companyAvailablity",
 };
 
 export const formatYearlyData = (data = {}, intl) => {
@@ -288,6 +290,15 @@ export const formatBondDetail = (data) => {
   };
 };
 
+export const formatInterviewDetails = (data) => {
+  return {
+    [keys.interviewDates]: data?.interview_dates?.map(
+      (item) => item?.schedule_date
+    ),
+    [keys.companyAvailablity]: data?.interview_type ?? "",
+  };
+};
+
 export const addValueOnField = ({ state, details }) => {
   return details.map((row) => {
     return row.map((item) => {
@@ -299,5 +310,17 @@ export const addValueOnField = ({ state, details }) => {
         value: state[key] ? state[key] : "--",
       };
     });
+  });
+};
+
+export const addValueOnInterviewField = ({ state, details }) => {
+  return details.map((item) => {
+    const { key, isEmptyView } = item;
+    if (isEmptyView) return { ...item };
+
+    return {
+      ...item,
+      value: state[key] ? state[key] : "--",
+    };
   });
 };

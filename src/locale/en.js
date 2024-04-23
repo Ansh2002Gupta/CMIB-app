@@ -816,7 +816,7 @@ const locale = {
   "label.telephoneNumber": "Telephone Number",
   "label.campusDates": "Campus Dates",
   "label.companyAvailableForInterview": "Company Available For Interview",
-  "label.campusDates": "Select Campus Dates",
+  "label.selectCampusDates": "Select Campus Dates",
   "label.selectCompany": "Select Company",
   "label.companyDates": "Campus Dates",
   "label.companyDates": "Campus Dates",

@@ -123,7 +123,7 @@ export const interviewDetailsFields = (
         showBadgeLabel: true,
         isMultiSelect: true,
         isDropdown: true,
-        placeholder: "label.select_module",
+        placeholder: "label.selectCampusDates",
         valueField: "id",
         labelField: "label",
         defaultValues: [],
