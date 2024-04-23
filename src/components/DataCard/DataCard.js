@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { View } from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import CommonText from "../CommonText";
@@ -31,6 +32,18 @@ const DataCard = ({ data, customStyles, customPosition }) => {
       </CommonText>
     </View>
   );
+};
+
+DataCard.defaultProps = {
+  data: {},
+  customStyles: {},
+  customPosition: {},
+};
+
+DataCard.propTypes = {
+  data: PropTypes.object,
+  customStyles: PropTypes.object,
+  customPosition: PropTypes.object,
 };
 
 export default DataCard;

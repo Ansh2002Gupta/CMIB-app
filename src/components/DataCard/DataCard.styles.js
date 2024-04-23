@@ -15,8 +15,10 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingBottom: 24,
     borderRadius: 16,
-    boxShadow: isWeb ? `0px 2px 5px 0px ${colors.greyThree}` : "",
     ...Platform.select({
+      web: {
+        boxShadow: `0px 2px 5px 0px ${colors.greyThree}`,
+      },
       android: {
         transform: [{ rotate: "-90deg" }],
       },
