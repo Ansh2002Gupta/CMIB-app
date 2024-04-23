@@ -97,6 +97,10 @@ const commonStyles = {
     marginTop: 24,
     marginBottom: 24,
   },
+  headingStyle: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
 };
 
 export const gridStyles = {

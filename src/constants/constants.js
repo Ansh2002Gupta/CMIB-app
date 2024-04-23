@@ -4,6 +4,7 @@ export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
 export const VALID_PAN = "Not a valid PAN, Please enter again";
+export const VALID_TAN = "Not a valid TAN, Please enter again";
 export const VALID_GSTIN = "Not a valid GSTIN, Please enter again";
 
 export const numRegex = /^\d+$/;
@@ -13,6 +14,9 @@ export const urlRegex =
 
 export const TOAST_TIMEOUT = 5000;
 export const API_VERSION_NUMBER = "1.0.0";
+export const UPDATED_API_VERSION = "1.0.1";
+export const API_VERSION_QUERY_PARAM = "api-version";
+export const SESSION_ID_QUERY_PARAM = "session-id";
 export const FIELD_MIN_LENGTH = 6;
 export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
@@ -206,7 +210,7 @@ export const STEPPER_STATE = {
 };
 
 export const DOCUMENT_TYPE = [
-  { label: "Photocopies", value: "copy" },
+  { label: "Photocopies", value: "photocopies" },
   { label: "Original", value: "original" },
   {
     label: "Both",
@@ -396,27 +400,21 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
         }
       : {};
   return {
-    centre_name: "Center Name",
-    total_vacancies: "Vaccany",
+    centre_name: "Centre Name",
+    total_vacancies: "Vacany",
     interview_dates: "Interview Dates",
     amount: "Amount",
     ...currentModules,
   };
 };
 
-export const TRANSACTION_LIST_HEADING_FOR_NQCA = (currentModule) => {
-  const currentModules =
-    currentModule === NEWLY_QUALIFIED
-      ? {
-          psychometric_test_fee: "Psychometric/ Written Test Fee",
-        }
-      : {};
+export const TRANSACTION_LIST_HEADING_FOR_NQCA = () => {
   return {
-    centre_name: "Transaction ID",
-    total_vacancies: "Offline/Online Transaction",
-    interview_dates: "Interview Dates",
-    amount: "Amount",
-    ...currentModules,
+    txn_id: "Transaction ID",
+    payment_type: "Offline/Online Transaction",
+    created_at: "Payment Date & Time",
+    payment_mode: "Payment Mode",
+    payment_status: "Payment Status",
   };
 };
 
@@ -698,6 +696,17 @@ export const LIST_OPTION = [
   { indent: "-1" },
   { indent: "+1" },
   { align: [] },
+];
+
+export const PAYMENT_MODE_OPTIONS = [
+  {
+    label: "Online",
+    value: "online",
+  },
+  {
+    label: "Offline",
+    value: "offline",
+  },
 ];
 
 export const PREVIEWED_LENGTH = 100;

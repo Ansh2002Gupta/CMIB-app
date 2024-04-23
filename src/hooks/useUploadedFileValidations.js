@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { Platform } from "@unthinkable/react-core-components";
 
 import {
   FILE_MAX_SIZE,
@@ -7,17 +8,21 @@ import {
   VIDEO_MAX_SIZE,
 } from "../constants/constants";
 import {
-  DOCUMENT_ACCEPTABLE_FORMAT_REGEX,
   IMAGE_ACCEPTABLE_FORMAT_REGEX,
   VIDEO_ACCEPTABLE_FORMAT_REGEX,
 } from "../constants/Regex";
-import { getImageSource } from "../utils/util";
+import {
+  getDocumentMimeType,
+  getFileExtension,
+  getImageSource,
+} from "../utils/util";
 
 const useUploadedFileValidations = ({
   isDocumentUpload,
   isVideoUpload,
 } = {}) => {
   const intl = useIntl();
+  const isPlatformWeb = Platform.OS.toLowerCase() === "web";
 
   const [fileTooLargeError, setFileTooLargeError] = useState("");
   const [invalidFormatError, setInvalidFormatError] = useState("");
@@ -38,10 +43,33 @@ const useUploadedFileValidations = ({
     };
   }, [fileTooLargeError, invalidFormatError, nonUploadableImageError]);
 
-  const getMimeType = () => {
-    if (isDocumentUpload) return DOCUMENT_ACCEPTABLE_FORMAT_REGEX;
+  const getMimeType = ({ fileName }) => {
+    if (isDocumentUpload) {
+      return getDocumentMimeType({ extension: getFileExtension({ fileName }) });
+    }
     if (isVideoUpload) return VIDEO_ACCEPTABLE_FORMAT_REGEX;
     return IMAGE_ACCEPTABLE_FORMAT_REGEX;
+  };
+
+  const getInvalidFormatMessage = () => {
+    if (isDocumentUpload) {
+      if (isPlatformWeb) {
+        return intl.formatMessage({
+          id: "label.allowedDocumentFormatsError",
+        });
+      }
+      return intl.formatMessage({
+        id: "label.allowedDocumentFormatsMobileError",
+      });
+    }
+    if (isVideoUpload) {
+      return intl.formatMessage({
+        id: "label.allowedVideoFormatsError",
+      });
+    }
+    return intl.formatMessage({
+      id: "label.allowedFileFormatsError",
+    });
   };
 
   const initiateFileUpload = ({ onLoad, resetUploadInput, uploadedFile }) => {
@@ -49,20 +77,10 @@ const useUploadedFileValidations = ({
     setInvalidFormatError("");
     setNonUploadableImageError("");
     if (uploadedFile) {
-      if (!uploadedFile.type.match(getMimeType())) {
-        setInvalidFormatError(
-          isDocumentUpload
-            ? intl.formatMessage({
-                id: "label.allowedDocumentFormatsError",
-              })
-            : isVideoUpload
-            ? intl.formatMessage({
-                id: "label.allowedVideoFormatsError",
-              })
-            : intl.formatMessage({
-                id: "label.allowedFileFormatsError",
-              })
-        );
+      if (
+        !uploadedFile.type.match(getMimeType({ fileName: uploadedFile?.name }))
+      ) {
+        setInvalidFormatError(getInvalidFormatMessage());
         resetUploadInput && resetUploadInput();
         return;
       }
