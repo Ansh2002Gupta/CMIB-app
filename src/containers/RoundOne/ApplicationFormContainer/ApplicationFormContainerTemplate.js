@@ -18,10 +18,13 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import { urlService } from "../../../services/urlService";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { useParams } from "react-router";
 import {
   API_VERSION_QUERY_PARAM,
+  FORM_STATES,
+  PAGINATION_PROPERTIES,
   SESSION_ID_QUERY_PARAM,
   UPDATED_API_VERSION,
 } from "../../../constants/constants";
@@ -35,9 +38,11 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const [sideBarState] = useContext(SideBarContext);
   const sessionId = sideBarState?.selectedSession?.value;
   const { currentModule } = useGetCurrentUser();
+  const [isEditable, setIsEditable] = useState();
   const [applicationFormData, setApplicationFormData] = useState({
     isEditable: true,
     isFilled: false,
+    isSubmitted: false,
   });
 
   const intl = useIntl();
@@ -67,11 +72,28 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
         setApplicationFormData({
           isEditable: newData?.application_form?.is_editable,
           isFilled: newData?.application_form?.is_filled,
+          isSubmitted: true,
         });
       }
     };
     fetchData();
   }, [sessionId, currentModule]);
+
+  useEffect(() => {
+    if (applicationFormData?.isSubmitted) {
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES?.MODE,
+        FORM_STATES.VIEW_ONLY
+      );
+      setIsEditable(false);
+    } else {
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES?.MODE,
+        FORM_STATES.EDITABLE
+      );
+      setIsEditable(true);
+    }
+  }, [applicationFormData]);
 
   const renderEditButton = ({ handleButtonClick, buttonTitle }) => {
     return (
@@ -121,7 +143,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
           bottomSection={
             <ActiveTabComponent
               tabHandler={onHandleTab}
-              isEditable={applicationFormData?.isEditable}
+              isEditable={isEditable}
             />
           }
           isBottomFillSpace

@@ -7,6 +7,7 @@ import CommonText from "../../../../../components/CommonText";
 import { mappedDataToUI, mappedPayload, offlineFields } from "../mappedData";
 import { formatDate, formatTime } from "../../../../../utils/util";
 import useGetCurrentUser from "../../../../../hooks/useGetCurrentUser";
+import useNavigateScreen from "../../../../../services/hooks/useNavigateScreen";
 import useIsWebView from "../../../../../hooks/useIsWebView";
 import styles from "../PaymentForm.style";
 import {
@@ -29,6 +30,7 @@ import {
 import { usePatch, usePost } from "../../../../../hooks/useApiRequest";
 import CustomTouchableOpacity from "../../../../../components/CustomTouchableOpacity";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
+import { navigations } from "../../../../../constants/routeNames";
 import {
   API_VERSION_QUERY_PARAM,
   SESSION_ID_QUERY_PARAM,
@@ -40,6 +42,7 @@ const usePaymentForm = () => {
   const [paymentDetails, setPaymentDetails] = useState([]);
   const [paymentList, setPaymentList] = useState();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const { navigateScreen } = useNavigateScreen();
   const isEditProfile = true;
   const intl = useIntl();
   const { id } = useParams();
@@ -421,7 +424,11 @@ const usePaymentForm = () => {
     ];
   };
   const handleSaveAndNext = () => {
-    submitApplication({});
+    submitApplication({
+      onSuccessCallback: () => {
+        navigateScreen(`/${currentModule}/${navigations.ROUND_ONE}`);
+      },
+    });
   };
 
   return {
