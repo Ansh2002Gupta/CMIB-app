@@ -170,7 +170,7 @@ const SavedCandidatesView = () => {
           )}
           {errorWhileFetchingCandidatesData && (
             <ErrorComponent
-              errorMsg={errorWhileFetchingCandidatesData?.data.message}
+              errorMsg={errorWhileFetchingCandidatesData?.data?.message}
               onRetry={() => fetchingCandidatesData()}
             />
           )}
