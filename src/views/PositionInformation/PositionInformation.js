@@ -4,32 +4,26 @@ import { FormTabs } from "../../components/Tab";
 import usePositionInformation from "./controller/usePositionInformation";
 import PositionInformationUI from "./PositionInformationUI";
 
-const Temp = () => {
-  return <View></View>;
-};
-
-const PositionInformation = ({ centreId, companyId }) => {
-  const positionInformation = usePositionInformation({ centreId, companyId });
-
+const PositionInformation = ({ centerId, companyId }) => {
+  const positionInformation = usePositionInformation({ centerId, companyId });
+  const { positionTabs } = positionInformation;
+  
   return (
     <View>
-      <FormTabs
-        tabs={[
-          {
-            label: "Education Details",
-            component: <Temp />,
-          },
-          {
-            label: "Exams",
-            component: <Temp />,
-          },
-          {
-            label: "Other Courses",
-            component: <Temp />,
-          },
-        ]}
-      />
-      <PositionInformationUI {...positionInformation} />
+      {positionTabs.length > 0 && (
+        <FormTabs
+          tabs={positionTabs.map((item) => {
+            return {
+              label: item?.designation,
+              component: (
+                <PositionInformationUI
+                  {...{ ...positionInformation, data: item }}
+                />
+              ),
+            };
+          })}
+        />
+      )}
     </View>
   );
 };

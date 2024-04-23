@@ -1,20 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "../styles";
 import CommonText from "../../../components/CommonText";
 import commonStyles from "../../../theme/styles/commonStyles";
 import useFetch from "../../../hooks/useFetch";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-
-const keys = {
-  noOfPosition: "noOfPosition",
-  compensation: "compensation",
-  startingSalaryIncludingPerks: "startingSalaryIncludingPerks",
-  roleAndResponsibility: "roleAndResponsibility",
-  detailsOfCTC: "detailsOfCTC",
-  bondRequired: "bondRequired",
-  monthsBondPeriod: "monthsBondPeriod",
-  exitAmount: "exitAmount",
-};
+import {
+  dummy,
+  formatBondDetail,
+  formatMonthlyData,
+  formatPositionDetail,
+  formatPostinAndVaccanyData,
+  formatYearlyData,
+  keys,
+} from "./utils";
+import { useIntl } from "react-intl";
+import { addValueOnField } from "./utils";
 
 const positionInfoDetails = (intl) => [
   [
@@ -43,9 +43,10 @@ const positionInfoDetails = (intl) => [
       isMandatory: true,
       label: "label.roles_and_responsibility",
       placeholder: "label.roles_and_responsibility",
+      isHtmlDescription: true,
     },
-    {},
-    {},
+    { isEmptyField: true },
+    { isEmptyField: true },
   ],
   [
     {
@@ -54,8 +55,8 @@ const positionInfoDetails = (intl) => [
       label: "label.details_of_ctc",
       placeholder: "label.details_of_ctc",
     },
-    {},
-    {},
+    { isEmptyField: true },
+    { isEmptyField: true },
   ],
 ];
 
@@ -68,13 +69,13 @@ const bondDetail = () => [
       placeholder: "label.bond_required",
     },
     {
-      key: keys.compensation,
+      key: keys.monthsBondPeriod,
       isMandatory: true,
       label: "label.months_bond_period",
       placeholder: "label.months_bond_period",
     },
     {
-      key: keys.startingSalaryIncludingPerks,
+      key: keys.exitAmount,
       isMandatory: true,
       label: "label.exit_amount",
       placeholder: "label.exit_amount",
@@ -82,13 +83,15 @@ const bondDetail = () => [
   ],
 ];
 
-const usePositionInformation = ({ centreId, companyId }) => {
+const usePositionInformation = ({ centerId, companyId }) => {
+  const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
+  const [positionTabs, setPositionTabs] = useState([]);
   const { data } = useFetch({
-    url: `member/${selectedModule}/centres/${centreId}/companies/${companyId}/positions`,
+    url: `member/${selectedModule.key}/centres/${centerId}/companies/${companyId}/positions`,
   });
-  console.log(data, "usePositionInformation");
+
   const getPostingAndCategoriesColumnConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
@@ -210,7 +213,7 @@ const usePositionInformation = ({ centreId, companyId }) => {
             customTextStyle={tableStyle}
             customContainerStyle={tableContainerStyle}
           >
-            {item?.documentName}
+            {item?.doc_name}
           </CommonText>
         ),
         style: { ...commonStyles.columnStyle("15%"), ...tableContainerStyle },
@@ -222,7 +225,7 @@ const usePositionInformation = ({ centreId, companyId }) => {
             customTextStyle={tableStyle}
             customContainerStyle={tableContainerStyle}
           >
-            {item?.documentType}
+            {item?.doc_type}
           </CommonText>
         ),
         style: { ...commonStyles.columnStyle("15%"), ...tableContainerStyle },
@@ -234,7 +237,7 @@ const usePositionInformation = ({ centreId, companyId }) => {
             customTextStyle={tableStyle}
             customContainerStyle={tableContainerStyle}
           >
-            {item?.numberOfCopies}
+            {item?.no_of_photocopies}
           </CommonText>
         ),
         style: { ...commonStyles.columnStyle("15%"), ...tableContainerStyle },
@@ -260,7 +263,7 @@ const usePositionInformation = ({ centreId, companyId }) => {
             customTextStyle={tableStyle}
             customContainerStyle={tableContainerStyle}
           >
-            {item?.value ?? "----"}
+            {item?.label ?? "----"}
           </CommonText>
         ),
         style: {
@@ -288,9 +291,40 @@ const usePositionInformation = ({ centreId, companyId }) => {
     ];
   };
 
+  const getTabData = () => {
+    setPositionTabs(
+      dummy.map((item) => {
+        return {
+          designation: item?.designation,
+          compensation: item?.compensation,
+          starting_salary: item?.starting_salary,
+          role_responsibility: item?.role_responsibility,
+          monthlyData: formatMonthlyData(item.monthly, intl),
+          yearlyData: formatYearlyData(item.yearly, intl),
+          requiredDocuments: item.required_docs,
+          postingAndVaccancyData: formatPostinAndVaccanyData(
+            item.posting_details[0]
+          ),
+          selectionProcess: item?.selection_process,
+          postionDetail: addValueOnField({
+            state: formatPositionDetail(item),
+            details: positionInfoDetails(),
+          }),
+          bondDetail: addValueOnField({
+            state: formatBondDetail(item?.bond_details),
+            details: bondDetail(),
+          }),
+        };
+      })
+    );
+  };
+
+  useEffect(() => {
+    getTabData();
+  }, []);
+
   return {
-    postionDetail: positionInfoDetails(),
-    bondDetail: bondDetail(),
+    positionTabs,
     getColoumConfigs: getColoumConfigs,
     getRequiredDocumentsColumnConfigs,
     getPostingAndCategoriesColumnConfigs,

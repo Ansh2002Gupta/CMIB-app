@@ -52,9 +52,11 @@ const RequriedDocuments = ({
         {...{
           data,
           tableHeading: {
-            documentName: intl.formatMessage({ id: "label.document_name" }),
-            documentType: intl.formatMessage({ id: "label.document_type" }),
-            numberOfCopies: intl.formatMessage({ id: "label.numberOfCopies" }),
+            doc_name: intl.formatMessage({ id: "label.document_name" }),
+            doc_type: intl.formatMessage({ id: "label.document_type" }),
+            no_of_photocopies: intl.formatMessage({
+              id: "label.numberOfCopies",
+            }),
           },
           getColoumConfigs: getRequiredDocumentsColumnConfigs,
           showSearchBar: false,
@@ -119,65 +121,36 @@ const SelectionProcess = ({ data }) => {
         {intl.formatMessage({ id: "label.selection_process" })}
       </CommonText>
       <BadgeLabel
-        badgeLabels={["sfdsf", "sfsd"]}
+        badgeLabels={data}
         customTextContainerStyle={styles.badgeContainer}
       />
     </CardComponent>
   );
 };
+
 const PositionInformationUI = ({
-  postionDetail,
-  bondDetail,
   getColoumConfigs,
   getRequiredDocumentsColumnConfigs,
   getPostingAndCategoriesColumnConfigs,
+  data,
 }) => {
   const intl = useIntl();
+  const {
+    monthlyData,
+    yearlyData,
+    requiredDocuments,
+    postingAndVaccancyData,
+    selectionProcess,
+    postionDetail,
+    bondDetail,
+  } = data ?? {};
 
   return (
     <View>
-      <SelectionProcess />
-      <PostingAndCategories
-        {...{
-          data: [
-            {
-              placeOfPosting: "placeOfPosting",
-              general: "general",
-              obc: "obc",
-              sc: "sc",
-              st: "st",
-              ph: "ph",
-              others: "others",
-              total: "total",
-            },
-            {
-              placeOfPosting: "placeOfPosting",
-              general: "general",
-              obc: "obc",
-              sc: "sc",
-              st: "st",
-              ph: "ph",
-              others: "others",
-              total: "total",
-            },
-          ],
-          getPostingAndCategoriesColumnConfigs,
-          tableName: intl.formatMessage({
-            id: "label.detailsOfRequiredDocuments",
-          }),
-        }}
-      />
       <DetailCard
         details={postionDetail}
         headerId={intl.formatMessage({
           id: "Assistant Finance Manager",
-        })}
-        isColumnVariableWidth
-      />
-      <DetailCard
-        details={bondDetail}
-        headerId={intl.formatMessage({
-          id: "label.bond_if_any",
         })}
         isColumnVariableWidth
       />
@@ -186,14 +159,7 @@ const PositionInformationUI = ({
         leftSection={
           <CommonTable
             {...{
-              data: [
-                { value: "Basic ", amount: "5000 inr" },
-                { value: "Basic", amount: "5000 inr" },
-                { value: "Basic", amount: "5000 inr" },
-                { value: "Basic", amount: "5000 inr" },
-                { value: "Basic", amount: "5000 inr" },
-                { value: "Total", amount: "5000 inr", highlight: true },
-              ],
+              data: monthlyData,
               isHeading: false,
               getColoumConfigs,
               tableName: intl.formatMessage({ id: "label.monthly" }),
@@ -205,10 +171,7 @@ const PositionInformationUI = ({
         rightSection={
           <CommonTable
             {...{
-              data: [
-                { value: "Basic CommonTable yearly", amount: "5000 inr" },
-                { value: "Total", amount: "5000 inr", highlight: true },
-              ],
+              data: yearlyData,
               isHeading: false,
               getColoumConfigs,
               tableName: intl.formatMessage({ id: "label.yearly" }),
@@ -218,26 +181,27 @@ const PositionInformationUI = ({
       />
       <RequriedDocuments
         {...{
-          data: [
-            {
-              documentName: "documentName",
-              documentType: "documentType",
-              numberOfCopies: "numberOfCopies",
-            },
-            {
-              documentName: "documentName",
-              documentType: "documentType",
-              numberOfCopies: "numberOfCopies",
-            },
-            {
-              documentName: "documentName",
-              documentType: "documentType",
-              numberOfCopies: "numberOfCopies",
-            },
-          ],
+          data: requiredDocuments,
           getRequiredDocumentsColumnConfigs,
           tableName: intl.formatMessage({
             id: "label.detailsOfRequiredDocuments",
+          }),
+        }}
+      />
+      <DetailCard
+        details={bondDetail}
+        headerId={intl.formatMessage({
+          id: "label.bond_if_any",
+        })}
+        isColumnVariableWidth
+      />
+      <SelectionProcess data={selectionProcess} />
+      <PostingAndCategories
+        {...{
+          data: postingAndVaccancyData,
+          getPostingAndCategoriesColumnConfigs,
+          tableName: intl.formatMessage({
+            id: "label.place_of_posting",
           }),
         }}
       />
