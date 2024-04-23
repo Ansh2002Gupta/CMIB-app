@@ -10,6 +10,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundGrey,
   },
   pieChartContiner: { gap: 24, flexDirection: "row", flexWrap: "wrap" },
+  webGraphContainer: {
+    flex: 1
+  }
+  ,
+  mobileGraphContainer: {
+    width: '100%'
+  }
 });
 
 export default styles;
