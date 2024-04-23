@@ -116,38 +116,55 @@ const JobDetails = ({ tabHandler, isEditable }) => {
                   {intl.formatMessage({ id: "label.back" })}
                 </CommonText>
               </CustomButton>
-              <View style={styles.rightSection}>
+              {isEditable ? (
+                <View style={styles.rightSection}>
+                  <CustomButton
+                    style={styles.buttonStyle}
+                    onPress={() => navigate(-1)}
+                  >
+                    <CommonText
+                      fontWeight={"600"}
+                      customTextStyle={styles.backButtonStyle}
+                    >
+                      {intl.formatMessage({ id: "label.cancel" })}
+                    </CommonText>
+                  </CustomButton>
+                  <ActionPairButton
+                    buttonOneText={intl.formatMessage({ id: "label.save" })}
+                    buttonTwoText={intl.formatMessage({
+                      id: "label.next",
+                    })}
+                    onPressButtonOne={() => handleSaveAndNext()}
+                    onPressButtonTwo={() => {
+                      tabHandler("next");
+                    }}
+                    disableLeftStyle={styles.disabled}
+                    isButtonOneDisabled={isDisabled}
+                    isDisabled={isDisabled}
+                    displayLoaderLeft={isButtonLoading}
+                    customStyles={{
+                      ...isWebProps,
+                      customContainerStyle: commonStyles.customContainerStyle,
+                    }}
+                    isButtonTwoGreen
+                  />
+                </View>
+              ) : (
                 <CustomButton
+                  withGreenBackground
                   style={styles.buttonStyle}
-                  onPress={() => navigate(-1)}
+                  onPress={() => {
+                    tabHandler("next");
+                  }}
                 >
                   <CommonText
                     fontWeight={"600"}
-                    customTextStyle={styles.backButtonStyle}
+                    customTextStyle={commonStyles.nextButtonStyle}
                   >
-                    {intl.formatMessage({ id: "label.cancel" })}
+                    {intl.formatMessage({ id: "label.next" })}
                   </CommonText>
                 </CustomButton>
-                <ActionPairButton
-                  buttonOneText={intl.formatMessage({ id: "label.save" })}
-                  buttonTwoText={intl.formatMessage({
-                    id: "label.next",
-                  })}
-                  onPressButtonOne={() => handleSaveAndNext()}
-                  onPressButtonTwo={() => {
-                    tabHandler("next");
-                  }}
-                  disableLeftStyle={styles.disabled}
-                  isButtonOneDisabled={isDisabled}
-                  isDisabled={isDisabled}
-                  displayLoaderLeft={isButtonLoading}
-                  customStyles={{
-                    ...isWebProps,
-                    customContainerStyle: commonStyles.customContainerStyle,
-                  }}
-                  isButtonTwoGreen
-                />
-              </View>
+              )}
             </View>
           }
         />

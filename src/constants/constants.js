@@ -329,6 +329,16 @@ export const ADD_DOCUMENT_HEADING = {
   no_of_copies: "Number of Copies",
 };
 
+export const ADD_DESIGNATION_HEADING = {
+  designation_details: "Designation",
+  number_of_vacancies: "No. of Vacancy",
+};
+
+export const OTHER_BENEFIT_HEADING = {
+  benefits_details: "Benefits Details",
+  benefits_amount: "Amount",
+};
+
 export const ADD_PLACE_OF_POSTING_HEADING = {
   place_of_posting: "Place of Posting",
   general: "General",
@@ -1002,4 +1012,28 @@ export const CHART_DATA_TYPE = {
   TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED:
     "TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED",
   TOP_COMPANIES_WITH_HIGHEST_CTC: "TOP_COMPANIES_WITH_HIGHEST_CTC",
+};
+
+export const PAGINATION_PROPERTIES = {
+  CURRENT_PAGE: "current-page",
+  ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
+  FILTER: "filter",
+  MODE: "mode",
+};
+
+export const ADD_PREINTERVIEW_PREFERNCES_HEADING = {
+  designation: "Desgination",
+  name: "Name",
+  email: "Email",
+  mobile_country_code: "Mobile Country Code",
+  mobile_number: "Mobile Number",
+  std_country_code: "Area Code",
+  telephone_number: "Telephone Number",
+};
+
+export const FORM_STATES = {
+  VIEW_ONLY: "view",
+  EDITABLE: "edit",
+  EMPTY: "empty",
 };
