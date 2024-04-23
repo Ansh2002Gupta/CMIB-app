@@ -35,7 +35,7 @@ const CentralDetailsTemplate = ({
   interviewDetails,
   handleInterviewDetailChange,
   mappedCentersList = [],
-
+  buttonDisabled,
   selectedOptions,
   handleDelete,
   handlePress,
@@ -335,20 +335,38 @@ const CentralDetailsTemplate = ({
                 {intl.formatMessage({ id: "label.back" })}
               </CommonText>
             </CustomButton>
-            <ActionPairButton
-              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-              buttonTwoText={intl.formatMessage({ id: "label.save_and_next" })}
-              onPressButtonOne={() => navigate(-1)}
-              onPressButtonTwo={() => {
-                handleSave();
-              }}
-              displayLoader={saveRoundDetailLoading}
-              customStyles={{
-                ...isWebProps,
-                customContainerStyle: commonStyles.customContainerStyle,
-              }}
-              isButtonTwoGreen
-            />
+            <View style={styles.rightSection}>
+              <CustomButton
+                style={styles.buttonStyle}
+                onPress={() => navigate(-1)}
+              >
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.backButtonStyle}
+                >
+                  {intl.formatMessage({ id: "label.cancel" })}
+                </CommonText>
+              </CustomButton>
+              <ActionPairButton
+                buttonOneText={intl.formatMessage({ id: "label.save" })}
+                buttonTwoText={intl.formatMessage({
+                  id: "label.next",
+                })}
+                onPressButtonOne={() => handleSave()}
+                onPressButtonTwo={() => {
+                  tabHandler("next");
+                }}
+                disableLeftStyle={styles.disabled}
+                isButtonOneDisabled={buttonDisabled}
+                isDisabled={buttonDisabled}
+                displayLoaderLeft={saveRoundDetailLoading}
+                customStyles={{
+                  ...isWebProps,
+                  customContainerStyle: commonStyles.customContainerStyle,
+                }}
+                isButtonTwoGreen
+              />
+            </View>
           </View>
         }
       />

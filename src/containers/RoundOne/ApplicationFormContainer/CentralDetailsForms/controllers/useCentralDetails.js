@@ -204,6 +204,65 @@ const useCentralDetails = ({ tabHandler }) => {
     });
   }, [contactDetailsState, countryData, intl, fieldError]);
 
+  function isButtonDisabled(
+    contactDetailsState,
+    requiredDocumentDetails,
+    designationDetails,
+    selectionProcess
+  ) {
+    function isFieldInvalid(field) {
+      if (field.isMandatory) {
+        if (field.isNumeric) {
+          const numericValue = Number(field.value);
+          if (isNaN(numericValue)) {
+            return true;
+          }
+        } else if (
+          typeof field.value === "string" &&
+          field.value.trim() === ""
+        ) {
+          return true;
+        } else if (field.isDropdown && !field.value) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    for (const key in contactDetailsState) {
+      if (
+        contactDetailsState.hasOwnProperty(key) &&
+        !contactDetailsState[key]
+      ) {
+        return true;
+      }
+    }
+
+    for (const detailsArray of [requiredDocumentDetails, designationDetails]) {
+      for (const item of detailsArray) {
+        if (!item.isButton && isFieldInvalid(item)) {
+          return true;
+        }
+      }
+    }
+
+    const isAnyProcessSelected = selectionProcess.some(
+      (process) => process.isSelected
+    );
+    if (!isAnyProcessSelected) {
+      return true;
+    }
+
+    return false;
+  }
+
+  const buttonDisabled = isButtonDisabled(
+    contactDetailsState,
+    requiredDocumentDetails,
+    designationDetatils,
+    selectionProcess
+  );
+
   const interviewDetailsTemplate = useMemo(() => {
     return interviewDetailsFields(
       interviewDetailsState,
@@ -508,6 +567,7 @@ const useCentralDetails = ({ tabHandler }) => {
       setFileUploadResult,
       uploadPercentage,
     },
+    buttonDisabled,
     uploadPercentage,
     requiredDocumentDetails,
     setRequiredDocumentDetails,
