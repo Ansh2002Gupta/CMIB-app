@@ -951,7 +951,7 @@ const locale = {
   "label.done": "Done",
   "label.viewDoc": "View Doc",
   "label.viewPPT": "View PPT",
-  "label.view": "View"
+  "label.view": "View",
 };
 
 export default locale;
