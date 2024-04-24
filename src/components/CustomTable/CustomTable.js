@@ -312,7 +312,6 @@ const CustomTable = ({
                                         onPress={() => {
                                           onIconPress(item);
                                         }}
-                                        isSvg={false}
                                         source={tableIcon}
                                         style={styles.iconTicket}
                                       />

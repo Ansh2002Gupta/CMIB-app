@@ -332,6 +332,7 @@ const usePackageInactiveHistory = (onViewPress) => {
                   onViewPress && onViewPress(item);
                 }}
                 source={images.iconEye}
+                isSvg
               />
             )}
           </View>
