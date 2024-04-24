@@ -103,7 +103,10 @@ function RoundTwoUI(props) {
     <View style={styles.container}>
       {userProfileDetails?.userDetails?.user_type?.toLowerCase() ===
       USER_TYPE_CANDIDATE ? (
-        <CandidateRoundOneContainer hasRoundone={false} />
+        <CandidateRoundOneContainer
+          hasRoundone={false}
+          savedRoundId={savedRoundId}
+        />
       ) : (
         <>
           {(isCardsDataLoading || cardsApiStatus === API_STATUS.IDLE) && (
