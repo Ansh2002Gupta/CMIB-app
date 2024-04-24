@@ -17,12 +17,11 @@ import { COMPANY_INACTIVE_SUBSCRIPTION_LISTING } from "../../../services/apiServ
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
 import { urlService } from "../../../services/urlService";
-import {
-  ROWS_PER_PAGE_ARRAY,
-} from "../../../constants/constants";
+import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import CustomModal from "../../../components/CustomModal";
 
 const useContentMarketingManagement = (onViewPress) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
@@ -36,13 +35,15 @@ const useContentMarketingManagement = (onViewPress) => {
   const intl = useIntl();
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
-    ROWS_PER_PAGE_ARRAY[0].value
+      ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
   const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(0);
-
+  const [showCurrentPopupmessageDetails, setCurrentPopupMessageDetails] =
+    useState(0);
+  const [showConsentModal, setShowConsentModal] = useState(0);
   const {
     data: inactiveSubscriptionListData,
     isLoading: isInactiveSubscriptionListLoading,
@@ -171,14 +172,21 @@ const useContentMarketingManagement = (onViewPress) => {
   };
 
   const onIconPress = (item) => {
-    console.log('*******', item)
-    // setCurrentPopupMessage(1)
-    showCurrentPopupmessage !== item?.employer_id &&
-      item?.job_applicantion_id !== null
+    showCurrentPopupmessage !== item?.employer_id && item?.employer_id !== null
       ? setCurrentPopupMessage(item?.employer_id)
       : setCurrentPopupMessage(-1);
   };
 
+  const onConsentPress = (item) => {
+    showConsentModal !== item?.employer_id && item?.employer_id !== null
+      ? setShowConsentModal(item?.employer_id)
+      : setShowConsentModal(-1);
+  };
+
+  const handleActions = (action, item) => {
+    setCurrentPopupMessageDetails(item?.employer_id);
+    setCurrentPopupMessage(-1);
+  };
 
   let headingTexts = ["employer_name"];
   let subHeadingText = ["interview_dates"];
@@ -195,15 +203,14 @@ const useContentMarketingManagement = (onViewPress) => {
       sortDirection: !isAscendingOrder ? "asc" : "desc",
     });
   };
+
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading
-      ? styles.tableHeadingText
-      : {};
+    const tableStyle = isHeading ? styles.tableHeadingText : {};
     return [
       {
         content: isHeading ? (
           <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
               {!!item.employer_name ? item.employer_name : "-"}
             </CommonText>
             <CustomImage
@@ -226,12 +233,12 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
               {!!item.interview_type ? item.interview_type : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
             {!!item.interview_type ? item.interview_type : "-"}
           </CommonText>
         ),
@@ -241,12 +248,12 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
               {!!item.mode ? item.mode : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
             {!!item.mode ? item.mode : "0"}
           </CommonText>
         ),
@@ -256,12 +263,12 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
               {!!item.interview_dates ? item.interview_dates : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
             {!!item.interview_dates ? item.interview_dates : "0"}
           </CommonText>
         ),
@@ -271,19 +278,103 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
               {!!item.shortlisting_round ? item.shortlisting_round : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
             {!!item.shortlisting_round ? item.shortlisting_round : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
-
+      {
+        content: !isHeading && (
+          <>
+            <TouchableImage
+              onPress={() => {
+                onConsentPress(item);
+              }}
+              source={images.iconShieldTickDisable}
+              imageStyle={styles.iconTicket}
+              isSvg={true}
+            />
+          </>
+        ),
+        style: {
+          ...commonStyles.columnStyle("5%"),
+          ...styles.iconTicketColoum,
+        },
+        isFillSpace: true,
+      },
+      {
+        content: !isHeading && (
+          <>
+            <TouchableImage
+              onPress={() => {
+                onIconPress(item);
+              }}
+              source={images.iconMore}
+              imageStyle={styles.iconTicket}
+              isSvg={true}
+            />
+            {showCurrentPopupmessage === item?.employer_id && (
+              <View ref={popMessageRef}>
+                <PopupMessage
+                  ref={popMessageRef}
+                  message={[
+                    { id: 1, name: "Download CTC info" },
+                    { id: 2, name: "Download PDF" },
+                  ]}
+                  labelName={"name"}
+                  customStyle={styles.popupMessageStyle}
+                  onPopupClick={(action) => handleActions(action, item)}
+                />
+              </View>
+            )}
+          </>
+        ),
+        style: {
+          ...commonStyles.columnStyle("5%"),
+          ...styles.iconTicketColoum,
+        },
+        isFillSpace: true,
+      },
+      {
+        content: !isHeading && showConsentModal == item?.employer_id && (
+          <>
+            <CustomModal
+              headerText={intl.formatMessage({
+                id: "label.provide_online_consent",
+              })}
+              secondaryText={intl.formatMessage({
+                id: "label.confirmation_provide_online_consent",
+              })}
+              buttonLeftTitle={intl.formatMessage({
+                id: "label.cancel",
+              })}
+              buttonRightTitle={intl.formatMessage({
+                id: "label.grant_consent",
+              })}
+              showActionButtonOnSuccess
+              onPress={() => {}}
+              isSuccess
+              maxWidth={"xs"}
+              imageOnSuccess={images.iconSheildTick}
+              handleButtonOnePress={() => {
+                setShowConsentModal(-1);
+              }}
+            />
+          </>
+        ),
+        style: {
+          ...commonStyles.columnStyle("5%"),
+          ...styles.iconTicketColoum,
+        },
+        isFillSpace: true,
+      },
     ];
   };
 
@@ -316,7 +407,10 @@ const useContentMarketingManagement = (onViewPress) => {
     totalcards: inactiveSubscriptionListData?.meta?.total,
     onIconPress,
     showCurrentPopupmessage,
-    setCurrentPopupMessage
+    setCurrentPopupMessage,
+    handleActions,
+    setCurrentPopupMessageDetails,
+    showCurrentPopupmessageDetails,
   };
 };
 

@@ -17,9 +17,7 @@ import { COMPANY_INACTIVE_SUBSCRIPTION_LISTING } from "../../../services/apiServ
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
 import { urlService } from "../../../services/urlService";
-import {
-  ROWS_PER_PAGE_ARRAY,
-} from "../../../constants/constants";
+import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 
 const useCampusInterviewManagement = (onViewPress) => {
@@ -35,7 +33,7 @@ const useCampusInterviewManagement = (onViewPress) => {
   const intl = useIntl();
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
-    ROWS_PER_PAGE_ARRAY[0].value
+      ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(urlService.getQueryStringValue("page"))
@@ -189,14 +187,12 @@ const useCampusInterviewManagement = (onViewPress) => {
     });
   };
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading
-      ? styles.tableHeadingText
-      : {};
+    const tableStyle = isHeading ? styles.tableHeadingText : {};
     return [
       {
         content: isHeading ? (
           <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
               {!!item.employer_name ? item.employer_name : "-"}
             </CommonText>
             <CustomImage
@@ -318,19 +314,15 @@ const useCampusInterviewManagement = (onViewPress) => {
   };
 
   const getCampusColoumConfigs = (item, isHeading) => {
-    console.log('item---', item)
-    const tableStyle = isHeading
-      ? styles.tableHeadingText
-      : {};
+    const tableStyle = isHeading ? styles.tableHeadingText : {};
     return [
       {
         content: isHeading ? (
           <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
               {!!item?.center_name ? item?.center_name : "-"}
             </CommonText>
             <CustomImage
-
               source={
                 isAscendingOrder
                   ? images.iconArrowUpSorting
@@ -434,12 +426,16 @@ const useCampusInterviewManagement = (onViewPress) => {
         content: isHeading ? (
           <CustomTouchableOpacity>
             <CommonText customTextStyle={tableStyle}>
-              {!!item?.offer_acceptance_deadline ? item?.offer_acceptance_deadline : "-"}
+              {!!item?.offer_acceptance_deadline
+                ? item?.offer_acceptance_deadline
+                : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
           <CommonText customTextStyle={tableStyle}>
-            {!!item?.offer_acceptance_deadline ? item?.offer_acceptance_deadline : "-"}
+            {!!item?.offer_acceptance_deadline
+              ? item?.offer_acceptance_deadline
+              : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("13%"),
