@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     flex: 1,
     backgroundColor: colors.white,
+    minWidth: 300,
   },
   flexContainer: {
     flex: 1,
@@ -165,6 +166,9 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
+  buttonTwoStyleContainer: {
+    flex: undefined,
+  },
   backButtonStyle: {
     fontSize: 14,
   },

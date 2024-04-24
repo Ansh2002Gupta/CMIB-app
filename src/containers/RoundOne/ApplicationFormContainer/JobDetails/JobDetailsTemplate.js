@@ -460,7 +460,7 @@ const JobDetailsTemplate = ({
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
         <View style={styles.mainContainer}>
-          <View>
+          <View style={styles.leftSectionStyle}>
             <ConfigurableList
               customOuterContianer={styles.configurableStyle}
               componentContainer={styles.componentContainer}
