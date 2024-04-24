@@ -1,3 +1,7 @@
+import {
+  DOCUMENT_TYPE_KEYS,
+  INTERVIEW_TYPE,
+} from "../../../constants/constants";
 import { capitalize } from "../../../utils/util";
 
 export const keys = {
@@ -79,7 +83,7 @@ export const formatMonthlyData = (data = {}, intl) => {
   ];
 };
 
-export const formatPostinAndVaccanyData = (data, intl) => {
+export const formatPostingAndVaccanyData = (data, intl) => {
   return Object.keys(data).map((key) => {
     return {
       placeOfPosting: key,
@@ -295,7 +299,7 @@ export const formatInterviewDetails = (data) => {
     [keys.interviewDates]: data?.interview_dates?.map(
       (item) => item?.schedule_date
     ),
-    [keys.companyAvailablity]: data?.interview_type ?? "",
+    [keys.companyAvailablity]: INTERVIEW_TYPE[data?.interview_type] ?? "",
   };
 };
 
@@ -322,5 +326,11 @@ export const addValueOnInterviewField = ({ state, details }) => {
       ...item,
       value: state[key] ? state[key] : "--",
     };
+  });
+};
+
+export const getRequiredDocs = (data) => {
+  return data?.map((item) => {
+    return { ...item, doc_type: DOCUMENT_TYPE_KEYS[item.doc_type] ?? "-" };
   });
 };

@@ -43,11 +43,21 @@ const Breadcrumbs = () => {
   const isBreadcrumbLocation = (pathname) => {
     return (
       pathname === `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}` ||
       (pathname === navigations.COMPANY_PROFILE && isMdOrGreater) ||
       pathname ===
         `/${currentModule}/${navigations.JOB_APPLICANTS}/${job_id}/applicant-details/${id}` ||
       pathname ===
-        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}`
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`
     );
   };
 

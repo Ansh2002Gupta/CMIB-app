@@ -191,7 +191,7 @@ const PositionInformationUI = ({
       <DetailCard
         details={interviewDetail}
         headerId={intl.formatMessage({
-          id: "label.bond_if_any",
+          id: "label.interview_details",
         })}
       />
       <SelectionProcess data={selectionProcess} />

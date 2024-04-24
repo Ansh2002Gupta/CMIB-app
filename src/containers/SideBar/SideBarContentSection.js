@@ -21,7 +21,7 @@ import useGlobalSessionListApi from "../../services/apiServices/hooks/useGlobalS
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
+import { setRoundsData, setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
 import { CA_JOBS, COMPANY } from "../../constants/constants";
@@ -72,6 +72,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       sideBarDispatch(setSelectedModule(item));
       if (item.key !== CA_JOBS) {
         await getGlobalSessionList(item.key);
+        sideBarDispatch(setRoundsData({}));
       }
     }
     setSideBarSubMenu(SideBarContentEnum.NONE);

@@ -17,8 +17,8 @@ const styles = {
     color: colors.black,
   },
   webProfileImageStyle: {
-    height: 108,
-    width: 108,
+    height: 72,
+    width: 72,
     borderWidth: 0,
   },
   mobileProfileImageStyle: {
@@ -32,7 +32,7 @@ const styles = {
     borderRadius: 12,
     alignSelf: "flex-start",
     overflow: "hidden",
-    marginRight: 24,
+    marginRight: 16,
   },
   centreView: {
     flexDirection: "row",

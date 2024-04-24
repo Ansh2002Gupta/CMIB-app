@@ -1,5 +1,6 @@
 import { useIntl } from "react-intl";
 import { useEffect, useState } from "react";
+import { COMPANY_TYPE_OPTIONS_KEYS } from "../../../constants/constants";
 
 const keys = {
   companyName: "companyName",
@@ -133,26 +134,11 @@ const contactPersonDetail = () => [
       placeholder: "label.email",
     },
     {
-      key: keys.contactPersonDesignation,
-      isMandatory: true,
-      label: "label.designation",
-      placeholder: "label.designation",
-    },
-  ],
-  [
-    {
-      key: keys.contactPersonCountryCode,
-      isMandatory: true,
-      label: "label.country_code",
-      placeholder: "label.country_code",
-    },
-    {
       key: keys.contactPersonMobileNo,
       isMandatory: true,
       label: "label.mobile_number",
       placeholder: "label.mobile_number",
     },
-    { isEmptyView: true },
   ],
 ];
 
@@ -188,15 +174,15 @@ const useCompanyProfileDetail = ({ data }) => {
       [keys.short_profile_of_the_company]: data?.company_details ?? "",
       [keys.website]: data?.website ?? "",
       [keys.nature_of_supplier]: data?.nature_of_suppliers ?? "",
-      [keys.company_type]: data?.type ?? "",
-      [keys.contactPersonName]: data?.contact_person_details?.[0]?.name ?? "",
-      [keys.contactPersonEmail]: data?.contact_person_details?.[0]?.email ?? "",
-      [keys.contactPersonDesignation]:
-        data?.contact_person_details?.[0]?.designation ?? "",
-      [keys.contactPersonCountryCode]:
-        data?.contact_person_details?.[0]?.mobile_country_code ?? "",
+      [keys.company_type]: COMPANY_TYPE_OPTIONS_KEYS[data?.type] ?? "",
+      [keys.contactPersonName]: data?.contact_person_details?.name ?? "",
+      [keys.contactPersonEmail]: data?.contact_person_details?.email ?? "",
       [keys.contactPersonMobileNo]:
-        data?.contact_person_details?.[0]?.mobile_number ?? "",
+        `${
+          data?.contact_person_details?.mobile_country_code
+            ? `${data?.contact_person_details?.mobile_country_code} `
+            : ""
+        }${data?.contact_person_details?.mobile ?? ""}` ?? "",
     });
   };
 

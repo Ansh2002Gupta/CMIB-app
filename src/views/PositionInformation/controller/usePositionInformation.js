@@ -11,8 +11,9 @@ import {
   formatInterviewDetails,
   formatMonthlyData,
   formatPositionDetail,
-  formatPostinAndVaccanyData,
+  formatPostingAndVaccanyData,
   formatYearlyData,
+  getRequiredDocs,
   keys,
 } from "./utils";
 import { useIntl } from "react-intl";
@@ -324,9 +325,9 @@ const usePositionInformation = ({ centerId, companyId }) => {
             role_responsibility: item?.role_responsibility ?? "",
             monthlyData: formatMonthlyData(item?.monthly, intl) ?? [],
             yearlyData: formatYearlyData(item?.yearly, intl) ?? [],
-            requiredDocuments: item?.required_docs ?? "",
+            requiredDocuments: getRequiredDocs(item?.required_docs) ?? "",
             postingAndVaccancyData:
-              formatPostinAndVaccanyData(item?.posting_details ?? {}) ?? "",
+              formatPostingAndVaccanyData(item?.posting_details ?? {}) ?? "",
             selectionProcess: item?.selection_process ?? "",
             positionDetail: addValueOnField({
               state: formatPositionDetail(item),

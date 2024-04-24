@@ -37,6 +37,8 @@ const CustomModal = ({
   secondaryText,
   showActionButtonOnSuccess,
   topLeftIcon,
+  buttonLeftTitle,
+  buttonRightTitle,
 }) => {
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
@@ -59,8 +61,8 @@ const CustomModal = ({
           <>
             <CustomImage
               alt={"Success Icon"}
-              source={images.iconSuccess || imageOnSuccess}
-              Icon={images.iconSuccess || imageOnSuccess}
+              source={imageOnSuccess || images.iconSuccess}
+              Icon={imageOnSuccess || images.iconSuccess}
               isSvg
               style={style.iconStyle}
             />
@@ -80,8 +82,14 @@ const CustomModal = ({
             )}
             {showActionButtonOnSuccess ? (
               <ActionPairButton
-                buttonOneText={intl.formatMessage({ id: "label.no_need_time" })}
-                buttonTwoText={intl.formatMessage({ id: "label.yes_pass_on" })}
+                buttonOneText={
+                  buttonLeftTitle ??
+                  intl.formatMessage({ id: "label.no_need_time" })
+                }
+                buttonTwoText={
+                  buttonRightTitle ??
+                  intl.formatMessage({ id: "label.yes_pass_on" })
+                }
                 isButtonTwoGreen
                 onPressButtonOne={handleButtonOnePress}
                 onPressButtonTwo={handleButtonTwoPress}
