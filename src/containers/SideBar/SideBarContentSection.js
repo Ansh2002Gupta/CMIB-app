@@ -71,7 +71,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     if (item.key !== selectedModule.key) {
       sideBarDispatch(setSelectedModule(item));
       if (item.key !== CA_JOBS) {
-        await getGlobalSessionList(selectedModule.key);
+        await getGlobalSessionList(item.key);
       }
     }
     setSideBarSubMenu(SideBarContentEnum.NONE);
