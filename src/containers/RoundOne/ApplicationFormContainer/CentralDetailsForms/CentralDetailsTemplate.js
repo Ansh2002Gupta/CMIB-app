@@ -110,7 +110,7 @@ const CentralDetailsTemplate = ({
   const navigate = useNavigate();
 
   const { isSubmitting, errorWhileSubmitting, setErrorWhileSubmiting } =
-    submitApplications();
+    submitApplications;
 
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
