@@ -187,7 +187,7 @@ const useCampusInterviewManagement = (onViewPress) => {
     });
   };
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading ? styles.tableHeadingText : {};
+    const tableStyle = isHeading ? styles.tableHeadingText : {fontSize: 14, fontWeight:500};
     return [
       {
         content: isHeading ? (
@@ -224,7 +224,7 @@ const useCampusInterviewManagement = (onViewPress) => {
             {!!item.interview_type ? item.interview_type : "-"}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {

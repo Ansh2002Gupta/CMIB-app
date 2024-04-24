@@ -51,6 +51,10 @@ const styles = {
     width: 16,
     marginLeft: 2,
   },
+  tableHeadingText:{
+    color: colors.darkGrey,
+    fontWeight: 600,
+  },
 };
 
 export default styles;

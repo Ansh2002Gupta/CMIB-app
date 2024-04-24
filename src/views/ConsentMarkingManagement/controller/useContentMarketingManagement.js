@@ -205,7 +205,7 @@ const useContentMarketingManagement = (onViewPress) => {
   };
 
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading ? styles.tableHeadingText : {};
+    const tableStyle = isHeading ? styles.tableHeadingText : {fontSize:14};
     return [
       {
         content: isHeading ? (
@@ -238,7 +238,7 @@ const useContentMarketingManagement = (onViewPress) => {
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
             {!!item.interview_type ? item.interview_type : "-"}
           </CommonText>
         ),
@@ -253,7 +253,7 @@ const useContentMarketingManagement = (onViewPress) => {
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
             {!!item.mode ? item.mode : "0"}
           </CommonText>
         ),
@@ -268,7 +268,7 @@ const useContentMarketingManagement = (onViewPress) => {
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
             {!!item.interview_dates ? item.interview_dates : "0"}
           </CommonText>
         ),
@@ -283,7 +283,7 @@ const useContentMarketingManagement = (onViewPress) => {
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
             {!!item.shortlisting_round ? item.shortlisting_round : "-"}
           </CommonText>
         ),
