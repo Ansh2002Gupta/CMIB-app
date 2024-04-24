@@ -48,7 +48,7 @@ const SkillTrainingUI = ({
     isErrorLoadingPage &&
     isErrorLoadingPage?.code !== STATUS_CODES.UNAUTHORIZED_USER
   ) {
-    return <ErrorComponent errorMsg={isErrorLoadingPage.message} />;
+    return <ErrorComponent errorMsg={isErrorLoadingPage?.data?.message} />;
   }
 
   return (

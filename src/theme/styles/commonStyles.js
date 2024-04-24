@@ -25,6 +25,10 @@ const commonStyles = {
   middleContainer: {
     flex: 1,
   },
+  customTableHeading: {
+    fontWeight: "600",
+    color: colors.darkGrey,
+  },
   commonWebContainer: {
     borderRadius: 24,
     borderWidth: 1,
@@ -42,6 +46,17 @@ const commonStyles = {
     flex: 1,
     display: "flex",
   },
+  cellTextStyle: (fontSize = 14) => ({
+    fontSize,
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: "100%",
+      },
+    }),
+  }),
   columnStyle: (WIDTH = "15%") => ({
     width: WIDTH,
     paddingLeft: 24,
@@ -57,6 +72,10 @@ const commonStyles = {
     paddingBottom: Platform.OS === "android" ? 0 : 22,
     maxHeight: Platform.OS === "web" ? 44 : "auto",
     justifyContent: "flex-end",
+  },
+  tableHeadingText: {
+    fontWeight: "600",
+    color: colors.darkGrey,
   },
   modalInnerContainer: {
     ...Platform.select({
@@ -77,6 +96,14 @@ const commonStyles = {
     backgroundColor: colors.lightGrey,
     marginTop: 24,
     marginBottom: 24,
+  },
+  headingStyle: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  nextButtonStyle: {
+    fontSize: 14,
+    color: colors.white,
   },
 };
 

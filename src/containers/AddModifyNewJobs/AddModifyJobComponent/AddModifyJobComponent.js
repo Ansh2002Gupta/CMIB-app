@@ -24,6 +24,8 @@ const AddModifyJobComponent = forwardRef(
       setIsExpanded,
       isMinimisedVisible = true,
       cleanUpFunction,
+      isStatusVisible = false,
+      isInstructionVisible = true,
     },
     ref
   ) => {
@@ -151,6 +153,8 @@ const AddModifyJobComponent = forwardRef(
               ref={bottomSectionRef}
               selectedJobType={selectedJobType}
               addNewJobData={addNewJobData}
+              isStatusVisible={isStatusVisible}
+              isInstructionVisible={isInstructionVisible}
             />
           </Animated.View>
         </ScrollView>

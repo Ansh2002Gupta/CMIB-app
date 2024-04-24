@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
-import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
 import styles from "./CheckBox.style";
+import { View } from "@unthinkable/react-core-components";
+import TouchableImage from "../TouchableImage";
 
 const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
 
@@ -15,12 +15,15 @@ const CheckBox = ({
   handleCheckbox,
   id,
   isDisabled,
+  isEditable,
   isPartial,
   isSelected,
   title,
   iconCheck,
   iconUnCheck,
   checkBoxTextStyle,
+  style,
+  isFillSpace,
 }) => {
   const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
@@ -42,18 +45,17 @@ const CheckBox = ({
 
   const rowCheckBox = [
     {
+      isFillSpace,
       content: (
-        <CustomTouchableOpacity
-          disabled={isDisabled}
-          onPress={() => handleCheckbox(id)}
-          style={{ ...styles.customTouchableOpacity, ...customTextStyle }}
-          hitSlop={hitSlop}
-        >
-          <CustomImage
+        <View style={{ ...styles.containerStyle, ...customTextStyle }}>
+          <TouchableImage
+            hitSlop={hitSlop}
             Icon={getCheckBoxIcon()}
-            style={styles.iconStyle}
+            style={isEditable ? styles.iconStyle : styles.disabledIconStyle}
             source={getCheckBoxIcon()}
             isSvg
+            disabled={isDisabled}
+            onPress={() => handleCheckbox(id)}
           />
           <CommonText
             customTextStyle={{
@@ -61,24 +63,33 @@ const CheckBox = ({
               ...(isDisabled ? styles.disabledText : {}),
               ...checkBoxTextStyle,
             }}
+            customContainerStyle={styles.alignJustifyCenter}
           >
             {title}
           </CommonText>
-        </CustomTouchableOpacity>
+        </View>
       ),
     },
   ];
 
-  return <MultiColumn columns={rowCheckBox} columnStyle={styles.columnStyle} />;
+  return (
+    <MultiColumn
+      columns={rowCheckBox}
+      columnStyle={styles.columnStyle}
+      style={style}
+    />
+  );
 };
 
 CheckBox.defaultProps = {
   customTextStyle: {},
   isDisabled: false,
+  isEditable: true,
   isPartial: false,
   isSelected: false,
   iconCheck: Images.iconCheckbox,
   iconUnCheck: Images.iconUnCheckbox,
+  style: {},
 };
 
 CheckBox.propTypes = {
@@ -86,11 +97,13 @@ CheckBox.propTypes = {
   handleCheckbox: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isDisabled: PropTypes.bool,
+  isEditable: PropTypes.bool,
   isPartial: PropTypes.bool,
   isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
   iconCheck: PropTypes.node,
   iconUnCheck: PropTypes.node,
+  style: PropTypes.object,
 };
 
 export default CheckBox;

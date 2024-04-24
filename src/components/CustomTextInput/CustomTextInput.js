@@ -109,9 +109,11 @@ const CustomTextInput = (props) => {
     isSingleSelection,
     isTextInputWithChip,
     onChipUpdate,
+    useExactToggleValue,
     showMonthYearPicker,
     datePickerContainer,
     checkBoxTextStyle,
+    customErrorViewStyle,
     ...remainingProps
   } = props;
 
@@ -302,7 +304,13 @@ const CustomTextInput = (props) => {
           onValueChange={(item) => {
             onChangeValue(item);
           }}
-          value={typeof value === "boolean" && value === true ? 0 : 1}
+          value={
+            useExactToggleValue
+              ? value
+              : typeof value === "boolean" && value === true
+              ? 0
+              : 1
+          }
         />
       );
     }
@@ -506,6 +514,7 @@ const CustomTextInput = (props) => {
         <View
           style={{
             ...style.errorAndCountLimitBox,
+            ...customErrorViewStyle,
             ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
           }}
         >
@@ -518,9 +527,9 @@ const CustomTextInput = (props) => {
             </CommonText>
           )}
           {isMultiline && (
-            <CommonText
-              customTextStyle={style.limitStyle}
-            >{`${value?.length}/${maxLength}`}</CommonText>
+            <CommonText customTextStyle={style.limitStyle}>{`${
+              value?.length ?? 0
+            }/${maxLength}`}</CommonText>
           )}
         </View>
       )}

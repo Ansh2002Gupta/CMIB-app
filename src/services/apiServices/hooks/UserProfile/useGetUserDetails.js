@@ -10,10 +10,8 @@ import {
   setIsGettingUserDetails,
   setUserDetails,
 } from "../../../../globalContext/userProfile/userProfileActions";
-import {
-  setSelectedModule,
-  setSelectedSession,
-} from "../../../../globalContext/sidebar/sidebarActions";
+import useGlobalSessionListApi from "../useGlobalSessionList";
+import { setSelectedModule } from "../../../../globalContext/sidebar/sidebarActions";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import {
   moduleKeys,
@@ -32,6 +30,8 @@ const useGetUserDetails = () => {
   const navigate = useNavigate();
 
   const { Http } = useHttpService();
+
+  const { getGlobalSessionList } = useGlobalSessionListApi();
 
   const getSelectedModule = ({
     firstAccessibleModuleName,
@@ -81,8 +81,8 @@ const useGetUserDetails = () => {
             accessibleModuleKeys,
             currentModules: getAppModules({ isMember: isMemberOrCandidate }),
           });
+        await getGlobalSessionList(moduleDetails?.key);
         sideBarDispatch(setSelectedModule(moduleDetails));
-        sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));
         const activeModuleInPath = location.pathname?.split("/")?.[1];
         if (
           isTriedToAccessProtectedModule &&

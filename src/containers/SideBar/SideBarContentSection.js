@@ -17,23 +17,31 @@ import SideBarContentEnum from "./sideBarContentEnum";
 import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import useGlobalSessionListApi from "../../services/apiServices/hooks/useGlobalSessionList";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import {
-  setSelectedModule,
-  setSelectedSession,
-} from "../../globalContext/sidebar/sidebarActions";
+import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
-import { COMPANY } from "../../constants/constants";
+import { CA_JOBS, COMPANY } from "../../constants/constants";
 import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
 import styles from "./SideBar.style";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const [userProfileDetails] = useContext(UserProfileContext);
+  const {
+    getGlobalSessionList,
+    error,
+    isError,
+    isLoadingSession,
+    setErrorGettingGlobalSession,
+    setErrorGettingSession,
+  } = useGlobalSessionListApi();
   const { selectedModule, selectedSession } = sideBarState;
   const { navigateScreen } = useNavigateScreen();
   const navigate = useNavigate();
@@ -57,18 +65,19 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     }
   }, [isWebView, sideBarContent]);
 
-  const handleOnSelectModuleItem = (item) => {
+  const handleOnSelectModuleItem = async (item) => {
     setActiveMenuItem(item?.children?.[0]?.key);
     navigateScreen(`/${item.key}/${item?.children?.[0]?.key}`);
     if (item.key !== selectedModule.key) {
-      sideBarDispatch(setSelectedSession(item?.session?.[0]));
       sideBarDispatch(setSelectedModule(item));
+      if (item.key !== CA_JOBS) {
+        await getGlobalSessionList(selectedModule.key);
+      }
     }
     setSideBarSubMenu(SideBarContentEnum.NONE);
   };
 
   const handleOnSelectSessionItem = (item) => {
-    sideBarDispatch(setSelectedSession(item));
     setSideBarSubMenu(SideBarContentEnum.NONE);
   };
 
@@ -187,6 +196,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             modules={getAppModules({ isMember: isMemberOrCandidate })}
             onSelectItem={handleOnSelectModuleItem}
             selectedModule={selectedModule}
+            isLoadingSession={isLoadingSession}
           />
         </>
       )}
@@ -230,6 +240,15 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           />
         </CustomTouchableOpacity>
       </View>
+      {isError && (
+        <ToastComponent
+          toastMessage={error?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE}
+          onDismiss={() => {
+            setErrorGettingGlobalSession(null);
+            setErrorGettingSession(null);
+          }}
+        />
+      )}
     </View>
   );
 };

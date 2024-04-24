@@ -11,6 +11,8 @@ const styles = {
     paddingLeft: 24,
     paddingRight: 24,
     paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderColor: colors.lightGrey,
   },
   icons: {
     width: 24,

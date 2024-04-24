@@ -15,17 +15,20 @@ import CommonText from "../../components/CommonText";
 import { usePost } from "../../hooks/useApiRequest";
 import { COMPANY_INIT_PAYMENT } from "../../services/apiServices/apiEndPoint";
 import Spinner from "../../components/Spinner";
+// import { WebView } from "react-native-webview";
 import {
   ADDRESS_MAX_LENGTH,
   GSTIN_MAX_LENGTH,
   PAN_MAX_LENGTH,
 } from "../../constants/constants";
-import {
-  validateGSTIN,
-  validatePAN,
-} from "../../utils/validation";
+import { validateGSTIN, validatePAN } from "../../utils/validation";
 
-const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
+const PaymentInitiateModal = ({
+  onPressCancel,
+  amount,
+  subscriptionId,
+  setCcAvenueUrl,
+}) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const [errors, setErrors] = useState({
@@ -102,13 +105,11 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
   };
 
   const isNextDisabled = () => {
-    return (
-      errors.address || errors.panNumber || errors.gstNumber
-    );
+    return errors.address || errors.panNumber || errors.gstNumber;
   };
 
   const handleSave = () => {
-    if (isNextDisabled()) return
+    if (isNextDisabled()) return;
     packagePaymentInitialization({
       body: {
         subscription_id: subscriptionId,
@@ -121,10 +122,16 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         // onPressCancel();
       },
       onSuccessCallback: (data) => {
-        if (isWebView && data?.data && data?.data?.url) {
-          window.open(data?.data?.url, "_self");
+        if (isWebView) {
+          if (data?.data && data?.data?.url) {
+            window.open(data?.data?.url, "_self");
+          } else {
+            window.location.reload();
+          }
         } else {
-          window.location.reload();
+          if (data?.data && data?.data?.url) {
+            setCcAvenueUrl(data?.data?.url);
+          }
         }
         onPressCancel();
       },
@@ -132,8 +139,8 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
   };
 
   const handleBlur = (name) => {
-    validateFields({ field: name })
-  }
+    validateFields({ field: name });
+  };
 
   const baseStyle = isWebView ? styles.containerStyle : styles.inputStyle;
   const customStyle = baseStyle;
@@ -165,7 +172,6 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
       </View>
     );
   };
-
 
   if (isPaymentInitializedLoading) {
     return (

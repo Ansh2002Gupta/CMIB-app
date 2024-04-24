@@ -1,16 +1,17 @@
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../../routes";
 
-import { CANDIDATE_ROUND_ONE_CARDS } from "../../../../constants/constants";
+import { getCandidatesRoundCards } from "../../../../constants/constants";
 import { navigations } from "../../../../constants/routeNames";
 import images from "../../../../images";
 
-
-const useCandidateRoundOneCards = () => {
+const useCandidateRoundOneCards = ({ hasRoundone }) => {
   const intl = useIntl();
   const navigate = useNavigate();
 
-  const roundOneCards = CANDIDATE_ROUND_ONE_CARDS.map((card) => ({
+  const CANDIDATE_ROUND_CARDS = getCandidatesRoundCards({ hasRoundone });
+
+  const roundCards = CANDIDATE_ROUND_CARDS.map((card) => ({
     title: intl.formatMessage({ id: card.title }),
     id: card.id,
     image: images[card.image],
@@ -20,11 +21,19 @@ const useCandidateRoundOneCards = () => {
   const onPressCard = (id) => {
     switch (id) {
       case 1:
-        navigate(navigations.APPLICATION_FORM);
+        navigate(`${navigations.APPLICATION_FORM}`);
         break;
       case 2:
         break;
       case 3:
+        navigate(`${navigations.CENTRE_WISE_COMPANY}`);
+        break;
+      case 4:
+        navigate(`${navigations.CONSENT_MARKING_MANAGEMENT}`);
+        break;
+      case 5:
+        navigate(`${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`);
+        break;
       default:
         break;
     }
@@ -32,7 +41,7 @@ const useCandidateRoundOneCards = () => {
 
   return {
     onPressCard,
-    roundOneCards,
+    roundCards,
   };
 };
 

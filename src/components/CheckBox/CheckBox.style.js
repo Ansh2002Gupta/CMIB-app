@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
+  disabledIconStyle: {
+    height: 20,
+    width: 20,
+    cursor: "not-allowed",
+  },
   titleStyle: {
     marginLeft: 8,
     fontSize: 14,
@@ -14,10 +19,23 @@ const styles = StyleSheet.create({
   disabledText: {
     color: colors.disabledGrey,
   },
+  containerStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  alignJustifyCenter: {
+    alignItems: "center",
+    justifyContent: "center",
+    maxWidth: "90%",
+  },
   columnStyle: {
+    maxWidth: "100%",
     ...Platform.select({
       web: {
-        flexShrink: "unset",
+        flexShrink: 1,
+        flexWrap: "wrap",
+        wordBreak: "break-word",
       },
     }),
   },

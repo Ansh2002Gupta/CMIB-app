@@ -17,6 +17,7 @@ import { getAuthToken } from "../utils/getAuthToken";
 import images from "../images";
 import commonStyles from "../theme/styles/commonStyles";
 import styles from "./HeaderWithContentLayout.style";
+import { doesPathIncludeAnyKey } from "../utils/util";
 
 function HeaderWithContentLayout({ doesExcludeHeader }) {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
@@ -78,7 +79,8 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
       )}
       <MainLayout
         header={
-          doesExcludeHeader && !isWebView ? null : (
+          (doesExcludeHeader || doesPathIncludeAnyKey(location?.pathname)) &&
+          !isWebView ? null : (
             <Header
               onPressLeftIcon={toggleSideBar}
               leftIcon={images.iconMenu}
@@ -88,8 +90,13 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
         }
         bottomSection={
           // TODO : check user type and route as application form
-          isAuthenticated && !location.pathname.includes(navigations.APPLICATION_FORM) &&
-          (!isWebView && !doesExcludeHeader ? <BottomBar /> : null)
+          isAuthenticated &&
+          !location.pathname.includes(navigations.APPLICATION_FORM) &&
+          (!isWebView &&
+          !doesExcludeHeader &&
+          !doesPathIncludeAnyKey(location?.pathname) ? (
+            <BottomBar />
+          ) : null)
         }
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}

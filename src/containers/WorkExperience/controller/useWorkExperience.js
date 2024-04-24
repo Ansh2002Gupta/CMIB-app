@@ -325,7 +325,7 @@ export const useWorkExperience = ({
         return data;
       });
     });
-  }, [state, isEditable, currentStatusError]);
+  }, [state, isEditable, currentStatusError, functionalAreas, industryTypes]);
 
   const workExperiencs_data = useMemo(() => {
     let initailWorkExperienceArr = [];
@@ -370,7 +370,7 @@ export const useWorkExperience = ({
         return { ...fields, error: prevError };
       });
     });
-  }, [state, isEditable, formError]);
+  }, [state, isEditable, formError, functionalAreas, industryTypes]);
 
   useEffect(() => {
     setWorkExperiences(workExperiencs_data);

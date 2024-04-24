@@ -48,6 +48,12 @@ const style = {
     height: 48,
     width: 48,
   },
+  topIconContianer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 12,
+  },
 };
 
 export default style;
