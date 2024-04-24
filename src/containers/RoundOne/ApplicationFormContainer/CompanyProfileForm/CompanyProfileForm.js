@@ -43,7 +43,7 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
     onDeleteImage,
     options,
     uploadImageToServerUtils,
-  } = useCompanyProfile({ tabHandler });
+  } = useCompanyProfile({ isEditable, tabHandler });
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
@@ -130,7 +130,7 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
             />
             <CardComponent customStyle={styles.cardStyle}>
               <DetailComponent
-                headerText={"label.source_of_info"}
+                headerText={intl.formatMessage({ id: "label.source_of_info" })}
                 isMandatory
               />
               <RenderSourceOfInfo
@@ -144,11 +144,11 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
             </CardComponent>
             <CardComponent customStyle={styles.cardStyle}>
               <DetailComponent
-                headerText={"label.company_logo"}
+                headerText={intl.formatMessage({ id: "label.company_logo" })}
                 headerTextCustomStyles={styles.headerTextStyle}
               />
               <CommonText customTextStyle={styles.infoStyle}>
-                {"label.logo_info"}
+                {intl.formatMessage({ id: "label.logo_info" })}
               </CommonText>
               <View style={styles.imageContainer}>
                 {isEditable ? (
