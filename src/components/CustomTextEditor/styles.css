@@ -43,3 +43,7 @@
 .custom .ql-editor{
   padding:0px
 }
+
+.removePadding > .ql-container.ql-snow {
+  padding: 0px;
+}

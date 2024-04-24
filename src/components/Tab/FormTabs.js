@@ -54,7 +54,7 @@ export const FormTabs = ({
 
   return (
     <>
-      <ScrollView style={styles.container} contentContainerStyle={styles.flex1}>
+      <ScrollView showsHorizontalScrollIndicator={false}>
         <View style={styles.innerContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Row gap={12} style={styles.tabContainer}>
@@ -104,6 +104,8 @@ export const FormTabs = ({
             </CustomTouchableOpacity>
           )}
         </View>
+      </ScrollView>
+      <ScrollView style={styles.container} contentContainerStyle={styles.flex1}>
         {tabs[activeTabIndex].component}
       </ScrollView>
       {alertOnTabSwitch?.showAlert && (

@@ -121,6 +121,16 @@ export const COMPANY_TYPE_OPTIONS = [
   { label: "Taxable", value: "taxable" },
 ];
 
+export const COMPANY_TYPE_OPTIONS_KEYS = {
+  exempt: "Exempt",
+  "nil rated": "Nil Rated",
+  "bill of supply": "Bill of Supply",
+  export: "Export",
+  sez: "SEZ",
+  "deemed export": "Deemed Export",
+  taxable: "Taxable",
+};
+
 export const NATURE_OF_SUPPLIER = [
   { label: "Registered", value: "Registered" },
   { label: "Unregistered", value: "Unregistered" },
@@ -217,6 +227,12 @@ export const DOCUMENT_TYPE = [
     value: "both",
   },
 ];
+
+export const DOCUMENT_TYPE_KEYS = {
+  photocopies: "Photocopies",
+  original: "Original",
+  both: "Both",
+};
 
 export const EXEPERIENCE_RANGE = [
   { label: "1-5", value: "1-5" },
@@ -423,6 +439,9 @@ export const POSTED_JOB_LISTING = {
   number_of_interviews: "Scheduled Interview",
   number_of_applications: "Applicants",
   approve: "Approved/Not Approved by Admin",
+};
+export const COMPANY_NAME_LISTING = {
+  name: "Company",
 };
 export const APPLICANT_LISTING = {
   name: "Applicant Name",
@@ -1037,10 +1056,20 @@ export const SAVED_CANDIDATES_TABLE_HEADING = {
   designation_applied_for: ["Designation Applied For"],
 };
 
+const interviewMode = {
+  online: "online",
+  offline: "offline",
+};
+
 export const interviewTypeOptions = [
-  { label: "Virtual Interview", value: "online" },
-  { label: "Face to Face", value: "offline" },
+  { label: "Virtual Interview", value: interviewMode.online },
+  { label: "Face to Face", value: interviewMode.offline },
 ];
+
+export const INTERVIEW_TYPE = {
+  [interviewMode.online]: "Virtual Interview",
+  [interviewMode.offline]: "Face to Face",
+};
 
 export const benefits_key = {
   BENEFITS_DETAILS: "benefits_details",
