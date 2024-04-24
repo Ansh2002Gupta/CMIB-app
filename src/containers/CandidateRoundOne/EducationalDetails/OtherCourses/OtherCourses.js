@@ -1,12 +1,12 @@
 //Libraries
-import React, { useRef } from "react";
+import React, { useRef, useImperativeHandle } from "react";
 //UI & Styling
 import OtherCoursesTemplate from "./OtherCoursesTemplate";
 import useExamDetailsAPI from "../../../../services/apiServices/hooks/CandidateRoundeOne/useExamDetailsAPI";
 import MultiRow from "../../../../core/layouts/MultiRow";
 import styles from "./OtherCourses.style";
 
-const OtherCourses = ({ intl, isWebView, isViewMode = false }) => {
+const OtherCourses = ({ intl, isWebView, isViewMode = false }, ref) => {
     //refs
     const otherCoursesRef = useRef();
     // const { handleExamDetails} = useExamDetailsAPI();
@@ -19,7 +19,11 @@ const OtherCourses = ({ intl, isWebView, isViewMode = false }) => {
     //       errorCallback: () => {},
     //     });
     //   }, []);
-
+    useImperativeHandle(ref, () => ({
+      getState: () => {
+        return otherCoursesRef?.current?.getState()
+      }
+    }))
     const otherCourseDetailsConfig = [
         {
           content: <OtherCoursesTemplate ref={otherCoursesRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>,
@@ -31,4 +35,4 @@ const OtherCourses = ({ intl, isWebView, isViewMode = false }) => {
   );
 };
 
-export default OtherCourses;
+export default React.forwardRef(OtherCourses);

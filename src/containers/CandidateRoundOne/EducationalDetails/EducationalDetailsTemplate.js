@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useImperativeHandle, useRef} from "react";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
@@ -14,19 +14,36 @@ const   EducationalDetailsTemplate = ({
   isWebView,
   onChangeTab,
   selectedTab,
-}) => {
+  handleSave
+}, ref) => {
+  const edDetailsRef = useRef();
+  const examsRef = useRef();
+  const otherCourseRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    getAllData: () => {
+      return {
+        ...edDetailsRef.current?.getState(),
+        ...examsRef.current?.getState(),
+        ...otherCourseRef?.current?.getState(),
+      }
+    }
+  }));
+
+
+
   const getEducationalDetailsTab = () => {
     switch (selectedTab.id) {
       case 1:
         return (
           <ScrollView>
-            <EdDetails intl={intl} isWebView={isWebView} />
+            <EdDetails intl={intl} isWebView={isWebView} ref={edDetailsRef} />
           </ScrollView>
         );
       case 2:
         return (
           <ScrollView>
-            <Exams intl={intl} isWebView={isWebView} />
+            <Exams intl={intl} isWebView={isWebView} ref={examsRef} />
           </ScrollView>
         );
       case 3:
@@ -67,4 +84,4 @@ const   EducationalDetailsTemplate = ({
   );
 };
 
-export default EducationalDetailsTemplate;
+export default React.forwardRef(EducationalDetailsTemplate);

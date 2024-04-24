@@ -8,11 +8,7 @@ import CustomToggleComponent from "../../../components/CustomToggleComponent/Cus
 import { GENDER, MARITAL_STATUS } from "../../../constants/constants";
 import images from "../../../images";
 import styles from "./PersonalDetails.style";
-import { formatDate } from "../../../utils/util";
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
+import { capitalizeFirstLetter, formatDate } from "../../../utils/util";
 
 const PersonalDetailsTemplate = ({
   intl,

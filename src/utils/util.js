@@ -154,6 +154,10 @@ export const extractFilename = (fileUri) => {
   return filename;
 };
 
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 let lastFlagDate = null;
 
 export const getDateStatus = (record) => {

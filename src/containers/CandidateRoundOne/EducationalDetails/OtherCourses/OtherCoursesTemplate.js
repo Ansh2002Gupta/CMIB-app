@@ -20,12 +20,15 @@ const OtherCoursesTemplate = ({intl, isWebView, isViewMode}, ref) => {
   useImperativeHandle(ref, () => ({
     getState: () => {
       return {
-        otherCourseExaminationName,
-        otherCourseStatus,
-        otherCourseBoard,
-        otherCourseYear,
-        otherCourseMarks,
-        otherCourseGrade,
+        "Others": [{
+          exam_board: otherCourseBoard,
+          exam_name: otherCourseExaminationName,
+          passing_percentage: otherCourseMarks,
+          passing_cgpa: otherCourseGrade,
+          passing_rank: "",
+          passing_year: otherCourseYear,
+          exam_status: otherCourseStatus,
+        }]
       };
     },
   }));
