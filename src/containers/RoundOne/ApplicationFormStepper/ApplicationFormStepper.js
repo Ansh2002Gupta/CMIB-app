@@ -43,6 +43,7 @@ const ApplicationFormStepper = ({
                     {headingText}
                   </CommonText>
                 }
+                isLeftFillSpace
                 rightSection={!!webActionButton && webActionButton}
               />
             )}

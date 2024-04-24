@@ -471,10 +471,7 @@ const useCentralDetails = ({ tabHandler }) => {
     saveRoundDetails({
       overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedOptions[0]?.detailId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
       body,
-      onSuccessCallback: () => {
-        console.log("onSuccessCallback,onSuccessCallback");
-        tabHandler("next");
-      },
+      onSuccessCallback: () => {},
       onErrorCallback: (error) => {
         setError(formateErrors(error));
       },

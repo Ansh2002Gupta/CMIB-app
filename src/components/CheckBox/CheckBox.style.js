@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
+  disabledIconStyle: {
+    height: 20,
+    width: 20,
+    cursor: "not-allowed",
+  },
   titleStyle: {
     marginLeft: 8,
     fontSize: 14,
