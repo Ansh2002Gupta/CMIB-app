@@ -61,7 +61,6 @@ const AddBenefitsTemplate = ({
     return result;
   }
   const nonEditableData = mapDocuments(requiredDocumentDetails);
-  console.log("nonEditableData", nonEditableData);
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? commonStyles.tableHeadingText
@@ -87,9 +86,6 @@ const AddBenefitsTemplate = ({
       },
     ];
   };
-
-  console.log(requiredDocumentDetails, "requiredDocumentDetails..");
-
   return (
     <View>
       <CommonText

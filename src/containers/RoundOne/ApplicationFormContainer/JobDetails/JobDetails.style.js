@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
   },
+  roundHeaderText: {
+    color: colors.black,
+    fontSize: 20,
+    fontWeight: "600",
+  },
   twoMainSTyle: { backgroundColor: colors.backgroundColor },
   mainContainer: {
     flexDirection: "row",
@@ -166,6 +171,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   customQuilStyle: { height: undefined, borderWidth: 0 },
+  quillContainerStyle: { borderColor: colors.lightGrey },
+  editCustomQuilStyle: { borderColor: colors.lightGrey },
   disabled: {
     opacity: 0.5,
     backgroundColor: colors.white,

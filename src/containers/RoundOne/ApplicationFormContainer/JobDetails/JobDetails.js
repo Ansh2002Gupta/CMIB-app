@@ -50,7 +50,7 @@ const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
     isLoading,
     error,
     validateError,
-  } = useJobDetailForm({ tabHandler });
+  } = useJobDetailForm({ isEditable, tabHandler });
 
   const isWebProps =
     Platform.OS.toLowerCase() === "web"

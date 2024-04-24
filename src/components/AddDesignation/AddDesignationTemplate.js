@@ -15,6 +15,7 @@ import {
   ADD_DOCUMENT,
   DOCUMENT_TYPE,
 } from "../../constants/constants";
+import { extractValueDropdown } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./AddDesignation.style";
@@ -47,10 +48,12 @@ const AddDesignationTemplate = ({
       }
       switch (item.key) {
         case "designation_details":
-          groupedData[item.cellID].designation_details = item.value;
+          groupedData[item.cellID].designation_details =
+            extractValueDropdown(item);
           break;
         case "number_of_vacancies":
-          groupedData[item.cellID].number_of_vacancies = item.value;
+          groupedData[item.cellID].number_of_vacancies =
+            extractValueDropdown(item);
           break;
       }
     });

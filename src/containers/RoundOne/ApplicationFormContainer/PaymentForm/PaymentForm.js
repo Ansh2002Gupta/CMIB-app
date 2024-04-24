@@ -46,7 +46,7 @@ const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
     isLoading,
     isLoadingPaymentInit,
     handleSaveAndNext,
-  } = usePaymentForm();
+  } = usePaymentForm({ isEditable });
 
   const intl = useIntl();
   const navigate = useNavigate();
