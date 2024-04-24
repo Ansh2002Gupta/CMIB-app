@@ -8,12 +8,12 @@ import LoadingScreen from "../../components/LoadingScreen";
 import useShortlistingConsentInterview from "./useShortlistingConsentInterview";
 import {
   cardConfigOverLine,
-  cardConfigOverLineColorArray,
   cardConfigOverRectangle,
-  cardConfigOverRectangleColorArray,
   dataCircleConfig,
+  diagramSupportEnum,
   lineSegmentStylesForLine,
   lineSegmentStylesForRectangle,
+  returnColorArray,
 } from "../../constants/constants";
 import styles, {
   getStylesAsPerWidth,
@@ -26,6 +26,11 @@ const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
     cardConfigLine: [],
     circleConfig: [],
   });
+  const [colorArray, setColorArray] = useState({
+    cardConfigOverRectangleColorArray: [],
+    cardConfigOverLineColorArray: [],
+  });
+
   const {
     diagramData,
     fetchDiagramData,
@@ -69,6 +74,12 @@ const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
       cardConfigLine: cardConfigOverLine,
       circleConfig: dataCircleConfig,
     }));
+    const tempColorArray1 = returnColorArray(diagramSupportEnum.RECTANGLE_CARD);
+    const tempColorArray2 = returnColorArray(diagramSupportEnum.LINE_CARD);
+    setColorArray({
+      cardConfigOverRectangleColorArray: tempColorArray1,
+      cardConfigOverLineColorArray: tempColorArray2,
+    });
   };
 
   return !!diagramData && !isDiagramDataLoading && !isErrorDiagramData ? (
@@ -111,7 +122,8 @@ const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
                   }
                   customPosition={cardInfo?.position}
                   customStyles={{
-                    color: cardConfigOverRectangleColorArray[index],
+                    color:
+                      colorArray?.cardConfigOverRectangleColorArray?.[index],
                   }}
                 />
               );
@@ -155,7 +167,7 @@ const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
                     }
                     customPosition={cardInfo?.position}
                     customStyles={{
-                      color: cardConfigOverLineColorArray[index],
+                      color: colorArray?.cardConfigOverLineColorArray?.[index],
                     }}
                   />
                 );

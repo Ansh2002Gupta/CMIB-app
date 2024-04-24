@@ -908,7 +908,7 @@ export const JOB_STATUS_RESPONSE_CODE = {
   "Job Not Offered": 9,
 };
 
-export let cardConfigOverRectangle = [
+export const cardConfigOverRectangle = [
   {
     data: { count: 500, textId: "label.available_round_1" },
     position: { top: "-15%", left: "-15%" },
@@ -939,7 +939,7 @@ export const cardConfigOverRectangleColorArray = [
   colors.medicineBlue,
 ];
 
-export let cardConfigOverLine = [
+export const cardConfigOverLine = [
   {
     data: { count: 500, textId: "label.final_consent_marked_list" },
     position: { top: -65, left: -75 },
@@ -1141,4 +1141,20 @@ export const FORM_STATES = {
   VIEW_ONLY: "view",
   EDITABLE: "edit",
   EMPTY: "empty",
+};
+
+export const diagramSupportEnum = {
+  RECTANGLE_CARD: "cardConfigOverRectangle",
+  LINE_CARD: "cardConfigOverLine",
+};
+
+export const returnColorArray = (key) => {
+  switch (key) {
+    case diagramSupportEnum.RECTANGLE_CARD:
+      return cardConfigOverRectangleColorArray;
+    case diagramSupportEnum.LINE_CARD:
+      return cardConfigOverLineColorArray;
+    default:
+      return cardConfigOverRectangleColorArray;
+  }
 };
