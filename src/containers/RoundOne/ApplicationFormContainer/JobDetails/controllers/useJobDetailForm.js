@@ -83,7 +83,7 @@ const initialState = {
   errors: "",
 };
 
-const useJobDetailForm = ({ tabHandler }) => {
+const useJobDetailForm = ({ isEditable, tabHandler }) => {
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
   const [documentState, setDocumentState] = useState([addDocumentField()]);
@@ -265,7 +265,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     if (!!error) {
       setIsLoading(false);
     }
-  }, [currentModule, sessionId]);
+  }, [currentModule, sessionId, isEditable]);
 
   useEffect(() => {
     setRenderJobDetails((prev) => ({
@@ -275,7 +275,7 @@ const useJobDetailForm = ({ tabHandler }) => {
       required_docs: getDocumentField(),
       posting_details: getPlaceOfPostingDetails(),
     }));
-  }, [isAddNewJob]);
+  }, [isAddNewJob, isEditable]);
 
   useEffect(() => {
     if (deleteDesginationId) {
@@ -285,7 +285,7 @@ const useJobDetailForm = ({ tabHandler }) => {
         },
       });
     }
-  }, [deleteDesginationId]);
+  }, [deleteDesginationId, isEditable]);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -299,7 +299,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     if (!!error) {
       setIsLoading(false);
     }
-  }, [currentDesginationID]);
+  }, [currentDesginationID, isEditable]);
 
   const handleInputChange = (fieldName, value, subFieldName) => {
     if (fieldName === "bond_details") {

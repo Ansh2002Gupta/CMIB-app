@@ -30,7 +30,7 @@ import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProv
 import { useParams } from "react-router";
 import { usePatch } from "../../../../../hooks/useApiRequest";
 
-const useCompanyProfile = ({ tabHandler }) => {
+const useCompanyProfile = ({ isEditable, tabHandler }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [sideBarState] = useContext(SideBarContext);
   const { isWebView } = useIsWebView();
@@ -159,7 +159,7 @@ const useCompanyProfile = ({ tabHandler }) => {
     if (currentModule && sessionId) {
       fetchPersonalData();
     }
-  }, [currentModule, sessionId]);
+  }, [currentModule, sessionId, isEditable]);
 
   const handleInputChange = (fieldName, value) => {
     if (fieldName === "label.entity") {

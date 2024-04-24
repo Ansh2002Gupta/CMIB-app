@@ -38,7 +38,7 @@ import {
 } from "../../../../../constants/constants";
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
 
-const usePaymentForm = () => {
+const usePaymentForm = ({ isEditable }) => {
   const [paymentDetails, setPaymentDetails] = useState([]);
   const [paymentList, setPaymentList] = useState();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -176,7 +176,7 @@ const usePaymentForm = () => {
       }
     };
     fetchData();
-  }, [currentModule, sessionId]);
+  }, [currentModule, sessionId, isEditable]);
 
   function isButtonEnabled(fieldsArray) {
     for (let field of fieldsArray) {
@@ -192,7 +192,7 @@ const usePaymentForm = () => {
 
   useEffect(() => {
     setIsButtonDisabled(!isButtonEnabled(paymentDetails));
-  }, [paymentDetails]);
+  }, [paymentDetails, isEditable]);
 
   const handlePay = () => {
     const payload = mappedPayload(paymentDetails);
