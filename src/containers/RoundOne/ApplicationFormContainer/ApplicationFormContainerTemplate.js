@@ -32,11 +32,7 @@ import {
 } from "../../../constants/constants";
 import useFetch from "../../../hooks/useFetch";
 import images from "../../../images";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import { getValidMode } from "../../../utils/validation";
-import CardComponent from "../../../components/CardComponent";
-import CustomImage from "../../../components/CustomImage";
-import CommonText from "../../../components/CommonText";
 import { View } from "@unthinkable/react-core-components";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {

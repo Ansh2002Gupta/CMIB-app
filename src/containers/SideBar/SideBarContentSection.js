@@ -24,7 +24,7 @@ import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
-import { COMPANY } from "../../constants/constants";
+import { CA_JOBS, COMPANY } from "../../constants/constants";
 import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
 import styles from "./SideBar.style";
@@ -38,6 +38,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     getGlobalSessionList,
     error,
     isError,
+    isLoadingSession,
     setErrorGettingGlobalSession,
     setErrorGettingSession,
   } = useGlobalSessionListApi();
@@ -64,20 +65,14 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     }
   }, [isWebView, sideBarContent]);
 
-  useEffect(() => {
-    const getSessions = async () => {
-      if (selectedModule.key) {
-        await getGlobalSessionList(selectedModule.key);
-      }
-    };
-    getSessions();
-  }, [selectedModule.key]);
-
-  const handleOnSelectModuleItem = (item) => {
+  const handleOnSelectModuleItem = async (item) => {
     setActiveMenuItem(item?.children?.[0]?.key);
     navigateScreen(`/${item.key}/${item?.children?.[0]?.key}`);
     if (item.key !== selectedModule.key) {
       sideBarDispatch(setSelectedModule(item));
+      if (item.key !== CA_JOBS) {
+        await getGlobalSessionList(selectedModule.key);
+      }
     }
     setSideBarSubMenu(SideBarContentEnum.NONE);
   };
@@ -201,6 +196,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             modules={getAppModules({ isMember: isMemberOrCandidate })}
             onSelectItem={handleOnSelectModuleItem}
             selectedModule={selectedModule}
+            isLoadingSession={isLoadingSession}
           />
         </>
       )}

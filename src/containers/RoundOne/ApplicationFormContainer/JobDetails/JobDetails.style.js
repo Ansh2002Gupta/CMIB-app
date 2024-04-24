@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
   twoMainSTyle: { backgroundColor: colors.backgroundColor },
   mainContainer: {
     flexDirection: "row",
+    padding: 24,
+    gap: 16,
   },
   customCardComponentStyle: {
     marginTop: 16,
@@ -20,6 +22,12 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
     borderWidth: 0,
     borderRadius: 8,
+  },
+  responsiveStyle: {
+    flexDirection: "column",
+    width: "100%",
+    padding: 24,
+    gap: 16,
   },
   MultiRowPhoneStyle: {
     backgroundColor: colors.backgroundColor,
@@ -47,8 +55,6 @@ const styles = StyleSheet.create({
   },
   bottomMargin: {
     marginBottom: 16,
-    marginRight: 16,
-    marginLeft: 16,
   },
   bondIfAnyView: {
     marginBottom: 16,
@@ -95,10 +101,7 @@ const styles = StyleSheet.create({
   customStyleCompensation: {
     marginRight: 24,
   },
-  addDesignationView: {
-    marginLeft: 16,
-    marginRight: 16,
-  },
+  addDesignationView: {},
   customLabelStyle: {
     color: colors.darkGrey,
   },
@@ -136,12 +139,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   configurableStyle: {
-    paddingHorizontal: undefined,
-    paddingVertical: undefined,
     backgroundColor: undefined,
-    marginTop: 24,
-    marginLeft: 16,
-    marginBottom: 16,
+    marginRight: 0,
+    flex: undefined,
+    display: undefined,
   },
   componentContainer: {
     borderWidth: 1,
@@ -152,12 +153,11 @@ const styles = StyleSheet.create({
   },
   innerContainerStyle: {
     flex: 1,
-    marginBottom: 16,
-    marginLeft: 16,
-    marginRight: 16,
-    marginTop: 24,
     borderRadius: 16,
     width: "60%",
+  },
+  leftSectionStyle: {
+    width: "25%",
   },
   emptyCard: {
     flex: 1,
