@@ -64,6 +64,15 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     }
   }, [isWebView, sideBarContent]);
 
+  useEffect(() => {
+    const getSessions = async () => {
+      if (selectedModule.key) {
+        await getGlobalSessionList(selectedModule.key);
+      }
+    };
+    getSessions();
+  }, [selectedModule.key]);
+
   const handleOnSelectModuleItem = (item) => {
     setActiveMenuItem(item?.children?.[0]?.key);
     navigateScreen(`/${item.key}/${item?.children?.[0]?.key}`);
