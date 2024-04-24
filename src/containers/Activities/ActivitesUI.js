@@ -52,18 +52,14 @@ const ActivitiesUI = ({
         <View style={style.innerContainerStyle}>
           <DetailCard
             details={achievements}
-            headerId={intl.formatMessage({
-              id: "label.achievements",
-            })}
+            headerId={"label.achievements"}
             isEditProfile={isEditable}
             handleChange={onChangeValue(achievements)}
             handleBlur={handleAchievementsBlur}
           />
           <DetailCard
             details={hobbies}
-            headerId={intl.formatMessage({
-              id: "label.hobbies",
-            })}
+            headerId={"label.hobbies"}
             isEditProfile={isEditable}
             handleChange={onChangeValue(hobbies)}
             handleBlur={handleHobbiesBlur}

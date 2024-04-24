@@ -179,9 +179,7 @@ const CentralDetailsTemplate = ({
           </CommonText>
           <DetailCard
             details={contactDetails}
-            headerId={intl.formatMessage({
-              id: "label.company_details",
-            })}
+            headerId={"label.company_details"}
             handleChange={(fieldName, value, codeValue) => {
               handleContactDetailsChange(fieldName, value, codeValue);
             }}
