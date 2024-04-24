@@ -31,6 +31,8 @@ const AddApplicationTemplate = ({
 
   const personalDetailsref = useRef();
   const edDetailsRef = useRef();
+  const workExperienceDetailsref = useRef();
+
   const { isLoading, makeRequest, error } = usePut({
     url: "/member/nqca-placements/rounds/264/academics",
   });
@@ -45,7 +47,7 @@ const AddApplicationTemplate = ({
       : {};
 
   const getCurrentStepperDetails = () => {
-    switch (2) {
+    switch (selectedStepper.id) {
       case 1:
         return (
           <PersonalDetails
@@ -108,7 +110,7 @@ const AddApplicationTemplate = ({
   const onPersonalDetailSave = () => {
     const payload = personalDetailsref?.current?.getFilledData();
     makeRequest({
-      overrideUrl: `member/nqca-placements/rounds/264/work-experience`,
+      overrideUrl: `/member/nqca-placements/rounds/264/personal`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
@@ -135,14 +137,32 @@ const AddApplicationTemplate = ({
     });
   };
 
+  const onExperienceDetailsSave = () => {
+    const payload = edDetailsRef?.current?.getAllData();
+    console.log("payload", payload);
+    makeRequest({
+      overrideUrl: `member/nqca-placements/rounds/264/work-experience`,
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
   const handleSavePress = () => {
-    switch (2) {
+    switch (selectedStepper.id) {
       case 1:
         onPersonalDetailSave();
         return;
       case 2:
         onEdDetailsSave();
         return;
+      case 4:
+        onExperienceDetailsSave();
       default:
         return;
     }

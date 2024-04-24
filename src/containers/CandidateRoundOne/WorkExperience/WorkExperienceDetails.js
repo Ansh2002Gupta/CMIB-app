@@ -51,13 +51,15 @@ const WorkExperienceDetails = (
   //   }, []);
 
   useImperativeHandle(ref, () => ({
-    getFilledData: () => {
+    getAllData: () => {
       const WorkExpAddData = WorkExpDetailsTemplateRef?.current?.getState();
       const CurrentStatusData =
         CurrentStatusDetailsTemplateRef?.current?.getState();
       return {
         has_work_experience: WorkExpAddData[0]?.has_work_experience ? 0 : 1,
-        work_experiences: WorkExpAddData,
+        work_experiences: WorkExpAddData[0]?.has_work_experience
+          ? []
+          : WorkExpAddData,
         current_status: CurrentStatusData,
       };
     },
