@@ -20,6 +20,8 @@ import {
   JOB_STATUS_RESPONSE_CODE,
   POSTED_JOB_LISTING_ENUM,
   ROWS_PER_PAGE_ARRAY,
+  getPassRejected,
+  yesOrNot,
 } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
@@ -41,7 +43,8 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const initialFilterState = {
-  ["selectedActive/Inactive"]: [],
+  selectedExperience: 0,
+
   ["selectedApproved/NotApproved"]: [],
 };
 
@@ -156,26 +159,20 @@ const useShortListingConsent = (id) => {
       };
     });
   };
+  const experienceData = 0;
 
   const customFilterInfo = [
     {
-      refKey: "id",
-      name: POSTED_JOB_LISTING_ENUM.activeorInactive,
-      type: FILTER_TYPE_ENUM.CHECKBOX,
-      options: statusData,
-      selectedOptions: filterState?.["selectedActive/Inactive"],
-      handler: handleFilterChange,
-    },
-    {
-      refKey: "id",
-      name: POSTED_JOB_LISTING_ENUM.approvedNotApproved,
-      type: FILTER_TYPE_ENUM.CHECKBOX,
-      options: queryTypeData,
-      selectedOptions: filterState?.["selectedApproved/NotApproved"],
+      refKey: "value",
+      name: "Experience",
+      type: FILTER_TYPE_ENUM.SLIDER,
+      minimumSliderLimit: 0,
+      maximumSliderLimit: 40,
+      options: experienceData,
+      selectedOptions: filterState?.selectedExperience,
       handler: handleFilterChange,
     },
   ];
-
   const getErrorDetails = () => {
     if (isErrorGetCandidateData) {
       let errorMessage = "";
@@ -399,10 +396,7 @@ const useShortListingConsent = (id) => {
   let subHeadingText = [];
   let statusText = [];
   let tableIcon = images.iconMore;
-  let filterCategory = [
-    POSTED_JOB_LISTING_ENUM.activeorInactive,
-    "Approved/Not Approved",
-  ];
+  let filterCategory = ["Experience", "Approved/Not Approved"];
   let isHeading = true;
   const handleCheckbox = (item, isAllSelected) => {
     if (isAllSelected) {
@@ -440,9 +434,15 @@ const useShortListingConsent = (id) => {
         obj = {
           content: (
             <>
-              <CommonText customTextStyle={tableStyle}>
-                {item?.consent ?? "-"}
-              </CommonText>
+              {isHeading ? (
+                <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+                  {item?.consent ?? "-"}
+                </CommonText>
+              ) : (
+                <CommonText customTextStyle={tableStyle}>
+                  {item?.consent ? yesOrNot[item?.consent] : "-"}
+                </CommonText>
+              )}
             </>
           ),
           style: {
@@ -475,7 +475,9 @@ const useShortListingConsent = (id) => {
                       item?.test_result == "pass" ? colors.green : colors.red,
                   }}
                   isBackground
-                  label={item?.test_result ?? "-"}
+                  label={
+                    item?.test_result ? getPassRejected[item?.test_result] : "-"
+                  }
                 />
               )}
             </>
@@ -510,7 +512,7 @@ const useShortListingConsent = (id) => {
                       item?.job_offered == "yes" ? colors.green : colors.black,
                   }}
                   isBackground
-                  label={item?.job_offered ?? "-"}
+                  label={item?.job_offered ? yesOrNot[item?.job_offered] : "-"}
                 />
               )}
             </>

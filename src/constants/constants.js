@@ -430,7 +430,14 @@ export const SHORTLISTING_TABLE_HEADING = (centerSelected) => {
     ...additionalColumn,
   };
 };
-
+export const getPassRejected = {
+  pass: "Pass",
+  reject: "Reject",
+};
+export const yesOrNot = {
+  yes: "Yes",
+  no: "No",
+};
 export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
   const currentModules =
     currentModule === NEWLY_QUALIFIED
