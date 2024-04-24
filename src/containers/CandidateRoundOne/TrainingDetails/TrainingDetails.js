@@ -1,5 +1,5 @@
 //Libraries
-import React, { useRef } from "react";
+import React, { useRef, useImperativeHandle } from "react";
 //UI & Styling
 import GMCSDetailsTemplate from "./GMCSDetailsTemplate";
 import useExamDetailsAPI from "../../../services/apiServices/hooks/CandidateRoundeOne/useExamDetailsAPI";
@@ -9,7 +9,7 @@ import { View } from "@unthinkable/react-core-components";
 import MembershipDetailsTemplate from "./MembershipDetailsTemplate";
 import CaTrainingDetailsTemplate from "./CaTrainingDetailsTemplate";
 
-const TrainingDetails = ({ intl, isWebView, isViewMode = false }) => {
+const TrainingDetails = ({ intl, isWebView, isViewMode = false }, ref) => {
     //refs
     const GMCSDetailsTemplateRef = useRef();
     const MembershipDetailsTemplateRef = useRef();
@@ -24,6 +24,15 @@ const TrainingDetails = ({ intl, isWebView, isViewMode = false }) => {
     //       errorCallback: () => {},
     //     });
     //   }, []);
+
+    useImperativeHandle(ref, () => ({
+      getALlData: () => {
+        return {
+          ...GMCSDetailsTemplateRef?.current?.getState(),
+          ...MembershipDetailsTemplateRef?.current?.getState()
+        }
+      }
+    }));
 
     const edDetailsConfig = [
         {
@@ -44,4 +53,4 @@ const TrainingDetails = ({ intl, isWebView, isViewMode = false }) => {
   );
 };
 
-export default TrainingDetails;
+export default React.forwardRef(TrainingDetails);

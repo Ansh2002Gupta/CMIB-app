@@ -30,6 +30,8 @@ const AddApplicationTemplate = ({
   const [isSaveEnabled, setIsSaveEnaabled] = useState(false);
   const personalDetailsref = useRef();
   const edDetailsRef = useRef();
+  const trainingDetailRef = useRef();
+
   const {
     isLoading,
     makeRequest,
@@ -48,7 +50,7 @@ const AddApplicationTemplate = ({
       : {};
 
   const getCurrentStepperDetails = () => {
-    switch (2) {
+    switch (selectedStepper.id) {
       case 1:
         return (
           <PersonalDetails
@@ -62,7 +64,7 @@ const AddApplicationTemplate = ({
       case 2:
         return <EducationalDetails ref={edDetailsRef} intl={intl} isWebView={isWebView} handleSave={(val) => {if (val !== isSaveEnabled) {setIsSaveEnaabled(val)}}} />;
       case 3:
-        return <TrainingDetails intl={intl} isWebView={isWebView} />;
+        return <TrainingDetails intl={intl} isWebView={isWebView}  ref={trainingDetailRef} handleSave={(val) => {if (val !== isSaveEnabled) {setIsSaveEnaabled(val)}}}/>;
       case 4:
         return <WorkExperienceDetails intl={intl} isWebView={isWebView} />;
       case 5:
