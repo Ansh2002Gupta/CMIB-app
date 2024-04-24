@@ -32,6 +32,7 @@ const AddApplicationTemplate = ({
   const personalDetailsref = useRef();
   const edDetailsRef = useRef();
   const workExperienceDetailsref = useRef();
+  const trainingDetailRef = useRef();
 
   const { isLoading, makeRequest, error } = usePut({
     url: "/member/nqca-placements/rounds/264/academics",
@@ -76,7 +77,18 @@ const AddApplicationTemplate = ({
           />
         );
       case 3:
-        return <TrainingDetails intl={intl} isWebView={isWebView} />;
+        return (
+          <TrainingDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={trainingDetailRef}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
       case 4:
         return (
           <WorkExperienceDetails
