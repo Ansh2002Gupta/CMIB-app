@@ -362,7 +362,7 @@ const useContentMarketingManagement = (onViewPress) => {
               onPress={() => {}}
               isSuccess
               maxWidth={"xs"}
-              imageOnSuccess={images.iconSheildTick}
+              imageOnSuccess={images.iconShieldSuccess}
               handleButtonOnePress={() => {
                 setShowConsentModal(-1);
               }}

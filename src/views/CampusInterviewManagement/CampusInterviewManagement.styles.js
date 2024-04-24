@@ -44,6 +44,7 @@ const styles = {
     }),
     paddingLeft: 24,
     paddingRight: 24,
+    backgroundColor: colors.white,
   },
   sortingIcon: {
     height: 16,

@@ -40,7 +40,7 @@ export const recordDataAhemdabad = [
     shortlisting_round: "2",
   },
   {
-    employer_id: 4,
+    employer_id: 6,
     employer_name: "Kelton Tech",
     interview_type: "Group Discussion",
     mode: "Physical",

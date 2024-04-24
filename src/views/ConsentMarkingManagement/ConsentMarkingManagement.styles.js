@@ -121,6 +121,7 @@ const styles = {
       web: {
         borderTopWidth: 0,
         paddingTop: 24,
+        backgroundColor: colors.white,
       },
     }),
     paddingLeft: 24,

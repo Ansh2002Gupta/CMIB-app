@@ -167,7 +167,7 @@ import iconEditBlue from "../../public/images/svg/iconEditBlue.svg";
 import iconWallet from "../../public/images/svg/wallet.svg";
 import iconSheildTick from "../../public/images/svg/iconSheildTick.svg";
 import iconShieldTickDisable from "../../public/images/svg/iconShieldTickDisable.svg";
-import iconSuccessShield from "../../public/images/svg/iconSuccessShield.svg";
+import iconShieldSuccess from "../../public/images/svg/iconShieldSuccess.svg";
 import iconDocument from "../../public/images/svg/iconDocument.svg";
 import iconPPT from "../../public/images/svg/iconPPT.svg";
 import iconPDF from "../../public/images/svg/iconPDF.svg";
@@ -343,7 +343,7 @@ const images = {
   iconWallet,
   iconSheildTick,
   iconShieldTickDisable,
-  iconSuccessShield,
+  iconShieldSuccess,
   iconDocument,
   iconPPT,
   iconPDF,

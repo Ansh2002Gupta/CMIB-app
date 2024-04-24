@@ -273,9 +273,7 @@ const iconSheildTick = appendAppBaseURl("/images/svg/iconSheildTick.svg");
 const iconShieldTickDisable = appendAppBaseURl(
   "/images/svg/iconShieldTickDisable.svg"
 );
-const iconSuccessShield = appendAppBaseURl(
-  "./images/svg/iconSuccessShield.svg"
-);
+const iconShieldSuccess = appendAppBaseURl("/images/svg/iconShieldSuccess.svg");
 const iconDocument = appendAppBaseURl("/images/svg/iconDocument.svg");
 const iconPPT = appendAppBaseURl("/images/svg/iconPPT.svg");
 const iconPDF = appendAppBaseURl("/images/svg/iconPDF.svg");
@@ -476,7 +474,7 @@ const images = {
   iconEditBlue,
   iconSheildTick,
   iconShieldTickDisable,
-  iconSuccessShield,
+  iconShieldSuccess,
   iconDocument,
   iconPPT,
   iconPDF,
