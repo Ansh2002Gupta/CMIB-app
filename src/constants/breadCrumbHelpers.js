@@ -28,6 +28,15 @@ const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
         },
       ];
     }
+    case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`: {
+      return [
+        { path: navigations.ROUND_ONE, label: "Round 1" },
+        {
+          path: `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}?id=${roundId}`,
+          label: "Centre wise Company detail",
+        },
+      ];
+    }
     case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}`: {
       return [
         { path: navigations.ROUND_ONE, label: "Round 1" },

@@ -47,7 +47,9 @@ const Breadcrumbs = () => {
       pathname ===
         `/${currentModule}/${navigations.JOB_APPLICANTS}/${job_id}/applicant-details/${id}` ||
       pathname ===
-        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}`
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`
     );
   };
 
