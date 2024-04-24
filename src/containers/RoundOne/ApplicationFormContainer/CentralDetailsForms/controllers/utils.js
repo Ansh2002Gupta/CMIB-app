@@ -304,19 +304,6 @@ export const createInterviewDateModuleOptions = (
   idKey = "id",
   showInterviewMode
 ) => {
-  console.log(
-    {
-      id: module[idKey],
-      label: showInterviewMode
-        ? formatDate(module[labelKey])
-        : `${formatDate(module[labelKey])} (${module?.interview_type})`,
-      name: module[labelKey],
-      value: module[valueKey],
-      isSelected: contact?.includes(String(module[valueKey])),
-      selectedIndex: null,
-    },
-    "showInterviewMode"
-  );
   return {
     id: module[idKey],
     label: showInterviewMode
