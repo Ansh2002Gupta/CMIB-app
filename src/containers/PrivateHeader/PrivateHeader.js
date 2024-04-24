@@ -15,6 +15,7 @@ import UserAccountInfo from "../../components/UserAccountInfo";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { navigations } from "../../constants/routeNames";
 import styles from "./PrivateHeader.style";
+import ThemeSwitcher from "../../components/ThemeSwitcher";
 
 const PrivateHeader = ({
   onPressLeftIcon = () => {},
@@ -56,6 +57,7 @@ const PrivateHeader = ({
         )}
         <Breadcrumbs />
       </View>
+      <ThemeSwitcher />
       <UserAccountInfo
         onPressRightIcon={onPressRightIcon}
         rightIcon={rightIcon}
