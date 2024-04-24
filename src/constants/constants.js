@@ -441,8 +441,8 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
   const currentModules =
     currentModule === NEWLY_QUALIFIED
       ? {
-          psychometric_test_fee: "Psychometric/ Written Test Fee",
-        }
+        psychometric_test_fee: "Psychometric/ Written Test Fee",
+      }
       : {};
   return {
     centre_name: "Centre Name",
@@ -898,6 +898,36 @@ export const INACTIVE_PACKAGE_TABLE_HEADING = {
   start_date: "Start Date",
   validity_date: "Validity Date",
 };
+
+export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT = {
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  center_name: "Center Name",
+  interview_dates: "Interview Dates",
+  shortlisting_round: "Shortlisting Round",
+  written_test: "Written Test"
+};
+
+export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT_CAMPUS = {
+  center_name: "Center Name",
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  interview_dates_time: "Interview Dates & Time",
+  offer_provided: "Offer Provided",
+  offer_acceptance_deadline: "Offer Acceptance Deadline"
+};
+
+
+export const ROUND_ONE_CAMPUS_INTERVIEW_MANAGEMENT = {
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  interview_dates: "Interview dates",
+  shortlisting_round: "Shortlisting round",
+};
+
 export const JOB_STATUS_RESPONSE_CODE = {
   "Shortlist Candidate": 3,
   "Reject Candidate": 2,

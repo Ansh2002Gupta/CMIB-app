@@ -43,6 +43,10 @@ const Breadcrumbs = () => {
   const isBreadcrumbLocation = (pathname) => {
     return (
       pathname === `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}` ||
       (pathname === navigations.COMPANY_PROFILE && isMdOrGreater) ||
       pathname ===
         `/${currentModule}/${navigations.JOB_APPLICANTS}/${job_id}/applicant-details/${id}`
