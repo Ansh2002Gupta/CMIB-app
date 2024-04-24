@@ -5,6 +5,7 @@ import useFetch from "../../hooks/useFetch";
 import {
   APPLICATION,
   CENTRES,
+  OVERVIEW_DATA,
   ROUNDS,
 } from "../../services/apiServices/apiEndPoint";
 import { COMPANY } from "../../constants/constants";
@@ -21,9 +22,9 @@ const useShortlistingConsentInterview = ({ roundId, centreId }) => {
     error: errorDiagramData,
     setData: setDiagramData,
   } = useFetch({
-    // url: `${COMPANY}/${selectedModule?.key}/${ROUNDS}/${roundId}/${APPLICATION}/${CENTRES}/${centreId}`,
+    // url: `${COMPANY}/${selectedModule?.key}/${ROUNDS}/${roundId}/${APPLICATION}/${CENTRES}/${centreId}/${OVERVIEW_DATA}`,
     /*TODO:: PLEASE REMOVE THE HARD CODED API AND USE THE ABOVE API CALL.*/
-    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/264${APPLICATION}/${CENTRES}/43`,
+    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/264${APPLICATION}/${CENTRES}/43/${OVERVIEW_DATA}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },

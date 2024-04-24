@@ -8,7 +8,9 @@ import LoadingScreen from "../../components/LoadingScreen";
 import useShortlistingConsentInterview from "./useShortlistingConsentInterview";
 import {
   cardConfigOverLine,
+  cardConfigOverLineColorArray,
   cardConfigOverRectangle,
+  cardConfigOverRectangleColorArray,
   dataCircleConfig,
   lineSegmentStylesForLine,
   lineSegmentStylesForRectangle,
@@ -88,7 +90,7 @@ const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
                 return (
                   <View
                     key={index}
-                    style={[styles?.borderSegment, styles[styleKey]]}
+                    style={[styles?.borderSegment, styles?.[styleKey]]}
                   />
                 );
               })}
@@ -108,7 +110,9 @@ const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
                       : "_"
                   }
                   customPosition={cardInfo?.position}
-                  customStyles={cardInfo?.style}
+                  customStyles={{
+                    color: cardConfigOverRectangleColorArray[index],
+                  }}
                 />
               );
             })}
@@ -150,7 +154,9 @@ const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
                         : "_"
                     }
                     customPosition={cardInfo?.position}
-                    customStyles={cardInfo?.style}
+                    customStyles={{
+                      color: cardConfigOverLineColorArray[index],
+                    }}
                   />
                 );
               })}

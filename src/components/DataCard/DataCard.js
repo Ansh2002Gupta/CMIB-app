@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
@@ -11,7 +12,8 @@ import styles, {
 } from "./DataCard.styles";
 
 const DataCard = ({ data, customStyles, customPosition }) => {
-  const { count, text } = data;
+  const intl = useIntl();
+  const { count, textId } = data;
   const { color } = customStyles;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   return (
@@ -32,7 +34,7 @@ const DataCard = ({ data, customStyles, customPosition }) => {
         customTextStyle={styles?.textInfo}
         customContainerStyle={styles.textContainer}
       >
-        {text}
+        {intl.formatMessage({ id: textId })}
       </CommonText>
     </View>
   );

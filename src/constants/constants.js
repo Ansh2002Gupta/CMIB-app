@@ -910,56 +910,63 @@ export const JOB_STATUS_RESPONSE_CODE = {
 
 export let cardConfigOverRectangle = [
   {
-    data: { count: 500, text: "Availbale for Round 1" },
+    data: { count: 500, textId: "label.available_round_1" },
     position: { top: "-15%", left: "-15%" },
     refKey: "round_1_available",
-    style: { color: colors.darkBlue },
   },
   {
-    data: { count: 120, text: "Round 1 shortlist" },
+    data: { count: 120, textId: "label.round_1_shortlist" },
     position: { top: "-15%", right: "25%" },
     refKey: "round_1_shortlist",
-    style: { color: colors.glowingPurple },
   },
   {
-    data: { count: 90, text: "Availbale for Round 2" },
+    data: { count: 90, textId: "label.available_round_2" },
     position: { bottom: "-15%", left: "-15%" },
     refKey: "round_2_available",
-    style: { color: colors.extraDarkPurple },
   },
   {
-    data: { count: 10, text: "Round 2 shortlist" },
+    data: { count: 10, textId: "label.round_2_shortlist" },
     position: { bottom: "-15%", right: "25%" },
     refKey: "round_2_shortlist",
-    style: { color: colors.medicineBlue },
   },
+];
+
+export const cardConfigOverRectangleColorArray = [
+  colors.darkBlue,
+  colors.glowingPurple,
+  colors.extraDarkPurple,
+  colors.extraDarkPurple,
+  colors.medicineBlue,
 ];
 
 export let cardConfigOverLine = [
   {
-    data: { count: 500, text: "Final Consent Marked List" },
+    data: { count: 500, textId: "label.final_consent_marked_list" },
     position: { top: -65, left: -75 },
     refKey: "final_concent",
-    style: { color: colors.hotPink },
   },
   {
-    data: { count: 120, text: "Interview Shortlist" },
+    data: { count: 120, textId: "label.interview_shortlist" },
     position: { top: -65, left: "24%" },
     refKey: "interview_shortlist",
-    style: { color: colors.ambientOrange },
   },
   {
-    data: { count: 90, text: "Offered Candidates" },
+    data: { count: 90, textId: "label.offered_candidates" },
     position: { top: -65, left: "60%" },
     refKey: "job_offered",
-    style: { color: colors.paleYellow },
   },
   {
-    data: { count: 10, text: "Offer Accepted by Candidates" },
+    data: { count: 10, textId: "label.offer_accepted_by_candidates" },
     position: { top: -65, left: "96%" },
     refKey: "offer_accepted",
-    style: { color: colors.green },
   },
+];
+
+export const cardConfigOverLineColorArray = [
+  colors.hotPink,
+  colors.ambientOrange,
+  colors.paleYellow,
+  colors.green,
 ];
 
 export const lineSegmentStylesForRectangle = [
