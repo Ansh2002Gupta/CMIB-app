@@ -11,8 +11,6 @@ const styles = StyleSheet.create({
   },
   bottomMargin: {
     marginBottom: 16,
-    marginLeft: 16,
-    marginRight: 16,
   },
   companyRequireToggleStyle: {
     paddingTop: 12,

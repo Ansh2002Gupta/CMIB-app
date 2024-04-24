@@ -683,7 +683,7 @@ export const mapDataToPayload = (data, currentModule) => {
     } else if (item.key === "document_type") {
       acc[cellID].doc_type = item.value;
     } else if (item.key === "no_of_copies") {
-      acc[cellID].no_of_photocopies = parseInt(item.value, 10);
+      acc[cellID].no_of_photocopies = item.value || 0;
     }
     if (!!item.id) {
       acc[cellID].id = item?.id;
