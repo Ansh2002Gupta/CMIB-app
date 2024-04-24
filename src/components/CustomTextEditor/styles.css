@@ -3,7 +3,7 @@
   border-top-right-radius: 12px;
 }
 .ql-container.ql-snow {
-  border: 1px solid #ecdddd;
+  border: 1px solid #CCD0E5;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   padding: 12px;
@@ -27,7 +27,7 @@
   border: none;
 }
 .disabled {
-  border: 1px solid #ecdddd;
+  border: 1px solid #CCD0E5;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   background-color: #ffff;

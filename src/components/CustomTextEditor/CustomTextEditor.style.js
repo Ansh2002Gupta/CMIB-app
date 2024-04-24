@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   toolbarStyle: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.lightGrey,
   },
   labelContainer: {
     flexDirection: "row",
@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingBottom: 16,
-    borderColor: colors.lightGray,
+    borderColor: colors.lightGrey,
     marginTop: 4,
   },
   invalidInput: {
-    borderColor: colors.red,
+    borderColor: colors.lightGrey,
   },
   formatOptionStyle: {
     alignItems: "center",

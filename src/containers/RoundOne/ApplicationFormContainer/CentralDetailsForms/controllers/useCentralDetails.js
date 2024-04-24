@@ -40,7 +40,7 @@ import {
 } from "../../../../../constants/constants";
 import { navigations } from "../../../../../constants/routeNames";
 
-const useCentralDetails = ({ tabHandler, hasRoundTwo }) => {
+const useCentralDetails = ({ isEditable, tabHandler, hasRoundTwo }) => {
   const [contactDetailsState, setContactDetailsState] = useState({});
   const [interviewDetailsState, setInterviewDetailsState] = useState({
     [keys.campusDates]: [],
@@ -304,7 +304,7 @@ const useCentralDetails = ({ tabHandler, hasRoundTwo }) => {
       fetchDesignationData({});
       fetchMappedCentersList();
     }
-  }, [selectedModule, roundId]);
+  }, [isEditable, selectedModule, roundId]);
 
   useEffect(() => {
     if (applicationDetail) {
@@ -342,7 +342,7 @@ const useCentralDetails = ({ tabHandler, hasRoundTwo }) => {
         );
       }
     }
-  }, [applicationDetail, desginationData]);
+  }, [isEditable, applicationDetail, desginationData]);
 
   const findFieldByKeyOrLabel = (value, details) => {
     return details
