@@ -177,6 +177,9 @@ const styles = StyleSheet.create({
   selectionProcessTitle: {
     flexDirection: "row",
   },
+  loader: {
+    color: colors.green,
+  },
 });
 
 export default styles;

@@ -483,7 +483,7 @@ const PreInterviewPreferencesTemplate = ({
             {item?.email || "-"}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: commonStyles.columnStyle("25%"),
         isFillSpace: true,
       },
       {
