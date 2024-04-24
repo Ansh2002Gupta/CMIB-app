@@ -165,8 +165,12 @@ const PreInterviewPreferencesTemplate = ({
         "label.participating",
         !!apiData?.["participating_for_first_time"]
           ? apiData?.["participating_for_first_time"].toLowerCase() === "yes"
-            ? 0
-            : 1
+            ? isEditable
+              ? 0
+              : "Yes"
+            : isEditable
+            ? 1
+            : "No"
           : false
       );
       handleInterviewPreferences(
@@ -281,7 +285,7 @@ const PreInterviewPreferencesTemplate = ({
     if (!!selectedModule?.key) {
       fetchData();
     }
-  }, [selectedModule?.key]);
+  }, [selectedModule?.key, isEditable]);
 
   const getRowData = ({ data }) => {
     const groupedData = data?.reduce((acc, item) => {

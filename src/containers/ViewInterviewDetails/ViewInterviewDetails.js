@@ -59,19 +59,22 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
     },
   });
 
-  useEffect(async () => {
+  useEffect(() => {
+    if (!!interview_id) runGetInterviewDates();
+    else runFetchData();
+  }, [interview_id]);
+
+  const runFetchData = async () => {
     if (!interview_id) {
       const newData = await fetchData();
       setInterviewData(newData);
     }
-  }, []);
+  };
 
-  useEffect(async () => {
-    if (!!interview_id) {
-      const newData = await getInterviewDates();
-      restructureData(newData);
-    }
-  }, [interview_id]);
+  const runGetInterviewDates = async () => {
+    const newData = await getInterviewDates();
+    restructureData(newData);
+  };
 
   const getInterviewDates = async () => {
     const newData = await fetchInterviewDates({
@@ -147,8 +150,8 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
     interviewData?.alternate_remote_meeting_link || "-"
   );
 
-  const currentPrimaryType = data?.type.toLowerCase();
-  const currentAlternateType = data?.alternate_type.toLowerCase();
+  const currentPrimaryType = data?.type?.toLowerCase();
+  const currentAlternateType = data?.alternate_type?.toLowerCase();
 
   const currentPrimaryDetails =
     currentPrimaryType === "face-to-face"
@@ -184,7 +187,7 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
           </View>
         }
         bottomSection={
-          label === "link" ? (
+          label === "link" && value !== "-" ? (
             <CustomTouchableOpacity onPress={() => handlePressLink(value)}>
               <CommonText customTextStyle={styles.linkText}>{value}</CommonText>
             </CustomTouchableOpacity>
@@ -204,11 +207,11 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
             <>
               {renderHeadingAndValue({
                 heading: intl.formatMessage({
-                  id: `label.${item.headingIntl}`,
+                  id: `label.${item?.headingIntl}`,
                 }),
-                value: item.value,
+                value: item?.value,
                 isMandatory: isMandatory,
-                label: item.label,
+                label: item?.label,
               })}
             </>
           );
@@ -243,9 +246,9 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
                       <>
                         {renderHeadingAndValue({
                           heading: intl.formatMessage({
-                            id: `label.${item.headingIntl}`,
+                            id: `label.${item?.headingIntl}`,
                           }),
-                          value: item.value,
+                          value: item?.value,
                           isMandatory: true,
                         })}
                       </>
@@ -268,7 +271,7 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
                     heading: intl.formatMessage({
                       id: "label.interview_type",
                     }),
-                    value: !!data?.type && formatText(currentPrimaryType),
+                    value: !!data?.type ? formatText(currentPrimaryType) : "-",
                     isMandatory: true,
                   })}
                 </View>
@@ -292,9 +295,9 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
                     heading: intl.formatMessage({
                       id: "label.interview_type",
                     }),
-                    value:
-                      !!data?.alternate_type &&
-                      formatText(currentAlternateType),
+                    value: !!data?.alternate_type
+                      ? formatText(currentAlternateType)
+                      : "-",
                     isMandatory: false,
                   })}
                 </View>

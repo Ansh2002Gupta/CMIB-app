@@ -163,7 +163,12 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
 
   const handleCancel = (val) => {
     if (applicationFormData?.isSubmitted) {
-      setIsEditable(true);
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES?.MODE,
+        FORM_STATES.VIEW_ONLY
+      );
+      setIsEditable(val);
+      return;
     }
     navigateScreen(-1);
   };
