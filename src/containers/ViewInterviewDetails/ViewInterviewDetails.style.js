@@ -58,6 +58,17 @@ const styles = StyleSheet.create({
   marginTop: {
     marginTop: 20,
   },
+  loadingStyleNoData: {
+    backgroundColor: colors.white,
+    alignItems: "center",
+    padding: 30,
+    borderRadius: 16,
+  },
+  noMoreData: {
+    textAlign: "center",
+    fontSize: 14,
+    color: colors.lightGrey,
+  },
 });
 
 export const getModalInnerContainerHeight = (parameter = 0.6) => {
