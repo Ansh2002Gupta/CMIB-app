@@ -81,7 +81,7 @@ const AddApplicationTemplate = ({
     }
   };
 
-  const handleSavePress = () => {
+  const onPersonalDetailSave = () => {
     const payload = personalDetailsref?.current?.getFilledData();
     makeRequest({
       body: payload,
@@ -93,7 +93,17 @@ const AddApplicationTemplate = ({
         onChangeStepper()
       },
     })
-    //onChangeStepper()
+  }
+
+  const handleSavePress = () => {
+    switch (selectedStepper.id) {
+      case 1:
+        onPersonalDetailSave();
+        return
+      default:
+        return;
+    }
+    
   }
 
   return (
