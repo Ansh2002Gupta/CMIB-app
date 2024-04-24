@@ -89,8 +89,6 @@ const CustomTable = ({
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
-  isStatusTextBoolean,
-  popUpMessage,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
