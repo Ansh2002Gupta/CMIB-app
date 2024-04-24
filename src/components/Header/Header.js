@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import ThemeSwitcher from "../../components/ThemeSwitcher";
 import styles from "./Header.style";
 
 const Header = (props) => {
@@ -20,6 +21,7 @@ const Header = (props) => {
         </CommonText>
       </View>
       <View style={styles.borderStyle} />
+      <ThemeSwitcher />
     </View>
   );
 };
