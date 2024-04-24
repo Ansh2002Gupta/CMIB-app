@@ -774,3 +774,11 @@ export const convertMobileBarData = (data) => {
 
   return chartData;
 };
+
+export const formatText = (text, delimitter = "-") => {
+  const words = text.split(delimitter);
+  const newWordList = words.map((word) => {
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+  });
+  return newWordList.join(" ");
+};
