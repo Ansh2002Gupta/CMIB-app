@@ -23,6 +23,7 @@ const useGlobalSessionListApi = () => {
     error: errorGettingSession,
     isError: isErrorGettingSesssion,
     fetchData,
+    isLoading: isLoadingSession,
     setError: setErrorGettingSession,
   } = useFetch({
     url: "",
@@ -117,6 +118,7 @@ const useGlobalSessionListApi = () => {
     getGlobalSessionList,
     error,
     isError,
+    isLoadingSession,
     setErrorGettingGlobalSession,
     setErrorGettingSession,
   };
