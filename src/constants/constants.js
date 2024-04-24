@@ -908,48 +908,56 @@ export const JOB_STATUS_RESPONSE_CODE = {
   "Job Not Offered": 9,
 };
 
-export const cardConfigOverRectangle = [
+export let cardConfigOverRectangle = [
   {
     data: { count: 500, text: "Availbale for Round 1" },
     position: { top: "-15%", left: "-15%" },
+    refKey: "round_1_available",
     style: { color: colors.darkBlue },
   },
   {
     data: { count: 120, text: "Round 1 shortlist" },
     position: { top: "-15%", right: "25%" },
+    refKey: "round_1_shortlist",
     style: { color: colors.glowingPurple },
   },
   {
     data: { count: 90, text: "Availbale for Round 2" },
     position: { bottom: "-15%", left: "-15%" },
+    refKey: "round_2_available",
     style: { color: colors.extraDarkPurple },
   },
   {
     data: { count: 10, text: "Round 2 shortlist" },
     position: { bottom: "-15%", right: "25%" },
+    refKey: "round_2_shortlist",
     style: { color: colors.medicineBlue },
   },
 ];
 
-export const cardConfigOverLine = [
+export let cardConfigOverLine = [
   {
-    data: { count: 500, text: "Availbale for Round 1" },
+    data: { count: 500, text: "Final Consent Marked List" },
     position: { top: -65, left: -75 },
+    refKey: "final_concent",
     style: { color: colors.hotPink },
   },
   {
-    data: { count: 120, text: "Round 1 shortlist" },
+    data: { count: 120, text: "Interview Shortlist" },
     position: { top: -65, left: "24%" },
+    refKey: "interview_shortlist",
     style: { color: colors.ambientOrange },
   },
   {
-    data: { count: 90, text: "Availbale for Round 2" },
+    data: { count: 90, text: "Offered Candidates" },
     position: { top: -65, left: "60%" },
+    refKey: "job_offered",
     style: { color: colors.paleYellow },
   },
   {
-    data: { count: 10, text: "Round 2 shortlist" },
+    data: { count: 10, text: "Offer Accepted by Candidates" },
     position: { top: -65, left: "96%" },
+    refKey: "offer_accepted",
     style: { color: colors.green },
   },
 ];
@@ -967,13 +975,15 @@ export const lineSegmentStylesForLine = [
   "thirdLineSegment",
 ];
 
-export const dataCircleConfig = [
+export let dataCircleConfig = [
   {
     data: 10,
+    refKey: "round_1_consent",
     styleKey: "dataCircle1",
   },
   {
     data: 11,
+    refKey: "round_2_consent",
     styleKey: "dataCircle2",
   },
 ];

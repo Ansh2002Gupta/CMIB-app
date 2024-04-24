@@ -1,8 +1,11 @@
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import DataCard from "../../components/DataCard/DataCard";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import LoadingScreen from "../../components/LoadingScreen";
+import useShortlistingConsentInterview from "./useShortlistingConsentInterview";
 import {
   cardConfigOverLine,
   cardConfigOverRectangle,
@@ -14,9 +17,59 @@ import styles, {
   getStylesAsPerWidth,
 } from "./ShortlistingConsentInterviewDiagram.styles";
 
-const ShortlistingConsentInterviewDiagram = () => {
+const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  return (
+  const [diagramDataState, setDiagramDataState] = useState({
+    cardConfigRectangle: [],
+    cardConfigLine: [],
+    circleConfig: [],
+  });
+  const {
+    diagramData,
+    fetchDiagramData,
+    isDiagramDataLoading,
+    isErrorDiagramData,
+    errorDiagramData,
+  } = useShortlistingConsentInterview({
+    roundId: round_id,
+    centreId: centre_id,
+  });
+
+  useEffect(() => {
+    if (!!diagramData) setApiDataToObjects();
+  }, [diagramData]);
+
+  const setApiDataToObjects = () => {
+    cardConfigOverRectangle?.forEach((card) => {
+      if (diagramData?.hasOwnProperty(card?.refKey)) {
+        card.data.count = !!diagramData?.[card?.refKey]
+          ? diagramData?.[card?.refKey]
+          : 0;
+      }
+    });
+    cardConfigOverLine.forEach((card) => {
+      if (diagramData?.hasOwnProperty(card?.refKey)) {
+        card.data.count = !!diagramData?.[card?.refKey]
+          ? diagramData?.[card?.refKey]
+          : 0;
+      }
+    });
+    dataCircleConfig.forEach((card) => {
+      if (diagramData?.hasOwnProperty(card?.refKey)) {
+        card.data = !!diagramData?.[card?.refKey]
+          ? diagramData?.[card?.refKey]
+          : 0;
+      }
+    });
+    setDiagramDataState((prev) => ({
+      ...prev,
+      cardConfigRectangle: cardConfigOverRectangle,
+      cardConfigLine: cardConfigOverLine,
+      circleConfig: dataCircleConfig,
+    }));
+  };
+
+  return !!diagramData && !isDiagramDataLoading && !isErrorDiagramData ? (
     <ScrollView
       style={{
         ...getStylesAsPerWidth(currentBreakpoint, "outerContainer"),
@@ -25,51 +78,98 @@ const ShortlistingConsentInterviewDiagram = () => {
         currentBreakpoint !== "xs" && currentBreakpoint !== "sm"
       }
     >
-      <View style={styles?.rectangle}>
-        {lineSegmentStylesForRectangle.map((styleKey) => {
-          return <View style={[styles?.borderSegment, styles[styleKey]]} />;
-        })}
-        <View style={styles.tempBox1}></View>
-        <View style={styles.tempBox2}></View>
-        {cardConfigOverRectangle.map((cardInfo, index) => {
-          return (
-            <DataCard
-              key={index}
-              data={cardInfo?.data}
-              customPosition={cardInfo?.position}
-              customStyles={cardInfo?.style}
-            />
-          );
-        })}
-        {dataCircleConfig.map((circleInfo) => {
-          return (
-            <View
-              style={{
-                ...styles?.dataCircle,
-                ...getStylesAsPerWidth(currentBreakpoint, circleInfo?.styleKey),
-              }}
-            >
-              {circleInfo?.data}
+      {isDiagramDataLoading && !isErrorDiagramData ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          <View style={styles?.rectangle}>
+            {!!diagramData &&
+              lineSegmentStylesForRectangle.map((styleKey, index) => {
+                return (
+                  <View
+                    key={index}
+                    style={[styles?.borderSegment, styles[styleKey]]}
+                  />
+                );
+              })}
+            {!!diagramData && (
+              <>
+                <View style={styles.tempBox1}></View>
+                <View style={styles.tempBox2}></View>
+              </>
+            )}
+            {diagramDataState?.cardConfigRectangle?.map((cardInfo, index) => {
+              return (
+                <DataCard
+                  key={index}
+                  data={
+                    !!cardInfo?.data || cardInfo?.data === 0
+                      ? cardInfo?.data
+                      : "_"
+                  }
+                  customPosition={cardInfo?.position}
+                  customStyles={cardInfo?.style}
+                />
+              );
+            })}
+            {diagramDataState?.circleConfig?.map((circleInfo, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{
+                    ...styles?.dataCircle,
+                    ...getStylesAsPerWidth(
+                      currentBreakpoint,
+                      circleInfo?.styleKey
+                    ),
+                  }}
+                >
+                  {circleInfo?.data}
+                </View>
+              );
+            })}
+          </View>
+          {!!diagramData && (
+            <View style={styles?.line}>
+              {!!diagramData &&
+                lineSegmentStylesForLine?.map((styleKey, index) => {
+                  return (
+                    <View
+                      key={index}
+                      style={[styles.borderSegment, styles[styleKey]]}
+                    />
+                  );
+                })}
+              {diagramDataState?.cardConfigLine?.map((cardInfo, index) => {
+                return (
+                  <DataCard
+                    key={index}
+                    data={
+                      !!cardInfo?.data || cardInfo?.data === 0
+                        ? cardInfo?.data
+                        : "_"
+                    }
+                    customPosition={cardInfo?.position}
+                    customStyles={cardInfo?.style}
+                  />
+                );
+              })}
             </View>
-          );
-        })}
-      </View>
-      <View style={styles?.line}>
-        {lineSegmentStylesForLine?.map((styleKey) => {
-          return <View style={[styles.borderSegment, styles[styleKey]]} />;
-        })}
-        {cardConfigOverLine?.map((cardInfo, index) => {
-          return (
-            <DataCard
-              key={index}
-              data={cardInfo?.data}
-              customPosition={cardInfo?.position}
-              customStyles={cardInfo?.style}
-            />
-          );
-        })}
-      </View>
+          )}
+        </>
+      )}
     </ScrollView>
+  ) : (
+    <>
+      {isDiagramDataLoading && !isErrorDiagramData && <LoadingScreen />}
+      {isErrorDiagramData && (
+        <ErrorComponent
+          errorMsg={errorDiagramData}
+          onRetry={fetchDiagramData}
+          disableRetryBtn={isDiagramDataLoading}
+        />
+      )}
+    </>
   );
 };
 

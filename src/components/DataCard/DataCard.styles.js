@@ -33,11 +33,20 @@ const styles = StyleSheet.create({
   },
   textInfo: {
     fontSize: 14,
+    textAlign: "center",
   },
   dataTextWrapper: {
     flex: 1,
     overflow: "hidden",
     justifyContent: "center",
+  },
+  textContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 });
 

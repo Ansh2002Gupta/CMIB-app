@@ -27,7 +27,11 @@ const DataCard = ({ data, customStyles, customPosition }) => {
       >
         {count}
       </CommonText>
-      <CommonText fontWeight={"600"} style={styles?.textInfo}>
+      <CommonText
+        fontWeight={"600"}
+        customTextStyle={styles?.textInfo}
+        customContainerStyle={styles.textContainer}
+      >
         {text}
       </CommonText>
     </View>
