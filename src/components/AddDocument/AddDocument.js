@@ -7,6 +7,7 @@ const AddDocument = ({
   requiredDocumentDetails,
   setRenderJobDetails,
   addDocumentField,
+  isEditable,
 }) => {
   const {
     addDocumentModal,
@@ -35,6 +36,7 @@ const AddDocument = ({
         handleDocumentDetailChange,
         handleMultiRowDocumentDetails,
         isFormValid,
+        isEditable,
         onClickAddDocument,
         onClickAddDocumentCancelButton,
         onClickAddDocumentSaveButton,

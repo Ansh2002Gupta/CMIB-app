@@ -19,7 +19,7 @@ const BarChart = ({ barColor, data, label, height }) => {
         </CommonText>
       }
       bottomSection={
-        <View style={{}}>
+        <View>
           <BarChartComponent
             horizontal
             barWidth={22}
@@ -35,10 +35,9 @@ const BarChart = ({ barColor, data, label, height }) => {
             roundedBottom={false}
             roundedTop={false}
             noOfSections={data.length}
-            topLabelTextStyle={{ fontWeight: 'bold', color: colors.black }}
+            topLabelTextStyle={styles.topLabelTextStyle}
             rulesType="solid"
             autoShiftLabels={true}
-            style={{ backgroundColor: 'red' }}
           />
         </View>
       }

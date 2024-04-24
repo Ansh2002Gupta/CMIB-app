@@ -323,26 +323,71 @@ export const SCREEN_NAMES = {
   ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
 };
 
-export const APPLICATION_FORM_STEPPER_OPTIONS = [
-  {
-    title: "label.company_profile",
-  },
-  {
-    title: "label.job_details",
-  },
-  {
-    title: "label.pre_interview_preferences",
-  },
-  {
-    title: "label.centre_details",
-  },
-  {
-    title: "label.billing_info",
-  },
-  {
-    title: "label.payment",
-  },
-];
+export const ADD_DOCUMENT_HEADING = {
+  doc_name: "Document Name",
+  doc_type: "Document Type",
+  no_of_copies: "Number of Copies",
+};
+
+export const ADD_DESIGNATION_HEADING = {
+  designation_details: "Designation",
+  number_of_vacancies: "No. of Vacancy",
+};
+
+export const OTHER_BENEFIT_HEADING = {
+  benefits_details: "Benefits Details",
+  benefits_amount: "Amount",
+};
+
+export const ADD_PLACE_OF_POSTING_HEADING = {
+  place_of_posting: "Place of Posting",
+  general: "General",
+  obc: "OBC",
+  sc: "SC",
+  st: "ST",
+  ph: "PH",
+  others: "Others",
+  total: "Total",
+};
+
+export const APPLICATION_FORM_STEPPER_OPTIONS = (hasRoundTwo) => {
+  const roundOneSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+    {
+      title: "label.billing_info",
+    },
+    {
+      title: "label.payment",
+    },
+  ];
+  const roundTwoSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+  ];
+
+  return hasRoundTwo ? roundTwoSteps : roundOneSteps;
+};
 
 export const ROWS_PER_PAGE_ARRAY = [
   { value: 10, label: "10" },
@@ -401,7 +446,7 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
       : {};
   return {
     centre_name: "Centre Name",
-    total_vacancies: "Vacany",
+    total_vacancies: "Vacancy",
     interview_dates: "Interview Dates",
     amount: "Amount",
     ...currentModules,
@@ -1015,4 +1060,28 @@ export const CHART_DATA_TYPE = {
   TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED:
     "TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED",
   TOP_COMPANIES_WITH_HIGHEST_CTC: "TOP_COMPANIES_WITH_HIGHEST_CTC",
+};
+
+export const PAGINATION_PROPERTIES = {
+  CURRENT_PAGE: "current-page",
+  ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
+  FILTER: "filter",
+  MODE: "mode",
+};
+
+export const ADD_PREINTERVIEW_PREFERNCES_HEADING = {
+  designation: "Desgination",
+  name: "Name",
+  email: "Email",
+  mobile_country_code: "Mobile Country Code",
+  mobile_number: "Mobile Number",
+  std_country_code: "Area Code",
+  telephone_number: "Telephone Number",
+};
+
+export const FORM_STATES = {
+  VIEW_ONLY: "view",
+  EDITABLE: "edit",
+  EMPTY: "empty",
 };

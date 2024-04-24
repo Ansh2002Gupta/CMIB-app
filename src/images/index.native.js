@@ -168,6 +168,11 @@ import iconWallet from "../../public/images/svg/wallet.svg";
 import iconSheildTick from "../../public/images/svg/iconSheildTick.svg";
 import iconShieldTickDisable from "../../public/images/svg/iconShieldTickDisable.svg";
 import iconSuccessShield from "../../public/images/svg/iconSuccessShield.svg";
+import iconDocument from "../../public/images/svg/iconDocument.svg";
+import iconPPT from "../../public/images/svg/iconPPT.svg";
+import iconPDF from "../../public/images/svg/iconPDF.svg";
+import iconDoc from "../../public/images/svg/iconDoc.svg";
+import defaultImage from "../../public/images/svg/defaultImage.svg";
 
 const images = {
   iconArrowUp,
@@ -339,6 +344,11 @@ const images = {
   iconSheildTick,
   iconShieldTickDisable,
   iconSuccessShield,
+  iconDocument,
+  iconPPT,
+  iconPDF,
+  iconDoc,
+  defaultImage,
 };
 
 export default images;

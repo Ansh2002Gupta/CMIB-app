@@ -7,6 +7,7 @@ import CommonText from "../../../../../components/CommonText";
 import { mappedDataToUI, mappedPayload, offlineFields } from "../mappedData";
 import { formatDate, formatTime } from "../../../../../utils/util";
 import useGetCurrentUser from "../../../../../hooks/useGetCurrentUser";
+import useNavigateScreen from "../../../../../services/hooks/useNavigateScreen";
 import useIsWebView from "../../../../../hooks/useIsWebView";
 import styles from "../PaymentForm.style";
 import {
@@ -14,6 +15,7 @@ import {
   PAY,
   PAYMENT_INFO,
   ROUNDS,
+  SUBMIT,
   TRANSACTIONS,
   USER_TYPE_COMPANY,
 } from "../../../../../services/apiServices/apiEndPoint";
@@ -25,9 +27,10 @@ import {
   validatePAN,
   validateTAN,
 } from "../../../../../utils/validation";
-import { usePost } from "../../../../../hooks/useApiRequest";
+import { usePatch, usePost } from "../../../../../hooks/useApiRequest";
 import CustomTouchableOpacity from "../../../../../components/CustomTouchableOpacity";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
+import { navigations } from "../../../../../constants/routeNames";
 import {
   API_VERSION_QUERY_PARAM,
   SESSION_ID_QUERY_PARAM,
@@ -39,6 +42,7 @@ const usePaymentForm = () => {
   const [paymentDetails, setPaymentDetails] = useState([]);
   const [paymentList, setPaymentList] = useState();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const { navigateScreen } = useNavigateScreen();
   const isEditProfile = true;
   const intl = useIntl();
   const { id } = useParams();
@@ -114,6 +118,16 @@ const usePaymentForm = () => {
     },
   });
 
+  const {
+    makeRequest: submitApplication,
+    isLoading: isSubmitting,
+    error: errorWhileSubmitting,
+    setError: setErrorWhileSubmiting,
+  } = usePatch({
+    url:
+      USER_TYPE_COMPANY + `/${currentModule}` + APPLICATION + `/${id}` + SUBMIT,
+  });
+
   const isLoading = isLoadingTransactionList || isLoadingPaymentDetails;
 
   const getErrorDetails = () => {
@@ -184,13 +198,18 @@ const usePaymentForm = () => {
     const payload = mappedPayload(paymentDetails);
     makeRequest({
       body: payload,
-      onSuccessCallback: (data) => {
-        if (isWebView) {
-          if (data?.data && data?.data?.url) {
-            window.open(data?.data?.url, "_self");
-          } else {
-            window.location.reload();
+      onSuccessCallback: async (data) => {
+        if (payload?.payment_mode.toLowerCase() === "online") {
+          if (isWebView) {
+            if (data?.data && data?.data?.url) {
+              window.open(data?.data?.url, "_self");
+            } else {
+              window.location.reload();
+            }
           }
+        } else {
+          await fetchPaymentDetails({});
+          await fetchTransactionList({});
         }
       },
     });
@@ -409,7 +428,13 @@ const usePaymentForm = () => {
       },
     ];
   };
-  const handleSaveAndNext = () => {};
+  const handleSaveAndNext = () => {
+    submitApplication({
+      onSuccessCallback: () => {
+        navigateScreen(`/${currentModule}/${navigations.ROUND_ONE}`);
+      },
+    });
+  };
 
   return {
     currentModule,
@@ -424,8 +449,11 @@ const usePaymentForm = () => {
     handleSaveAndNext,
     getErrorDetails,
     isLoading,
+    isSubmitting,
+    errorWhileSubmitting,
     errorWhilePaymentInit,
     setErrorWhilePayment,
+    setErrorWhileSubmiting,
     isLoadingPaymentInit,
     isEditProfile,
     paymentDetails,

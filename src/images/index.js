@@ -276,6 +276,11 @@ const iconShieldTickDisable = appendAppBaseURl(
 const iconSuccessShield = appendAppBaseURl(
   "./images/svg/iconSuccessShield.svg"
 );
+const iconDocument = appendAppBaseURl("/images/svg/iconDocument.svg");
+const iconPPT = appendAppBaseURl("/images/svg/iconPPT.svg");
+const iconPDF = appendAppBaseURl("/images/svg/iconPDF.svg");
+const iconDoc = appendAppBaseURl("/images/svg/iconDoc.svg");
+const defaultImage = appendAppBaseURl("/images/svg/defaultImage.svg");
 
 const images = {
   iconArrowUp,
@@ -472,6 +477,11 @@ const images = {
   iconSheildTick,
   iconShieldTickDisable,
   iconSuccessShield,
+  iconDocument,
+  iconPPT,
+  iconPDF,
+  iconDoc,
+  defaultImage,
 };
 
 export default images;

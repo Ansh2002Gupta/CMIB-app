@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.black,
   },
+  donutContainer: {
+    marginStart: 90,
+    marginTop: 20
+  }
 });
 
 export default styles;

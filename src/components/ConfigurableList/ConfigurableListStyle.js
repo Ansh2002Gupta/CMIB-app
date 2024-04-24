@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGray,
     borderWidth: 1,
     overflow: "hidden",
-    minWidth: 300,
     minHeight: 360,
   },
   titleStyles: {
@@ -100,7 +99,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexShrink: 1,
     padding: 8,
-    maxWidth: 300,
     gap: 15,
   },
   item: {

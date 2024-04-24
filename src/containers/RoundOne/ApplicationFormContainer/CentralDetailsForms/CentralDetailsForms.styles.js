@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
   actionBtnContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     gap: 16,
     padding: 24,
-    backgroundColor: colors.backgroundGrey,
+    backgroundColor: colors.backgroundColor,
   },
   valueStyle: {
     marginLeft: 4,
@@ -63,6 +63,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  rightSection: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  disabled: {
+    opacity: 0.5,
+    backgroundColor: colors.white,
+    cursor: Platform.OS.toLowerCase() === "web" ? "not-allowed" : "",
   },
 
   innerContainerStyle: {
@@ -111,6 +120,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     flex: 1,
     backgroundColor: colors.white,
+    minWidth: 300,
   },
   flexContainer: {
     flex: 1,
@@ -129,7 +139,16 @@ const styles = StyleSheet.create({
   customToggleStyle: { marginTop: 12 },
   customLabelStyle: { color: colors.gray },
   toggleComponent: { marginBottom: 24 },
-  checkBoxStyle: { marginTop: 8 },
+  checkBoxStyle: {
+    marginTop: 8,
+  },
+  viewCheckBoxStyle: {
+    marginTop: 8,
+    flex: 1,
+    flexDirection: "row",
+    display: "flex",
+    gap: 8,
+  },
   selectionProcessStyle: {
     color: colors.black,
     fontSize: 16,
@@ -146,19 +165,14 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginTop: 24,
   },
-  actionBtnContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 16,
-    padding: 24,
-    backgroundColor: colors.backgroundColor,
-  },
-  buttonStyle: { maxHeight: 44, maxWidth: 80 },
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
+  buttonTwoStyleContainer: {
+    flex: undefined,
+  },
   backButtonStyle: {
     fontSize: 14,
   },
+  nextButtonStyle: { fontSize: 14, color: colors.white },
   starStyle: { color: colors.errorRed },
   selectionProcessTitle: {
     flexDirection: "row",

@@ -61,6 +61,7 @@ export const PAYMENT_INFO = "/payment-info";
 export const PROFILE = "/profile";
 export const ROUNDS = "/rounds";
 export const STATUS = "/status";
+export const SUBMIT = "/submit";
 export const JOB_DETAILS = "/job-detail";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
 export const TRANSACTIONS = "/transactions";

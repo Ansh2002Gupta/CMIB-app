@@ -24,11 +24,13 @@ import commonStyles from "../../../../theme/styles/commonStyles";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { formateErrors } from "../../../../utils/util";
 
-const PaymentForm = ({ tabHandler }) => {
+const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
   const {
     currentModule,
     errorWhilePaymentInit,
+    errorWhileSubmitting,
     setErrorWhilePayment,
+    setErrorWhileSubmiting,
     paymentDetails,
     handleBlur,
     handlePay,
@@ -40,6 +42,7 @@ const PaymentForm = ({ tabHandler }) => {
     getStatusStyle,
     getColoumConfigs,
     getErrorDetails,
+    isSubmitting,
     isLoading,
     isLoadingPaymentInit,
     handleSaveAndNext,
@@ -96,7 +99,7 @@ const PaymentForm = ({ tabHandler }) => {
                   handleChange={(fieldName, value) => {
                     handleInputChange(fieldName, value);
                   }}
-                  isEditProfile={isEditProfile}
+                  isEditProfile={isEditable}
                   datePickerContainer={styles.datePickerContainerStyle}
                 />
                 <CustomButton
@@ -145,37 +148,63 @@ const PaymentForm = ({ tabHandler }) => {
           isTopFillSpace
           bottomSection={
             <View style={styles.actionBtnContainer}>
-              <CustomButton
-                style={styles.buttonStyle}
-                iconLeft={{
-                  leftIconSource: images.iconArrowLeft,
-                }}
-                onPress={() => {
-                  tabHandler("prev");
+              <View
+                style={{
+                  ...(!isEditable && { flex: 1 }),
                 }}
               >
-                <CommonText
-                  fontWeight={"600"}
-                  customTextStyle={styles.backButtonStyle}
+                <CustomButton
+                  style={styles.buttonStyle}
+                  iconLeft={{
+                    leftIconSource: images.iconArrowLeft,
+                  }}
+                  onPress={() => {
+                    tabHandler("prev");
+                  }}
                 >
-                  {intl.formatMessage({ id: "label.back" })}
-                </CommonText>
-              </CustomButton>
-              <ActionPairButton
-                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                buttonTwoText={intl.formatMessage({
-                  id: "label.submit",
-                })}
-                onPressButtonOne={() => navigate(-1)}
-                onPressButtonTwo={() => {
-                  handleSaveAndNext();
-                }}
-                customStyles={{
-                  ...isWebProps,
-                  customContainerStyle: commonStyles.customContainerStyle,
-                }}
-                isButtonTwoGreen
-              />
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={styles.backButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.back" })}
+                  </CommonText>
+                </CustomButton>
+              </View>
+              {isEditable ? (
+                <ActionPairButton
+                  buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+                  buttonTwoText={intl.formatMessage({
+                    id: "label.submit",
+                  })}
+                  displayLoader={isSubmitting}
+                  onPressButtonOne={() => {
+                    isEditable ? setIsEditable(false) : navigate(-1);
+                  }}
+                  onPressButtonTwo={() => {
+                    handleSaveAndNext();
+                  }}
+                  customStyles={{
+                    ...isWebProps,
+                    customContainerStyle: commonStyles.customContainerStyle,
+                  }}
+                  isButtonTwoGreen
+                />
+              ) : (
+                <CustomButton
+                  withGreenBackground
+                  style={styles.buttonStyle}
+                  onPress={() => {
+                    navigate(-1);
+                  }}
+                >
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={styles.doneButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.done" })}
+                  </CommonText>
+                </CustomButton>
+              )}
             </View>
           }
         />
@@ -186,13 +215,19 @@ const PaymentForm = ({ tabHandler }) => {
           onRetry={() => getErrorDetails().onRetry()}
         />
       )}
-      {errorWhilePaymentInit && (
-        <ToastComponent
-          customToastStyle={styles.toastMessageStyle}
-          toastMessage={formateErrors(errorWhilePaymentInit)}
-          onDismiss={() => setErrorWhilePayment("")}
-        />
-      )}
+      {errorWhilePaymentInit ||
+        (errorWhileSubmitting && (
+          <ToastComponent
+            customToastStyle={styles.toastMessageStyle}
+            toastMessage={formateErrors(
+              errorWhilePaymentInit || errorWhileSubmitting
+            )}
+            onDismiss={() => {
+              setErrorWhilePayment("");
+              setErrorWhileSubmiting("");
+            }}
+          />
+        ))}
     </CustomScrollView>
   );
 };

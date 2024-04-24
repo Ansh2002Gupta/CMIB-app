@@ -739,7 +739,7 @@ export const formateErrors = (errorResponse) => {
 };
 
 export const convertStringtoNumber = (val) => {
-  return +val;
+  return !!val ? +val : 0;
 };
 
 export const convertGraphData = (data) => {
