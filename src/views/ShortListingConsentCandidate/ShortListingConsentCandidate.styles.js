@@ -14,6 +14,10 @@ const styles = {
       },
     }),
   }),
+  checkboxViewStyle: {
+    marginTop: 16,
+    alignItems: "center",
+  },
   cursorStyle: { cursor: "pointer" },
   justifyContentCenter: {
     justifyContent: "center",
@@ -103,6 +107,9 @@ const styles = {
     color: colors.darkBlue,
     borderBottomWidth: 1,
     borderColor: colors.darkBlue,
+  },
+  marginTop24: {
+    marginTop: 44,
   },
 };
 

@@ -78,9 +78,9 @@ const ShortListingConsentCandidate = () => {
     companyLocation,
     seletedCenter,
     setSeletedCenter,
-    seletedTabs,
+    selectedTabs,
     setSelectedTabs,
-  } = useShortListingConsent(onViewPress, onEditPress, id);
+  } = useShortListingConsent(id);
 
   const getMobileView = (item, index) => {
     return (
@@ -124,7 +124,7 @@ const ShortListingConsentCandidate = () => {
         }}
       />
       <>
-        {!false && (
+        {!isError && (
           <CustomTable
             {...{
               customFilterInfo,
@@ -160,7 +160,7 @@ const ShortListingConsentCandidate = () => {
               statusData,
               statusText,
               subHeadingText,
-              tableHeading: SHORTLISTING_TABLE_HEADING(seletedTabs),
+              tableHeading: SHORTLISTING_TABLE_HEADING(selectedTabs),
               tableIcon,
               totalcards,
               placeholder: intl.formatMessage({
@@ -170,16 +170,17 @@ const ShortListingConsentCandidate = () => {
             mobileComponentToRender={getMobileView}
             containerStyle={styles.customTableStyle}
             isTotalCardVisible={false}
-            selectedTabs={seletedTabs}
-            isFilterVisible={false}
+            selectedTabs={selectedTabs}
             ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
           />
         )}
         {isError && !!getErrorDetails()?.errorMessage && (
-          <ErrorComponent
-            errorMsg={getErrorDetails()?.errorMessage}
-            onRetry={() => getErrorDetails()?.onRetry()}
-          />
+          <View style={styles.marginTop24}>
+            <ErrorComponent
+              errorMsg={getErrorDetails()?.errorMessage}
+              onRetry={() => getErrorDetails()?.onRetry()}
+            />
+          </View>
         )}
       </>
     </View>

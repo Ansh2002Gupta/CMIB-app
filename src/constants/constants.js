@@ -396,7 +396,7 @@ export const SHORTLISTING_TABLE_HEADING = (centerSelected) => {
   let additionalColumn;
   if (centerSelected == 3 || centerSelected == 4) {
     additionalColumn = {
-      consent_given: "Consent Given",
+      consent: "Consent Given",
     };
   } else if (centerSelected == 5) {
     additionalColumn = {
@@ -415,15 +415,15 @@ export const SHORTLISTING_TABLE_HEADING = (centerSelected) => {
   }
 
   return {
-    registrationNumber: "Registration Number",
+    application_number: "Registration Number",
     name: "Name",
     gender: "Gender",
     age: "Age",
     city: "City",
     country: "Country",
-    ca_inter_rank: "CA Inter",
-    ca_final_rank: "CA Final",
-    ca_experience_rank: "Experience",
+    ca_inter_rank: "CA Inter %",
+    ca_final_rank: "CA Final %",
+    ca_experience_rank: "Experience (Years)",
     rank: "Rank",
     category: "Category",
     expected_salary: "Expected Salary",

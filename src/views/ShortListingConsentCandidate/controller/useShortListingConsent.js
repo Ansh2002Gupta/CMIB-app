@@ -17,6 +17,7 @@ import {
 import {
   DEFAULT_CATEGORY_FOR_FILTER_MODAL,
   FILTER_TYPE_ENUM,
+  JOB_STATUS_RESPONSE_CODE,
   POSTED_JOB_LISTING_ENUM,
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
@@ -34,6 +35,8 @@ import CheckBox from "../../../components/CheckBox";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import Chip from "../../../components/Chip";
 import { getQueryParams } from "../mappedData";
+import { useIntl } from "react-intl";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -42,9 +45,10 @@ const initialFilterState = {
   ["selectedApproved/NotApproved"]: [],
 };
 
-const useShortListingConsent = (onViewPress, onEditPress, id) => {
+const useShortListingConsent = (id) => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
+  const intl = useIntl();
 
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
@@ -52,46 +56,9 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [seletedCenter, setSeletedCenter] = useState(0);
-  const [seletedTabs, setSelectedTabs] = useState(0);
-
-  const [currentRecords, setCurrentRecords] = useState([
-    {
-      registrationNumber: "N1234",
-      name: "John",
-      gender: "Male",
-      age: "23",
-      city: "Lucknow",
-      country: "India",
-      ca_inter_rank: "23",
-      ca_final_rank: "50",
-      ca_experience_rank: "3",
-      rank: "2",
-      category: "General",
-      expected_salary: "23",
-      test_result: "Passed",
-      job_offered: "No",
-      offered_status: "Rejected",
-      consent_given: "Yes",
-    },
-    {
-      registrationNumber: "N4554",
-      name: "Peter",
-      gender: "Female",
-      age: "25",
-      city: "Agra",
-      country: "India",
-      ca_inter_rank: "23",
-      ca_final_rank: "50",
-      ca_experience_rank: "3",
-      rank: "2",
-      category: "OBC",
-      expected_salary: "23",
-      test_result: "Failed",
-      job_offered: "Yes",
-      offered_status: "Accepted",
-      consent_given: "No",
-    },
-  ]);
+  const [selectedTabs, setSelectedTabs] = useState(0);
+  const [currentRecords, setCurrentRecords] = useState([]);
+  const [selectedElement, setSelectedElements] = useState([]);
   const [filterState, setFilterState] = useState(initialFilterState);
   const [filterOptions, setFilterOptions] = useState({
     [POSTED_JOB_LISTING_ENUM.activeorInactive]: "",
@@ -108,6 +75,8 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
     getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.PostedJobs;
+  const popupRef = useRef();
+  useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
 
   const {
     data: candidateData,
@@ -116,7 +85,7 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
     isError: isErrorGetCandidateData,
     error: errorGetCandidateData,
   } = useFetch({
-    url: `company/${selectedModule?.key}/rounds/${id}/application/centres/32/candidate`,
+    url: `company/${selectedModule?.key}/rounds/${id}/application/centres/32/candidates`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -137,7 +106,7 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
   });
 
   const isTicketListingLoading = isCompanyLocationLoading || isLoading;
-  const isError = isErrorCompanyLocation;
+  const isError = isErrorCompanyLocation || isErrorGetCandidateData;
   const statusData = [
     {
       id: 1,
@@ -249,41 +218,40 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
     if (selectedModule.key) {
       fetchCompanyLocation();
     }
-
-    // fetchData();
   }, [selectedModule]);
+
   useEffect(() => {
     const fetchData = async () => {
       const requestedParams = {
         perPage: rowsPerPage,
         page: currentPage,
-        listType: getQueryParams(seletedTabs),
+        listType: getQueryParams(selectedTabs),
       };
       const initialData = await fetchCandidateData({
         queryParamsObject: requestedParams,
-        overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidate`,
+        overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidates`,
       });
       if (initialData) {
         setCurrentRecords(initialData?.records);
       }
       setIsFirstPageReceived(false);
     };
-    if (isSuccess && companyLocation) {
+    if (isSuccess && companyLocation && selectedTabs) {
       fetchData();
     }
-  }, [companyLocation, seletedCenter]);
+  }, [companyLocation, seletedCenter, selectedTabs]);
 
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
   const updateCurrentRecords = async (params) => {
-    params.listType = getQueryParams(seletedTabs);
+    params.listType = getQueryParams(selectedTabs);
     const newData = await fetchCandidateData({
       queryParamsObject: params,
-      overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidate`,
+      overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidates`,
     });
 
-    setCurrentRecords(newData.records);
+    setCurrentRecords(newData?.records ?? []);
   };
 
   const handleLoadMore = async () => {
@@ -297,9 +265,10 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
           page: nextPage,
           status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
           approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
-          listType: getQueryParams(seletedTabs),
+          listType: getQueryParams(selectedTabs),
+          q: filterOptions.searchData,
         },
-        overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidate`,
+        overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidates`,
       });
 
       if (newData && newData?.records?.length > 0) {
@@ -323,7 +292,7 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
     await updateCurrentRecords({
-      search: filterOptions.searchData,
+      q: filterOptions.searchData,
       perPage: rowsPerPage,
       page: page,
       status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
@@ -338,22 +307,22 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
       page: currentPage,
       status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
       approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
-      search: filterOptions.searchData,
+      q: filterOptions.searchData,
     });
   };
 
   const handleSearchResults = async (searchedData) => {
-    setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
+    setFilterOptions((prev) => ({ ...prev, q: searchedData }));
     if (isMob) {
       setCurrentPage(1);
       const newData = await fetchCandidateData({
         queryParamsObject: {
-          search: searchedData,
+          q: searchedData,
           status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
           approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
-          listType: getQueryParams(seletedTabs),
+          listType: getQueryParams(selectedTabs),
         },
-        overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidate`,
+        overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidates`,
       });
       setCurrentRecords(newData?.records);
       if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
@@ -363,7 +332,7 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
       }
     } else {
       await updateCurrentRecords({
-        search: searchedData,
+        q: searchedData,
         perPage: rowsPerPage,
         page: currentPage,
         status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
@@ -399,14 +368,14 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
       setCurrentPage(1);
       const newData = await fetchCandidateData({
         queryParamsObject: {
-          search: filterOptions.searchData,
+          q: filterOptions.searchData,
           status:
             currentFilterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
           approved:
             currentFilterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
-          listType: getQueryParams(seletedTabs),
+          listType: getQueryParams(selectedTabs),
         },
-        overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidate`,
+        overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidates`,
       });
       setCurrentRecords(newData?.records);
       if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
@@ -416,7 +385,7 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
       }
     } else {
       await updateCurrentRecords({
-        search: filterOptions.searchData,
+        q: filterOptions.searchData,
         status: currentFilterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
         approved:
           currentFilterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
@@ -435,6 +404,30 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
     "Approved/Not Approved",
   ];
   let isHeading = true;
+  const handleCheckbox = (item, isAllSelected) => {
+    if (isAllSelected) {
+      if (selectedElement.length === currentRecords.length) {
+        setSelectedElements([]);
+      } else {
+        const newArray = currentRecords.map((item) => {
+          return item.application_id;
+        });
+        setSelectedElements(newArray);
+      }
+    } else {
+      const index = selectedElement.indexOf(item);
+      if (index > -1) {
+        const newArray = [
+          ...selectedElement.slice(0, index),
+          ...selectedElement.slice(index + 1),
+        ];
+        setSelectedElements(newArray);
+      } else {
+        const newArray = [...selectedElement, item];
+        setSelectedElements(newArray);
+      }
+    }
+  };
 
   const getColoumConfigs = (item, isHeading, index, selectedTabs) => {
     const tableStyle = isHeading
@@ -448,7 +441,7 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
           content: (
             <>
               <CommonText customTextStyle={tableStyle}>
-                {item?.consent_given ?? "-"}
+                {item?.consent ?? "-"}
               </CommonText>
             </>
           ),
@@ -473,15 +466,13 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
                 <Chip
                   customTextStyle={tableStyle}
                   bgColor={
-                    item?.test_result === "Passed"
+                    item?.test_result == "pass"
                       ? colors.lightGreen
                       : colors.lightOrangeThird
                   }
                   style={{
                     color:
-                      item?.test_result === "Passed"
-                        ? colors.green
-                        : colors.red,
+                      item?.test_result == "pass" ? colors.green : colors.red,
                   }}
                   isBackground
                   label={item?.test_result ?? "-"}
@@ -510,13 +501,13 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
                 <Chip
                   customTextStyle={tableStyle}
                   bgColor={
-                    item?.job_offered === "Yes"
+                    item?.job_offered == "yes"
                       ? colors.lightGreen
                       : colors.greyOne
                   }
                   style={{
                     color:
-                      item?.job_offered === "Yes" ? colors.green : colors.black,
+                      item?.job_offered == "yes" ? colors.green : colors.black,
                   }}
                   isBackground
                   label={item?.job_offered ?? "-"}
@@ -574,18 +565,54 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
         obj = {};
         break;
     }
+    const optionArray = [
+      {
+        name: "View candidate Details",
+        id: item.application_id,
+      },
+      {
+        name: "Shortlist Candidate",
+        id: item.application_id,
+      },
+    ];
+
+    const tabsWithoutShortlist = new Set([3, 4, 5, 6, 7, 8]);
+
+    if (tabsWithoutShortlist.has(selectedTabs)) {
+      const shortlistIndex = optionArray.findIndex(
+        (option) => option.name === "Shortlist Candidate"
+      );
+      if (shortlistIndex !== -1) {
+        optionArray.splice(shortlistIndex, 1);
+      }
+    }
+    switch (selectedTabs) {
+      case 5:
+        optionArray.push({
+          name: "Update Written Test Result",
+          id: item.application_id,
+        });
+        break;
+      case 6:
+        optionArray.push({
+          name: "Mark Candidate as Offered",
+          id: item.application_id,
+        });
+        break;
+    }
 
     return [
       {
         content: (
           <CheckBox
-            style={{
-              //   ...tableStyle,
-              ...{
-                marginTop: 14,
-                alignItems: "center",
-              },
-            }}
+            style={styles.checkboxViewStyle}
+            isSelected={
+              isHeading
+                ? selectedElement.length === currentRecords.length
+                : selectedElement.includes(item.application_id)
+            }
+            id={item.application_id}
+            handleCheckbox={(item) => handleCheckbox(item, isHeading)}
           />
         ),
         style: {
@@ -598,7 +625,7 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
         content: (
           <>
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-              {item?.registrationNumber ?? "-"}
+              {item?.application_number ?? "-"}
             </CommonText>
           </>
         ),
@@ -766,22 +793,38 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
               <>
                 <TouchableImage
                   onPress={() => {
-                    // onIconPress(item);
+                    setCurrentPopupMessage(item.application_id);
                   }}
                   source={images.iconMore}
                   imageStyle={{ height: 20, width: 20 }}
                   isSvg={true}
                 />
-                {currentPopUpMessage === item.id && (
-                  <View>
+                {currentPopUpMessage == item.application_id && (
+                  <View ref={popupRef}>
                     <PopupMessage
-                      message={item?.action}
+                      message={optionArray}
                       onPopupClick={(selectedItem) => {
                         setCurrentPopupMessage(-1);
-                        // onEditPress(selectedItem.name, item);
+                        if (
+                          selectedItem.name ===
+                          intl.formatMessage({ id: "label.offer_job" })
+                        ) {
+                          const request = {
+                            status: JOB_STATUS_RESPONSE_CODE[selectedItem.name],
+                          };
+                          // handleUseApplicantStatus(
+                          //   item.application_id,
+                          //   request
+                          // );
+                        } else {
+                          // onClickAction(selectedItem.name, item);
+                        }
                       }}
                       labelName={"name"}
-                      customStyle={styles.popupContainer}
+                      customStyle={{
+                        ...styles.popupContainer,
+                        ...{ right: 130 },
+                      }}
                       isPopupModal
                       onPopUpClose={() => setCurrentPopupMessage(-1)}
                     />
@@ -834,7 +877,7 @@ const useShortListingConsent = (onViewPress, onEditPress, id) => {
     companyLocation,
     seletedCenter,
     setSeletedCenter,
-    seletedTabs,
+    selectedTabs,
     setSelectedTabs,
   };
 };
