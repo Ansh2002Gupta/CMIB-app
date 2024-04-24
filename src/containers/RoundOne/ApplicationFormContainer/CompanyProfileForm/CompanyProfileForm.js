@@ -96,9 +96,7 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
             <DetailCard
               details={formDetails?.companyDetail}
               handleBlur={handleBlur}
-              headerId={intl.formatMessage({
-                id: "label.company_details",
-              })}
+              headerId={"label.company_details"}
               handleChange={(fieldName, value) => {
                 handleInputChange(fieldName, value);
               }}
@@ -110,9 +108,7 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
                   key={index}
                   customCardStyle={styles.customCardStyle}
                   customContainerStyle={styles.customContainerStyle}
-                  headerId={intl.formatMessage({
-                    id: "label.contact_person_info",
-                  })}
+                  headerId={"label.contact_person_info"}
                   handleChange={(detailKey, value, isCode) =>
                     handleContactPersonInfo(index, detailKey, value, isCode)
                   }
@@ -126,9 +122,7 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
             <DetailCard
               handleBlur={handleBlur}
               handleChange={handleCompanyProfile}
-              headerId={intl.formatMessage({
-                id: "label.other_details",
-              })}
+              headerId={"label.other_details"}
               isRow
               details={formDetails?.companyProfile}
               otherDetails={formDetails?.otherDetails}
@@ -136,9 +130,7 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
             />
             <CardComponent customStyle={styles.cardStyle}>
               <DetailComponent
-                headerText={intl.formatMessage({
-                  id: "label.source_of_info",
-                })}
+                headerText={"label.source_of_info"}
                 isMandatory
               />
               <RenderSourceOfInfo
@@ -152,15 +144,11 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
             </CardComponent>
             <CardComponent customStyle={styles.cardStyle}>
               <DetailComponent
-                headerText={intl.formatMessage({
-                  id: "label.company_logo",
-                })}
+                headerText={"label.company_logo"}
                 headerTextCustomStyles={styles.headerTextStyle}
               />
               <CommonText customTextStyle={styles.infoStyle}>
-                {intl.formatMessage({
-                  id: "label.logo_info",
-                })}
+                {"label.logo_info"}
               </CommonText>
               <View style={styles.imageContainer}>
                 {isEditable ? (
