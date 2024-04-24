@@ -173,7 +173,6 @@ const JobDetailsTemplate = ({
               handleInputChange("role_responsibility", val)
             }
             disabled={!isEditable}
-            isViewMore
             customHandleBlur={() => handleBlur("role_responsibility")}
             errorMessage={validateError?.role_responsibility}
           />
