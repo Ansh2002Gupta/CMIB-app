@@ -388,7 +388,7 @@ AddPlaceOfPostingTemplate.propTypes = {
   editPlaceModal: PropTypes.bool.isRequired,
   handlePostingPlaceChange: PropTypes.func.isRequired,
   isFormValid: PropTypes.bool,
-  jobDetailData: PropTypes.object,
+  jobDetailData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onClickAddPlace: PropTypes.func.isRequired,
   onClickAddPlaceCancelButton: PropTypes.func.isRequired,
   onClickAddPlaceSaveButton: PropTypes.func.isRequired,

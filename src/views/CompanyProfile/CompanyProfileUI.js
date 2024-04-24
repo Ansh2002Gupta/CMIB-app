@@ -338,9 +338,7 @@ const CompanyProfileUI = (props) => {
               details={profileResult?.companyDetail}
               handleBlur={handleBlur}
               handleChange={handleCompanyDetailChange}
-              headerId={intl.formatMessage({
-                id: "label.company_details",
-              })}
+              headerId={"label.company_details"}
               isEditProfile={isEditProfile}
             />
             <CardComponent customStyle={style.cardStyle}>

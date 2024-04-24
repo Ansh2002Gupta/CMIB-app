@@ -96,8 +96,9 @@ const ConfigurableList = ({
         <View style={styles.section}>
           <View style={styles.itemsWrapper}>
             {menuOptions?.length > 0 &&
-              menuOptions.map((item) => (
+              menuOptions.map((item, index) => (
                 <CustomTouchableOpacity
+                  key={index}
                   className={
                     selectedOptions.includes(item.id)
                       ? `${classes["configurableList__item--green"]}`
