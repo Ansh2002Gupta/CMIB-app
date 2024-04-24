@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, { useState, useRef } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
@@ -28,13 +28,14 @@ const AddApplicationTemplate = ({
   stepperData,
 }) => {
   const [isSaveEnabled, setIsSaveEnaabled] = useState(false);
+
   const personalDetailsref = useRef();
-  const {
-    isLoading,
-    makeRequest,
-    error,
-  } = usePut({
-    url: '/member/nqca-placements/rounds/264/personal',
+  const workExperienceDetailsref = useRef();
+
+  console.log(isSaveEnabled, "isSaveEnabled..");
+
+  const { isLoading, makeRequest, error } = usePut({
+    url: "/member/nqca-placements/rounds/264/personal",
   });
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
@@ -47,7 +48,7 @@ const AddApplicationTemplate = ({
       : {};
 
   const getCurrentStepperDetails = () => {
-    switch (selectedStepper.id) {
+    switch (4) {
       case 1:
         return (
           <PersonalDetails
@@ -55,7 +56,11 @@ const AddApplicationTemplate = ({
             intl={intl}
             ref={personalDetailsref}
             isWebView={isWebView}
-            handleSave={(val) => {if (val !== isSaveEnabled) {setIsSaveEnaabled(val)}}}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
           />
         );
       case 2:
@@ -63,11 +68,22 @@ const AddApplicationTemplate = ({
       case 3:
         return <TrainingDetails intl={intl} isWebView={isWebView} />;
       case 4:
-        return <WorkExperienceDetails intl={intl} isWebView={isWebView} />;
+        return (
+          <WorkExperienceDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={workExperienceDetailsref}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
       case 5:
         return <HobbiesDetails intl={intl} isWebView={isWebView} />;
       case 6:
-          return <JobPreferenceDetails intl={intl} isWebView={isWebView} />;
+        return <JobPreferenceDetails intl={intl} isWebView={isWebView} />;
       default:
         return (
           <View
@@ -82,19 +98,33 @@ const AddApplicationTemplate = ({
   };
 
   const handleSavePress = () => {
-    const payload = personalDetailsref?.current?.getFilledData();
+    // const payload = personalDetailsref?.current?.getFilledData();
+    // makeRequest({
+    //   body: payload,
+    //   onErrorCallback: (errorMessage) => {
+    //     //
+    //     console.log("error");
+    //   },
+    //   onSuccessCallback: (data) => {
+    //     onChangeStepper();
+    //   },
+    // });
+
+    //onChangeStepper()
+
+    const payload = workExperienceDetailsref?.current?.getFilledData();
     makeRequest({
+      overrideUrl: `member/nqca-placements/rounds/264/work-experience`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
         console.log("error");
       },
       onSuccessCallback: (data) => {
-        onChangeStepper()
+        onChangeStepper();
       },
-    })
-    //onChangeStepper()
-  }
+    });
+  };
 
   return (
     <View style={styles.mainContainer}>

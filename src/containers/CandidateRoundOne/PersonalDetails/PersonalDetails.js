@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useState, useImperativeHandle, useRef } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import { ScrollView } from "@unthinkable/react-core-components";
 import PersonalDetailsTemplate from "./PersonalDetailsTemplate";
 import MultiRow from "../../../core/layouts/MultiRow";
@@ -9,13 +15,16 @@ import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import usePersonalDetailsAPI from "../../../services/apiServices/hooks/CandidateRoundeOne/usePersonalDetailsAPI";
 
-const PersonalDetails = ({ countryCodeData, intl, isWebView, handleSave = () => {} }, ref) => {
+const PersonalDetails = (
+  { countryCodeData, intl, isWebView, handleSave = () => {} },
+  ref
+) => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
-  console.log("userProfileDetails", userProfileDetails,  "sideBarState", sideBarState )
-  const {handlePersonalDetails, personalDetails} = usePersonalDetailsAPI();
+  const { handlePersonalDetails, personalDetails } = usePersonalDetailsAPI();
 
-  const [isPersonalDetailsCompleted, setisPersonalDetailsCompleted] = useState(false);
+  const [isPersonalDetailsCompleted, setisPersonalDetailsCompleted] =
+    useState(false);
   const [isCorresponAddCompleted, setIsCorresponAddCompleted] = useState(false);
   const [isPermanentAddCompleted, setIsPermanentAddCompleted] = useState(false);
   const [isAllFieldsCompleted, setIsAllFieldsCompleted] = useState(false);
@@ -44,9 +53,9 @@ const PersonalDetails = ({ countryCodeData, intl, isWebView, handleSave = () => 
       return {
         addresses: [perAddData.address, corresAddData.address],
         ...personalDetailsTemplateRef?.current?.getState(),
-        ...corresAddData.other
-      }
-    }
+        ...corresAddData.other,
+      };
+    },
   }));
 
   const handlePersonalDetailsFields = (val) => {
@@ -54,21 +63,21 @@ const PersonalDetails = ({ countryCodeData, intl, isWebView, handleSave = () => 
       setisPersonalDetailsCompleted(val);
       handleSave(val && isCorresponAddCompleted && isPermanentAddCompleted);
     }
-  }
+  };
 
   const handleCorresponAddFields = (val) => {
     if (val !== isCorresponAddCompleted) {
       setIsCorresponAddCompleted(val);
       handleSave(val && isPersonalDetailsCompleted && isPermanentAddCompleted);
     }
-  }
+  };
 
   const handlePermanentAddFields = (val) => {
     if (val !== isPermanentAddCompleted) {
       setIsPermanentAddCompleted(val);
       handleSave(val && isCorresponAddCompleted && isPersonalDetailsCompleted);
     }
-  }
+  };
 
   useEffect(() => {
     handlePersonalDetails();
@@ -77,21 +86,45 @@ const PersonalDetails = ({ countryCodeData, intl, isWebView, handleSave = () => 
 
   const personalDetailsConfig = [
     {
-      content: <PersonalDetailsTemplate ref={personalDetailsTemplateRef} intl={intl} isWebView={isWebView} onValidationChange={handlePersonalDetailsFields} personalDetails={personalDetails}/>,
+      content: (
+        <PersonalDetailsTemplate
+          ref={personalDetailsTemplateRef}
+          intl={intl}
+          isWebView={isWebView}
+          onValidationChange={handlePersonalDetailsFields}
+          personalDetails={personalDetails}
+        />
+      ),
     },
     {
-      content: <CorrespondenceAddress ref={correspondanceAddRef} intl={intl} isWebView={isWebView} countryCodeData={countryCodeData}  onValidationChange={handleCorresponAddFields} userProfileDetails={userProfileDetails}/>,
+      content: (
+        <CorrespondenceAddress
+          ref={correspondanceAddRef}
+          intl={intl}
+          isWebView={isWebView}
+          countryCodeData={countryCodeData}
+          onValidationChange={handleCorresponAddFields}
+          userProfileDetails={userProfileDetails}
+        />
+      ),
     },
     {
-      content: <PermanentAddress ref={permanentAddRef} intl={intl} isWebView={isWebView}  onValidationChange={handlePermanentAddFields}/>
+      content: (
+        <PermanentAddress
+          ref={permanentAddRef}
+          intl={intl}
+          isWebView={isWebView}
+          onValidationChange={handlePermanentAddFields}
+        />
+      ),
     },
   ];
 
-  return(
+  return (
     <ScrollView>
       <MultiRow rows={personalDetailsConfig} style={styles.mainContainer} />
     </ScrollView>
-  )
+  );
 };
 
 export default React.forwardRef(PersonalDetails);

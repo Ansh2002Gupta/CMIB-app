@@ -54,6 +54,7 @@ export const JOB_SKILLS = "/skills";
 export const JOB_PREFERENCES = "/job-preferences";
 export const MEMBERS = "/members";
 export const MEMBERSHIP = "/membership";
+export const MEMBER_WORK_EXPERIENCE = "/work-experience";
 export const MARK_PREFER = "/mark-prefer";
 export const PAY = "/pay";
 export const PERSONAL = "/personal";
