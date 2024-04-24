@@ -110,7 +110,7 @@ const CentralDetailsTemplate = ({
   const navigate = useNavigate();
 
   const { isSubmitting, errorWhileSubmitting, setErrorWhileSubmiting } =
-    submitApplications();
+    submitApplications;
 
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
@@ -179,9 +179,7 @@ const CentralDetailsTemplate = ({
           </CommonText>
           <DetailCard
             details={contactDetails}
-            headerId={intl.formatMessage({
-              id: "label.company_details",
-            })}
+            headerId={"label.company_details"}
             handleChange={(fieldName, value, codeValue) => {
               handleContactDetailsChange(fieldName, value, codeValue);
             }}
