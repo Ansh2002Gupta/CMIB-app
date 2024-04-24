@@ -286,14 +286,14 @@ const JobDetailsTemplate = ({
       content: (
         <View style={styles.bottomMargin}>
           <DetailCard
-            headerId={intl.formatMessage({ id: "label.monthly" })}
+            headerId={"label.monthly"}
             details={renderJobDetails?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile={isEditable}
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
-            headerId={intl.formatMessage({ id: "label.yearly" })}
+            headerId={"label.yearly"}
             details={renderJobDetails?.yearly}
             handleChange={handleYearlyData}
             isEditProfile={isEditable}
