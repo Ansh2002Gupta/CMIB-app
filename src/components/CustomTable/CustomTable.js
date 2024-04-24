@@ -17,7 +17,6 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
-import PopupMessage from "../PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
@@ -46,11 +45,9 @@ const CustomTable = ({
   getStatusStyle,
   handleLoadMore,
   handlePageChange,
-  handleTicketModal,
   handleRowPerPageChange,
   handleSearchResults,
   headingTexts,
-  handleSaveAddTicket,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
@@ -71,12 +68,7 @@ const CustomTable = ({
   showInterviewTimeModal,
   statusText,
   subHeadingText,
-  statusLabels,
-  showPopUpWithID,
   setShowPopUpWithID,
-  setModalData,
-  setShowJobOfferResponseModal,
-  setShowInterviewTimeModal,
   tableHeading,
   tableIcon,
   totalcards,
@@ -84,8 +76,6 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
-  statusData,
-  queryTypeData,
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
@@ -245,11 +235,6 @@ const CustomTable = ({
                       style={styles.flatListStyle}
                       keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
-                        const statusRenderText = getRenderText(
-                          item,
-                          statusText,
-                          formatConfig
-                        );
                         return (
                           <>
                             {isWebView ? (

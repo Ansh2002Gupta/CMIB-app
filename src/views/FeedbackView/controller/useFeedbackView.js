@@ -117,7 +117,7 @@ const useFeedbackView = () => {
   let headingTexts = ["id"];
   let subHeadingText = ["created_at"];
   let statusText = ["status"];
-  let tableIcon = images.iconEye;
+  let tableIcon = images.iconEyeSvg;
   let filterCategory = ["Status", "Role"];
   let isHeading = true;
 
