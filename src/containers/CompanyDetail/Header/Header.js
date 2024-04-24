@@ -16,9 +16,7 @@ const Header = ({ centreName, comanyLogo = "", companyName }) => {
           uri: comanyLogo ?? "",
         }}
         style={{
-          ...(isWebView
-            ? styles.webProfileImageStyle
-            : styles.mobileProfileImageStyle),
+          ...styles.webProfileImageStyle,
         }}
       />
     </View>
