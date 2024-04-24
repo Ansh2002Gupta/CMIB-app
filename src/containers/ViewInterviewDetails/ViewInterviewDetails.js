@@ -47,6 +47,7 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
       skipApiCallOnMount: true,
     },
   });
+
   const {
     data: interviewDatesData,
     fetchData: fetchInterviewDates,
@@ -94,11 +95,13 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
       type: data?.[0]?.primary?.type,
       venue_address: data?.[0]?.primary?.venue,
       primary_schedule: data?.[0]?.primary?.schedule,
+      primary_isAccepted: data?.[0]?.primary?.is_accepted,
       remote_meeting_link: data?.[0]?.primary?.meeting_link,
       alternate_type: data?.[0]?.alternate?.type,
       alternate_venue_address: data?.[0]?.alternate?.venue,
       alternate_schedule: data?.[0]?.alternate?.schedule,
       alternate_remote_meeting_link: data?.[0]?.alternate?.meeting_link,
+      alternate_isAccepted: data?.[0]?.alternate?.is_accepted,
     };
     setInterviewData({ ...restructuredData });
     setData({
@@ -231,7 +234,7 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{
-          ...getModalInnerContainerHeight(!!interview_id ? 0.4 : 0.6),
+          ...getModalInnerContainerHeight(!!interview_id ? 0.2 : 0.6),
           ...styles.marginTop,
         }}
       >
@@ -258,55 +261,74 @@ const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
                 <View style={commonStyles.horizontalLine} />
               </>
             )}
-            <TwoRow
-              topSection={
-                <View>
-                  <CommonText
-                    fontWeight={"600"}
-                    customTextStyle={styles.headingText}
-                  >
-                    {intl.formatMessage({ id: "label.primary_interview" })}
-                  </CommonText>
-                  {renderHeadingAndValue({
-                    heading: intl.formatMessage({
-                      id: "label.interview_type",
-                    }),
-                    value: !!data?.type ? formatText(currentPrimaryType) : "-",
-                    isMandatory: true,
-                  })}
-                </View>
-              }
-              bottomSection={renderInterviewDetails(
-                currentPrimaryDetails,
-                true
+            {!!interviewData?.primary_isAccepted && (
+              <TwoRow
+                topSection={
+                  <View>
+                    <CommonText
+                      fontWeight={"600"}
+                      customTextStyle={styles.headingText}
+                    >
+                      {intl.formatMessage({ id: "label.primary_interview" })}
+                    </CommonText>
+                    {renderHeadingAndValue({
+                      heading: intl.formatMessage({
+                        id: "label.interview_type",
+                      }),
+                      value: !!data?.type
+                        ? formatText(currentPrimaryType)
+                        : "-",
+                      isMandatory: true,
+                    })}
+                  </View>
+                }
+                bottomSection={renderInterviewDetails(
+                  currentPrimaryDetails,
+                  true
+                )}
+              />
+            )}
+            {!!interviewData?.primary_isAccepted &&
+              !!interviewData?.alternate_isAccepted && (
+                <View style={commonStyles.horizontalLine} />
               )}
-            />
-            <View style={commonStyles.horizontalLine} />
-            <TwoRow
-              topSection={
-                <View>
-                  <CommonText
-                    fontWeight={"600"}
-                    customTextStyle={styles.headingText}
-                  >
-                    {intl.formatMessage({ id: "label.alternate_interview" })}
-                  </CommonText>
-                  {renderHeadingAndValue({
-                    heading: intl.formatMessage({
-                      id: "label.interview_type",
-                    }),
-                    value: !!data?.alternate_type
-                      ? formatText(currentAlternateType)
-                      : "-",
-                    isMandatory: false,
-                  })}
-                </View>
-              }
-              bottomSection={renderInterviewDetails(
-                currentAlternateDetails,
-                false
+            {!interviewData?.primary_isAccepted &&
+              !interviewData?.alternate_isAccepted && (
+                <CommonText
+                  fontWeight={"500"}
+                  customContainerStyle={styles.loadingStyleNoData}
+                  customTextStyle={styles.noMoreData}
+                >
+                  {intl.formatMessage({ id: "label.no_data" })}
+                </CommonText>
               )}
-            />
+            {!!interviewData?.alternate_isAccepted && (
+              <TwoRow
+                topSection={
+                  <View>
+                    <CommonText
+                      fontWeight={"600"}
+                      customTextStyle={styles.headingText}
+                    >
+                      {intl.formatMessage({ id: "label.alternate_interview" })}
+                    </CommonText>
+                    {renderHeadingAndValue({
+                      heading: intl.formatMessage({
+                        id: "label.interview_type",
+                      }),
+                      value: !!data?.alternate_type
+                        ? formatText(currentAlternateType)
+                        : "-",
+                      isMandatory: false,
+                    })}
+                  </View>
+                }
+                bottomSection={renderInterviewDetails(
+                  currentAlternateDetails,
+                  false
+                )}
+              />
+            )}
           </>
         )}
         {isError && (
