@@ -35,7 +35,6 @@ export const COMPANY_INACTIVE_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/inact
 export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`;
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
-export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
 export const DETAIL = `/detail`;
 
 //sub routes
@@ -56,16 +55,21 @@ export const JOB_PREFERENCES = "/job-preferences";
 export const MEMBERS = "/members";
 export const MEMBERSHIP = "/membership";
 export const MARK_PREFER = "/mark-prefer";
+export const PAY = "/pay";
 export const PERSONAL = "/personal";
+export const PAYMENT_INFO = "/payment-info";
 export const PROFILE = "/profile";
 export const ROUNDS = "/rounds";
 export const STATUS = "/status";
+export const SUBMIT = "/submit";
 export const JOB_DETAILS = "/job-detail";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const TRANSACTIONS = "/transactions";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
-export const ROUND_ONE_DASHBOARD = `/board`;
+export const ROUND_ONE_DASHBOARD = `/dashboard`;
+export const ROUND_ONE_BOARD = `/board`;
 export const GLOBAL_SESSIONS = `/sessions`;
 
 /* API Endpoints Members*/

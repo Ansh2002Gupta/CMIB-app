@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { View } from "@unthinkable/react-core-components";
 
 import commonStyles from "../../../../../theme/styles/commonStyles";
-import Chip from "../../../../../components/Chip";
 import CommonText from "../../../../../components/CommonText";
-import { formatDate } from "../../../../../utils/util";
-import useIsWebView from "../../../../../hooks/useIsWebView";
-import styles from "../BillingInfo.style";
+import { convertStringtoNumber, formatDate } from "../../../../../utils/util";
 import useFetch from "../../../../../hooks/useFetch";
-import { useParams } from "react-router";
 import useGetCurrentUser from "../../../../../hooks/useGetCurrentUser";
 import {
   APPLICATION,
@@ -16,20 +13,47 @@ import {
   ROUNDS,
   USER_TYPE_COMPANY,
 } from "../../../../../services/apiServices/apiEndPoint";
+import { useIntl } from "react-intl";
+import {
+  API_VERSION_QUERY_PARAM,
+  NEWLY_QUALIFIED,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+} from "../../../../../constants/constants";
+import styles from "../BillingInfo.style";
+import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
 
 const useBillingInfo = () => {
-  const { isWebView } = useIsWebView();
+  const intl = useIntl();
   const { id } = useParams();
   const { currentModule } = useGetCurrentUser();
+  const [billingListData, setBillingListData] = useState([]);
+  const [sideBarState] = useContext(SideBarContext);
+  const sessionId = sideBarState?.selectedSession?.value;
+  const [totalAmount, setTotalAmount] = useState({
+    totalPsychometricTestFee: 0,
+    totalAmount: 0,
+    finalAmount: 0,
+  });
 
-  const { fetchData, data } = useFetch({
+  const {
+    fetchData,
+    isLoading: isLoadingBilling,
+    isError: isErrorListing,
+    error: errorWhileFetchingList,
+  } = useFetch({
     url:
       USER_TYPE_COMPANY +
       `/${currentModule}` +
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      BILLING_INFO,
+      `${BILLING_INFO}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -37,144 +61,131 @@ const useBillingInfo = () => {
 
   useEffect(() => {
     const fetchBillingData = async () => {
-      if (currentModule) {
+      let totalPsychometricTestFee = 0;
+      let totalAmount = 0;
+      let finalAmount = 0;
+      if (currentModule && sessionId) {
         const newData = await fetchData();
-        console.log("newData", newData);
+        if (!!newData && newData.length) {
+          newData.forEach((item) => {
+            totalPsychometricTestFee += convertStringtoNumber(
+              item?.psychometric_test_fee
+            );
+            totalAmount += convertStringtoNumber(item?.amount);
+            finalAmount = totalAmount + totalPsychometricTestFee;
+          });
+          setTotalAmount({
+            totalPsychometricTestFee,
+            totalAmount,
+            finalAmount,
+          });
+          setBillingListData([...newData]);
+        }
       }
     };
     fetchBillingData();
-  }, [currentModule]);
+  }, [currentModule, sessionId]);
 
-  function getStatusStyle(status) {
-    status = status.toLowerCase();
-    switch (status) {
-      case "pending":
-        return {
-          ...(!isWebView ? styles.pending : styles.pendingWeb),
-          ...commonStyles.cellTextStyle(12),
-        };
-      case "closed":
-        return {
-          ...(!isWebView ? styles.close : styles.closeWeb),
-          ...commonStyles.cellTextStyle(12),
-        };
-      case "published":
-        return {
-          ...(!isWebView ? styles.inProgress : styles.inProgressWeb),
-          ...commonStyles.cellTextStyle(12),
-        };
-      default:
-        return commonStyles.cellTextStyle(12);
-    }
-  }
-
-  const getColoumConfigs = (item, isHeading) => {
+  const getColoumConfigs = (
+    item,
+    isHeading,
+    index,
+    isShowFinalAmount = false
+  ) => {
     const tableStyle = isHeading
       ? commonStyles.tableHeadingText
       : commonStyles.cellTextStyle();
 
+    const isPsychometricTab =
+      currentModule === NEWLY_QUALIFIED
+        ? {
+            content: !!item.psychometric_test_fee && (
+              <CommonText customTextStyle={tableStyle}>
+                {item.psychometric_test_fee}&nbsp;INR
+              </CommonText>
+            ),
+            style: commonStyles.columnStyle("25%"),
+            isFillSpace: true,
+          }
+        : {};
+
     return [
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.transaction_id}
+          <CommonText customTextStyle={tableStyle}>
+            {item.centre_name}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.online_offline_transaction}
+            {item.total_vacancies}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("10%"),
         isFillSpace: true,
       },
       {
-        content: (
-          <CommonText customTextStyle={tableStyle}>
-            {item.payment_mode}
-          </CommonText>
-        ),
-        style: commonStyles.columnStyle("20%"),
-        isFillSpace: true,
+        ...isPsychometricTab,
       },
       {
         content: isHeading ? (
-          <CommonText customTextStyle={tableStyle}>{item.date}</CommonText>
-        ) : (
           <CommonText customTextStyle={tableStyle}>
-            {formatDate(item.date)}
+            {item.interview_dates}
           </CommonText>
-        ),
-        style: commonStyles.columnStyle("20%"),
-        isFillSpace: true,
-      },
-      {
-        content: (
-          <View style={styles.statusStyle}>
-            {isHeading ? (
-              <CommonText customTextStyle={tableStyle}>
-                {item.status}
-              </CommonText>
-            ) : (
-              <Chip label={item.status} style={getStatusStyle(item.status)} />
-            )}
+        ) : (
+          <View style={styles.interviewDatesContainer}>
+            {item?.interview_dates.map((dates, index) => {
+              const lastItem = item.interview_dates.length - 1 === index;
+              return (
+                <>
+                  <CommonText customTextStyle={tableStyle}>
+                    {formatDate(dates)}
+                  </CommonText>
+                  {!lastItem && (
+                    <CommonText customTextStyle={tableStyle}>
+                      ,&nbsp;
+                    </CommonText>
+                  )}
+                </>
+              );
+            })}
           </View>
         ),
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
+      {
+        content: isShowFinalAmount ? (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {intl.formatMessage({ id: "label.total_amount" })}
+            &#58;&nbsp;&nbsp;&nbsp;
+            {item.finalAmount}&nbsp;INR
+          </CommonText>
+        ) : (
+          <CommonText customTextStyle={tableStyle}>
+            {item.amount}&nbsp;INR
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("30%"),
+        isFillSpace: true,
+      },
     ];
   };
 
-  const handleSaveAndNext = () => {};
-
   return {
-    handleSaveAndNext,
-    getStatusStyle,
+    billingListData,
+    currentModule,
+    errorWhileFetchingList,
+    fetchData,
     getColoumConfigs,
+    isLoadingBilling,
+    isErrorListing,
+    totalAmount,
   };
 };
 
 export default useBillingInfo;
-
-export const transactionList = [
-  {
-    transaction_id: "T0123456",
-    online_offline_transaction: "Online",
-    payment_mode: "Credit Card",
-    date: "10/10/2010",
-    status: "Pending",
-  },
-  {
-    transaction_id: "T0123456",
-    online_offline_transaction: "Online",
-    payment_mode: "Credit Card",
-    date: "10/10/2010",
-    status: "Pending",
-  },
-  {
-    transaction_id: "T0123457",
-    online_offline_transaction: "Online",
-    payment_mode: "Credit Card",
-    date: "11/15/2011",
-    status: "Published",
-  },
-  {
-    transaction_id: "T0123458",
-    online_offline_transaction: "Online",
-    payment_mode: "Credit Card",
-    date: "05/20/2012",
-    status: "Published",
-  },
-  {
-    transaction_id: "T0123459",
-    online_offline_transaction: "Online",
-    payment_mode: "Credit Card",
-    date: "03/07/2013",
-    status: "Pending",
-  },
-];

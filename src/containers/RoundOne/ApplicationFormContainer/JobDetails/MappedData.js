@@ -1,4 +1,8 @@
-import { DOCUMENT_TYPE, document_keys } from "../../../../constants/constants";
+import {
+  DOCUMENT_TYPE,
+  NEWLY_QUALIFIED,
+  document_keys,
+} from "../../../../constants/constants";
 import { convertStringtoNumber } from "../../../../utils/util";
 
 export const mapMonthyApiToUI = () => {
@@ -366,6 +370,7 @@ export const mapDocsToUI = (data) => {
         placeholder: "label.select_no_of_copies",
         value: docs?.no_of_photocopies,
         isNumeric: true,
+        isEditable: true,
       },
       {
         cellID: index + 1,
@@ -406,6 +411,7 @@ export const getDocumentField = () => {
       placeholder: "label.select_no_of_copies",
       value: "",
       isNumeric: true,
+      isEditable: true,
     },
     {
       cellID: 1,
@@ -492,6 +498,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.total",
         value: details.total,
         isNumeric: true,
+        isEditable: false,
         width: 4,
       },
       {
@@ -576,6 +583,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.total",
       value: "",
       isNumeric: true,
+      isEditable: false,
       width: 4,
     },
     {
@@ -617,7 +625,7 @@ const mapPostingDetailsToPayload = (fieldsArray) => {
 
 export const mapDataToPayload = (data, currentModule) => {
   const overSeasProps =
-    currentModule === "overseas-chapters"
+    currentModule !== NEWLY_QUALIFIED
       ? {
           job_type: data?.job_type,
           flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",
@@ -675,7 +683,7 @@ export const mapDataToPayload = (data, currentModule) => {
     } else if (item.key === "document_type") {
       acc[cellID].doc_type = item.value;
     } else if (item.key === "no_of_copies") {
-      acc[cellID].no_of_photocopies = parseInt(item.value, 10);
+      acc[cellID].no_of_photocopies = item.value || 0;
     }
     if (!!item.id) {
       acc[cellID].id = item?.id;

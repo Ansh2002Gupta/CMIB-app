@@ -7,6 +7,7 @@ const MainContainer = ({ cardsData, hasRoundone, roundId }) => {
   const { onPressCard, roundOneTabs, selectedTab } = useMainContainerTabs({
     cardsData,
     roundId,
+    hasRoundone,
   });
 
   return (

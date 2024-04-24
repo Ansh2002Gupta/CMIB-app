@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { document_keys } from "../../../constants/constants";
 
 const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   const [addDocumentModal, setAddDocumentModal] = useState(false);
@@ -54,33 +55,34 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
     });
   };
 
-  const handleMultiRowDocumentDetails = ({
-    propertyName,
-    value,
-    id,
-    cellID,
-  }) => {
+  const handleMultiRowDocumentDetails = ({ propertyName, value, cellID }) => {
     setRenderJobDetails((prevDetail) => {
-      const updatedDetail = prevDetail?.required_docs?.map((item) => {
-        if (
-          !value &&
-          value?.length === 0 &&
-          item.cellID === cellID &&
-          item.label === propertyName
-        ) {
-          return {
-            ...item,
-            value: value,
-            isError: true,
-            error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
-          };
+      const updatedDocs = prevDetail?.required_docs?.map((doc) => {
+        if (doc.cellID === cellID) {
+          if (doc.label === propertyName) {
+            const isError = !value;
+            const error = isError
+              ? intl.formatMessage({ id: "label.error.cannot_be_empty" })
+              : null;
+            return { ...doc, value: value, isError: isError, error: error };
+          } else if (
+            doc.label === "label.no_of_copies" &&
+            propertyName === "label.document_type"
+          ) {
+            const isEditable = value !== "original";
+            return {
+              ...doc,
+              isEditable: isEditable,
+              isError: false,
+              error: null,
+              value: isEditable ? value : 0,
+            };
+          }
         }
-        if (item.label === propertyName && item.cellID === cellID) {
-          return { ...item, value: value, isError: null, error: null };
-        }
-        return item;
+        return doc;
       });
-      return { ...prevDetail, required_docs: updatedDetail };
+
+      return { ...prevDetail, required_docs: updatedDocs };
     });
   };
 

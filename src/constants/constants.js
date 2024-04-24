@@ -4,6 +4,7 @@ export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
 export const VALID_PAN = "Not a valid PAN, Please enter again";
+export const VALID_TAN = "Not a valid TAN, Please enter again";
 export const VALID_GSTIN = "Not a valid GSTIN, Please enter again";
 
 export const numRegex = /^\d+$/;
@@ -13,6 +14,9 @@ export const urlRegex =
 
 export const TOAST_TIMEOUT = 5000;
 export const API_VERSION_NUMBER = "1.0.0";
+export const UPDATED_API_VERSION = "1.0.1";
+export const API_VERSION_QUERY_PARAM = "api-version";
+export const SESSION_ID_QUERY_PARAM = "session-id";
 export const FIELD_MIN_LENGTH = 6;
 export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
@@ -206,7 +210,7 @@ export const STEPPER_STATE = {
 };
 
 export const DOCUMENT_TYPE = [
-  { label: "Photocopies", value: "copy" },
+  { label: "Photocopies", value: "photocopies" },
   { label: "Original", value: "original" },
   {
     label: "Both",
@@ -319,26 +323,71 @@ export const SCREEN_NAMES = {
   ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
 };
 
-export const APPLICATION_FORM_STEPPER_OPTIONS = [
-  {
-    title: "label.company_profile",
-  },
-  {
-    title: "label.job_details",
-  },
-  {
-    title: "label.pre_interview_preferences",
-  },
-  {
-    title: "label.centre_details",
-  },
-  {
-    title: "label.billing_info",
-  },
-  {
-    title: "label.payment",
-  },
-];
+export const ADD_DOCUMENT_HEADING = {
+  doc_name: "Document Name",
+  doc_type: "Document Type",
+  no_of_copies: "Number of Copies",
+};
+
+export const ADD_DESIGNATION_HEADING = {
+  designation_details: "Designation",
+  number_of_vacancies: "No. of Vacancy",
+};
+
+export const OTHER_BENEFIT_HEADING = {
+  benefits_details: "Benefits Details",
+  benefits_amount: "Amount",
+};
+
+export const ADD_PLACE_OF_POSTING_HEADING = {
+  place_of_posting: "Place of Posting",
+  general: "General",
+  obc: "OBC",
+  sc: "SC",
+  st: "ST",
+  ph: "PH",
+  others: "Others",
+  total: "Total",
+};
+
+export const APPLICATION_FORM_STEPPER_OPTIONS = (hasRoundTwo) => {
+  const roundOneSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+    {
+      title: "label.billing_info",
+    },
+    {
+      title: "label.payment",
+    },
+  ];
+  const roundTwoSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+  ];
+
+  return hasRoundTwo ? roundTwoSteps : roundOneSteps;
+};
 
 export const ROWS_PER_PAGE_ARRAY = [
   { value: 10, label: "10" },
@@ -388,12 +437,30 @@ export const SCHEDULE_LISTING = {
   primary_interview_time: "Primary Interview Time",
   status: "Status",
 };
-export const TRANSACTION_LIST_HEADING = {
-  transaction_id: "Transaction ID",
-  online_offline_transaction: "Offline/Online Transaction",
-  payment_mode: "Payment Mode",
-  date: "Date",
-  status: "Status",
+export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
+  const currentModules =
+    currentModule === NEWLY_QUALIFIED
+      ? {
+          psychometric_test_fee: "Psychometric/ Written Test Fee",
+        }
+      : {};
+  return {
+    centre_name: "Centre Name",
+    total_vacancies: "Vacancy",
+    interview_dates: "Interview Dates",
+    amount: "Amount",
+    ...currentModules,
+  };
+};
+
+export const TRANSACTION_LIST_HEADING_FOR_NQCA = () => {
+  return {
+    txn_id: "Transaction ID",
+    payment_type: "Offline/Online Transaction",
+    created_at: "Payment Date & Time",
+    payment_mode: "Payment Mode",
+    payment_status: "Payment Status",
+  };
 };
 
 export const FEEDBACK_TABLE_HEADING = {
@@ -676,6 +743,17 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
+export const PAYMENT_MODE_OPTIONS = [
+  {
+    label: "Online",
+    value: "online",
+  },
+  {
+    label: "Offline",
+    value: "offline",
+  },
+];
+
 export const PREVIEWED_LENGTH = 100;
 export const COMPANY_QUERY_TYPE_TICKET = "/";
 
@@ -952,4 +1030,28 @@ export const CHART_DATA_TYPE = {
   TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED:
     "TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED",
   TOP_COMPANIES_WITH_HIGHEST_CTC: "TOP_COMPANIES_WITH_HIGHEST_CTC",
+};
+
+export const PAGINATION_PROPERTIES = {
+  CURRENT_PAGE: "current-page",
+  ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
+  FILTER: "filter",
+  MODE: "mode",
+};
+
+export const ADD_PREINTERVIEW_PREFERNCES_HEADING = {
+  designation: "Desgination",
+  name: "Name",
+  email: "Email",
+  mobile_country_code: "Mobile Country Code",
+  mobile_number: "Mobile Number",
+  std_country_code: "Area Code",
+  telephone_number: "Telephone Number",
+};
+
+export const FORM_STATES = {
+  VIEW_ONLY: "view",
+  EDITABLE: "edit",
+  EMPTY: "empty",
 };

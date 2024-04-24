@@ -19,52 +19,37 @@ import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { formateErrors } from "../../../../utils/util";
 
-const JobDetails = ({ tabHandler }) => {
+const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
   const {
     isButtonLoading,
+    deleteDesignationFromList,
     isDisabled,
     desginationItems,
     setRenderJobDetails,
     configurableListQuery,
     setConfigurableListQuery,
     selectedOptions,
-    setSelectedOptions,
     modalDetails,
     setModalDetails,
     handleDelete,
+    workExperienceOptions,
     renderJobDetails,
     menuOptions,
     setMenuOptions,
     handlePress,
     handleAdd,
     handleInputChange,
-    addDocumentField,
     addDesignation,
-    bondPeriod,
-    compensation,
-    CTCDetail,
-    designationName,
-    exitAmount,
-    handleBondPeriod,
-    handleCompensation,
-    handleTextEditorValue,
     handleBlur,
-    handleCTCDetail,
-    handleDesignationName,
-    handleExitAmount,
     handleMonthlyData,
-    handleStartingSalary,
     handleYearlyData,
     currentError,
     setCurrentError,
-    jobDetailData,
     handleSaveAndNext,
     onClickAddDesignation,
     isLoading,
     error,
     validateError,
-    selectionProcess,
-    startingSalary,
   } = useJobDetailForm({ tabHandler });
 
   const isWebProps =
@@ -85,44 +70,30 @@ const JobDetails = ({ tabHandler }) => {
       {isLoading && <LoadingScreen />}
       {!isLoading && !error && (
         <TwoRow
+          style={styles.twoMainSTyle}
           topSection={
             <JobDetailsTemplate
               {...{
+                isEditable,
                 validateError,
-                desginationItems,
+                renderJobDetails,
+                handleInputChange,
+                configurableListQuery,
+                setConfigurableListQuery,
                 menuOptions,
                 setMenuOptions,
                 handlePress,
                 handleAdd,
-                selectedOptions,
-                setSelectedOptions,
+                workExperienceOptions,
                 handleDelete,
-                configurableListQuery,
-                setConfigurableListQuery,
-                setRenderJobDetails,
-                renderJobDetails,
-                handleInputChange,
-                addDocumentField,
-                addDesignation,
-                bondPeriod,
-                compensation,
-                CTCDetail,
                 handleBlur,
-                designationName,
-                exitAmount,
-                handleBondPeriod,
-                handleCompensation,
-                handleCTCDetail,
-                handleDesignationName,
-                handleExitAmount,
+                selectedOptions,
+                desginationItems,
+                setRenderJobDetails,
+                addDesignation,
                 handleMonthlyData,
-                handleStartingSalary,
                 handleYearlyData,
-                handleTextEditorValue,
-                jobDetailData,
                 onClickAddDesignation,
-                selectionProcess,
-                startingSalary,
               }}
             />
           }
@@ -145,21 +116,57 @@ const JobDetails = ({ tabHandler }) => {
                   {intl.formatMessage({ id: "label.back" })}
                 </CommonText>
               </CustomButton>
-              <ActionPairButton
-                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                buttonTwoText={intl.formatMessage({ id: "label.save" })}
-                onPressButtonOne={() => navigate(-1)}
-                onPressButtonTwo={() => {
-                  handleSaveAndNext();
-                }}
-                isDisabled={isDisabled}
-                displayLoader={isButtonLoading}
-                customStyles={{
-                  ...isWebProps,
-                  customContainerStyle: commonStyles.customContainerStyle,
-                }}
-                isButtonTwoGreen
-              />
+              {isEditable ? (
+                <View style={styles.rightSection}>
+                  <CustomButton
+                    style={styles.buttonStyle}
+                    onPress={() => {
+                      isEditable ? setIsEditable(false) : navigate(-1);
+                    }}
+                  >
+                    <CommonText
+                      fontWeight={"600"}
+                      customTextStyle={styles.backButtonStyle}
+                    >
+                      {intl.formatMessage({ id: "label.cancel" })}
+                    </CommonText>
+                  </CustomButton>
+                  <ActionPairButton
+                    buttonOneText={intl.formatMessage({ id: "label.save" })}
+                    buttonTwoText={intl.formatMessage({
+                      id: "label.next",
+                    })}
+                    onPressButtonOne={() => handleSaveAndNext()}
+                    onPressButtonTwo={() => {
+                      tabHandler("next");
+                    }}
+                    disableLeftStyle={styles.disabled}
+                    isButtonOneDisabled={isDisabled}
+                    isDisabled={isDisabled}
+                    displayLoaderLeft={isButtonLoading}
+                    customStyles={{
+                      ...isWebProps,
+                      customContainerStyle: commonStyles.customContainerStyle,
+                    }}
+                    isButtonTwoGreen
+                  />
+                </View>
+              ) : (
+                <CustomButton
+                  withGreenBackground
+                  style={styles.buttonStyle}
+                  onPress={() => {
+                    tabHandler("next");
+                  }}
+                >
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={commonStyles.nextButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.next" })}
+                  </CommonText>
+                </CustomButton>
+              )}
             </View>
           }
         />
@@ -172,7 +179,9 @@ const JobDetails = ({ tabHandler }) => {
         />
       )}
 
-      {modalDetails.isShown && (
+      {(modalDetails.isShown ||
+        modalDetails.isDeleteModal ||
+        modalDetails.isChangeTabModal) && (
         <ConfirmationModal
           severity={"warning"}
           hasSingleButton
@@ -181,12 +190,31 @@ const JobDetails = ({ tabHandler }) => {
             id: "label.ok",
           })}
           icon={images.iconWarning}
-          onPressButtonOne={() =>
-            setModalDetails({
+          onPressButtonOne={() => {
+            if (modalDetails.isDeleteModal) {
+              deleteDesignationFromList(modalDetails?.deleteDetails);
+              setModalDetails((prev) => ({
+                ...prev,
+                isDeleteModal: false,
+                modalMessage: "",
+              }));
+              return;
+            }
+            if (modalDetails.isChangeTabModal) {
+              setModalDetails((prev) => ({
+                ...prev,
+                isChangeTabModal: false,
+                modalMessage: "",
+              }));
+              return;
+            }
+            setModalDetails((prev) => ({
+              ...prev,
               isShown: false,
               modalMessage: "",
-            })
-          }
+            }));
+            return;
+          }}
         />
       )}
     </>
