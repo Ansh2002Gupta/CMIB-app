@@ -12,6 +12,7 @@ import styles from "./CustomButton.style";
 const CustomButton = ({
   children,
   customStyle,
+  customLoadingStyle,
   disabled,
   disabledStyle,
   iconRight,
@@ -42,7 +43,11 @@ const CustomButton = ({
       {isLoading ? (
         <Spinner
           thickness={3}
-          color={withGreenBackground || isLoading ? colors.white : ""}
+          color={
+            withGreenBackground || isLoading
+              ? { ...colors.white, ...customLoadingStyle }
+              : ""
+          }
           {...webProps}
         />
       ) : (
@@ -97,6 +102,7 @@ CustomButton.defaultProps = {
     rightIconSource: "",
   },
   isLoading: false,
+  customLoadingStyle: {},
   onPress: () => {},
   style: {},
   type: "button",
@@ -112,6 +118,7 @@ CustomButton.propTypes = {
   iconRight: PropTypes.object,
   isLeftIconNotSvg: PropTypes.bool,
   isLoading: PropTypes.bool,
+  customLoadingStyle: PropTypes.object,
   isRightIconNotSvg: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
