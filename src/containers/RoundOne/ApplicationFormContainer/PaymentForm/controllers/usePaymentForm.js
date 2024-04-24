@@ -172,7 +172,7 @@ const usePaymentForm = ({ isEditable }) => {
         const newData = await fetchPaymentDetails();
         const newTransactionList = await fetchTransactionList();
         setPaymentList([...newTransactionList]);
-        setPaymentDetails(mappedDataToUI(newData));
+        setPaymentDetails(mappedDataToUI(newData, isEditable));
       }
     };
     fetchData();
