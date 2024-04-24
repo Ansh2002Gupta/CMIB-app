@@ -43,7 +43,7 @@ const CorrespondenceAddress = ({
           pincode
         },
         other: {
-          mobile_country_code: countryCode,
+          mobile_country_code: countryCode?.split(' ')?.[0] || '',
           mobileNo,
           mobile_number: mobileNo,
           phoneNo,
@@ -63,7 +63,7 @@ const CorrespondenceAddress = ({
   }, [userProfileDetails, countryCodeData]);
 
   useEffect(() => {
-    let res = address1.length > 3 && city.length > 0 && country.length > 0 && countryCode.length > 0 && mobileNo.length > 4 && nationality.length > 0 && pincode.length > 0 && phoneNo.length > 0 && state.length > 0;
+    let res = address1.length > 3 && city.length > 0 && country.length > 0 && countryCode.length > 0 && mobileNo.length > 4 && nationality.length > 0 && pincode.length > 0 && phoneNo.length > 0 && state.length > 3;
     onValidationChange(res);
   }, [address1, city, country, countryCode, mobileNo, nationality, onValidationChange, phoneNo, pincode, state]);
 

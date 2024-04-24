@@ -42,7 +42,7 @@ const PermanentAddress = ({
     permanentCity.length > 0 &&
     permanentCountry.length > 3 &&
     permanentPincode.length > 3 &&
-    permanentState.length > 0);
+    permanentState.length > 3);
     
   }, [permanentAddress1,
     permanentCity,
