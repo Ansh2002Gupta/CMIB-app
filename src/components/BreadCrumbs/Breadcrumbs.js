@@ -49,7 +49,11 @@ const Breadcrumbs = () => {
       pathname ===
         `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}` ||
       pathname ===
-        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`
+        `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}` ||
+      pathname ===
+        `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`
     );
   };
 
