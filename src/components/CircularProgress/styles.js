@@ -1,8 +1,12 @@
-const styles = {
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
+const getStyles = (theme) => {
+  const { colors } = theme;
+
+  return {
+    container: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  };
 };
 
-export default styles;
+export default getStyles;

@@ -1,9 +1,11 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = StyleSheet.create({
-  mobContainer: {
-    marginBottom: 20,
-  },
-});
+  return {
+    mobContainer: {
+      marginBottom: 20,
+    },
+  };
+};
 
-export default styles;
+export default getStyles;

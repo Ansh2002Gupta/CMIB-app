@@ -1,9 +1,10 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CustomButton from "../CustomButton/CustomButton";
 import { TwoColumn } from "../../core/layouts";
-import styles from "./ActionPairButton.style";
+import getStyles from "./ActionPairButton.style";
 
 const ActionPairButton = ({
   buttonOneText,
@@ -36,7 +37,8 @@ const ActionPairButton = ({
     customContainerStyle,
   } = customStyles;
   const { buttonOneType, buttonTwoType } = buttonsType || {};
-
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <TwoColumn
       style={{ ...styles.containerStyle, ...customContainerStyle }}

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
@@ -9,7 +10,7 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import TouchableImage from "../TouchableImage";
 import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
-import styles from "./ConfigurableListStyle";
+import getStyles from "./ConfigurableListStyle";
 
 const ConfigurableList = ({
   isEditable,
@@ -32,6 +33,8 @@ const ConfigurableList = ({
   optionFormatter,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const allOptions = useRef([]);
 
   const defaultOptionFormatter = (option) => ({

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { useLocation, useNavigate, useParams } from "../../routes";
 import { View, useWindowDimensions } from "@unthinkable/react-core-components";
 
@@ -9,11 +10,13 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { navigations } from "../../constants/routeNames";
 import { urlService } from "../../services/urlService";
 import { EDIT } from "../../constants/constants";
-import styles from "./Breadcrumbs.style";
+import getTheme from "./Breadcrumbs.style";
 
 const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = useTheme();
+  const styles = getTheme(theme);
   const { job_id, id, centerId, companyId, roundId } = useParams();
   const windowDimensions = useWindowDimensions();
   const isMdOrGreater = windowDimensions.width >= 900;

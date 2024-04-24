@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import AddIconText from "../../components/AddIconText";
@@ -17,8 +18,8 @@ import {
   DOCUMENT_TYPE,
 } from "../../constants/constants";
 import { numericValidator } from "../../utils/validation";
-import styles from "./AddDocument.style";
 import commonStyles from "../../theme/styles/commonStyles";
+import getStyles from "./AddDocument.style";
 
 const AddDocumentTemplate = ({
   addDocumentField,
@@ -39,6 +40,8 @@ const AddDocumentTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const { theme } = useTheme();
+  const styles = getStyles(theme);
 
   const setObjectGridTemplate = (updatedDocs) => {
     setRenderJobDetails((prev) => ({

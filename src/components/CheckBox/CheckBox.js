@@ -1,12 +1,13 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
-import styles from "./CheckBox.style";
 import { View } from "@unthinkable/react-core-components";
 import TouchableImage from "../TouchableImage";
+import getStyles from "./CheckBox.style";
 
 const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
 
@@ -25,6 +26,8 @@ const CheckBox = ({
   style,
   isFillSpace,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
   const PartialIcon = Images.iconPartial;

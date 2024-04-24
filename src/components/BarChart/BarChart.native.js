@@ -1,15 +1,16 @@
 import React from "react";
+import useTheme from "";
 import { Dimensions, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
-import { convertMobileBarData } from "../../utils/util";
 import CommonText from "../CommonText";
-import colors from "../../assets/colors";
-import styles from "./BarChart.style";
 import { BarChart as BarChartComponent } from "react-native-gifted-charts";
+import getStyles from "./BarChart.style";
 
 const BarChart = ({ barColor, data, label, height }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <TwoRow
       style={styles.container}

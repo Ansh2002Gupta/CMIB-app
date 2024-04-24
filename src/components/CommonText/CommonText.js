@@ -1,9 +1,10 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { Text, View } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
-import styles from "./CommonText.style";
+import getStyles from "./CommonText.style";
 
 const CommonText = ({
   children,
@@ -16,6 +17,8 @@ const CommonText = ({
   underLinecolor,
   underLineStyle,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const styleArray = Array.isArray(customTextStyle)
     ? customTextStyle
     : [customTextStyle];

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import AddIconText from "../AddIconText";
@@ -17,7 +18,7 @@ import {
 } from "../../constants/constants";
 import { numericValidator } from "../../utils/validation";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./AddBenefits.style";
+import getStyles from "./AddBenefits.style";
 
 const AddBenefitsTemplate = ({
   addDocumentModal,
@@ -39,6 +40,8 @@ const AddBenefitsTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   function mapDocuments(dataArray) {
     const groupedData = {};

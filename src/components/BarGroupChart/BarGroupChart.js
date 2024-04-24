@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { Dimensions } from "@unthinkable/react-core-components";
 import {
   VictoryBar,
@@ -11,8 +12,8 @@ import {
 } from "victory";
 import { TwoRow } from "../../core/layouts";
 import { convertGraphData } from "../../utils/util";
-import styles from "./BarGroupChart.style";
 import CommonText from "../CommonText";
+import getStyles from "./BarGroupChart.style";
 
 const BarGroupChart = ({
   barColor1,
@@ -32,6 +33,8 @@ const BarGroupChart = ({
   yAxisTickFormat,
   xAxisTickFormat,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <TwoRow
       style={styles.barChartContainer}

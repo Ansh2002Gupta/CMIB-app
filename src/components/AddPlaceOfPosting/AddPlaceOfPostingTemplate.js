@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import AddIconText from "../../components/AddIconText";
@@ -17,11 +18,11 @@ import {
   OTHER_INFO_MAX_LENGTH,
   PLACE_OF_POSTING,
 } from "../../constants/constants";
-import styles from "./AddPlaceOfPosting.style";
 import useIsWebView from "../../hooks/useIsWebView";
 import CustomMultiRowTextInput from "../CustomMultiRowTextinput";
 import RenderHeadingAndValue from "../RenderHeadingAndValue/RenderHeadingAndValue";
 import commonStyles from "../../theme/styles/commonStyles";
+import getStyles from "./AddPlaceOfPosting.style";
 
 const AddPlaceOfPostingTemplate = ({
   isEditable,
@@ -46,6 +47,8 @@ const AddPlaceOfPostingTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const setObjectGridTemplate = (updatedDocs) => {
     setRenderJobDetails((prev) => ({

@@ -1,10 +1,11 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
-import styles from "./Chip.style";
+import getStyles from "./Chip.style";
 
 const Chip = ({
   bgColor,
@@ -14,6 +15,8 @@ const Chip = ({
   customContainerStyle,
   isBackground,
 }) => {
+  const theme = useTheme();
+  const { styles } = getStyles(theme);
   const { isWebView } = useIsWebView();
 
   return (

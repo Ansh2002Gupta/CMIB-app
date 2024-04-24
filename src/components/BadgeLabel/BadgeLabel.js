@@ -1,11 +1,12 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import { HYPHEN } from "../../constants/constants";
-import style from "./BadgeLabel.style";
+import getStyles from "./BadgeLabel.style";
 
 const BadgeLabel = ({
   badgeLabels,
@@ -14,6 +15,8 @@ const BadgeLabel = ({
   customTextStyle,
 }) => {
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   const containerStyles = {
     ...((isWebView && style.webContainerStyle) || {}),

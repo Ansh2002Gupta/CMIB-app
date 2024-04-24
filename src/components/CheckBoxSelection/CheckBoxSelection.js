@@ -1,13 +1,14 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
-import styles from "./CheckBoxSelection.style";
 import { Text, View } from "@unthinkable/react-core-components";
 import CheckBox from "../CheckBox/CheckBox";
 import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import CommonText from "../CommonText";
+import getStyles from "./CheckBoxSelection.style";
 
 const CheckBoxSelection = ({
   isEditable,
@@ -20,6 +21,8 @@ const CheckBoxSelection = ({
   value,
   checkBoxTextStyle,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const iconCheck = isEditable
     ? isSingleSelection
