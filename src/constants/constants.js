@@ -392,6 +392,45 @@ export const SCHEDULE_LISTING = {
   primary_interview_time: "Primary Interview Time",
   status: "Status",
 };
+export const SHORTLISTING_TABLE_HEADING = (centerSelected) => {
+  let additionalColumn;
+  if (centerSelected == 3 || centerSelected == 4) {
+    additionalColumn = {
+      consent_given: "Consent Given",
+    };
+  } else if (centerSelected == 5) {
+    additionalColumn = {
+      test_result: "Written Test",
+    };
+  } else if (centerSelected == 6) {
+    additionalColumn = {
+      job_offered: "Offered",
+    };
+  } else if (centerSelected == 7) {
+    additionalColumn = {
+      offered_status: "Offer Status",
+    };
+  } else {
+    additionalColumn = {};
+  }
+
+  return {
+    registrationNumber: "Registration Number",
+    name: "Name",
+    gender: "Gender",
+    age: "Age",
+    city: "City",
+    country: "Country",
+    ca_inter_rank: "CA Inter",
+    ca_final_rank: "CA Final",
+    ca_experience_rank: "Experience",
+    rank: "Rank",
+    category: "Category",
+    expected_salary: "Expected Salary",
+    ...additionalColumn,
+  };
+};
+
 export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
   const currentModules =
     currentModule === NEWLY_QUALIFIED

@@ -35,6 +35,9 @@ const useMainContainerTabs = ({ cardsData, roundId }) => {
         );
         break;
       case 2:
+        navigate(
+          `/${currentModule}/${navigations.ROUND_ONE}/shortlisting-candidate/${roundId}`
+        );
         break;
       case 3:
       default:

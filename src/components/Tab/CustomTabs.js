@@ -46,7 +46,7 @@ export const CustomTabs = ({
         });
         return;
       }
-      cleanupFuntion && cleanupFuntion();
+      cleanupFuntion && cleanupFuntion(index);
       setActiveTabIndex(index);
     }
   };
