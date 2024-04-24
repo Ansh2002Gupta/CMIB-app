@@ -7,6 +7,7 @@ import { validateEmail } from "../../../../../utils/validation";
 export const addValueOnField = (state, details, isEditable, countryData) => {
   return details?.map((item) => {
     return item?.map((val) => {
+      console.log(val, "val...");
       if (val?.isMobileNumber) {
         return {
           ...val,
@@ -14,7 +15,20 @@ export const addValueOnField = (state, details, isEditable, countryData) => {
           codeValue: formatCountryCode(state?.[keys.countryCode], countryData),
         };
       }
-
+      if (val.key === keys.campusDates) {
+        return {
+          ...val,
+          value: isEditable
+            ? state?.[val?.key]
+            : state?.[val?.key] === null
+            ? "--"
+            : val?.options
+                ?.filter((option) =>
+                  state[val?.key]?.includes(String(option?.id))
+                )
+                ?.map((optionData) => optionData?.label),
+        };
+      }
       return {
         ...val,
         value: isEditable

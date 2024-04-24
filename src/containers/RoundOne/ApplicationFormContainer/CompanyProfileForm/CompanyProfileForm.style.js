@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundGrey,
     flex: 1,
   },
+
   containerGridStyle: (columnCount) => ({
     display: "grid",
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",

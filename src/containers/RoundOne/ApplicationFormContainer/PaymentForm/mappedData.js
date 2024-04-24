@@ -4,7 +4,7 @@ import {
   formatDateToYYYYMMDD,
 } from "../../../../utils/util";
 
-export const mappedDataToUI = (data) => {
+export const mappedDataToUI = (data, isEditable) => {
   const finalAmount =
     convertStringtoNumber(data?.amount_to_pay) -
     convertStringtoNumber(data?.amount_paid);
@@ -44,7 +44,7 @@ export const mappedDataToUI = (data) => {
     {
       key: "address_for_hard_copy",
       label: "label.address_for_hard_copy",
-      value: data?.address_for_hard_copy || "",
+      value: data?.address_for_hard_copy || isEditable ? "" : "-",
       placeholder: "label.enter_address_for_hard_copy",
       isMandatory: true,
       isError: null,
@@ -72,7 +72,7 @@ export const mappedDataToUI = (data) => {
     {
       key: "totaltdsNumber",
       label: "label.total_tds_number",
-      value: null,
+      value: isEditable ? null : 0,
       placeholder: "label.enter_total_tds_number",
       isMandatory: true,
       isRupee: true,
@@ -82,7 +82,7 @@ export const mappedDataToUI = (data) => {
     {
       key: "final_amount",
       label: "label.final_amount",
-      value: finalAmount || 0,
+      value: finalAmount || isEditable ? null : 0,
       placeholder: "label.select_final_amount",
       isMandatory: true,
       isRupee: true,
@@ -92,7 +92,7 @@ export const mappedDataToUI = (data) => {
     {
       key: "payment_mode",
       label: "label.payment_mode",
-      value: "" || null,
+      value: "" || isEditable ? null : "online/offline",
       placeholder: "label.payment_mode",
       isMandatory: true,
       isDropdown: true,
