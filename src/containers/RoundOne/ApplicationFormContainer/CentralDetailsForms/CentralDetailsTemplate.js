@@ -424,8 +424,10 @@ const CentralDetailsTemplate = ({
                     }}
                     disableLeftStyle={styles.disabled}
                     isButtonOneDisabled={buttonDisabled}
+                    displayLoaderLeft={saveRoundDetailLoading}
+                    customLoadingStyleButtonOne={styles.loader}
                     isDisabled={buttonDisabled}
-                    displayLoaderLeft={isSubmitting}
+                    displayLoader={isSubmitting}
                     customStyles={{
                       ...isWebProps,
                       customContainerStyle: commonStyles.customContainerStyle,
@@ -457,14 +459,20 @@ const CentralDetailsTemplate = ({
                 withGreenBackground
                 style={styles.buttonStyle}
                 onPress={() => {
-                  tabHandler("next");
+                  if (hasRoundTwo) {
+                    navigate(-1);
+                  } else {
+                    tabHandler("next");
+                  }
                 }}
               >
                 <CommonText
                   fontWeight={"600"}
                   customTextStyle={styles.nextButtonStyle}
                 >
-                  {intl.formatMessage({ id: "label.next" })}
+                  {hasRoundTwo
+                    ? intl.formatMessage({ id: "label.done" })
+                    : intl.formatMessage({ id: "label.next" })}
                 </CommonText>
               </CustomButton>
             )}
