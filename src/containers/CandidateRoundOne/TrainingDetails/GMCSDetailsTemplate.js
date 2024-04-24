@@ -28,9 +28,9 @@ const GMCSDetailsTemplate = ({intl, isWebView, isViewMode, onValidationChange = 
   useImperativeHandle(ref, () => ({
     getState: () => {
       return {
-        isGcmsNumber: !Boolean(isGcmsNumber),
-        gcmsCertifiedNumber,
-        dateOfCompletion,
+        has_mcs_certification: !Boolean(isGcmsNumber),
+        mcs_certification_number: gcmsCertifiedNumber,
+        mcs_completion_date: dateOfCompletion ? formatDate(dateOfCompletion, 'YYYY-MM-DD') : '',
       };
     },
   }));
@@ -39,7 +39,7 @@ const GMCSDetailsTemplate = ({intl, isWebView, isViewMode, onValidationChange = 
   useEffect(() => {
     if(!Boolean(isGcmsNumber)) {
       // selected yes
-      onValidationChange(gcmsCertifiedNumber.length > 0 && dateOfCompletion.length > 0);
+      onValidationChange(gcmsCertifiedNumber.length > 0 && dateOfCompletion);
     } else {
       // selected no
       onValidationChange(true);
@@ -89,7 +89,7 @@ const GMCSDetailsTemplate = ({intl, isWebView, isViewMode, onValidationChange = 
                 format={'DD/MM/YYYY'}
                 maxDate={new Date()}
                 value={dateOfCompletion}
-                onChangeText={setDateOfCompletion}
+                onChangeValue={setDateOfCompletion}
               />
             </>}
           </View>

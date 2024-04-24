@@ -7,7 +7,7 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./TrainingDetails.style";
 import images from "../../../images";
 import CustomButton from "../../../components/CustomButton";
-import { YEARS } from "../../../constants/constants";
+import { formatDate } from "../../../utils/util";
 
 const industrialKeys = {
     orgName: '',
@@ -82,8 +82,18 @@ const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = (
 
   useImperativeHandle(ref, () => ({
     getState: () => {
+      const industry = industrialTrainings.map((item, index) => ({
+        assignment_company_name: item.comapanyName,
+        assignment_industry_name: item.industryName,
+        location: item.location,
+        name_of_organisation: item.orgName,
+        nature_of_article_industry: item.natureOfWorkInArticle,
+        nature_of_industrial_training: item.natureOfWork,
+        training_from: formatDate(item.trainingFrom, 'YYYY-MM-DD'),
+        training_to: formatDate(item.trainingTo, "YYYY-MM-DD")
+      }));
       return {
-        industrialTrainings
+        industrial_training_details: industry
       };
     },
   }));
@@ -191,9 +201,7 @@ const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = (
                             label={intl.formatMessage({ id: "label.natureOfWorkdoneIndustrial" })}
                             placeholder={intl.formatMessage({ id: "label.natureOfWorkdoneIndustrial" })}
                             value={industrialTrainings[index]?.natureOfWork}
-                            isDropdown
-                            options={YEARS}
-                            onChangeValue={(txt) => onDataChange(txt, index, 'natureOfWork')}
+                            onChangeText={(txt) => onDataChange(txt, index, 'natureOfWork')}
                         />
                         <CustomTextInput
                             isViewMode={isViewMode}
@@ -204,9 +212,7 @@ const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = (
                             label={intl.formatMessage({ id: "label.natureOfWorkdoneIndustrialArticles" })}
                             placeholder={intl.formatMessage({ id: "label.natureOfWorkdoneIndustrialArticles" })}
                             value={industrialTrainings[index]?.natureOfWorkInArticle}
-                            isDropdown
-                            options={YEARS}
-                            onChangeValue={(txt) => onDataChange(txt, index, 'natureOfWorkInArticle')}
+                            onChangeText={(txt) => onDataChange(txt, index, 'natureOfWorkInArticle')}
                         />
                     </View>
                     </CardComponent>

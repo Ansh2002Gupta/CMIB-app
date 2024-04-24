@@ -28,9 +28,9 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
   useImperativeHandle(ref, () => ({
     getState: () => {
       return {
-        isMembershipNumber: !Boolean(isMembershipNumber),
-        membershipEnrollNumber,
-        dateOfCompletion,
+        has_membership: !Boolean(isMembershipNumber),
+        membership_enrollment_number: membershipEnrollNumber,
+        membership_completion_date: dateOfCompletion ? formatDate(dateOfCompletion, 'YYYY-MM-DD') : '',
       };
     },
   }));
@@ -39,7 +39,7 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
   useEffect(() => {
     if(!Boolean(isMembershipNumber)) {
       // selected yes
-      onValidationChange(membershipEnrollNumber.length > 0 && dateOfCompletion.length > 0);
+      onValidationChange(membershipEnrollNumber.length > 0 && dateOfCompletion);
     } else {
       // selected no
       onValidationChange(true);
@@ -89,7 +89,7 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
                 format={'DD/MM/YYYY'}
                 maxDate={new Date()}
                 value={dateOfCompletion}
-                onChangeText={setDateOfCompletion}
+                onChangeValue={setDateOfCompletion}
               />
             </>}
           </View>

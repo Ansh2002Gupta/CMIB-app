@@ -1,5 +1,5 @@
 //Libraries
-import React, { useRef, useImperativeHandle } from "react";
+import React, { useRef, useImperativeHandle, useState } from "react";
 //UI & Styling
 import GMCSDetailsTemplate from "./GMCSDetailsTemplate";
 import useExamDetailsAPI from "../../../services/apiServices/hooks/CandidateRoundeOne/useExamDetailsAPI";
@@ -9,11 +9,15 @@ import { View } from "@unthinkable/react-core-components";
 import MembershipDetailsTemplate from "./MembershipDetailsTemplate";
 import CaTrainingDetailsTemplate from "./CaTrainingDetailsTemplate";
 
-const TrainingDetails = ({ intl, isWebView, isViewMode = false }, ref) => {
+const TrainingDetails = ({ intl, isWebView, isViewMode = false, handleSave = () => {} }, ref) => {
     //refs
     const GMCSDetailsTemplateRef = useRef();
     const MembershipDetailsTemplateRef = useRef();
     const CaTrainingDetailsTemplateRef = useRef();
+
+    const [isGMCSDetailsAdded, setIsGMCSDetailsAdded]  = useState(false);
+    const [isMembershipDetailsAdded, setIsMembershipDetailsAdded]  = useState(false);
+    const [isCaTrainingDetailsAdded, setIsCaTrainingDetailsAdded]  = useState(false);
     // const { handleExamDetails} = useExamDetailsAPI();
 
     // useEffect(() => {
@@ -26,23 +30,45 @@ const TrainingDetails = ({ intl, isWebView, isViewMode = false }, ref) => {
     //   }, []);
 
     useImperativeHandle(ref, () => ({
-      getALlData: () => {
+      getAllData: () => {
         return {
           ...GMCSDetailsTemplateRef?.current?.getState(),
-          ...MembershipDetailsTemplateRef?.current?.getState()
+          ...MembershipDetailsTemplateRef?.current?.getState(),
+          ...CaTrainingDetailsTemplateRef?.current?.getState(),
         }
       }
     }));
 
+    const handleGMCSDeatils = (val) => {
+      if (val !== isGMCSDetailsAdded) {
+        setIsGMCSDetailsAdded(val);
+        handleSave(val && isMembershipDetailsAdded && isCaTrainingDetailsAdded);
+      }
+    }
+  
+    const handleMembershipDetails = (val) => {
+      if (val !== isMembershipDetailsAdded) {
+        setIsMembershipDetailsAdded(val);
+        handleSave(val && isGMCSDetailsAdded && isCaTrainingDetailsAdded);
+      }
+    }
+  
+    const handleCaTrainingDeatils = (val) => {
+      if (val !== isCaTrainingDetailsAdded) {
+        setIsCaTrainingDetailsAdded(val);
+        handleSave(val && isGMCSDetailsAdded && isMembershipDetailsAdded);
+      }
+    }
+
     const edDetailsConfig = [
         {
-          content: <GMCSDetailsTemplate ref={GMCSDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>,
+          content: <GMCSDetailsTemplate ref={GMCSDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleGMCSDeatils}/>,
         },
         {
-          content: <MembershipDetailsTemplate ref={MembershipDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>,
+          content: <MembershipDetailsTemplate ref={MembershipDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleMembershipDetails}/>,
         },
         {
-          content: <CaTrainingDetailsTemplate ref={CaTrainingDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>,
+          content: <CaTrainingDetailsTemplate ref={CaTrainingDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleCaTrainingDeatils}/>,
         },
       ];
 

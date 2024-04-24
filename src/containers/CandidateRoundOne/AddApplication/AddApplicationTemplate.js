@@ -37,7 +37,7 @@ const AddApplicationTemplate = ({
     makeRequest,
     error,
   } = usePut({
-    url: '/member/nqca-placements/rounds/264/academics',
+    url: '/member/nqca-placements/rounds/264/training-details',
   });
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
@@ -100,7 +100,20 @@ const AddApplicationTemplate = ({
 
   const onEdDetailsSave = () => {
     const payload = edDetailsRef?.current?.getAllData();
-    console.log("payload", payload)
+    makeRequest({
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper()
+      },
+    })
+  }
+
+  const onTrainingDetailsSave = () => {
+    const payload = trainingDetailRef?.current?.getAllData();
     makeRequest({
       body: payload,
       onErrorCallback: (errorMessage) => {
@@ -114,13 +127,16 @@ const AddApplicationTemplate = ({
   }
 
   const handleSavePress = () => {
-    switch (2) {
+    switch (3) {
       case 1:
         onPersonalDetailSave();
-        return
+        return;
       case 2:
         onEdDetailsSave();
-        return
+        return;
+      case 3: 
+        onTrainingDetailsSave();
+        return;
       default:
         return;
     }
