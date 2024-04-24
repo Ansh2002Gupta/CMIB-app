@@ -126,7 +126,6 @@ const colors = {
   yellow,
   backgroundGrey,
   orange,
-  shallowGreen,
   lightOrange,
   lightGreen,
   darkSecondGreen,

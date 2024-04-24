@@ -16,6 +16,7 @@ import {
 
 export const mapApiDataToUI = ({
   apiData,
+  stateOptions,
   industryOptions,
   intl,
   countryCodes,
@@ -287,6 +288,20 @@ export const mapApiDataToUI = ({
         maxLength: NUMBER_MAX_LENGTH,
         placeholder: "label.enter_telephone_no",
         isMandatory: true,
+      },
+      {
+        key: "state",
+        label: "label.state",
+        value: checkValue(state?.code),
+        defaultValue: checkValue(state?.name),
+        isMajor: true,
+        placeholder: "label.state",
+        isMandatory: true,
+        isDropdown: true,
+        options: stateOptions,
+        labelField: "name",
+        valueField: "state_code",
+        inputKey: "name",
       },
     ],
     contactPersonInfo: mapContactDetails(contact_details),

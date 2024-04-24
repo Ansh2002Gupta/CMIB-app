@@ -72,6 +72,25 @@ const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
         },
       ];
     }
+    case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`: {
+      return [
+        { path: navigations.ROUND_ONE, label: "Round 1" },
+        {
+          path: navigations.CAMPUS_INTERVIEW_MANAGEMENT,
+          label: "Campus Interview Management",
+        },
+      ];
+    }
+    case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`: {
+      return [
+        { path: navigations.ROUND_ONE, label: "Round 1" },
+        {
+          path: navigations.CAMPUS_INTERVIEW_MANAGEMENT,
+          label: "Concent Marking Management",
+        },
+      ];
+    }
+
     default:
   }
 };
