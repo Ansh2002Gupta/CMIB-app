@@ -30,12 +30,9 @@ const AddApplicationTemplate = ({
   const [isSaveEnabled, setIsSaveEnaabled] = useState(false);
 
   const personalDetailsref = useRef();
-  const workExperienceDetailsref = useRef();
-
-  console.log(isSaveEnabled, "isSaveEnabled..");
-
+  const edDetailsRef = useRef();
   const { isLoading, makeRequest, error } = usePut({
-    url: "/member/nqca-placements/rounds/264/personal",
+    url: "/member/nqca-placements/rounds/264/academics",
   });
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
@@ -48,7 +45,7 @@ const AddApplicationTemplate = ({
       : {};
 
   const getCurrentStepperDetails = () => {
-    switch (4) {
+    switch (2) {
       case 1:
         return (
           <PersonalDetails
@@ -64,7 +61,18 @@ const AddApplicationTemplate = ({
           />
         );
       case 2:
-        return <EducationalDetails intl={intl} isWebView={isWebView} />;
+        return (
+          <EducationalDetails
+            ref={edDetailsRef}
+            intl={intl}
+            isWebView={isWebView}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
       case 3:
         return <TrainingDetails intl={intl} isWebView={isWebView} />;
       case 4:
@@ -97,22 +105,8 @@ const AddApplicationTemplate = ({
     }
   };
 
-  const handleSavePress = () => {
-    // const payload = personalDetailsref?.current?.getFilledData();
-    // makeRequest({
-    //   body: payload,
-    //   onErrorCallback: (errorMessage) => {
-    //     //
-    //     console.log("error");
-    //   },
-    //   onSuccessCallback: (data) => {
-    //     onChangeStepper();
-    //   },
-    // });
-
-    //onChangeStepper()
-
-    const payload = workExperienceDetailsref?.current?.getFilledData();
+  const onPersonalDetailSave = () => {
+    const payload = personalDetailsref?.current?.getFilledData();
     makeRequest({
       overrideUrl: `member/nqca-placements/rounds/264/work-experience`,
       body: payload,
@@ -124,6 +118,34 @@ const AddApplicationTemplate = ({
         onChangeStepper();
       },
     });
+  };
+
+  const onEdDetailsSave = () => {
+    const payload = edDetailsRef?.current?.getAllData();
+    console.log("payload", payload);
+    makeRequest({
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
+  const handleSavePress = () => {
+    switch (2) {
+      case 1:
+        onPersonalDetailSave();
+        return;
+      case 2:
+        onEdDetailsSave();
+        return;
+      default:
+        return;
+    }
   };
 
   return (

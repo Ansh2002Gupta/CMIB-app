@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useImperativeHandle } from "react";
 
 import ExamsTemplate from "./ExamsTemplate";
 import useExam from "./controller/useExam";
 import useExamDetailsAPI from "../../../../services/apiServices/hooks/CandidateRoundeOne/useExamDetailsAPI";
 
-const Exams = ({ intl, isWebView }) => {
+const Exams = ({ intl, isWebView }, ref) => {
     const { handleExamDetails} = useExamDetailsAPI();
 
     useEffect(() => {
@@ -78,7 +78,15 @@ const Exams = ({ intl, isWebView }) => {
     onChangeInterRank,
     onChangeInterYear,
     updateExamDetails,
+    getAllState
   } = useExam();
+
+  useImperativeHandle(ref, () => ({
+    getState: () => {
+      return getAllState()
+    }
+  }));
+
   return (
     <ExamsTemplate
       {...{
@@ -149,4 +157,4 @@ const Exams = ({ intl, isWebView }) => {
   );
 };
 
-export default Exams;
+export default React.forwardRef(Exams);

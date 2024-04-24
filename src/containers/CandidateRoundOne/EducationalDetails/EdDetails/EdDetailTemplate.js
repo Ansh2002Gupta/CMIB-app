@@ -4,10 +4,11 @@ import { View } from "@unthinkable/react-core-components";
 import CardComponent from "../../../../components/CardComponent";
 import CommonText from "../../../../components/CommonText";
 import CustomTextInput from "../../../../components/CustomTextInput";
-import { YEARS } from "../../../../constants/constants";
+import { YEARS, Education_Status_Options } from "../../../../constants/constants";
 import styles from "./EdDetail.style";
 import CustomLabelView from "../../../../components/CustomLabelView";
 import CustomToggleComponent from "../../../../components/CustomToggleComponent";
+import { capitalizeFirstLetter } from "../../../../utils/util";
 
 const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
   //metric states
@@ -45,35 +46,43 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
     getState: () => {
       return {
         // Metric states
-        metricExaminationName,
-        metricStatus,
-        metricBoard,
-        metricYear,
-        metricMarks,
-        metricRank,
+        "Class 10" : {
+          exam_name: metricExaminationName,
+          exam_status: capitalizeFirstLetter(metricStatus),
+          exam_board: metricBoard,
+          passing_year: metricYear,
+          passing_percentage: metricMarks,
+          passing_rank: metricRank,
+        },
         // Higher secondary states
-        higherSecondaryExaminationName,
-        higherSecondaryStatus,
-        higherSecondaryBoard,
-        higherSecondaryYear,
-        higherSecondaryMarks,
-        higherSecondaryRank,
+        "Class 12" : {
+          exam_name: higherSecondaryExaminationName,
+          exam_status: capitalizeFirstLetter(higherSecondaryStatus),
+          exam_board: higherSecondaryBoard,
+          passing_year: higherSecondaryYear,
+          passing_percentage: higherSecondaryMarks,
+          passing_rank:   higherSecondaryRank,
+        },
         // Graduation states
-        isGraduated,
-        graduationExaminationName,
-        graduationStatus,
-        graduationBoard,
-        graduationYear,
-        graduationMarks,
-        graduationRank,
+        "Graduation": {
+          isGraduated,
+          exam_name: graduationExaminationName,
+          exam_status: capitalizeFirstLetter(graduationStatus),
+          exam_board: graduationBoard,
+          passing_year: graduationYear,
+          passing_percentage: graduationMarks,
+          passing_rank: graduationRank,
+        },
         // Post graduation states
-        isPostGraduated,
-        postGraduationExaminationName,
-        postGraduationStatus,
-        postGraduationBoard,
-        postGraduationYear,
-        postGraduationMarks,
-        postGraduationRank,
+        "Post Graduation": {
+          isPostGraduated,
+          exam_name: postGraduationExaminationName,
+          exam_status: capitalizeFirstLetter(postGraduationStatus),
+          exam_board: postGraduationBoard,
+          passing_year: postGraduationYear,
+          passing_percentage: postGraduationMarks,
+          passing_rank: postGraduationRank,
+        }
       };
     },
   }));
@@ -103,7 +112,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             label={intl.formatMessage({ id: "label.status" })}
             placeholder={intl.formatMessage({ id: "label.status" })}
             isDropdown
-            options={YEARS}
+            options={Education_Status_Options}
             value={metricStatus}
             onChangeValue={setMetricStatus}
           />
@@ -113,8 +122,6 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             isPaddingNotRequired
             label={intl.formatMessage({ id: "label.board_university" })}
             placeholder={intl.formatMessage({ id: "label.board_university" })}
-            isDropdown
-            options={YEARS}
             value={metricBoard}
             onChangeText={setMetricBoard}
           />
@@ -127,7 +134,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             isDropdown
             options={YEARS}
             value={metricYear}
-            onChangeText={setMetricYear}
+            onChangeValue={setMetricYear}
           />
           <CustomTextInput
             isViewMode={isViewMode}
@@ -136,7 +143,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             label={intl.formatMessage({ id: "label.mark_in_percent" })}
             placeholder={intl.formatMessage({ id: "label.mark_in_percent" })}
             value={metricMarks}
-            onChangeValue={setMetricMarks}
+            onChangeText={setMetricMarks}
           />
           <CustomTextInput
             isViewMode={isViewMode}
@@ -145,7 +152,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             label={intl.formatMessage({ id: "label.rank_medal" })}
             placeholder={intl.formatMessage({ id: "label.rank_medal" })}
             value={metricRank}
-            onChangeValue={setMetricRank}
+            onChangeText={setMetricRank}
           />
           {/* metric details code ends here */}
         </View>
@@ -167,7 +174,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             label={intl.formatMessage({ id: "label.status" })}
             placeholder={intl.formatMessage({ id: "label.status" })}
             isDropdown
-            options={YEARS}
+            options={Education_Status_Options}
             value={higherSecondaryStatus}
             onChangeValue={setHigherSecondaryStatus}
           />
@@ -177,8 +184,6 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             isPaddingNotRequired
             label={intl.formatMessage({ id: "label.board_university" })}
             placeholder={intl.formatMessage({ id: "label.board_university" })}
-            isDropdown
-            options={YEARS}
             value={higherSecondaryBoard}
             onChangeText={setHigherSecondaryBoard}
           />
@@ -191,7 +196,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             isDropdown
             options={YEARS}
             value={higherSecondaryYear}
-            onChangeText={setHigherSecondaryYear}
+            onChangeValue={setHigherSecondaryYear}
           />
           <CustomTextInput
             isViewMode={isViewMode}
@@ -243,7 +248,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             label={intl.formatMessage({ id: "label.status" })}
             placeholder={intl.formatMessage({ id: "label.status" })}
             isDropdown
-            options={YEARS}
+            options={Education_Status_Options}
             value={graduationStatus}
             onChangeValue={setGraduationStatus}
           />
@@ -253,8 +258,6 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             isPaddingNotRequired
             label={intl.formatMessage({ id: "label.board_university" })}
             placeholder={intl.formatMessage({ id: "label.board_university" })}
-            isDropdown
-            options={YEARS}
             value={graduationBoard}
             onChangeText={setGraduationBoard}
           />
@@ -267,7 +270,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             isDropdown
             options={YEARS}
             value={graduationYear}
-            onChangeText={setGraduationYear}
+            onChangeValue={setGraduationYear}
           />
           <CustomTextInput
             isViewMode={isViewMode}
@@ -319,7 +322,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             label={intl.formatMessage({ id: "label.status" })}
             placeholder={intl.formatMessage({ id: "label.status" })}
             isDropdown
-            options={YEARS}
+            options={Education_Status_Options}
             value={postGraduationStatus}
             onChangeValue={setPostGraduationStatus}
           />
@@ -329,8 +332,6 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             isPaddingNotRequired
             label={intl.formatMessage({ id: "label.board_university" })}
             placeholder={intl.formatMessage({ id: "label.board_university" })}
-            isDropdown
-            options={YEARS}
             value={postGraduationBoard}
             onChangeText={setPostGraduationBoard}
           />
@@ -343,7 +344,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             isDropdown
             options={YEARS}
             value={postGraduationYear}
-            onChangeText={setPostGraduationYear}
+            onChangeValue={setPostGraduationYear}
           />
           <CustomTextInput
             isViewMode={isViewMode}
