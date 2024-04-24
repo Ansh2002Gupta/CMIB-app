@@ -17,7 +17,7 @@ const BarChart = ({ barColor, data, label }) => {
         </CommonText>
       }
       bottomSection={
-        !!data.length ? (
+        !!data?.length ? (
           <BarChartComponent
             horizontal
             barWidth={22}
