@@ -6,6 +6,7 @@ const isWeb = Platform.OS.toLocaleLowerCase() === "web";
 const styles = StyleSheet.create({
   outerContainer: {
     width: 144,
+    height: 146,
     flex: 1,
     flexWrap: "wrap",
     justifyContent: "center",
