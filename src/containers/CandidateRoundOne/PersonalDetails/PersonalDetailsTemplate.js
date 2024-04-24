@@ -1,7 +1,6 @@
-import React, {useState, useImperativeHandle} from "react";
+import React, {useState, useImperativeHandle, useEffect} from "react";
 import { View } from "@unthinkable/react-core-components";
 import CardComponent from "../../../components/CardComponent";
-
 import CommonText from "../../../components/CommonText";
 import CustomLabelView from "../../../components/CustomLabelView";
 import CustomTextInput from "../../../components/CustomTextInput";
@@ -9,28 +8,56 @@ import CustomToggleComponent from "../../../components/CustomToggleComponent/Cus
 import { GENDER, MARITAL_STATUS } from "../../../constants/constants";
 import images from "../../../images";
 import styles from "./PersonalDetails.style";
+import { formatDate } from "../../../utils/util";
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
 
 const PersonalDetailsTemplate = ({
   intl,
   isWebView,
+  onValidationChange = () => {},
+  personalDetails
 }, ref) => {
-  const [gender, onChangeGender] = useState('');
-  const [maritalStatus, onChangeMaritalStatus] = useState('');
-  const [dob, onChangeDob] = useState('');
-  const [email, onChangeEmail] = useState('');
-  const [passportNumber, onChangePassportNumber] = useState('');
+  const [gender, setGender] = useState('');
+  const [maritalStatus, setMaritalStatus] = useState('');
+  const [dob, setDob] = useState('');
+  const [email, setEmail] = useState('');
+  const [passportNumber, setPassportNumber] = useState('');
+  const [isPassport, setIsPassport] = useState(1);
 
   useImperativeHandle(ref, () => ({
     getState: () => {
       return {
-        gender,
-        maritalStatus,
-        dob,
+        name: personalDetails?.name,
+        nationality: personalDetails?.nationality,
+        gender: capitalizeFirstLetter(gender),
+        marital_status: maritalStatus,
+        dob: personalDetails?.dob || dob,
         email,
-        passportNumber
+        passportNumber,
+        has_passport: isPassport === 1 ? 0 : 1,
       };
     },
   }));
+
+  useEffect(() => {
+    if (personalDetails) {
+      personalDetails?.gender && setGender(personalDetails?.gender);
+      personalDetails?.dob && setDob(formatDate(new Date(personalDetails?.dob)));
+      personalDetails?.email && setEmail(personalDetails?.email);
+    }
+  }, [personalDetails]);
+
+  useEffect(() => {
+   let res = gender.length > 0 && maritalStatus.length > 0 && dob.length > 0 && email.length > 0;
+   if (!Boolean(isPassport)) {
+      return onValidationChange(res && passportNumber.length > 0);
+   } else {
+      return onValidationChange(res);
+   }
+  }, [dob, email, gender, isPassport, maritalStatus, onValidationChange, passportNumber]);
 
   return (
     <CardComponent customStyle={styles.cardContainer}>
@@ -45,10 +72,10 @@ const PersonalDetailsTemplate = ({
               placeholder={intl.formatMessage({ id: "label.gender" })}
               isMandatory
               isDropdown
-              isEditable={false}
+              isEditable={!personalDetails?.gender}
               options={GENDER}
               value={gender}
-              onChangeValue={onChangeGender}
+              onChangeValue={setGender}
             />
             <CustomTextInput
               customStyle={styles.textInputContainer(isWebView)}
@@ -59,7 +86,7 @@ const PersonalDetailsTemplate = ({
               isDropdown
               options={MARITAL_STATUS}
               value={maritalStatus}
-              onChangeValue={onChangeMaritalStatus}
+              onChangeValue={setMaritalStatus}
             />
             <CustomTextInput
               customStyle={styles.textInputContainer(false)}
@@ -68,9 +95,10 @@ const PersonalDetailsTemplate = ({
               placeholder={intl.formatMessage({ id: "label.date_of_birth" })}
               isMandatory
               value={dob}
+              format={'DD/MM/YYYY'}
               isEditable={false}
               rightIcon={images.iconCalendar}
-              onChangeText={onChangeDob}
+              onChangeText={setDob}
             />
             <CustomTextInput
               isPaddingNotRequired
@@ -80,7 +108,7 @@ const PersonalDetailsTemplate = ({
               isMandatory
               isEditable={false}
               value={email}
-              onChangeText={onChangeEmail}
+              onChangeText={setEmail}
             />
             {isWebView ? (
               <>
@@ -92,9 +120,11 @@ const PersonalDetailsTemplate = ({
                   <CustomToggleComponent
                     isMandatory
                     customToggleStyle={styles.customToggleStyle}
+                    value={isPassport}
+                    onValueChange={setIsPassport}
                   />
                 </View>
-                <CustomTextInput
+                {!Boolean(isPassport) && <CustomTextInput
                   customStyle={styles.textInputContainer(false)}
                   isPaddingNotRequired
                   label={intl.formatMessage({ id: "label.passport_number" })}
@@ -103,8 +133,8 @@ const PersonalDetailsTemplate = ({
                   })}
                   isMandatory
                   value={passportNumber}
-                  onChangeText={onChangePassportNumber}
-                />
+                  onChangeText={setPassportNumber}
+                />}
               </>
             ) : (
               <>
@@ -131,7 +161,7 @@ const PersonalDetailsTemplate = ({
                       })}
                       isMandatory
                       value={passportNumber}
-                      onChangeText={onChangePassportNumber}
+                      onChangeText={setPassportNumber}
                     />
                   </View>
                 </View>

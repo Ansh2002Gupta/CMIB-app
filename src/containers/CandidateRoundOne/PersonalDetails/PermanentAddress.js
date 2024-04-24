@@ -1,24 +1,17 @@
-import React, {useState, useImperativeHandle} from "react";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import React, {useState, useImperativeHandle, useEffect} from "react";
+import { View } from "@unthinkable/react-core-components";
 
-import MultiRow from "../../../core/layouts/MultiRow";
 import CardComponent from "../../../components/CardComponent";
 
 import CommonText from "../../../components/CommonText";
-import CustomLabelView from "../../../components/CustomLabelView";
 import CustomTextInput from "../../../components/CustomTextInput";
-import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
-import MobileNumberInput from "../../../components/MobileNumberInput";
-import { numericValidator } from "../../../utils/validation";
-import { GENDER, MARITAL_STATUS } from "../../../constants/constants";
-import images from "../../../images";
 import styles from "./PersonalDetails.style";
 
 const PermanentAddress = ({
   intl,
   isWebView,
   onValidationChange = () => {}
-}) => {
+}, ref) => {
   const [permanentAddress1, setPermanentAddress1] = useState('');
   const [permanentAddress2, setPermanentAddress2] = useState('');
   const [permanentAddress3, setPermanentAddress3] = useState('');
@@ -26,6 +19,38 @@ const PermanentAddress = ({
   const [permanentCountry, setPermanentCountry] = useState('');
   const [permanentPincode, setPermanentPincode] = useState('');
   const [permanentState, setPermanentState] = useState('');
+
+  useImperativeHandle(ref, () => ({
+    getState: () => {
+      return {
+        address: {
+          type: "Permanent",
+          address_line_1: permanentAddress1,
+          address_line_2: permanentAddress2,
+          address_line_3: permanentAddress3,
+          city: permanentCity,
+          country: permanentCountry,
+          state: permanentState,
+          pincode: permanentPincode
+        }
+      };
+    },
+  }));
+
+  useEffect(() => {
+   onValidationChange(permanentAddress1.length > 0 &&
+    permanentCity.length > 0 &&
+    permanentCountry.length > 3 &&
+    permanentPincode.length > 3 &&
+    permanentState.length > 0);
+    
+  }, [permanentAddress1,
+    permanentCity,
+    permanentCountry,
+    permanentPincode,
+    permanentState,
+    onValidationChange]);
+
   return (
     <CardComponent customStyle={styles.cardContainer}>
           <CommonText customTextStyle={styles.titleText} fontWeight={"600"}>
@@ -104,4 +129,4 @@ const PermanentAddress = ({
   )
 };
 
-export default PermanentAddress;
+export default React.forwardRef(PermanentAddress);

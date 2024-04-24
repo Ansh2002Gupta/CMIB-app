@@ -1,24 +1,21 @@
-import React, {useState} from "react";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import React, {useState, useEffect, useImperativeHandle} from "react";
+import { View } from "@unthinkable/react-core-components";
 
-import MultiRow from "../../../core/layouts/MultiRow";
 import CardComponent from "../../../components/CardComponent";
 
 import CommonText from "../../../components/CommonText";
-import CustomLabelView from "../../../components/CustomLabelView";
 import CustomTextInput from "../../../components/CustomTextInput";
-import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
 import MobileNumberInput from "../../../components/MobileNumberInput";
 import { numericValidator } from "../../../utils/validation";
-import { GENDER, MARITAL_STATUS } from "../../../constants/constants";
-import images from "../../../images";
 import styles from "./PersonalDetails.style";
 
 const CorrespondenceAddress = ({
   intl,
   isWebView,
-  countryCodeData
-}) => {
+  countryCodeData,
+  onValidationChange = () => {},
+  userProfileDetails
+}, ref) => {
   // Inside your component
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
@@ -31,6 +28,45 @@ const CorrespondenceAddress = ({
   const [pincode, setPincode] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const [state, setState] = useState('');
+
+  useImperativeHandle(ref, () => ({
+    getState: () => {
+      return {
+        address: {
+          type: "Correspondence",
+          address_line_1: address1,
+          address_line_2: address2,
+          address_line_3: address3,
+          city,
+          country,
+          state,
+          pincode
+        },
+        other: {
+          mobile_country_code: countryCode,
+          mobileNo,
+          mobile_number: mobileNo,
+          phoneNo,
+          nationality
+        }
+      };
+    },
+  }));
+
+  useEffect(() => {
+    if (userProfileDetails?.userDetails && countryCodeData) {
+      userProfileDetails?.userDetails?.mobile_country_code && setCountryCode(userProfileDetails?.userDetails?.mobile_country_code);
+      let code = countryCodeData?.filter(item => item.dial_code.includes(userProfileDetails?.userDetails?.mobile_country_code));
+      code?.length > 0 && setCountryCode(code[0]?.dial_code + " (" + code[0]?.name + ")")
+      userProfileDetails?.userDetails?.mobile_number && setMobileNo(userProfileDetails?.userDetails?.mobile_number);
+    }
+  }, [userProfileDetails, countryCodeData]);
+
+  useEffect(() => {
+    let res = address1.length > 3 && city.length > 0 && country.length > 0 && countryCode.length > 0 && mobileNo.length > 4 && nationality.length > 0 && pincode.length > 0 && phoneNo.length > 0 && state.length > 0;
+    onValidationChange(res);
+  }, [address1, city, country, countryCode, mobileNo, nationality, onValidationChange, phoneNo, pincode, state]);
+
   return (
     <CardComponent customStyle={styles.cardContainer}>
           <CommonText customTextStyle={styles.titleText} fontWeight={"600"}>
@@ -110,9 +146,9 @@ const CorrespondenceAddress = ({
                 codeValue={countryCode}
                 onChangeCode={setCountryCode}
                 onChangeMobNumber={(val) => {
-                  numericValidator(val) && setMobileNo(val);
+                 // numericValidator(val) && setMobileNo(val);
                 }}
-                isEditable={false}
+                isEditable={!userProfileDetails?.userDetails?.mobile_country_code}
                 options={countryCodeData}
                 mobNumberValue={mobileNo}
               />
@@ -140,4 +176,4 @@ const CorrespondenceAddress = ({
   )
 };
 
-export default CorrespondenceAddress;
+export default React.forwardRef(CorrespondenceAddress);

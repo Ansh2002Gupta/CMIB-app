@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useRef} from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
@@ -15,6 +15,7 @@ import TrainingDetails from "../TrainingDetails";
 import WorkExperienceDetails from "../WorkExperience";
 import HobbiesDetails from "../Hobbies";
 import JobPreferenceDetails from "../JobPreference";
+import { usePut } from "../../../hooks/useApiRequest";
 
 const AddApplicationTemplate = ({
   countryCodeData,
@@ -26,6 +27,15 @@ const AddApplicationTemplate = ({
   selectedStepper,
   stepperData,
 }) => {
+  const [isSaveEnabled, setIsSaveEnaabled] = useState(false);
+  const personalDetailsref = useRef();
+  const {
+    isLoading,
+    makeRequest,
+    error,
+  } = usePut({
+    url: '/member/nqca-placements/rounds/264/personal',
+  });
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -43,7 +53,9 @@ const AddApplicationTemplate = ({
           <PersonalDetails
             countryCodeData={countryCodeData}
             intl={intl}
+            ref={personalDetailsref}
             isWebView={isWebView}
+            handleSave={(val) => {if (val !== isSaveEnabled) {setIsSaveEnaabled(val)}}}
           />
         );
       case 2:
@@ -68,6 +80,21 @@ const AddApplicationTemplate = ({
         );
     }
   };
+
+  const handleSavePress = () => {
+    const payload = personalDetailsref?.current?.getFilledData();
+    makeRequest({
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper()
+      },
+    })
+    //onChangeStepper()
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -137,7 +164,7 @@ const AddApplicationTemplate = ({
               leftIconSource: images.iconArrowLeft,
             }
           }
-          isDisabled={false}
+          isDisabled={!isSaveEnabled}
           isButtonTwoGreen
           onPressButtonOne={() => {
             if (!isWebView && selectedStepper.id != 1) {
@@ -146,7 +173,7 @@ const AddApplicationTemplate = ({
               onClickCancel();
             }
           }}
-          onPressButtonTwo={onChangeStepper}
+          onPressButtonTwo={handleSavePress}
         />
       </View>
     </View>
