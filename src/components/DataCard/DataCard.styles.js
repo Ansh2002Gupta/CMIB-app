@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingBottom: 24,
     borderRadius: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    flexDirection: "row",
     ...Platform.select({
       web: {
         boxShadow: `0px 2px 5px 0px ${colors.greyThree}`,
