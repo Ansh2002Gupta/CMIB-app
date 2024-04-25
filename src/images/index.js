@@ -278,6 +278,7 @@ const iconDocument = appendAppBaseURl("/images/svg/iconDocument.svg");
 const iconPPT = appendAppBaseURl("/images/svg/iconPPT.svg");
 const iconPDF = appendAppBaseURl("/images/svg/iconPDF.svg");
 const iconDoc = appendAppBaseURl("/images/svg/iconDoc.svg");
+const rightArrowGreen = appendAppBaseURl("/images/svg/rightArrowGreen.svg");
 const defaultImage = appendAppBaseURl("/images/svg/defaultImage.svg");
 
 const images = {
@@ -479,6 +480,7 @@ const images = {
   iconPPT,
   iconPDF,
   iconDoc,
+  rightArrowGreen,
   defaultImage,
 };
 

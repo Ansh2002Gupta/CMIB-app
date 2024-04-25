@@ -154,6 +154,10 @@ export const extractFilename = (fileUri) => {
   return filename;
 };
 
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
 let lastFlagDate = null;
 
 export const getDateStatus = (record) => {
@@ -814,6 +818,14 @@ export const formatText = (text, delimitter = "-") => {
   });
   return newWordList.join(" ");
 };
+
+export const changeBooltoBinary = (value) => {
+  if (value === "true") {
+    return 1;
+  } else {
+    return 0;
+  }
+}
 
 export const extractValueDropdown = (item) => {
   if (item?.isDropdown) {

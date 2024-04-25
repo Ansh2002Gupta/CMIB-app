@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
@@ -6,11 +6,18 @@ import CommonText from "../../../components/CommonText";
 import CustomButton from "../../../components/CustomButton";
 import EducationalDetails from "../EducationalDetails";
 import NumberAndTextStepper from "../../NumberAndTextStepper";
+import PaymentDetails from "../PaymentDetails/PaymentDetails";
 import PersonalDetails from "../PersonalDetails";
 import Stepper from "../../../components/Stepper";
 import { ADD_APPLICATION_STEPPER } from "../../../constants/constants";
 import images from "../../../images";
 import styles from "./AddApplication.style";
+import TrainingDetails from "../TrainingDetails";
+import WorkExperienceDetails from "../WorkExperience";
+import HobbiesDetails from "../Hobbies";
+import JobPreferenceDetails from "../JobPreference";
+import { usePut } from "../../../hooks/useApiRequest";
+import useFetch from "../../../hooks/useFetch";
 
 const AddApplicationTemplate = ({
   countryCodeData,
@@ -22,6 +29,40 @@ const AddApplicationTemplate = ({
   selectedStepper,
   stepperData,
 }) => {
+  const [isSaveEnabled, setIsSaveEnaabled] = useState(false);
+
+  const personalDetailsref = useRef();
+  const edDetailsRef = useRef();
+  const workExperienceDetailsref = useRef();
+  const trainingDetailRef = useRef();
+  const jobPreferneceref = useRef();
+  const hobbiesRef = useRef();
+
+  const { isLoading, makeRequest, error } = usePut({
+    url: "/member/nqca-placements/rounds/264/training-details",
+  });
+
+  const {
+    isLoading: isLoadingHobbies,
+    makeRequest: makeRequestHobbies,
+    error: errorHobbies,
+  } = usePut({
+    url: "/member/nqca-placements/rounds/264/activities",
+  });
+
+  const {
+    data: hobbiesData,
+    isLoading: isHobbiesLoading,
+    error: errorWhileFetchingHobbies,
+    fetchData: fetchHobbies,
+  } = useFetch({
+    url: "/member/nqca-placements/rounds/264/activities",
+  });
+
+  useEffect(() => {
+    fetchHobbies();
+  }, []);
+
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -39,11 +80,88 @@ const AddApplicationTemplate = ({
           <PersonalDetails
             countryCodeData={countryCodeData}
             intl={intl}
+            ref={personalDetailsref}
             isWebView={isWebView}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
           />
         );
       case 2:
-        return <EducationalDetails intl={intl} isWebView={isWebView} />;
+        return (
+          <EducationalDetails
+            ref={edDetailsRef}
+            intl={intl}
+            isWebView={isWebView}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
+      case 3:
+        return (
+          <TrainingDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={trainingDetailRef}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
+      case 4:
+        return (
+          <WorkExperienceDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={workExperienceDetailsref}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
+      case 5:
+        return (
+          <HobbiesDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={hobbiesRef}
+            hobbiesData={hobbiesData}
+          />
+        );
+      case 6:
+        return (
+          <JobPreferenceDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={jobPreferneceref}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
+      case 7:
+        return (
+          <PaymentDetails
+            intl={intl}
+            isWebView={isWebView}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
       default:
         return (
           <View
@@ -57,6 +175,116 @@ const AddApplicationTemplate = ({
     }
   };
 
+  const onPersonalDetailSave = () => {
+    const payload = personalDetailsref?.current?.getFilledData();
+    makeRequest({
+      overrideUrl: `/member/nqca-placements/rounds/264/personal`,
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
+  const onEdDetailsSave = () => {
+    const payload = edDetailsRef?.current?.getAllData();
+    makeRequest({
+      overrideUrl: `/member/nqca-placements/rounds/264/academics`,
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
+  const onTrainingDetailsSave = () => {
+    const payload = trainingDetailRef?.current?.getAllData();
+    makeRequest({
+      overrideUrl: `/member/nqca-placements/rounds/264/training-details`,
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
+  const onExperienceDetailsSave = () => {
+    const payload = workExperienceDetailsref?.current?.getAllData();
+    makeRequest({
+      overrideUrl: `member/nqca-placements/rounds/264/work-experience`,
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
+  const onJobPreferencesSave = () => {
+    const payload = jobPreferneceref?.current?.getAllData();
+    makeRequest({
+      overrideUrl: `member/nqca-placements/rounds/264/job-preferences`,
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
+  const onHobbiesDetailsSave = () => {
+    const payload = hobbiesRef?.current?.getAllData();
+    makeRequestHobbies({
+      body: { data: payload },
+      onErrorCallback: (errorMessage) => {},
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
+  const handleSavePress = () => {
+    switch (selectedStepper.id) {
+      case 1:
+        onPersonalDetailSave();
+        return;
+      case 2:
+        onEdDetailsSave();
+        return;
+      case 3:
+        onTrainingDetailsSave();
+        return;
+      case 4:
+        onExperienceDetailsSave();
+        return
+      case 5:
+        onHobbiesDetailsSave();
+        return;
+      case 6:
+        onJobPreferencesSave();
+        return;
+      default:
+        return;
+    }
+  };
   return (
     <View style={styles.mainContainer}>
       <View
@@ -125,7 +353,7 @@ const AddApplicationTemplate = ({
               leftIconSource: images.iconArrowLeft,
             }
           }
-          isDisabled={false}
+          isDisabled={selectedStepper.id == 5 ? false : !isSaveEnabled}
           isButtonTwoGreen
           onPressButtonOne={() => {
             if (!isWebView && selectedStepper.id != 1) {
@@ -134,7 +362,7 @@ const AddApplicationTemplate = ({
               onClickCancel();
             }
           }}
-          onPressButtonTwo={onChangeStepper}
+          onPressButtonTwo={handleSavePress}
         />
       </View>
     </View>

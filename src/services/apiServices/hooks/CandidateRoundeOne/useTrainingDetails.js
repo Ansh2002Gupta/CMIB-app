@@ -2,32 +2,29 @@ import { useState } from "react";
 
 import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
-import { MEMBER_PERSONAL_DETAILS } from "../../apiEndPoint";
+import { MEMBER_EXAM_DETAILS } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
-const usePersonalDetailsAPI = () => {
+const useTrainingDetails = () => {
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
-  const [personalDetails, setPersonalDetails] = useState({});
+  const [trainingDetails, setTrainingDetails] = useState({});
   const [apiError, setApiError] = useState("");
 
   const { Http } = useHttpService();
 
-  const handlePersonalDetails = async () => {
+  const handleTrainingDetails = async () => {
     try {
       setApiStatus(API_STATUS.LOADING);
       apiError && setApiError("");
-      
-      const res = await Http.get(MEMBER_PERSONAL_DETAILS);
+      const res = await Http.get(MEMBER_EXAM_DETAILS);
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         setApiStatus(API_STATUS.SUCCESS);
-        setPersonalDetails(res.data);
-        
+        setTrainingDetails(res.data);
         return;
       }
-     
       setApiStatus(API_STATUS.ERROR);
       setApiError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
@@ -45,12 +42,12 @@ const usePersonalDetailsAPI = () => {
   return {
     apiError,
     apiStatus,
-    handlePersonalDetails,
+    handleTrainingDetails,
     isError,
     isLoading,
     isSuccess,
-    personalDetails,
+    trainingDetails,
   };
 };
 
-export default usePersonalDetailsAPI;
+export default useTrainingDetails;
