@@ -32,7 +32,7 @@ const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
       return [
         { path: navigations.ROUND_ONE, label: "Round 1" },
         {
-          path: `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}?id=${roundId}`,
+          path: `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`,
           label: "Centre wise Company detail",
         },
       ];
@@ -41,7 +41,7 @@ const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
       return [
         { path: navigations.ROUND_TWO, label: "Round 2" },
         {
-          path: `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}?id=${roundId}`,
+          path: `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`,
           label: "Centre wise Company detail",
         },
       ];
@@ -50,7 +50,7 @@ const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
       return [
         { path: navigations.ROUND_ONE, label: "Round 1" },
         {
-          path: `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}?id=${roundId}`,
+          path: `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`,
           label: "Centre wise Company detail",
         },
         {
@@ -63,7 +63,7 @@ const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
       return [
         { path: navigations.ROUND_TWO, label: "Round 2" },
         {
-          path: `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}?id=${roundId}`,
+          path: `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`,
           label: "Centre wise Company detail",
         },
         {
