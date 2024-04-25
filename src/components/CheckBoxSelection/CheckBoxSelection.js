@@ -29,6 +29,9 @@ const CheckBoxSelection = ({
   const iconCheck = () => {
     if (isEditable) {
       if (isSingleSelection) {
+        if (colorMode === "dark") {
+          return images.iconCheckBoxRoundRed;
+        }
         return images.iconCheckBoxRound;
       }
       if (colorMode === "dark") {

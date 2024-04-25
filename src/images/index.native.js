@@ -175,6 +175,7 @@ import iconDoc from "../../public/images/svg/iconDoc.svg";
 import defaultImage from "../../public/images/svg/defaultImage.svg";
 import checkboxRed from "../../public/images/svg/checkboxRed.svg";
 import partialSelectIcon from "../../public/images/svg/partialSelectIcon.svg";
+import iconCheckBoxRoundRed from "../../public/images/svg/iconCheckBoxRoundRed.svg";
 
 const images = {
   iconArrowUp,
@@ -353,6 +354,7 @@ const images = {
   defaultImage,
   checkboxRed,
   partialSelectIcon,
+  iconCheckBoxRoundRed,
 };
 
 export default images;
