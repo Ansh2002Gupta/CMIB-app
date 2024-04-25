@@ -14,6 +14,8 @@ const ActionPairButton = ({
   displayLoader,
   displayLoaderLeft,
   customLoadingStyleButtonOne,
+  buttonOneLoaderColor,
+  buttonTwoLoaderColor,
   disableRightStyle,
   iconRight,
   iconLeft,
@@ -47,6 +49,7 @@ const ActionPairButton = ({
             disabled={isButtonOneDisabled || isDisabledLeft}
             isLoading={displayLoaderLeft}
             customLoadingStyle={customLoadingStyleButtonOne}
+            color={buttonOneLoaderColor}
             iconLeft={iconLeft}
             onPress={onPressButtonOne}
             customStyle={{ customTextStyle: buttonOneTextStyle }}
@@ -67,6 +70,7 @@ const ActionPairButton = ({
             customStyle={{ customTextStyle: buttonTwoTextStyle }}
             iconRight={iconRight}
             isLoading={displayLoader}
+            color={buttonTwoLoaderColor}
             onPress={onPressButtonTwo}
             style={buttonTwoStyle}
             type={buttonTwoType}
@@ -124,6 +128,8 @@ ActionPairButton.propTypes = {
   buttonsType: PropTypes.object,
   customStyles: PropTypes.object,
   displayLoader: PropTypes.bool,
+  buttonOneLoaderColor: PropTypes.string,
+  buttonTwoLoaderColor: PropTypes.string,
   iconLeft: PropTypes.object,
   iconRight: PropTypes.object,
   isDisabled: PropTypes.bool,
