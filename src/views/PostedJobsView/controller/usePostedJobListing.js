@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "../../../routes";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   TouchableOpacity,
@@ -32,7 +33,7 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMe
 import { navigations } from "../../../constants/routeNames";
 import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../PostedJobsView.styles";
+import getStyles from "../PostedJobsView.styles";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -44,6 +45,9 @@ const initialFilterState = {
 const usePostedJobListing = (onViewPress, onEditPress) => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);

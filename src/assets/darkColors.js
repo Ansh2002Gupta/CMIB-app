@@ -8,7 +8,7 @@ const blackWithOneForthOpacity = "rgba(0, 0, 0, 0.25)";
 const blackWithMinorOpacity = "rgba(0, 0, 0, 0.85)";
 
 /* Blues */
-const backgroundColor = "orange"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
+const backgroundColor = "#F1F6F9"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
 const darkBlue = "#364049";
 const darkBlueShade = "#182F53";
 const lightBlue = "#269AD4";

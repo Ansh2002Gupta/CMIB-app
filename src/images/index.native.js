@@ -173,6 +173,7 @@ import iconPPT from "../../public/images/svg/iconPPT.svg";
 import iconPDF from "../../public/images/svg/iconPDF.svg";
 import iconDoc from "../../public/images/svg/iconDoc.svg";
 import defaultImage from "../../public/images/svg/defaultImage.svg";
+import checkboxRed from "../../public/images/svg/checkboxRed.svg";
 
 const images = {
   iconArrowUp,
@@ -349,6 +350,7 @@ const images = {
   iconPDF,
   iconDoc,
   defaultImage,
+  checkboxRed,
 };
 
 export default images;
