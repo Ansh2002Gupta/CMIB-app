@@ -17,6 +17,7 @@ const EditDeleteAction = ({
   bottomRightText,
   customContainerStyle,
   isCategory,
+  categoriesText = "Categories",
   onEditDocument,
   onDeleteDocument,
   requiredPostingPlaceDetail,
@@ -60,7 +61,7 @@ const EditDeleteAction = ({
                     customTextStyle={styles.catrgoryTextStyle}
                     fontWeight="600"
                   >
-                    {intl.formatMessage({ id: "label.categories" })}
+                    {categoriesText}
                   </CommonText>
                   <CustomImage
                     source={
