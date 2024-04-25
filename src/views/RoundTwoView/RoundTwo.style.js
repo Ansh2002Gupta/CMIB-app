@@ -1,15 +1,17 @@
-import colors from "../../assets/colors";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const style = {
-  container: {
-    flex: 1,
-    backgroundColor: colors.backgroundColor,
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 24,
-    textAlign: "center",
-  },
+  return {
+    container: {
+      flex: 1,
+      backgroundColor: colors.backgroundColor,
+    },
+    header: {
+      fontSize: 24,
+      marginBottom: 24,
+      textAlign: "center",
+    },
+  };
 };
 
-export default style;
+export default getStyles;

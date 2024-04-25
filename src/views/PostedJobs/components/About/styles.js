@@ -1,16 +1,18 @@
-import colors from "../../../../assets/colors";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = {
-  container: {
-    backgroundColor: colors.white,
-    borderWidth: 1,
-  },
-  headingTextStyle: {
-    color: colors.black,
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: "600",
-  },
+  return {
+    container: {
+      backgroundColor: colors.white,
+      borderWidth: 1,
+    },
+    headingTextStyle: {
+      color: colors.black,
+      fontSize: 14,
+      lineHeight: 20,
+      fontWeight: "600",
+    },
+  };
 };
 
-export default styles;
+export default getStyles;

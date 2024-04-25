@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import MultiRow from "../../core/layouts/MultiRow";
@@ -10,11 +11,13 @@ import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import useIsWebView from "../../hooks/useIsWebView";
 import { formatDate } from "../../utils/util";
 import images from "../../images";
-import styles from "./TicketDetails.style";
+import getStyles from "./TicketDetails.style";
 
 const TicketDetails = ({ details }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const isAssigned = !!details?.chat_partner_details || false;
   const getTopSectionData = (assignedTo) => {

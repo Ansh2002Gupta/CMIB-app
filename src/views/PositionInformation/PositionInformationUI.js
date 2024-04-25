@@ -3,13 +3,16 @@ import React from "react";
 import DetailCard from "../../components/DetailCard";
 import { useIntl } from "react-intl";
 import CustomTable from "../../components/CustomTable";
-import styles from "./styles";
+import getStyles from "./styles";
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
 import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
+import { useTheme } from "@unthinkable/react-theme";
 
 const CommonTable = ({ data = [], tableName, getColoumConfigs }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <CardComponent customStyle={styles.commonTable}>
@@ -41,6 +44,8 @@ const RequriedDocuments = ({
   getRequiredDocumentsColumnConfigs,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <CardComponent customStyle={styles.requriedDocuments}>
@@ -78,6 +83,8 @@ const PostingAndCategories = ({
   getPostingAndCategoriesColumnConfigs,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <CardComponent customStyle={styles.requriedDocuments}>
@@ -114,6 +121,9 @@ const PostingAndCategories = ({
 
 const SelectionProcess = ({ data }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <CardComponent customStyle={styles.requriedDocuments}>
       <CommonText customTextStyle={styles.tableTitleText}>
@@ -134,6 +144,9 @@ const PositionInformationUI = ({
   data,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const {
     monthlyData,
     yearlyData,

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 
 import { Base } from "../../core/layouts";
 
@@ -25,7 +26,7 @@ import {
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { setRoundsData } from "../../globalContext/sidebar/sidebarActions";
 import { isObjectFilled } from "../../utils/util";
-import styles from "./RoundOneView.style";
+import getStyles from "./RoundOneView.style";
 
 const RoundOneView = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -37,6 +38,9 @@ const RoundOneView = () => {
   const selectedModule = sideBarState?.selectedModule?.key;
   const sessionId = sideBarState?.selectedSession?.value;
   const savedRoundsData = sideBarState?.roundsData;
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const { data, fetchData } = useFetch({
     url: CORE + `/${selectedModule}` + GLOBAL_SESSIONS + `/${sessionId}`,
