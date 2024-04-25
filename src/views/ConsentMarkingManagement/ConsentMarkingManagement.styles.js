@@ -117,7 +117,6 @@ const styles = {
   containerStyle: {
     borderBottomColor: colors.lightGray,
     borderBottomWidth: 1,
-    flex:1,
     ...Platform.select({
       web: {
         borderTopWidth: 0,

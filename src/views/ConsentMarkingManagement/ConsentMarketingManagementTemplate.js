@@ -182,6 +182,8 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
         style={{
           backgroundColor: colors.backgroundGrey,
           height: !isWebView && "100%",
+          flex: 1,
+          display: 'block',
         }}
       >
         <SearchView
