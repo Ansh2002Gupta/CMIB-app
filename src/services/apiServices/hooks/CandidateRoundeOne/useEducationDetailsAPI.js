@@ -17,7 +17,7 @@ const useEducationDetailsApi = () => {
       setApiStatus(API_STATUS.LOADING);
       apiError && setApiError("");
       
-      const res = await Http.get(MEMBER_PERSONAL_DETAILS);
+      const res = await Http.get('member/nqca-placements/rounds/264/academics');
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
         res.code === STATUS_CODES.SUCCESS_STATUS

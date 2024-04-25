@@ -68,7 +68,7 @@ const PersonalDetails = (
 
   useEffect(() => {
     handlePersonalDetails();
-    fetchFilledData();
+    //fetchFilledData();
     //BUG: adding deps causes infinite loop
   }, []);
 

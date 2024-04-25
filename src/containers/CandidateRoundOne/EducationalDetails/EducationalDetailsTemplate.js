@@ -33,7 +33,7 @@ const   EducationalDetailsTemplate = ({
   }));
 
 useEffect(() => {
-  fetchFilledData();
+  //fetchFilledData();
 }, []);
 
   const getEducationalDetailsTab = () => {
