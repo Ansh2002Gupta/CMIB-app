@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
@@ -16,6 +16,7 @@ import WorkExperienceDetails from "../WorkExperience";
 import HobbiesDetails from "../Hobbies";
 import JobPreferenceDetails from "../JobPreference";
 import { usePut } from "../../../hooks/useApiRequest";
+import useFetch from "../../../hooks/useFetch";
 
 const AddApplicationTemplate = ({
   countryCodeData,
@@ -31,14 +32,33 @@ const AddApplicationTemplate = ({
   const personalDetailsref = useRef();
   const edDetailsRef = useRef();
   const trainingDetailRef = useRef();
+  const hobbiesRef = useRef();
+
+  const { isLoading, makeRequest, error } = usePut({
+    url: "/member/nqca-placements/rounds/264/training-details",
+  });
 
   const {
-    isLoading,
-    makeRequest,
-    error,
+    isLoading: isLoadingHobbies,
+    makeRequest: makeRequestHobbies,
+    error: errorHobbies,
   } = usePut({
-    url: '/member/nqca-placements/rounds/264/training-details',
+    url: "/member/nqca-placements/rounds/264/activities",
   });
+
+  const {
+    data: hobbiesData,
+    isLoading: isHobbiesLoading,
+    error: errorWhileFetchingHobbies,
+    fetchData: fetchHobbies,
+  } = useFetch({
+    url: "/member/nqca-placements/rounds/264/activities",
+  });
+
+  useEffect(() => {
+    fetchHobbies();
+  }, []);
+
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -58,19 +78,52 @@ const AddApplicationTemplate = ({
             intl={intl}
             ref={personalDetailsref}
             isWebView={isWebView}
-            handleSave={(val) => {if (val !== isSaveEnabled) {setIsSaveEnaabled(val)}}}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
           />
         );
       case 2:
-        return <EducationalDetails ref={edDetailsRef} intl={intl} isWebView={isWebView} handleSave={(val) => {if (val !== isSaveEnabled) {setIsSaveEnaabled(val)}}} />;
+        return (
+          <EducationalDetails
+            ref={edDetailsRef}
+            intl={intl}
+            isWebView={isWebView}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
       case 3:
-        return <TrainingDetails intl={intl} isWebView={isWebView}  ref={trainingDetailRef} handleSave={(val) => {if (val !== isSaveEnabled) {setIsSaveEnaabled(val)}}}/>;
+        return (
+          <TrainingDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={trainingDetailRef}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
       case 4:
         return <WorkExperienceDetails intl={intl} isWebView={isWebView} />;
       case 5:
-        return <HobbiesDetails intl={intl} isWebView={isWebView} />;
+        return (
+          <HobbiesDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={hobbiesRef}
+            hobbiesData={hobbiesData}
+          />
+        );
       case 6:
-          return <JobPreferenceDetails intl={intl} isWebView={isWebView} />;
+        return <JobPreferenceDetails intl={intl} isWebView={isWebView} />;
       default:
         return (
           <View
@@ -93,10 +146,10 @@ const AddApplicationTemplate = ({
         console.log("error");
       },
       onSuccessCallback: (data) => {
-        onChangeStepper()
+        onChangeStepper();
       },
-    })
-  }
+    });
+  };
 
   const onEdDetailsSave = () => {
     const payload = edDetailsRef?.current?.getAllData();
@@ -107,10 +160,10 @@ const AddApplicationTemplate = ({
         console.log("error");
       },
       onSuccessCallback: (data) => {
-        onChangeStepper()
+        onChangeStepper();
       },
-    })
-  }
+    });
+  };
 
   const onTrainingDetailsSave = () => {
     const payload = trainingDetailRef?.current?.getAllData();
@@ -121,10 +174,21 @@ const AddApplicationTemplate = ({
         console.log("error");
       },
       onSuccessCallback: (data) => {
-        onChangeStepper()
+        onChangeStepper();
       },
-    })
-  }
+    });
+  };
+
+  const onHobbiesDetailsSave = () => {
+    const payload = hobbiesRef?.current?.getAllData();
+    makeRequestHobbies({
+      body: { data: payload },
+      onErrorCallback: (errorMessage) => {},
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
 
   const handleSavePress = () => {
     switch (selectedStepper.id) {
@@ -134,15 +198,18 @@ const AddApplicationTemplate = ({
       case 2:
         onEdDetailsSave();
         return;
-      case 3: 
+      case 3:
         onTrainingDetailsSave();
+        return;
+      case 4:
+        return;
+      case 5:
+        onHobbiesDetailsSave();
         return;
       default:
         return;
     }
-    
-  }
-
+  };
   return (
     <View style={styles.mainContainer}>
       <View
@@ -211,7 +278,7 @@ const AddApplicationTemplate = ({
               leftIconSource: images.iconArrowLeft,
             }
           }
-          isDisabled={!isSaveEnabled}
+          isDisabled={selectedStepper.id == 5 ? false : !isSaveEnabled}
           isButtonTwoGreen
           onPressButtonOne={() => {
             if (!isWebView && selectedStepper.id != 1) {
