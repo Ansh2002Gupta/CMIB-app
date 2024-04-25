@@ -1,5 +1,5 @@
-import { View } from "@unthinkable/react-core-components";
-import React from "react";
+import { Row, View } from "@unthinkable/react-core-components";
+import React, { useState } from "react";
 import DetailCard from "../../components/DetailCard";
 import { useIntl } from "react-intl";
 import CustomTable from "../../components/CustomTable";
@@ -7,13 +7,134 @@ import styles from "./styles";
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
 import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
+import useIsWebView from "../../hooks/useIsWebView";
+import { TwoRow } from "../../core/layouts";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
+import CustomImage from "../../components/CustomImage";
+import images from "../../images";
 
-const CommonTable = ({ data = [], tableName, getColoumConfigs }) => {
+const renderCatgories = ({ category, value }) => {
+  return (
+    <CommonText customTextStyle={styles.categoriesOptionsStyle}>
+      {category}: {value}
+    </CommonText>
+  );
+};
+
+const RenderPlaceOfPosting = ({ intl, place, totalPosition, categories }) => {
+  const [showCategories, setShowCategories] = useState(false);
+  const handleShow = () => {
+    setShowCategories((pre) => !pre);
+  };
+  return (
+    <TwoRow
+      style={styles.mainRowContainer}
+      topSection={
+        <CommonText customTextStyle={styles.placeHeadingStyle}>
+          {place}
+        </CommonText>
+      }
+      bottomSection={
+        <>
+          <Row>
+            <CommonText customTextStyle={styles.totalPositionStyle}>
+              {intl.formatMessage({ id: "label.totalPosition" })}
+              {totalPosition}
+            </CommonText>
+            <CustomTouchableOpacity onPress={handleShow}>
+              <CommonText
+                customTextStyle={styles.categoriesStyle}
+                fontWeight={"600"}
+              >
+                {intl.formatMessage({ id: "label.categories" })}
+              </CommonText>
+              <CustomImage
+                source={
+                  showCategories ? images.iconUpArrow : images.iconDownArrow
+                }
+                style={styles.iconArrow}
+              />
+            </CustomTouchableOpacity>
+          </Row>
+          {showCategories && (
+            <View style={styles.row}>
+              {renderCatgories({
+                category: intl.formatMessage({ id: "label.general" }),
+                value: categories?.gen,
+              })}
+              {renderCatgories({
+                category: intl.formatMessage({ id: "label.obc" }),
+                value: categories?.obc,
+              })}
+              {renderCatgories({
+                category: intl.formatMessage({ id: "label.sc" }),
+                value: categories?.sc,
+              })}
+              {renderCatgories({
+                category: intl.formatMessage({ id: "label.st" }),
+                value: categories?.st,
+              })}
+              {renderCatgories({
+                category: intl.formatMessage({ id: "label.ph" }),
+                value: categories?.ph,
+              })}
+              {renderCatgories({
+                category: intl.formatMessage({ id: "label.others" }),
+                value: categories?.others,
+              })}
+            </View>
+          )}
+        </>
+      }
+    />
+  );
+};
+
+const CommonTable = ({
+  data = [],
+  tableName,
+  getColoumConfigs,
+  style = {},
+}) => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
+  if (!isWebView) {
+    return (
+      <CardComponent
+        customStyle={{ ...styles.mobileCommonTableCard, ...style }}
+      >
+        <CommonText
+          fontWeight="600"
+          customContainerStyle={styles.mobileCommonTable}
+          customTextStyle={styles.tableTitleText}
+        >
+          {tableName}
+        </CommonText>
+        {data?.map((item) => {
+          return (
+            <View style={styles.tableRow}>
+              <CommonText
+                customContainerStyle={styles.commonTableCell}
+                customTextStyle={styles.labelText}
+              >
+                {item?.label}
+              </CommonText>
+              <CommonText
+                customContainerStyle={styles.commonTableCell}
+                customTextStyle={styles.labelText}
+              >
+                {item?.amount}
+              </CommonText>
+            </View>
+          );
+        })}
+      </CardComponent>
+    );
+  }
 
   return (
     <CardComponent customStyle={styles.commonTable}>
-      <CommonText customTextStyle={styles.tableTitleText}>
+      <CommonText fontWeight="600" customTextStyle={styles.tableTitleText}>
         {tableName}
       </CommonText>
       <CustomTable
@@ -39,12 +160,53 @@ const RequriedDocuments = ({
   data = [],
   tableName,
   getRequiredDocumentsColumnConfigs,
+  style = {},
 }) => {
   const intl = useIntl();
-
+  const { isWebView } = useIsWebView();
+  if (!isWebView) {
+    return (
+      <CardComponent
+        customStyle={{
+          ...styles.requriedDocuments,
+          ...styles.mobileCommonTableCard,
+          ...style,
+        }}
+      >
+        <CommonText
+          fontWeight="600"
+          customContainerStyle={styles.mobileCommonTable}
+          customTextStyle={styles.tableTitleText}
+        >
+          {tableName}
+        </CommonText>
+        {data?.map((item, index) => (
+          <View
+            style={{
+              ...styles.docItem,
+              ...(index < data.length - 1 && (styles.docItemBorder ?? {})),
+            }}
+          >
+            <CommonText customTextStyle={styles.docName}>
+              {item?.doc_name}
+            </CommonText>
+            <View style={styles.documentRow}>
+              <CommonText customTextStyle={styles.docText}>
+                {item?.doc_type}
+              </CommonText>
+              <View style={styles.dot} />
+              <CommonText customTextStyle={styles.docText}>
+                {item?.no_of_photocopies}
+              </CommonText>
+            </View>
+          </View>
+        ))}
+      </CardComponent>
+    );
+  }
   return (
     <CardComponent customStyle={styles.requriedDocuments}>
-      <CommonText customTextStyle={styles.tableTitleText}>
+      <CommonText fontWeight="600" customTextStyle={styles.tableTitleText}>
         {tableName}
       </CommonText>
       <CustomTable
@@ -76,8 +238,47 @@ const PostingAndCategories = ({
   data = [],
   tableName,
   getPostingAndCategoriesColumnConfigs,
+  style,
 }) => {
+  console.log(data, "PostingAndCategories");
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
+  if (!isWebView) {
+    return (
+      <CardComponent
+        customStyle={{
+          ...styles.requriedDocuments,
+          ...styles.mobileCommonTableCard,
+          ...style,
+        }}
+      >
+        <CommonText
+          fontWeight="600"
+          customContainerStyle={styles.mobileCommonTable}
+          customTextStyle={styles.tableTitleText}
+        >
+          {tableName}
+        </CommonText>
+        {data?.map((item) => {
+          return (
+            <RenderPlaceOfPosting
+              intl={intl}
+              place={item?.placeOfPosting}
+              totalPosition={item?.total}
+              categories={{
+                gen: item?.general,
+                obc: item?.obc,
+                sc: item?.sc,
+                st: item?.st,
+                ph: item?.ph,
+                others: item?.others,
+              }}
+            />
+          );
+        })}
+      </CardComponent>
+    );
+  }
 
   return (
     <CardComponent customStyle={styles.requriedDocuments}>
@@ -116,7 +317,7 @@ const SelectionProcess = ({ data }) => {
   const intl = useIntl();
   return (
     <CardComponent customStyle={styles.requriedDocuments}>
-      <CommonText customTextStyle={styles.tableTitleText}>
+      <CommonText fontWeight="600" customTextStyle={styles.tableTitleText}>
         {intl.formatMessage({ id: "label.selection_process" })}
       </CommonText>
       <BadgeLabel
@@ -134,6 +335,7 @@ const PositionInformationUI = ({
   data,
 }) => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
   const {
     monthlyData,
     yearlyData,
@@ -146,7 +348,7 @@ const PositionInformationUI = ({
   } = data ?? {};
 
   return (
-    <View>
+    <View style={styles.container}>
       <DetailCard
         details={positionDetail}
         headerId={intl.formatMessage({
@@ -154,7 +356,9 @@ const PositionInformationUI = ({
         })}
         isColumnVariableWidth
       />
-      <View style={styles.twoColumn}>
+      <View
+        style={{ ...styles.twoColumn, ...(isWebView && styles.twoColumnWeb) }}
+      >
         <CommonTable
           {...{
             data: monthlyData,
@@ -169,6 +373,7 @@ const PositionInformationUI = ({
             isHeading: false,
             getColoumConfigs,
             tableName: intl.formatMessage({ id: "label.yearly" }),
+            style: !isWebView && styles.yearlyData,
           }}
         />
       </View>

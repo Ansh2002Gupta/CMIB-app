@@ -233,7 +233,7 @@ const config = [
         element: <RoundOneApplicationForm />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/:id`,
         element: <CentreWiseCompanyListing />,
       },
       {
@@ -257,7 +257,7 @@ const config = [
         element: <RoundTwoApplicationForm />,
       },
       {
-        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`,
+        viewPath: `${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/:id`,
         element: <CentreWiseCompanyListing />,
       },
       {
@@ -385,7 +385,7 @@ const config = [
         element: <RoundOneApplicationForm />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/:id`,
         element: <CentreWiseCompanyListing />,
       },
       {
@@ -420,7 +420,7 @@ const config = [
       },
 
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/:id`,
         element: <CentreWiseCompanyListing />,
       },
       {
@@ -454,7 +454,7 @@ const config = [
         element: <RoundOneApplicationForm />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/:id`,
         element: <CentreWiseCompanyListing />,
       },
       {

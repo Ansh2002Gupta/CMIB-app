@@ -205,12 +205,12 @@ const useContentMarketingManagement = (onViewPress) => {
   };
 
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading ? styles.tableHeadingText : {};
+    const tableStyle = isHeading ? styles.tableHeadingText : styles.tableRowText;
     return [
       {
         content: isHeading ? (
           <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.employer_name ? item.employer_name : "-"}
             </CommonText>
             <CustomImage
@@ -233,12 +233,12 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.interview_type ? item.interview_type : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
             {!!item.interview_type ? item.interview_type : "-"}
           </CommonText>
         ),
@@ -248,12 +248,12 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.mode ? item.mode : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
             {!!item.mode ? item.mode : "0"}
           </CommonText>
         ),
@@ -263,12 +263,12 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.interview_dates ? item.interview_dates : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
             {!!item.interview_dates ? item.interview_dates : "0"}
           </CommonText>
         ),
@@ -278,12 +278,12 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.shortlisting_round ? item.shortlisting_round : "-"}
             </CommonText>
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"400"} customTextStyle={tableStyle}>
+          <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
             {!!item.shortlisting_round ? item.shortlisting_round : "-"}
           </CommonText>
         ),

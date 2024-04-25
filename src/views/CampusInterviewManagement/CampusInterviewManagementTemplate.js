@@ -56,11 +56,13 @@ const CampusInterviewManagementTemplate = ({ intl }) => {
         style={{
           backgroundColor: colors.backgroundGrey,
           height: !isWebView && "100%",
+          flex: 1,
+          display: 'block',
         }}
       >
         <CustomTable
           {...{
-            customTableStyle: { padding: 16 },
+            customTableStyle: { padding: 16},
             allDataLoaded,
             currentPage,
             currentRecords: data,
