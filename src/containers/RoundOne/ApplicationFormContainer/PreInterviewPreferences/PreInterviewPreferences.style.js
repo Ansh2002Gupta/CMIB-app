@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   customContainerStyle: (windowWidth) => ({
-    // display: "flex",
+    display: "flex",
     // overflow: "auto",
     flexDirection: "column",
     justifyContent: "flex-start",
