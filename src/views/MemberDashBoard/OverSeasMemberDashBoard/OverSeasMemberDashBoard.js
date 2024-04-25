@@ -272,29 +272,33 @@ const OverSeasMemberDashBoard = () => {
             />
           </View>
         </View>
-        <BarChart
-          yAxisLabel={intl.formatMessage({ id: "label.numberJobsOffered" })}
-          domainPadding={20}
-          height={200}
-          label={intl.formatMessage({
-            id: "label.topCompaniesHighestJobsOffered",
-          })}
-          toolTipLabel={({ datum }) => datum.y}
-          barColor={colors.purple}
-          data={highestOffetChartData}
-        />
-        <BarChart
-          yAxisLabel={intl.formatMessage({ id: "label.highestCTCinINR" })}
-          domainPadding={20}
-          height={200}
-          label={intl.formatMessage({
-            id: "label.topCompaniesHighestCTCs",
-          })}
-          barColor={colors.green}
-          data={hightCtcChartData}
-          toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
-          yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
-        />
+        {highestOffetChartData?.length > 0 && (
+          <BarChart
+            yAxisLabel={intl.formatMessage({ id: "label.numberJobsOffered" })}
+            domainPadding={20}
+            height={200}
+            label={intl.formatMessage({
+              id: "label.topCompaniesHighestJobsOffered",
+            })}
+            toolTipLabel={({ datum }) => datum.y}
+            barColor={colors.purple}
+            data={highestOffetChartData}
+          />
+        )}
+        {hightCtcChartData?.length > 0 && (
+          <BarChart
+            yAxisLabel={intl.formatMessage({ id: "label.highestCTCinINR" })}
+            domainPadding={20}
+            height={200}
+            label={intl.formatMessage({
+              id: "label.topCompaniesHighestCTCs",
+            })}
+            barColor={colors.green}
+            data={hightCtcChartData}
+            toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
+            yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
+          />
+        )}
         <View style={styles.pieChartContiner}>
           <View style={isWebView && { flex: 1 }}>
             <PieChart

@@ -1,7 +1,7 @@
 import { Dimensions } from "@unthinkable/react-core-components";
 
 const screenHeight = Dimensions.get("window").height;
-const maxHeight = screenHeight * 0.8;
+const maxHeight = screenHeight * 0.5;
 
 const getStyles = (theme) => {
   const { colors } = theme;
@@ -55,6 +55,32 @@ const getStyles = (theme) => {
         marginRight: 0,
         maxHeight: maxHeight,
       },
+    },
+    addDocumentViewStyle: {
+      paddingBottom: 24,
+    },
+    documentBorderStyle: {
+      borderTopWidth: 1,
+      borderTopColor: colors.greyOne,
+    },
+    mandatoryTextStyle: {
+      paddingTop: 16,
+      paddingBottom: 24,
+    },
+    customAddIconStyle: {
+      marginTop: 16,
+    },
+    toggleLabelViewStyle: {
+      width: "100%",
+    },
+    customWebContainerStyle: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+      overflowY: "auto",
+    },
+    ctcTextInputStyle: {
+      maxHeight: maxHeight,
+      overflowY: "auto",
     },
     addDocumentViewStyle: {
       paddingBottom: 24,

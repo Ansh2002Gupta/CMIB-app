@@ -1,3 +1,8 @@
+import { Dimensions } from "@unthinkable/react-core-components";
+
+const screenHeight = Dimensions.get("window").height;
+const maxHeight = screenHeight * 0.5;
+
 const getStyles = (theme) => {
   const { colors } = theme;
   return {
@@ -67,6 +72,23 @@ const getStyles = (theme) => {
       flex: 1,
       justifyContent: "center",
       margin: 12,
+    },
+    documentBorderStyle: {
+      borderTopWidth: 1,
+      borderTopColor: colors.greyOne,
+    },
+    ctcTextInputStyle: {
+      maxHeight: maxHeight,
+    },
+    bottomMargin: {
+      marginBottom: 16,
+    },
+    customAddIconStyle: {
+      marginTop: 16,
+    },
+    mandatoryTextStyle: {
+      paddingTop: 16,
+      paddingBottom: 24,
     },
   };
 };

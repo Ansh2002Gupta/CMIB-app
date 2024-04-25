@@ -16,6 +16,7 @@ const AddPlaceOfPosting = ({
   const {
     addPlaceModal,
     editPlaceModal,
+    nonEditableData,
     handlePostingPlaceChange,
     handleMultiRowDocumentDetails,
     isFormValid,
@@ -28,12 +29,14 @@ const AddPlaceOfPosting = ({
   } = useAddPlaceOfPosting({
     requiredPostingPlaceDetail,
     setRenderJobDetails,
+    addPostingDetailsField,
   });
   return (
     <AddPlaceOfPostingTemplate
       {...{
         isEditable,
         otherInfo,
+        nonEditableData,
         isSpecificPerformaRequired,
         addPostingDetailsField,
         handleInputChange,

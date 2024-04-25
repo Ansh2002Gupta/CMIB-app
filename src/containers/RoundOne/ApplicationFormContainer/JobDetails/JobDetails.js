@@ -18,7 +18,10 @@ import ConfirmationModal from "../../../ConfirmationModal";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
+import colors from "../../../../assets/colors";
 import { formateErrors } from "../../../../utils/util";
+
+const isWeb = Platform.OS.toLowerCase() === "web";
 
 const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
   const {
@@ -55,16 +58,14 @@ const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
 
   const theme = useTheme();
   const styles = getStyles(theme);
-
-  const isWebProps =
-    Platform.OS.toLowerCase() === "web"
-      ? {
-          buttonOneStyle: styles.buttonStyle,
-          buttonTwoStyle: styles.buttonTwoStyle,
-          buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonTwoStyle,
-        }
-      : {};
+  const isWebProps = isWeb
+    ? {
+        buttonOneStyle: styles.buttonStyle,
+        buttonTwoStyle: styles.buttonTwoStyle,
+        buttonOneContainerStyle: styles.buttonStyle,
+        buttonTwoContainerStyle: styles.buttonTwoStyle,
+      }
+    : {};
 
   const navigate = useNavigate();
   const intl = useIntl();
@@ -105,7 +106,7 @@ const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
           bottomSection={
             <View style={styles.actionBtnContainer}>
               <CustomButton
-                style={styles.buttonStyle}
+                style={isWeb ? styles.buttonStyle : {}}
                 iconLeft={{
                   leftIconSource: images.iconArrowLeft,
                 }}
@@ -147,6 +148,7 @@ const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
                     disableLeftStyle={styles.disabled}
                     isButtonOneDisabled={isDisabled}
                     isDisabled={isDisabled}
+                    buttonOneLoaderColor={colors.green}
                     displayLoaderLeft={isButtonLoading}
                     customStyles={{
                       ...isWebProps,
@@ -158,7 +160,7 @@ const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
               ) : (
                 <CustomButton
                   withGreenBackground
-                  style={styles.buttonStyle}
+                  style={isWeb ? styles.buttonStyle : {}}
                   onPress={() => {
                     tabHandler("next");
                   }}

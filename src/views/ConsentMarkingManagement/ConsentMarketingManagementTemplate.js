@@ -182,10 +182,12 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
         style={{
           backgroundColor: colors.backgroundGrey,
           height: !isWebView && "100%",
+          flex: 1,
+          display: 'block',
         }}
       >
         <SearchView
-          customParentStyle={{ width: isWebView ? "30%" : "60%", margin: 16 }}
+          customParentStyle={{ width: isWebView ? "30%" : "60%", marginTop: 16, marginLeft: 16 }}
           customSearchCriteria={() => {}}
           placeholder={"Search by company name"}
         />

@@ -5,6 +5,7 @@ import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent/CardComponent";
+import CommonText from "../CommonText";
 import DetailComponent from "../../components/DetailComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import getStyles from "./DetailCard.style";
@@ -110,7 +111,7 @@ const DetailCard = ({
       )}
       {!!footerId && (
         <View style={style.footerContainer}>
-          {intl.formatMessage({ id: footerId })}
+          <CommonText> {intl.formatMessage({ id: footerId })}</CommonText>
         </View>
       )}
     </CardComponent>

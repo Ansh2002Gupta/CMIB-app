@@ -9,18 +9,19 @@ import CommonText from "../CommonText";
 import { convertMobileGraphData } from "../../utils/util";
 import Pie from "react-native-pie";
 import getStyles from "./PieChart.style";
+import colors from "../../assets/colors";
 
 const PieChart = ({ colorScale, data, height, label }) => {
   const screenWidth = Dimensions.get("window").width;
   const theme = useTheme();
   const styles = getStyles(theme);
 
-  const sections = data.map((value, index) => ({
+  const sections = data?.map((value, index) => ({
     percentage: data[index].value,
     color: colorScale[index],
   }));
 
-  const labelChart = data.map((value, index) => ({
+  const labelChart = data?.map((value, index) => ({
     label: data[index].label,
     color: colorScale[index],
   }));
@@ -50,13 +51,15 @@ const PieChart = ({ colorScale, data, height, label }) => {
       bottomSection={
         <>
           <View style={[{ width: screenWidth }, styles.pieChartView]}>
-            <Pie
-              radius={60}
-              innerRadius={40}
-              sections={sections}
-              dividerSize={2}
-              strokeCap={"butt"}
-            />
+            {data && (
+              <Pie
+                radius={60}
+                innerRadius={40}
+                sections={sections}
+                dividerSize={2}
+                strokeCap={"butt"}
+              />
+            )}
             {labelView()}
           </View>
         </>

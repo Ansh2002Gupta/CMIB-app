@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "@unthinkable/react-core-components";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 import { CustomTabs } from "../../components/Tab";
 import PositionInformation from "../PositionInformation";
 import CompanyProfileDetail from "../CompanyProfileDetail";
@@ -11,10 +11,12 @@ import useCompanyDetail from "./controller/useCompanyDetail";
 import { STATUS_CODES } from "../../constants/constants";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import Spinner from "../../components/Spinner";
+import useIsWebView from "../../hooks/useIsWebView";
 
 const CompanyDetail = () => {
   const intl = useIntl();
   const { centerId, companyId } = useParams();
+  const { isWebView } = useIsWebView();
   const { profileInformation, isProfileLoading, profileError } =
     useCompanyDetail({
       centerId,
@@ -34,7 +36,9 @@ const CompanyDetail = () => {
   }
 
   return (
-    <View style={styles.containerStyle}>
+    <ScrollView
+      style={isWebView ? styles.containerStyle : styles.containeStyleMob}
+    >
       <CustomTabs
         renderHeader={() => (
           <Header
@@ -43,6 +47,7 @@ const CompanyDetail = () => {
             companyName={profileInformation?.name}
           />
         )}
+        container={{ flex: undefined }}
         tabs={[
           {
             label: intl.formatMessage({ id: "label.positionInformation" }),
@@ -56,7 +61,7 @@ const CompanyDetail = () => {
           },
         ]}
       />
-    </View>
+    </ScrollView>
   );
 };
 

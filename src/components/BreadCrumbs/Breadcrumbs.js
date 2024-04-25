@@ -11,12 +11,14 @@ import { navigations } from "../../constants/routeNames";
 import { urlService } from "../../services/urlService";
 import { EDIT } from "../../constants/constants";
 import getTheme from "./Breadcrumbs.style";
+import useIsWebView from "../../hooks/useIsWebView";
 
 const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
   const styles = getTheme(theme);
+  const { isWebView } = useIsWebView();
   const { job_id, id, centerId, companyId, roundId } = useParams();
   const windowDimensions = useWindowDimensions();
   const isMdOrGreater = windowDimensions.width >= 900;
@@ -58,15 +60,15 @@ const Breadcrumbs = () => {
       pathname ===
         `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}` ||
       pathname ===
-        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}` ||
+        `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${roundId}` ||
       pathname ===
-        `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`
+        `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`
     );
   };
 
   return (
     <>
-      {isBreadcrumbLocation(location.pathname) && (
+      {isWebView && isBreadcrumbLocation(location.pathname) && (
         <View style={styles.container}>
           {breadcrumbs.map((crumb, index) => {
             const buttonStyles = getStyles(index);

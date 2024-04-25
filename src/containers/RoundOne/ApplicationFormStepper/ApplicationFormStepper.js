@@ -10,6 +10,7 @@ import { TwoColumn } from "../../../core/layouts";
 import CommonText from "../../../components/CommonText";
 import Stepper from "../../../components/Stepper";
 import StepperTabs from "../../../components/StepperTabs";
+import useIsWebView from "../../../hooks/useIsWebView";
 import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
 import getStyles from "./ApplicationFormStepper.style";
 
@@ -32,19 +33,24 @@ const ApplicationFormStepper = ({
     intl.formatMessage({ id: step.title })
   );
 
+  const { isWebView } = useIsWebView();
+
   return (
     <>
       {isWeb ? (
         <View style={styles.stepperContainer}>
-          <View style={styles.headingContainerWeb}>
+          <View style={isWebView ? styles.headingContainerWeb : {}}>
             {!!headingText && (
               <TwoColumn
+                style={!isWebView ? styles.mainContainerMob : {}}
                 leftSection={
                   <CommonText
                     fontWeight={"600"}
                     customTextStyle={{
-                      ...styles.headingtextWeb,
-                      customMobHeadingText,
+                      ...(isWebView
+                        ? styles.headingtextWeb
+                        : styles.headingtextWebMobView),
+                      ...customMobHeadingText,
                     }}
                   >
                     {headingText}
@@ -67,12 +73,13 @@ const ApplicationFormStepper = ({
           {!!headingText && (
             <TwoColumn
               style={styles.headingContainer}
+              isLeftFillSpace
               leftSection={
                 <CommonText
                   fontWeight={"600"}
                   customTextStyle={{
                     ...styles.headingtext,
-                    customMobHeadingText,
+                    ...customMobHeadingText,
                   }}
                 >
                   {headingText}
@@ -84,9 +91,7 @@ const ApplicationFormStepper = ({
           <Stepper
             {...{
               activeStep: activeStep,
-              steps: APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
-                intl.formatMessage({ id: step.title })
-              ),
+              steps,
             }}
           />
         </View>

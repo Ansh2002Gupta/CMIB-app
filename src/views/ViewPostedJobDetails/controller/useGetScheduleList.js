@@ -127,6 +127,9 @@ const useGetScheduleList = (id, onClickAction) => {
       });
       if (initialData && initialData?.records?.length > 0) {
         setCurrentRecords(initialData?.records);
+        if (initialData?.meta?.currentPage === initialData?.meta?.lastPage) {
+          setAllDataLoaded(true);
+        }
       }
       setIsFirstPageReceived(false);
     };

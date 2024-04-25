@@ -234,7 +234,7 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
 UserAccountInfo.propTypes = {
   isMdOrGreater: PropTypes.bool.isRequired,
   onPressRightIcon: PropTypes.func.isRequired,
-  rightIcon: PropTypes.string.isRequired,
+  rightIcon: PropTypes.node,
 };
 
 export default UserAccountInfo;

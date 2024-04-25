@@ -514,7 +514,7 @@ const useTicketListing = () => {
             }}
             source={images.iconTicket}
             imageStyle={styles.iconTicket}
-            isSvg={true}
+            isSvg
           />
         ),
         style: {

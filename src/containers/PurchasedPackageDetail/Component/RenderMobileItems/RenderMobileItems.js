@@ -68,7 +68,7 @@ const RenderMobileItem = ({ item, lastElement, onPress }) => {
           }}
           source={images.iconEyeSvg}
           imageStyle={{ height: 20, width: 20 }}
-          isSvg={true}
+          isSvg
         />
       </View>
     </View>

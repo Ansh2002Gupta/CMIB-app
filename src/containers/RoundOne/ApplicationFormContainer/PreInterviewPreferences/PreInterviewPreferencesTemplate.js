@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   ScrollView,
@@ -27,7 +28,7 @@ import {
   PRE_INTERVIEW,
   ROUNDS,
 } from "../../../../services/apiServices/apiEndPoint";
-import { headStartRowConfig } from "./config";
+import { rowConfigs } from "./config";
 import {
   ADD_PREINTERVIEW_PREFERNCES_HEADING,
   API_VERSION_QUERY_PARAM,
@@ -40,11 +41,13 @@ import {
 import LoadingScreen from "../../../../components/LoadingScreen";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
-import styles from "./PreInterviewPreferences.style";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
+import useIsWebView from "../../../../hooks/useIsWebView";
 import CardComponent from "../../../../components/CardComponent";
 import getStyles from "./PreInterviewPreferences.style";
-import { useTheme } from "@unthinkable/react-theme";
+import EditDeleteAction from "../../../../components/EditDeleteAction/EditDeleteAction";
+import AddIconText from "../../../../components/AddIconText";
+import ModalWithTitleButton from "../../../../components/ModalWithTitleButton";
 
 const PreInterviewPreferencesTemplate = ({
   isEditable,
@@ -61,18 +64,12 @@ const PreInterviewPreferencesTemplate = ({
   const navigate = useNavigate();
   const { currentModule } = useGetCurrentUser();
   const windowWidth = useWindowDimensions()?.width;
+  const { isWebView } = useIsWebView();
   const round_id = params?.id;
   const isMob = Platform.OS.toLowerCase() !== "web";
   const webProps = !isMob ? { size: "xs" } : {};
-  const isWebProps =
-    Platform.OS.toLowerCase() === "web"
-      ? {
-          buttonOneStyle: styles.buttonStyle,
-          buttonTwoStyle: styles.buttonTwoStyle,
-          buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonTwoStyle,
-        }
-      : {};
+  const headStartRowConfig = rowConfigs(isWebView);
+
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const sessionId = sideBarState?.selectedSession?.value;
@@ -82,6 +79,19 @@ const PreInterviewPreferencesTemplate = ({
   const [headContactDetails, setHeadContactDetails] = useState([
     ...headStartRowConfig,
   ]);
+
+  const [contactDetails, setContactDetails] = useState(null);
+  const [addDetailsModal, setAddDetailsModal] = useState(false);
+
+  const isWebProps =
+    Platform.OS.toLowerCase() === "web"
+      ? {
+          buttonOneStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonTwoStyle,
+          buttonOneContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyle,
+        }
+      : {};
 
   const {
     data: fetchedHeadContactDetails,
@@ -155,7 +165,6 @@ const PreInterviewPreferencesTemplate = ({
     startRowTemplateConfig.current = newData;
     setHeadContactDetails(newData);
   };
-
   useEffect(() => {
     const fetchData = async () => {
       const apiData = await fetchHeadContactData();
@@ -520,6 +529,202 @@ const PreInterviewPreferencesTemplate = ({
     ];
   };
 
+  const dataArr = Object.values(
+    headContactDetails.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+
+      if (item.key === "designation") {
+        group.designation = item.value;
+      } else if (item.key === "name") {
+        group.name = item.value;
+      } else if (item.key === "email") {
+        group.email = item.value;
+      } else if (item.key === "mobile_country_code") {
+        group.mobile_country_code = item.value;
+      } else if (item.key === "mobile_number") {
+        group.mobile_number = item.value;
+      } else if (item.key === "std_country_code") {
+        group.std_country_code = item.value;
+      } else if (item.key === "telephone_number") {
+        group.telephone_number = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
+
+  const onClickAddPlace = (cellID) => {
+    setAddDetailsModal(true);
+    setContactDetails((prev) => ({
+      ...prev,
+      cellID: cellID,
+    }));
+  };
+
+  const onClickDeletePlace = (cellID) => {
+    setHeadContactDetails((prevDetail) => {
+      const filteredDocs = prevDetail?.filter((doc) => doc.cellID !== cellID);
+      return [...filteredDocs];
+    });
+  };
+  const onCLickEditPlace = (cellID) => {
+    const documentToEdit = headContactDetails.find(
+      (doc) => doc.cellID === cellID
+    );
+
+    if (documentToEdit) {
+      setContactDetails({
+        designation:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "designation"
+          )?.value || "",
+        name:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "name"
+          )?.value || "",
+        email:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "email"
+          )?.value || "",
+        mobile_country_code:
+          headContactDetails.find(
+            (item) =>
+              item.cellID === cellID && item.key === "mobile_country_code"
+          )?.value || "",
+        mobile_number:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "mobile_number"
+          )?.value || "",
+        std_country_code:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "std_country_code"
+          )?.value || "",
+        telephone_number:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "telephone_number"
+          )?.value || "",
+        cellID: cellID,
+      });
+    }
+  };
+  const onClickAddPlaceCancelButton = () => {
+    setAddDetailsModal(false);
+    setContactDetails(null);
+  };
+
+  const onClickAddPlaceSaveButton = () => {
+    const {
+      designation,
+      name,
+      email,
+      mobile_country_code,
+      mobile_number,
+      std_country_code,
+      telephone_number,
+      cellID,
+    } = contactDetails;
+
+    let newData = headStartRowConfig?.map((doc) => {
+      let val;
+      if (doc?.key === "designation") {
+        val = designation;
+      } else if (doc.key === "name") {
+        val = name;
+      } else if (doc.key === "email") {
+        val = email;
+      } else if (doc.key === "mobile_country_code") {
+        val = mobile_country_code;
+      } else if (doc.key === "mobile_number") {
+        val = mobile_number;
+      } else if (doc.key === "std_country_code") {
+        val = std_country_code;
+      } else {
+        val = telephone_number;
+      }
+      return {
+        ...doc,
+        cellID,
+        value: val,
+      };
+    });
+
+    const updatedDocumentDetails = headContactDetails.map((item) => {
+      if (item.cellID === cellID) {
+        switch (item.key) {
+          case "designation":
+            return { ...item, value: designation };
+          case "name":
+            return { ...item, value: name };
+          case "email":
+            return { ...item, value: email };
+          case "mobile_country_code":
+            return { ...item, value: mobile_country_code };
+          case "mobile_number":
+            return { ...item, value: mobile_number };
+          case "std_country_code":
+            return { ...item, value: std_country_code };
+          default:
+            return item;
+        }
+      }
+      return item;
+    });
+
+    setHeadContactDetails([...updatedDocumentDetails, ...newData]);
+    setAddDetailsModal(false);
+    setContactDetails(null);
+  };
+
+  const renderAddContactDetailsMob = () => {
+    return (
+      <>
+        {dataArr.map((item, index) => {
+          return (
+            <View>
+              <View
+                style={
+                  index !== 0
+                    ? { ...styles.documentBorderStyle }
+                    : { ...styles.bottomMargin }
+                }
+              ></View>
+              <EditDeleteAction
+                topText={item?.name}
+                bottomLeftText={item?.designation}
+                onDeleteDocument={() => {
+                  onClickDeletePlace(item.cellID);
+                }}
+                onEditDocument={() => {
+                  onCLickEditPlace(item.cellID);
+                }}
+                categoriesText={intl.formatMessage({
+                  id: "label.contact_details",
+                })}
+                isCategory
+                requiredPostingPlaceDetail={dataArr[index]}
+              />
+            </View>
+          );
+        })}
+        <AddIconText
+          customViewStyle={styles.customAddIconStyle}
+          label={intl.formatMessage({
+            id: "label.add_place",
+          })}
+          onPress={() => onClickAddPlace(dataArr?.length + 1)}
+        />
+        <CommonText customTextStyle={styles.mandatoryTextStyle}>
+          {intl.formatMessage({
+            id: "label.one_mandatory",
+          })}
+        </CommonText>
+      </>
+    );
+  };
+
   const renderCustomMultiRowComponent = () => {
     return (
       <CustomMultiRowTextInput
@@ -570,14 +775,60 @@ const PreInterviewPreferencesTemplate = ({
     },
     {
       content: isEditable ? (
-        renderCustomMultiRowComponent()
+        isWebView ? (
+          renderCustomMultiRowComponent()
+        ) : (
+          <CardComponent customStyle={styles.CardComponentStyle}>
+            {renderAddContactDetailsMob()}
+          </CardComponent>
+        )
       ) : (
-        <CardComponent customStyle={styles.CardComponentStyle}>
-          <CommonText customTextStyle={commonStyles.headingStyle}>
-            {intl.formatMessage({ id: "label.head_contacts" })}
-          </CommonText>
-          {renderCustomMultiRowComponent()}
-        </CardComponent>
+        <>
+          <CardComponent customStyle={styles.CardComponentStyle}>
+            <CommonText customTextStyle={commonStyles.headingStyle}>
+              {intl.formatMessage({ id: "label.head_contacts" })}
+            </CommonText>
+            {isWebView
+              ? renderCustomMultiRowComponent()
+              : renderAddContactDetailsMob()}
+          </CardComponent>
+          {(addDetailsModal || contactDetails) && (
+            <ModalWithTitleButton
+              enableBottomButton
+              heading={intl.formatMessage({
+                id: "label.add_contact",
+              })}
+              leftLabelTxt={intl.formatMessage({
+                id: "label.cancel",
+              })}
+              rightLabelTxt={intl.formatMessage({
+                id: "label.add",
+              })}
+              customStyles={styles.customModalStyle}
+              onClickLeftButton={onClickAddPlaceCancelButton}
+              onClickRightButton={onClickAddPlaceSaveButton}
+            >
+              <ScrollView style={styles.ctcTextInputStyle}>
+                <DetailCard
+                  details={headContactDetails}
+                  handleChange={(label, inputValue, index, id, changedCellID) =>
+                    handleHeadContactDetails({
+                      propertyName: label,
+                      value: inputValue,
+                      id,
+                      cellID: changedCellID,
+                    })
+                  }
+                  isEditProfile
+                  customCardStyle={styles.modalCardStyle}
+                  // customContainerStyle={styles.customContainerStyle(
+                  //   windowWidth
+                  // )}
+                />
+              </ScrollView>
+            </ModalWithTitleButton>
+          )}
+        </>
       ),
     },
   ];

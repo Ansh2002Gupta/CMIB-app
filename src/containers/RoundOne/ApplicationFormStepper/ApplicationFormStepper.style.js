@@ -19,11 +19,14 @@ const getStyles = (theme) => {
       borderColor: colors.lightGrey,
     },
     headingContainer: {
-      paddingLeft: 16,
-      paddingRight: 16,
-      paddingBottom: 16,
+      padding: 16,
+      alignItems: "center",
     },
     headingtext: {
+      color: colors.black,
+      fontSize: 20,
+    },
+    headingtextWebMobView: {
       color: colors.black,
       fontSize: 20,
     },
@@ -34,6 +37,10 @@ const getStyles = (theme) => {
     headingContainerWeb: {
       paddingBottom: 24,
       paddingTop: 24,
+    },
+    mainContainerMob: {
+      alignItems: "center",
+      paddingBottom: 8,
     },
   };
 };
