@@ -17,6 +17,7 @@ const EditDeleteAction = ({
   bottomRightText,
   customContainerStyle,
   isCategory,
+  categoriesText = "Categories",
   onEditDocument,
   onDeleteDocument,
   requiredPostingPlaceDetail,

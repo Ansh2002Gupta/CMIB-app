@@ -34,6 +34,7 @@ import useFetch from "../../../hooks/useFetch";
 import images from "../../../images";
 import { getValidMode } from "../../../utils/validation";
 import { View } from "@unthinkable/react-core-components";
+import CommonText from "../../../components/CommonText";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const [sideBarState] = useContext(SideBarContext);
@@ -124,18 +125,18 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
         iconLeft={{ leftIconSource: images.iconEdit }}
         onPress={handleButtonClick}
       >
-        {intl.formatMessage({ id: "label.edit" })}
+        <CommonText> {intl.formatMessage({ id: "label.edit" })}</CommonText>
       </CustomButton>
     );
   };
 
   let tabConfig = [
-    // {
-    //   component: CompanyProfile,
-    // },
-    // {
-    //   component: JobDetails,
-    // },
+    {
+      component: CompanyProfile,
+    },
+    {
+      component: JobDetails,
+    },
     {
       component: PreInterviewPreferences,
     },

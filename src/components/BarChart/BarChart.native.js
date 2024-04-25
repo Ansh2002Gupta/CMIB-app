@@ -7,10 +7,12 @@ import { TwoRow } from "../../core/layouts";
 import CommonText from "../CommonText";
 import styles from "./BarChart.style";
 
-const BarChart = ({ barColor, data, label }) => {
+const BarChart = ({ barColor, data, label, heightOfOneBar = 60 }) => {
   return (
     <TwoRow
-      style={styles.container}
+      style={styles.container(
+        data.length > 0 ? data.length * heightOfOneBar : 90
+      )}
       topSection={
         <CommonText customTextStyle={styles.headerText} fontWeight="600">
           {label}
@@ -32,7 +34,7 @@ const BarChart = ({ barColor, data, label }) => {
             showValuesAsTopLabel
             roundedBottom={false}
             roundedTop={false}
-            noOfSections={data.length}
+            noOfSections={4}
             topLabelTextStyle={styles.topLabelTextStyle}
             rulesType="solid"
             autoShiftLabels
