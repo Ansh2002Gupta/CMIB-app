@@ -329,7 +329,7 @@ const CAJobsDashboard = () => {
             }
           />
         </View>
-        <ScrollView style={{ gap: 24 }} showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <BarChart
             yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
             domainPadding={20}
@@ -445,8 +445,7 @@ const CAJobsDashboard = () => {
               data={candidatesAcceptingIndustriesData}
             />
           </View>
-          <View style={isWebView ? {} : { width: '100%' }}>
-
+          <View style={isWebView ? {} : { width: '100%', marginBottom: 620 }}>
             <BarChart
               xAxisTickAngle={-20}
               yAxisLabel={intl.formatMessage({

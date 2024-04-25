@@ -2,7 +2,7 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
-  container: {
+  container: (HEIGHT = 44) => ({
     justifyContent: "flex-start",
     backgroundColor: colors.white,
     marginBottom: 16,
@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 16,
     padding: 24,
-  },
+    height: HEIGHT,
+  }),
 
   barChartContainer: {
     backgroundColor: colors.white,

@@ -47,7 +47,7 @@ const ApplicationFormStepper = ({
                       ...(isWebView
                         ? styles.headingtextWeb
                         : styles.headingtextWebMobView),
-                      customMobHeadingText,
+                      ...customMobHeadingText,
                     }}
                   >
                     {headingText}
@@ -76,7 +76,7 @@ const ApplicationFormStepper = ({
                   fontWeight={"600"}
                   customTextStyle={{
                     ...styles.headingtext,
-                    customMobHeadingText,
+                    ...customMobHeadingText,
                   }}
                 >
                   {headingText}
