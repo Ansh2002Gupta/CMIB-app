@@ -24,7 +24,10 @@ const CustomButton = ({
   type,
   withGreenBackground,
 }) => {
-  const webProps = Platform.OS === "web" ? { size: "xs" } : {};
+  const webProps =
+    Platform.OS === "web"
+      ? { size: "xs", customStyle: customLoadingStyle }
+      : {};
   const { customTextStyle, textFontWeight } = customStyle || {};
 
   return (
@@ -43,11 +46,7 @@ const CustomButton = ({
       {isLoading ? (
         <Spinner
           thickness={3}
-          color={
-            withGreenBackground || isLoading
-              ? { ...colors.white, ...customLoadingStyle }
-              : ""
-          }
+          color={withGreenBackground || isLoading ? colors.white : ""}
           {...webProps}
         />
       ) : (
