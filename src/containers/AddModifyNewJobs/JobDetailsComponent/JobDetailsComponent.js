@@ -5,6 +5,8 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CustomTextInput from "../../../components/CustomTextInput";
@@ -12,12 +14,13 @@ import CustomTextEditor from "../../../components/CustomTextEditor/CustomTextEdi
 import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
 
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
-import { useIntl } from "react-intl";
-import styles from "./JobDetailsComponent.style";
+import getStyles from "./JobDetailsComponent.style";
 
 const JobDetailsComponent = forwardRef(
   ({ addNewJobData, isWebView, selectedJobType, setSelectedJobType }, ref) => {
     const intl = useIntl();
+    const theme = useTheme();
+    const styles = getStyles(theme);
     const [addJobs] = useContext(AddJobContext);
     const { jobType } = addJobs;
     const [jobData, setJobData] = useState({

@@ -1,13 +1,14 @@
 import React from "react";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
 import CustomButton from "../../../components/CustomButton";
 
-import { useIntl } from "react-intl";
 import images from "../../../images";
-import styles from "./HeaderComponent.styles";
+import getStyles from "./HeaderComponent.styles";
 
 const HeaderComponent = ({
   headerText,
@@ -24,6 +25,8 @@ const HeaderComponent = ({
   const ArrowUp = images.iconArrowUp;
   const ArrowDown = images.iconArrowDown;
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <View>

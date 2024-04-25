@@ -10,7 +10,6 @@ import {
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./CaJobsPackagesListing.style";
 import { TwoColumn } from "../../core/layouts";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
@@ -26,7 +25,8 @@ import {
   GET_PAYMENTS_STATUS,
 } from "../../services/apiServices/apiEndPoint";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
+import getStyles from "./CaJobsPackagesListing.style";
 
 const getPaymentStatus = (status) => {
   if (status === "Success") {
@@ -45,6 +45,8 @@ const CaJobsPackagesListing = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const [showPaymentInitiateModal, setShowPaymentInitiateModal] = useState();
   const [viewPackageDetailModal, setViewPackageDetailModal] = useState();

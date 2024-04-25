@@ -1,10 +1,11 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import Exams from "./Exams";
-import styles from "./EducationalDetails.style";
+import getStyles from "./EducationalDetails.style";
 
 const EducationalDetailsTemplate = ({
   educationalTabList,
@@ -13,6 +14,8 @@ const EducationalDetailsTemplate = ({
   onChangeTab,
   selectedTab,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const getEducationalDetailsTab = () => {
     switch (selectedTab.id) {
       case 2:

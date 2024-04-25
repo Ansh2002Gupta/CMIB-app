@@ -22,11 +22,13 @@ import { useLocation } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages } from "../../constants/sideBarHelpers";
 import { COMPANY } from "../../constants/constants";
-import styles from "./bottomBar.style";
+import getStyles from "./bottomBar.style";
 
 function BottomBar() {
   const icons = useTheme("icons");
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { navigateScreen } = useNavigateScreen();
   const [sideBarState] = useContext(SideBarContext);
   const [userProfileDetails] = useContext(UserProfileContext);

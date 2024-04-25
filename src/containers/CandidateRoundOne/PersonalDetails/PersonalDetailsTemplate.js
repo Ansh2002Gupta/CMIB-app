@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import MultiRow from "../../../core/layouts/MultiRow";
@@ -12,7 +13,7 @@ import MobileNumberInput from "../../../components/MobileNumberInput";
 import { numericValidator } from "../../../utils/validation";
 import { GENDER, MARITAL_STATUS } from "../../../constants/constants";
 import images from "../../../images";
-import styles from "./PersonalDetails.style";
+import getStyles from "./PersonalDetails.style";
 
 const PersonalDetailsTemplate = ({
   address1,
@@ -65,6 +66,8 @@ const PersonalDetailsTemplate = ({
   phoneNo,
   state,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const personalDetailsConfig = [
     {
       content: (

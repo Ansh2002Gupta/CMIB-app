@@ -6,16 +6,19 @@ import React, {
   useState,
 } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 
 import CustomTextInput from "../../../components/CustomTextInput";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import useGetAddNewJobData from "../../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 import { DEBOUNCE_TIME } from "../../../constants/constants";
-import styles from "./PersonalDetails.styles";
+import getStyles from "./PersonalDetails.styles";
 
 const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const debounceTimeout = useRef(null);
 
   const { fetchSearch } = useGetAddNewJobData();

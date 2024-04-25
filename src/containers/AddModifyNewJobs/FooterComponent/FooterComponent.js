@@ -1,15 +1,16 @@
 import React, { useContext, useRef } from "react";
+import { useTheme } from "@unthinkable/react-theme";
+import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CustomButton from "../../../components/CustomButton";
 
-import { useIntl } from "react-intl";
-import styles from "./FooterComponent.styles";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { DEBOUNCE_TIME } from "../../../constants/constants";
+import getStyles from "./FooterComponent.styles";
 
 const FooterComponent = ({
   isWebView,
@@ -20,6 +21,8 @@ const FooterComponent = ({
   onCancelPress,
   disabled = false,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const navigate = useNavigate();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
