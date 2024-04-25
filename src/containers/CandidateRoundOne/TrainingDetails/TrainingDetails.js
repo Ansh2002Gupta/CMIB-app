@@ -1,13 +1,13 @@
 //Libraries
-import React, { useRef, useImperativeHandle, useState } from "react";
+import React, { useRef, useImperativeHandle, useState, useEffect } from "react";
 //UI & Styling
 import GMCSDetailsTemplate from "./GMCSDetailsTemplate";
-import useExamDetailsAPI from "../../../services/apiServices/hooks/CandidateRoundeOne/useExamDetailsAPI";
 import MultiRow from "../../../core/layouts/MultiRow";
 import styles from "./TrainingDetails.style";
 import { View } from "@unthinkable/react-core-components";
 import MembershipDetailsTemplate from "./MembershipDetailsTemplate";
 import CaTrainingDetailsTemplate from "./CaTrainingDetailsTemplate";
+import useTrainingDetails from "../../../services/apiServices/hooks/CandidateRoundeOne/useTrainingDetails";
 
 const TrainingDetails = ({ intl, isWebView, isViewMode = false, handleSave = () => {} }, ref) => {
     //refs
@@ -18,16 +18,11 @@ const TrainingDetails = ({ intl, isWebView, isViewMode = false, handleSave = () 
     const [isGMCSDetailsAdded, setIsGMCSDetailsAdded]  = useState(false);
     const [isMembershipDetailsAdded, setIsMembershipDetailsAdded]  = useState(false);
     const [isCaTrainingDetailsAdded, setIsCaTrainingDetailsAdded]  = useState(false);
-    // const { handleExamDetails} = useExamDetailsAPI();
+    const { handleTrainingDetails, trainingDetails} = useTrainingDetails();
 
-    // useEffect(() => {
-    //     handleExamDetails ({
-    //       successCallback: (examDetails) => {
-    //         updateExamDetails(examDetails);
-    //       },
-    //       errorCallback: () => {},
-    //     });
-    //   }, []);
+    useEffect(() => {
+      handleTrainingDetails();
+      }, []);
 
     useImperativeHandle(ref, () => ({
       getAllData: () => {
@@ -62,13 +57,13 @@ const TrainingDetails = ({ intl, isWebView, isViewMode = false, handleSave = () 
 
     const edDetailsConfig = [
         {
-          content: <GMCSDetailsTemplate ref={GMCSDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleGMCSDeatils}/>,
+          content: <GMCSDetailsTemplate trainingDetails={trainingDetails} ref={GMCSDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleGMCSDeatils}/>,
         },
         {
-          content: <MembershipDetailsTemplate ref={MembershipDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleMembershipDetails}/>,
+          content: <MembershipDetailsTemplate trainingDetails={trainingDetails} ref={MembershipDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleMembershipDetails}/>,
         },
         {
-          content: <CaTrainingDetailsTemplate ref={CaTrainingDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleCaTrainingDeatils}/>,
+          content: <CaTrainingDetailsTemplate trainingDetails={trainingDetails} ref={CaTrainingDetailsTemplateRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} onValidationChange={handleCaTrainingDeatils}/>,
         },
       ];
 

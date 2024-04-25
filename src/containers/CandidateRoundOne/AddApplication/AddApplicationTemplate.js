@@ -74,7 +74,7 @@ const AddApplicationTemplate = ({
       : {};
 
   const getCurrentStepperDetails = () => {
-    switch (7) {
+    switch (selectedStepper.id) {
       case 1:
         return (
           <PersonalDetails
