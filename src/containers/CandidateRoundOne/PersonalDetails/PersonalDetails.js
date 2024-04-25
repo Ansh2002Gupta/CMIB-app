@@ -33,19 +33,6 @@ const PersonalDetails = (
   const correspondanceAddRef = useRef();
   const permanentAddRef = useRef();
 
-  // useEffect(() => {
-  //   if(isAllFieldsCompleted !== isPermanentAddCompleted && isCorresponAddCompleted && isPersonalDetailsCompleted) {
-  //     setIsAllFieldsCompleted(isPermanentAddCompleted && isCorresponAddCompleted && isPersonalDetailsCompleted)
-  //     if (isPermanentAddCompleted && isCorresponAddCompleted && isPersonalDetailsCompleted) {
-  //       enableSave(true);
-  //     } else {
-  //       enableSave(false);
-  //     }
-  //   }
-  // }, [isPermanentAddCompleted, isCorresponAddCompleted, isPersonalDetailsCompleted])
-  // console.log("userProfileDetails", userProfileDetails);
-  // console.log("sideBarState", sideBarState);
-
   useImperativeHandle(ref, () => ({
     getFilledData: () => {
       const corresAddData = correspondanceAddRef?.current?.getState();

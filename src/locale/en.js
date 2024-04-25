@@ -849,7 +849,6 @@ const locale = {
     "Any other information that you wish to provide for smooth conduct of the interviews",
   "label.enter_any_other_information":
     "Enter any other information that you wish to provide for smooth conduct of the interviews",
-  "label.save_and_next": "Save & Next",
   "label.obc": "OBC",
   "label.sc": "SC",
   "label.ph": "PH",
@@ -1011,6 +1010,10 @@ const locale = {
   "label.viewDoc": "View Doc",
   "label.viewPPT": "View PPT",
   "label.view": "View",
+  "label.contact_details": "Contact details",
+  "label.totalPosition": "Total Position: ",
+  "label.categories": "Categories",
+  "label.add_contact": "Add Contact",
   "label.firstCampusInterviewcentre": "First Campus Interview centre",
   "label.secondCampusInterviewCentre": "Second Campus Interview centre",
   "label.dateofOrientation": "Date of Orientation",
