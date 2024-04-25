@@ -1013,6 +1013,8 @@ const locale = {
   "label.contact_details": "Contact details",
   "label.totalPosition": "Total Position: ",
   "label.categories": "Categories",
+  "label.addBenefit": "Add Benefit",
+  "label.editBenefit": "Edit Benefit",
   "label.add_contact": "Add Contact",
   "label.firstCampusInterviewcentre": "First Campus Interview centre",
   "label.secondCampusInterviewCentre": "Second Campus Interview centre",
@@ -1048,6 +1050,9 @@ const locale = {
   "label.interview_shortlist": "Interview Shortlist",
   "label.offered_candidates": "Offered Candidates",
   "label.offer_accepted_by_candidates": "Offer Accepted By Candidates",
+  "label.noOfVacancy": "No. of Vacancy",
+  "label.edit_designation": "Edit Designation",
+
   "label.more_details": "More Details",
   "label.vacancy": "Vacancy",
   "label.pyscometric_written_test": "Psychometric/ Written Test Fee",

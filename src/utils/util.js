@@ -829,7 +829,7 @@ export const changeBooltoBinary = (value) => {
 
 export const extractValueDropdown = (item) => {
   if (item?.isDropdown) {
-    return item.options.find((val) => val.id == item.value).label;
+    return item?.options?.find((val) => val?.id == item?.value)?.label;
   }
   return item?.value;
 };

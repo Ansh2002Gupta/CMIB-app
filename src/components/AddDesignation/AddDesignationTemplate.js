@@ -14,11 +14,13 @@ import {
   ADD_DESIGNATION_HEADING,
   ADD_DOCUMENT,
   DOCUMENT_TYPE,
+  designation_key,
 } from "../../constants/constants";
 import { extractValueDropdown } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./AddDesignation.style";
+import { createModuleOptions } from "./controllers/useAddDesignation";
 
 const AddDesignationTemplate = ({
   addDocumentModal,
@@ -37,6 +39,7 @@ const AddDesignationTemplate = ({
   onClickDeleteDocument,
   onCLickEditDocument,
   requiredDocumentDetails,
+  options,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
@@ -63,6 +66,7 @@ const AddDesignationTemplate = ({
     });
     return result;
   }
+
   const nonEditableData = mapDocuments(requiredDocumentDetails);
 
   const getColoumConfigs = (item, isHeading) => {
@@ -90,6 +94,23 @@ const AddDesignationTemplate = ({
       },
     ];
   };
+
+  const dataArr = Object.values(
+    requiredDocumentDetails.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+
+      if (item.key === "designation_details") {
+        group.designation_details = item.value ?? "-";
+      } else if (item.key === "number_of_vacancies") {
+        group.number_of_vacancies = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
 
   return (
     <View>
@@ -120,10 +141,7 @@ const AddDesignationTemplate = ({
         />
       ) : (
         <>
-          {requiredDocumentDetails.map((item, index) => {
-            const isOriginal = item?.documentType === ADD_DOCUMENT.ORIGINAL;
-            const isBoth = item?.documentType === ADD_DOCUMENT.BOTH;
-            const copiesNumber = item?.copiesNumber || "0";
+          {nonEditableData.map((item, index) => {
             return (
               <View>
                 <View
@@ -132,51 +150,58 @@ const AddDesignationTemplate = ({
                       ? { ...styles.documentBorderStyle }
                       : { ...styles.notBorderStyle }
                   }
-                ></View>
+                />
                 <EditDeleteAction
-                  topText={item?.documentName}
-                  bottomLeftText={
-                    isOriginal || isBoth
-                      ? intl.formatMessage({
-                          id: "label.original",
-                        })
-                      : intl.formatMessage({
-                          id: "label.not_original",
-                        })
+                  topText={item?.designation_details}
+                  onDeleteDocument={
+                    isEditable
+                      ? () => {
+                          onClickDeleteDocument(item.cellID);
+                        }
+                      : null
                   }
-                  bottomRightText={`${copiesNumber} ${intl.formatMessage({
-                    id: "label.photocopies",
-                  })} `}
-                  onDeleteDocument={() => {
-                    onClickDeleteDocument(index);
-                  }}
-                  onEditDocument={() => {
-                    onCLickEditDocument(index);
-                  }}
+                  onEditDocument={
+                    isEditable
+                      ? () => {
+                          onCLickEditDocument(item.cellID);
+                        }
+                      : null
+                  }
+                  bottomView={
+                    <CommonText customTextStyle={styles.bottomText}>
+                      {intl.formatMessage(
+                        { id: "label.formatVacancies" },
+                        { value: item?.number_of_vacancies }
+                      )}
+                    </CommonText>
+                  }
                 />
               </View>
             );
           })}
-          <AddIconText
-            customViewStyle={styles.customAddIconTextStyle}
-            label={intl.formatMessage({
-              id: "label.add_document",
-            })}
-            onPress={onClickAddDocument}
-          />
+          {isEditable && (
+            <AddIconText
+              customViewStyle={styles.customAddIconTextStyle}
+              label={intl.formatMessage({
+                id: "label.add_designation",
+              })}
+              onPress={() => onClickAddDocument(dataArr.length + 1)}
+            />
+          )}
         </>
       )}
       {(addDocumentModal || editDocumentModal) && (
         <ModalWithTitleButton
           enableBottomButton
-          isRightDisabled={!isFormValid}
+          isRightDisabled={!Boolean(isFormValid)}
+          headerTextStyle={{ marginBottom: 12 }}
           heading={
             addDocumentModal
               ? intl.formatMessage({
-                  id: "label.add_document",
+                  id: "label.add_designation",
                 })
               : intl.formatMessage({
-                  id: "label.edit_document",
+                  id: "label.edit_designation",
                 })
           }
           leftLabelTxt={intl.formatMessage({
@@ -195,61 +220,46 @@ const AddDesignationTemplate = ({
           onClickLeftButton={onClickAddDocumentCancelButton}
           onClickRightButton={onClickAddDocumentSaveButton}
         >
-          <View>
-            <CustomTextInput
-              customStyle={styles.documentNameInput}
-              label={intl.formatMessage({
-                id: "label.document_name",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.required_document_name",
-              })}
-              isMandatory
-              value={documentDetail?.documentName || ""}
-              onChangeText={(val) =>
-                handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_NAME, val)
-              }
-            ></CustomTextInput>
-            <View style={styles.inputView}>
-              <CustomTextInput
-                customStyle={styles.documentTypeInput}
-                label={intl.formatMessage({
-                  id: "label.document_type",
-                })}
-                placeholder={intl.formatMessage({
-                  id: "label.enter_document_type",
-                })}
-                isMandatory
-                isDropdown
-                options={DOCUMENT_TYPE}
-                value={documentDetail?.documentType || ""}
-                onChangeValue={(val) =>
-                  handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_TYPE, val)
-                }
-                search={false}
-              ></CustomTextInput>
-              {documentDetail?.documentType === ADD_DOCUMENT.BOTH ||
-              documentDetail?.documentType === ADD_DOCUMENT.PHOTOCOPIES ? (
-                <View style={styles.copiesInputStyle}>
-                  <CustomTextInput
-                    label={intl.formatMessage({
-                      id: "label.no_of_copies",
-                    })}
-                    placeholder={intl.formatMessage({
-                      id: "label.enter_no_of_copies",
-                    })}
-                    isMandatory
-                    value={documentDetail?.copiesNumber || null}
-                    onChangeText={(val) =>
-                      numericValidator(val) &&
-                      handleDocumentDetailChange(ADD_DOCUMENT.COPIESNUMBER, val)
-                    }
-                    maxLength={7}
-                  ></CustomTextInput>
-                </View>
-              ) : null}
-            </View>
-          </View>
+          <CustomTextInput
+            isDropdown
+            customStyle={styles.documentNameInput}
+            label={intl.formatMessage({
+              id: "label.add_designation",
+            })}
+            placeholder={intl.formatMessage({
+              id: "label.designation",
+            })}
+            isMandatory
+            valueField="id"
+            value={documentDetail?.designation_details || ""}
+            options={options?.map((option) =>
+              createModuleOptions(option, [], "designation", "designation")
+            )}
+            onChangeValue={(data) => {
+              handleDocumentDetailChange(
+                designation_key.DESIGNATION_DETAILS,
+                data
+              );
+            }}
+          />
+          <CustomTextInput
+            customStyle={styles.documentNameInput}
+            label={intl.formatMessage({
+              id: "label.noOfVacancy",
+            })}
+            placeholder={intl.formatMessage({
+              id: "label.noOfVacancy",
+            })}
+            isNumeric
+            isMandatory
+            value={documentDetail?.number_of_vacancies || ""}
+            onChangeText={(val) =>
+              handleDocumentDetailChange(
+                designation_key.NUMBER_OF_VACANCIES,
+                val
+              )
+            }
+          />
         </ModalWithTitleButton>
       )}
     </View>

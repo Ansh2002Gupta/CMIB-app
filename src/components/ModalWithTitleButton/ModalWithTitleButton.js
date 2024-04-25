@@ -19,6 +19,7 @@ const ModalWithTitleButton = ({
   rightButtonLeftImage,
   rightButtonRightImage,
   rightLabelTxt,
+  headerTextStyle,
 }) => {
   const {
     containerStyle = {},
@@ -35,6 +36,7 @@ const ModalWithTitleButton = ({
         ...styles.containerStyle,
         ...containerStyle,
       }}
+      headerTextStyle={headerTextStyle}
     >
       {children}
       {enableBottomButton && (
@@ -88,7 +90,7 @@ ModalWithTitleButton.propTypes = {
     rightButtonStyle: PropTypes.object,
     rightTextStyle: PropTypes.object,
   }),
-  isRightDisabled: PropTypes.object,
+  isRightDisabled: PropTypes.bool,
   enableBottomButton: PropTypes.bool,
   heading: PropTypes.string,
   leftLabelTxt: PropTypes.string,
