@@ -21,6 +21,7 @@ export const CustomTabs = ({
   setSelectedTab,
   tabs,
   intialActiveTab = 0,
+  container
 }) => {
   const intl = useIntl();
 
@@ -61,7 +62,7 @@ export const CustomTabs = ({
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={{ ...styles.container, ...(container ?? {}) }}>
         <View style={{ ...styles.headerContainer, ...containerStyle }}>
           {renderHeader && renderHeader()}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
