@@ -101,6 +101,7 @@ const AddDocumentTemplate = ({
       return acc;
     }, {})
   );
+  
   return (
     <View>
       <CardComponent customStyle={styles.notBorderStyle}>

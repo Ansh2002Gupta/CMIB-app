@@ -4,24 +4,25 @@ import { document_keys } from "../../../constants/constants";
 
 function mapDocuments(dataArray) {
   const groupedData = {};
-  dataArray.forEach((item) => {
-    if (!groupedData[item.cellID]) {
-      groupedData[item.cellID] = {};
-    }
-    switch (item.key) {
-      case "document_name":
-        groupedData[item.cellID].doc_name = item.value;
-        break;
-      case "document_type":
-        groupedData[item.cellID].doc_type = item.value;
-        break;
-      case "no_of_copies":
-        groupedData[item.cellID].no_of_copies = item.value;
-      case "cellID":
-        groupedData[item.cellID].cellID = item.cellID;
-        break;
-    }
-  });
+  Array.isArray(dataArray) &&
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "document_name":
+          groupedData[item.cellID].doc_name = item.value;
+          break;
+        case "document_type":
+          groupedData[item.cellID].doc_type = item.value;
+          break;
+        case "no_of_copies":
+          groupedData[item.cellID].no_of_copies = item.value;
+        case "cellID":
+          groupedData[item.cellID].cellID = item.cellID;
+          break;
+      }
+    });
   const result = Object.keys(groupedData).map((key) => {
     return groupedData[key];
   });

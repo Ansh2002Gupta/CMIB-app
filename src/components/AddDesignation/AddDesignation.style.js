@@ -151,14 +151,8 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     marginTop: 16,
   },
-  documentNameInput: {
-    marginTop: 20,
-    paddingBottom: 24,
-  },
-  inputView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
+  documentNameInput: {},
+  inputView: {},
   documentTypeInput: {
     paddingBottom: 24,
     width: "48%",
@@ -174,6 +168,11 @@ const styles = StyleSheet.create({
     display: "grid",
     gridTemplateColumns: "10fr 4fr 1fr ",
     overflowY: "auto",
+  },
+  bottomText: {
+    fontSize: 12,
+    marginTop: 2,
+    color: colors.darkGrey,
   },
 });
 

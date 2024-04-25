@@ -49,6 +49,7 @@ const AddDesignation = ({
         onClickDeleteDocument,
         onCLickEditDocument,
         requiredDocumentDetails,
+        options,
       }}
     />
   );

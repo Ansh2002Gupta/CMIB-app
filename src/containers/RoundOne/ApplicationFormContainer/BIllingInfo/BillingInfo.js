@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../../routes";
 import { View, Platform } from "@unthinkable/react-core-components";
 
-import { TwoRow } from "../../../../core/layouts";
+import { ThreeRow, TwoRow } from "../../../../core/layouts";
 import MultiColumn from "../../../../core/layouts/MultiColumn";
+import { Row } from "../../../../core/components";
 
 import ActionPairButton from "../../../../components/ActionPairButton";
 import CardComponent from "../../../../components/CardComponent";
@@ -19,6 +20,9 @@ import { BILLING_INFO_HEADING_FOR_NQCA } from "../../../../constants/constants";
 import images from "../../../../images";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./BillingInfo.style";
+import useIsWebView from "../../../../hooks/useIsWebView";
+import CustomDropdownButton from "../../../../components/CustomDropdownButton/CustomDropdownButton";
+import { formatDate } from "../../../../utils/util";
 
 const BillingInfo = ({ isEditable, tabHandler, setIsEditable }) => {
   const {
@@ -43,28 +47,112 @@ const BillingInfo = ({ isEditable, tabHandler, setIsEditable }) => {
         }
       : {};
 
+  const [showMoreDetails, setShowMoreDetails] = useState(null);
+
+  const { isWebView } = useIsWebView();
+  const handleViewMoreDetails = (id) => {
+    if (id === showMoreDetails) {
+      setShowMoreDetails(-1);
+    } else {
+      setShowMoreDetails(id);
+    }
+  };
+
+  const renderValues = ({ label, value }) => {
+    return (
+      <CommonText customTextStyle={styles.valuesStyle}>
+        {label}&nbsp;&#58;&nbsp;{value}
+      </CommonText>
+    );
+  };
+
+  const renderMobSection = (item, index) => {
+    return (
+      <View style={styles.mobileContainer} key={index}>
+        <View>
+          <CommonText
+            fontWeight={"600"}
+            customTextStyle={commonStyles.cellTextStyle()}
+          >
+            {item.centre_name || "-"}
+          </CommonText>
+          <View style={styles.subHeadingSection}>
+            <CommonText customTextStyle={styles.tableQueryText}>
+              {intl.formatMessage({ id: "label.amount" })}&nbsp;&#58;&nbsp;
+              {item?.amount || "-"}&nbsp;INR
+            </CommonText>
+            <CustomDropdownButton
+              onPress={() => handleViewMoreDetails(index)}
+              text={intl.formatMessage({ id: "label.more_details" })}
+            />
+          </View>
+          {showMoreDetails === index && (
+            <ThreeRow
+              topSection={renderValues({
+                label: intl.formatMessage({ id: "label.vacancy" }),
+                value: item.total_vacancies,
+              })}
+              middleSection={renderValues({
+                label: intl.formatMessage({
+                  id: "label.pyscometric_written_test",
+                }),
+                value: item.psychometric_test_fee,
+              })}
+              bottomSection={
+                <View style={styles.interviewDatesContainer}>
+                  <CommonText customTextStyle={styles.valuesStyle}>
+                    {intl.formatMessage({ id: "label.interview_dates" })}
+                    &nbsp;&#58;&nbsp;
+                  </CommonText>
+                  {item?.interview_dates.map((dates, index) => {
+                    const lastItem = item.interview_dates.length - 1 === index;
+                    return (
+                      <>
+                        <CommonText customTextStyle={styles.valuesStyle}>
+                          {formatDate(dates)}
+                        </CommonText>
+                        {!lastItem && (
+                          <CommonText customTextStyle={styles.valuesStyle}>
+                            ,&nbsp;
+                          </CommonText>
+                        )}
+                      </>
+                    );
+                  })}
+                </View>
+              }
+            />
+          )}
+        </View>
+      </View>
+    );
+  };
+
   const renderFooterComponenet = () => {
     const item = {
       psychometric_test_fee: `Total : ${totalAmount?.totalPsychometricTestFee}`,
       interview_dates: [],
-      amount: `Total : ${totalAmount?.totalAmount}`,
+      final_amt: `Total Amount : ${totalAmount?.totalAmount}`,
     };
-    const subTotalItem = {
-      interview_dates: [],
-      finalAmount: totalAmount?.finalAmount,
-    };
-    const isShowFinalAmount = true;
-    return (
+    const isFooterValues = true;
+    return isWebView ? (
       <>
         <MultiColumn
-          columns={getColoumConfigs(item, false, 0)}
-          style={styles.columnStyleBorder}
-        />
-        <MultiColumn
-          columns={getColoumConfigs(subTotalItem, false, 0, isShowFinalAmount)}
+          columns={getColoumConfigs(item, false, undefined, isFooterValues)}
           style={styles.columnStyleBorder}
         />
       </>
+    ) : (
+      <Row style={styles.bottomContainer}>
+        <CommonText fontWeight={"600"} customTextStyle={styles.bottomText}>
+          {intl.formatMessage({ id: "label.total_amount" })}
+          &nbsp;&#58;&nbsp;
+        </CommonText>
+
+        <CommonText fontWeight={"600"} customTextStyle={styles.bottomText}>
+          {totalAmount?.totalAmount}&nbsp;INR
+        </CommonText>
+      </Row>
     );
   };
 
@@ -87,7 +175,11 @@ const BillingInfo = ({ isEditable, tabHandler, setIsEditable }) => {
               </View>
               <CustomTable
                 {...{
-                  customTableStyle: styles.customTableStyle,
+                  isTotalCardVisible: false,
+                  customTableStyle: styles.customTableContainerStyle,
+                  containerStyle: isWebView
+                    ? styles.customTableStyle
+                    : styles.customTableStyleMob,
                   showSearchBar: false,
                   currentRecords: billingListData,
                   data: billingListData,
@@ -97,6 +189,7 @@ const BillingInfo = ({ isEditable, tabHandler, setIsEditable }) => {
                   tableHeading: BILLING_INFO_HEADING_FOR_NQCA(currentModule),
                   isRenderFooterComponent: true,
                   renderFooterComponenet,
+                  mobileComponentToRender: renderMobSection,
                 }}
               />
             </CardComponent>

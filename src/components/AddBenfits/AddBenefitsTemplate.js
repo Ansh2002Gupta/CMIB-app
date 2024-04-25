@@ -10,12 +10,7 @@ import CustomTextInput from "../CustomTextInput";
 import EditDeleteAction from "../EditDeleteAction/EditDeleteAction";
 import useIsWebView from "../../hooks/useIsWebView";
 import ModalWithTitleButton from "../ModalWithTitleButton";
-import {
-  ADD_DOCUMENT,
-  DOCUMENT_TYPE,
-  OTHER_BENEFIT_HEADING,
-} from "../../constants/constants";
-import { numericValidator } from "../../utils/validation";
+import { OTHER_BENEFIT_HEADING, benefits_key } from "../../constants/constants";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./AddBenefits.style";
 
@@ -86,6 +81,23 @@ const AddBenefitsTemplate = ({
       },
     ];
   };
+
+  const dataArr = Object.values(
+    requiredDocumentDetails.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+      if (item.key === "benefits_details") {
+        group.benefits_details = item.value ?? "-";
+      } else if (item.key === "benefits_amount") {
+        group.benefits_amount = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
+
   return (
     <View>
       <CommonText
@@ -114,10 +126,7 @@ const AddBenefitsTemplate = ({
         />
       ) : (
         <>
-          {requiredDocumentDetails.map((item, index) => {
-            const isOriginal = item?.documentType === ADD_DOCUMENT.ORIGINAL;
-            const isBoth = item?.documentType === ADD_DOCUMENT.BOTH;
-            const copiesNumber = item?.copiesNumber || "0";
+          {dataArr.map((item, index) => {
             return (
               <View>
                 <View
@@ -128,36 +137,39 @@ const AddBenefitsTemplate = ({
                   }
                 ></View>
                 <EditDeleteAction
-                  topText={item?.documentName}
-                  bottomLeftText={
-                    isOriginal || isBoth
-                      ? intl.formatMessage({
-                          id: "label.original",
-                        })
-                      : intl.formatMessage({
-                          id: "label.not_original",
-                        })
+                  topText={item?.benefits_details}
+                  onDeleteDocument={
+                    isEditable
+                      ? () => {
+                          onClickDeleteDocument(item.cellID);
+                        }
+                      : null
                   }
-                  bottomRightText={`${copiesNumber} ${intl.formatMessage({
-                    id: "label.photocopies",
-                  })} `}
-                  onDeleteDocument={() => {
-                    onClickDeleteDocument(index);
-                  }}
-                  onEditDocument={() => {
-                    onCLickEditDocument(index);
-                  }}
+                  onEditDocument={
+                    isEditable
+                      ? () => {
+                          onCLickEditDocument(item.cellID);
+                        }
+                      : null
+                  }
+                  bottomView={
+                    <CommonText customTextStyle={styles.bottomText}>
+                      {`${item?.benefits_amount ?? "-"} INR`}
+                    </CommonText>
+                  }
                 />
               </View>
             );
           })}
-          <AddIconText
-            customViewStyle={styles.customAddIconTextStyle}
-            label={intl.formatMessage({
-              id: "label.add_document",
-            })}
-            onPress={onClickAddDocument}
-          />
+          {isEditable && (
+            <AddIconText
+              customViewStyle={styles.customAddIconTextStyle}
+              label={intl.formatMessage({
+                id: "label.addBenefit",
+              })}
+              onPress={() => onClickAddDocument(dataArr.length + 1)}
+            />
+          )}
         </>
       )}
       {(addDocumentModal || editDocumentModal) && (
@@ -167,15 +179,16 @@ const AddBenefitsTemplate = ({
           heading={
             addDocumentModal
               ? intl.formatMessage({
-                  id: "label.add_document",
+                  id: "label.addBenefit",
                 })
               : intl.formatMessage({
-                  id: "label.edit_document",
+                  id: "label.editBenefit",
                 })
           }
           leftLabelTxt={intl.formatMessage({
             id: "label.cancel",
           })}
+          headerTextStyle={{ marginBottom: 12 }}
           rightLabelTxt={
             addDocumentModal
               ? intl.formatMessage({
@@ -193,56 +206,32 @@ const AddBenefitsTemplate = ({
             <CustomTextInput
               customStyle={styles.documentNameInput}
               label={intl.formatMessage({
-                id: "label.document_name",
+                id: "label.benefit_details",
               })}
               placeholder={intl.formatMessage({
-                id: "label.required_document_name",
+                id: "label.enter_benefit_details",
               })}
               isMandatory
-              value={documentDetail?.documentName || ""}
+              value={documentDetail?.[benefits_key.BENEFITS_DETAILS] || ""}
               onChangeText={(val) =>
-                handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_NAME, val)
+                handleDocumentDetailChange(benefits_key.BENEFITS_DETAILS, val)
               }
-            ></CustomTextInput>
-            <View style={styles.inputView}>
-              <CustomTextInput
-                customStyle={styles.documentTypeInput}
-                label={intl.formatMessage({
-                  id: "label.document_type",
-                })}
-                placeholder={intl.formatMessage({
-                  id: "label.enter_document_type",
-                })}
-                isMandatory
-                isDropdown
-                options={DOCUMENT_TYPE}
-                value={documentDetail?.documentType || ""}
-                onChangeValue={(val) =>
-                  handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_TYPE, val)
-                }
-                search={false}
-              ></CustomTextInput>
-              {documentDetail?.documentType === ADD_DOCUMENT.BOTH ||
-              documentDetail?.documentType === ADD_DOCUMENT.PHOTOCOPIES ? (
-                <View style={styles.copiesInputStyle}>
-                  <CustomTextInput
-                    label={intl.formatMessage({
-                      id: "label.no_of_copies",
-                    })}
-                    placeholder={intl.formatMessage({
-                      id: "label.enter_no_of_copies",
-                    })}
-                    isMandatory
-                    value={documentDetail?.copiesNumber || null}
-                    onChangeText={(val) =>
-                      numericValidator(val) &&
-                      handleDocumentDetailChange(ADD_DOCUMENT.COPIESNUMBER, val)
-                    }
-                    maxLength={7}
-                  ></CustomTextInput>
-                </View>
-              ) : null}
-            </View>
+            />
+            <CustomTextInput
+              customStyle={styles.documentNameInput}
+              label={intl.formatMessage({
+                id: "label.amount",
+              })}
+              placeholder={intl.formatMessage({
+                id: "label.enter_amount",
+              })}
+              isNumeric
+              isMandatory
+              value={documentDetail?.[benefits_key.BENEFITS_AMOUNT] || ""}
+              onChangeText={(val) =>
+                handleDocumentDetailChange(benefits_key.BENEFITS_AMOUNT, val)
+              }
+            />
           </View>
         </ModalWithTitleButton>
       )}
