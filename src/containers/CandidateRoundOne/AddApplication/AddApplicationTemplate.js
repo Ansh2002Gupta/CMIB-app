@@ -127,7 +127,7 @@ const AddApplicationTemplate = ({
   }
 
   const handleSavePress = () => {
-    switch (3) {
+    switch (selectedStepper.id) {
       case 1:
         onPersonalDetailSave();
         return;

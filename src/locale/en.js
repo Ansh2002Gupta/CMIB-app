@@ -976,6 +976,16 @@ const locale = {
   "label.viewDoc": "View Doc",
   "label.viewPPT": "View PPT",
   "label.view": "View",
+  "label.submitDeclaration": "Submit declaration form to become a member",
+  "label.submitDeclarationform": "Submit Declaration Form",
+  "label.declarationForm": "Declaration Form",
+  "label.underTaking": "Undertaking to become member of the Institute of Chartered Accountants of India (ICAI)",
+  "label.stdRegNumber": "Student Registration No",
+  "label.articleshipCompleteDate": "Articleship Completion Date",
+  "label.mcsCompletionDate": "MCS Completion Date",
+  "label.mcsCertificateNo": "MCS Certificate No",
+  "label.declarationDetails": "Details should be same as main Application form",
+  "label.declarationConcent": "I Hereby Undertake And Declare That I Will Submit My ICAI Membership Application Form (Form 2) Along With Necessary Papers To The Concerned Regional Office Of ICAI In Accordance With The Deadlines Mentioned In The Eligibility Criteria’s For Appearing In The Campus Placement Programme For Newly Qualified Chartered Accountants Session name",
 };
 
 export default locale;

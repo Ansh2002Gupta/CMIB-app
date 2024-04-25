@@ -69,7 +69,7 @@ const IndustrialTraining = ({intl, isWebView, isViewMode, onValidationChange = (
             }
           } else {
             // For text fields, trim and check if empty
-            if (typeof value === 'string' && value.trim() === '') {
+            if (typeof value === 'string' && value.length < 3) {
               return false;
             }
           }

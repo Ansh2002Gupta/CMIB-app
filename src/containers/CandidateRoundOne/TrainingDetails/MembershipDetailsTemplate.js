@@ -8,12 +8,17 @@ import styles from "./TrainingDetails.style";
 import CustomLabelView from "../../../components/CustomLabelView";
 import CustomToggleComponent from "../../../components/CustomToggleComponent";
 import { formatDate } from "../../../utils/util";
+import CustomImage from "../../../components/CustomImage";
+import images from "../../../images";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import DeclarationForm from "./DeclarationForm";
 
 const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValidationChange = () => {}}, ref) => {
   //states
   const [isMembershipNumber, setIsMembershipNumber] = useState(1);
   const [membershipEnrollNumber, setMembershipEnrollNumber] = useState('');
   const [dateOfCompletion, setDateOfCompletion] = useState('');
+  const [showDeclarationModal, setShowDeclarationModal] = useState(false);
 
   //custom functions
   const handleGcmsNumberSelection = (val) => {
@@ -92,7 +97,20 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
                 onChangeValue={setDateOfCompletion}
               />
             </>}
+            {Boolean(isMembershipNumber) && 
+              <View style={styles.submitFormContainer}>
+                <CommonText>{intl.formatMessage({ id: "label.submitDeclaration" })}</CommonText>
+                <CustomTouchableOpacity style={styles.submitButtonContainer} onPress={() => {setShowDeclarationModal(true)}}>
+                  <CommonText customTextStyle={{color: '#04AF55', fontWeight: 600}}>{intl.formatMessage({ id: "label.submitDeclarationform" })}</CommonText>
+                  <CustomImage
+                    source={images.rightArrowGreen}
+                    style={styles.imageStyle}
+                  />
+                </CustomTouchableOpacity>
+              </View>
+            }
           </View>
+          {showDeclarationModal && <DeclarationForm intl={intl} onPressIconCross={() => setShowDeclarationModal(false)}/>}
         </CardComponent>
   )
 };

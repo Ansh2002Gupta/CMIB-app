@@ -77,6 +77,34 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: colors.lightGray
   },
+  //declarationForm
+  submitFormContainer: {
+    backgroundColor: '#F2F4FC',
+    borderRadius: 16,
+    height: 64,
+    padding: 16,
+    flexDirection: 'row',
+    minWidth: 500,
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: '#CCD0E5',
+    alignItems: 'center'
+  },
+  imageStyle: {
+    width: 16,
+    height: 16,
+    marginLeft: 5,
+    color: '#04AF55'
+  },
+  submitButtonContainer: {
+    flexDirection: 'row',
+    color: '#04AF55',
+    marginLeft: 40
+  },
+  checkBoxTextStyle: {
+    fontWeight: 500,
+    marginTop: 24
+  }
 });
 
 export default styles;
