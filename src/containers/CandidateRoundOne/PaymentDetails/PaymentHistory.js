@@ -14,7 +14,7 @@ import styles from "./PaymentDetails.style";
 
 const PaymentHistory = ({ intl, isWebView }) => {
   const { data: paymentList } = useFetch({
-    url: `member/nqca-placements/rounds/264/application/transactions?session-id=142`,
+    url: `member/nqca-placements/rounds/264/transactions`,
   });
 
   function getStatusStyle(status) {
