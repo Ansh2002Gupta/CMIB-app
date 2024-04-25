@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
@@ -8,7 +9,7 @@ import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
 import images from "../../images";
 import { DOTS } from "../../constants/constants";
-import styles from "./Pagination.style";
+import getStyles from "./Pagination.style";
 
 const range = (start, end) => {
   const length = end - start + 1;
@@ -25,6 +26,8 @@ function Pagination(props) {
     containerStyle,
   } = props;
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const windowDimensions = useWindowDimensions();
   const showbuttonText = windowDimensions.width >= 900;
 

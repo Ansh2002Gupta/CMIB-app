@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Dimensions,
-  Platform,
-} from "@unthinkable/react-core-components";
-
-import colors from "../../assets/colors";
+import { Dimensions } from "@unthinkable/react-core-components";
 
 const { height: deviceHeight } = Dimensions.get("window");
 
@@ -17,26 +11,30 @@ const basetextStyle = {
   whiteSpace: "break-space",
 };
 
-const styles = StyleSheet.create({
-  headerText: {
-    color: colors.darkGrey,
-    fontSize: 14,
-  },
-  formalText: {
-    ...basetextStyle,
-  },
-  redText: {
-    color: colors.red,
-  },
-  headingContainer: {
-    flexDirection: "row",
-    paddingBottom: 8,
-    paddingTop: 8,
-  },
-  headingValueContainer: {
-    marginRight: 16,
-    marginBottom: 16,
-  },
-});
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-export default styles;
+  return {
+    headerText: {
+      color: colors.darkGrey,
+      fontSize: 14,
+    },
+    formalText: {
+      ...basetextStyle,
+    },
+    redText: {
+      color: colors.red,
+    },
+    headingContainer: {
+      flexDirection: "row",
+      paddingBottom: 8,
+      paddingTop: 8,
+    },
+    headingValueContainer: {
+      marginRight: 16,
+      marginBottom: 16,
+    },
+  };
+};
+
+export default getStyles;

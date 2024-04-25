@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
@@ -9,9 +10,11 @@ import Rail from "./Helpers/Rail";
 import RailSelected from "./Helpers/RailSelected";
 import Slider from "rn-range-slider";
 import Thumb from "./Helpers/Thumb";
-import { styles } from "./RangeSlider.styles";
+import getStyles from "./RangeSlider.styles";
 
 const RangeSlider = ({ isDisabled, label, max, min, onChange, step }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);

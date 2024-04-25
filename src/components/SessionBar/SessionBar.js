@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef } from "react";
 import { useIntl } from "react-intl";
 import Storage from "../../services/cookie-and-storage-service";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
@@ -16,10 +16,12 @@ import {
   SESSION_KEY,
 } from "../../constants/constants";
 import images from "../../images";
-import styles from "./SessionBar.style";
+import getStyles from "./SessionBar.style";
 
 const SessionBar = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const { globalSessionList, selectedSession, selectedModule } = sideBarState;
