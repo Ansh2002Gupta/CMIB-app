@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
   },
   customContainerStyle: {
     flexDirection: "row",
-    flexWrap: "unwrap",
   },
   customTableStyle: {
     backgroundColor: colors.white,

@@ -174,6 +174,7 @@ const NQCACandidateDashboard = () => {
           data={hightCtcChartData}
           toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
           yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
+          heightOfOneBar={70}
         />
       </ScrollView>
     )
