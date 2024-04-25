@@ -156,7 +156,7 @@ export const extractFilename = (fileUri) => {
 
 export const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
+};
 
 let lastFlagDate = null;
 
@@ -817,4 +817,12 @@ export const formatText = (text, delimitter = "-") => {
     return word[0].toUpperCase() + word.slice(1).toLowerCase();
   });
   return newWordList.join(" ");
+};
+
+export const changeBooltoBinary = (value) => {
+  if (value === "true") {
+    return 1;
+  } else {
+    return 0;
+  }
 };

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
@@ -17,6 +17,7 @@ import WorkExperienceDetails from "../WorkExperience";
 import HobbiesDetails from "../Hobbies";
 import JobPreferenceDetails from "../JobPreference";
 import { usePut } from "../../../hooks/useApiRequest";
+import useFetch from "../../../hooks/useFetch";
 
 const AddApplicationTemplate = ({
   countryCodeData,
@@ -35,10 +36,33 @@ const AddApplicationTemplate = ({
   const workExperienceDetailsref = useRef();
   const trainingDetailRef = useRef();
   const jobPreferneceref = useRef();
+  const hobbiesRef = useRef();
 
   const { isLoading, makeRequest, error } = usePut({
     url: "/member/nqca-placements/rounds/264/training-details",
   });
+
+  const {
+    isLoading: isLoadingHobbies,
+    makeRequest: makeRequestHobbies,
+    error: errorHobbies,
+  } = usePut({
+    url: "/member/nqca-placements/rounds/264/activities",
+  });
+
+  const {
+    data: hobbiesData,
+    isLoading: isHobbiesLoading,
+    error: errorWhileFetchingHobbies,
+    fetchData: fetchHobbies,
+  } = useFetch({
+    url: "/member/nqca-placements/rounds/264/activities",
+  });
+
+  useEffect(() => {
+    fetchHobbies();
+  }, []);
+
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -105,7 +129,14 @@ const AddApplicationTemplate = ({
           />
         );
       case 5:
-        return <HobbiesDetails intl={intl} isWebView={isWebView} />;
+        return (
+          <HobbiesDetails
+            intl={intl}
+            isWebView={isWebView}
+            ref={hobbiesRef}
+            hobbiesData={hobbiesData}
+          />
+        );
       case 6:
         return (
           <JobPreferenceDetails
@@ -219,6 +250,17 @@ const AddApplicationTemplate = ({
     });
   };
 
+  const onHobbiesDetailsSave = () => {
+    const payload = hobbiesRef?.current?.getAllData();
+    makeRequestHobbies({
+      body: { data: payload },
+      onErrorCallback: (errorMessage) => {},
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
   const handleSavePress = () => {
     switch (selectedStepper.id) {
       case 1:
@@ -232,13 +274,17 @@ const AddApplicationTemplate = ({
         return;
       case 4:
         onExperienceDetailsSave();
+        return
       case 5:
         onJobPreferencesSave();
+        return;
+      case 6:
+        onHobbiesDetailsSave();
+        return;
       default:
         return;
     }
   };
-
   return (
     <View style={styles.mainContainer}>
       <View
@@ -307,7 +353,7 @@ const AddApplicationTemplate = ({
               leftIconSource: images.iconArrowLeft,
             }
           }
-          isDisabled={!isSaveEnabled}
+          isDisabled={selectedStepper.id == 5 ? false : !isSaveEnabled}
           isButtonTwoGreen
           onPressButtonOne={() => {
             if (!isWebView && selectedStepper.id != 1) {
