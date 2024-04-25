@@ -24,7 +24,7 @@ const useCandidateRoundOneCards = ({ hasRoundone, savedRoundId }) => {
         navigate(`${navigations.CONSENT_MARKING_MANAGEMENT}`);
         break;
       case 2:
-        navigate(`${navigations.APPLICATION_FORM}`);
+        navigate(`${navigations.APPLICATION_FORM_SUBROUTE}${savedRoundId}`);
         break;
       case 3:
         navigate(`${navigations.CENTRE_WISE_COMPANY}/${savedRoundId}`);

@@ -1,10 +1,17 @@
 //Libraries
 import React, { useImperativeHandle, useRef, useState } from "react";
+import { useParams } from "react-router";
 //UI & Styling
 import MultiRow from "../../../core/layouts/MultiRow";
 import styles from "./JobPreferenceDetails.style";
 import { View } from "@unthinkable/react-core-components";
 import useFetch from "../../../hooks/useFetch";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import {
+  ROUNDS,
+  JOB_PREFERENCES,
+  USER_TYPE_MEMBER,
+} from "../../../services/apiServices/apiEndPoint";
 import PreferenceRegarding from "./PreferenceRegarding";
 import CitySelection from "./CitySelection";
 import MockInterview from "./MockInterview";
@@ -19,6 +26,8 @@ const JobPreferenceDetails = (
   const citySelectionRef = useRef();
   const mockInterviewRef = useRef();
   const cvUploadRef = useRef();
+  const { currentModule } = useGetCurrentUser();
+  const { id } = useParams();
 
   const [isPreferenceRegardingCompleted, setIsPreferenceRegardingCompleted] =
     useState(false);
@@ -34,7 +43,7 @@ const JobPreferenceDetails = (
     isLoading: isGettingJobPreference,
     error: errorWhileGettingJobPreference,
   } = useFetch({
-    url: `/member/nqca-placements/rounds/264/job-preferences`,
+    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${JOB_PREFERENCES}`,
   });
   // const { handleExamDetails} = useExamDetailsAPI();
 
