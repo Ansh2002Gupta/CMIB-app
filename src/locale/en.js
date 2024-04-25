@@ -1053,6 +1053,9 @@ const locale = {
   "label.noOfVacancy": "No. of Vacancy",
   "label.edit_designation": "Edit Designation",
 
+  "label.more_details": "More Details",
+  "label.vacancy": "Vacancy",
+  "label.pyscometric_written_test": "Psychometric/ Written Test Fee",
 };
 
 export default locale;

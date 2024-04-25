@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 16,
+    marginBottom: 8,
   },
   downloadText: { color: colors.darkBlue, fontSize: 14, marginLeft: 8 },
   downloadIcon: {
@@ -47,17 +48,32 @@ const styles = StyleSheet.create({
   downloadButtonContainer: {
     alignItems: "center",
     flexDirection: "row",
+    marginBottom: 8,
   },
   tableCard: {
     marginTop: 24,
   },
   customTableStyle: {
+    paddingBottom: 0,
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingLeft: 0,
     backgroundColor: colors.white,
-    padding: 0,
+  },
+  customTableStyleWeb: {
+    backgroundColor: colors.white,
     marginBottom: 16,
     borderRadius: 16,
-    overflow: "hidden",
     borderWidth: 0.5,
+    borderColor: colors.lightGrey,
+  },
+  customTableStyleMob: {
+    backgroundColor: colors.white,
+    borderWidth: 0,
+    overflow: "hidden",
+    borderRadius: 16,
+    marginBottom: 16,
+    padding: 0,
     borderColor: colors.lightGrey,
   },
   statusStyle: {
@@ -151,6 +167,28 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   doneButtonStyle: { fontSize: 14, color: colors.white },
+  headerContainerMob: {
+    flexDirection: "column",
+  },
+  rowStyling: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: 2,
+  },
+  mobileContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 16,
+    paddingBottom: 16,
+    borderRadius: 15,
+    borderColor: colors.greyOne,
+    backgroundColor: colors.white,
+  },
+  rowsPerPageWeb: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
 });
 
 export default styles;
