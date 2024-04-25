@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
-import styles from "./CentreWiseCompanyListing.styles";
+import getStyles from "./CentreWiseCompanyListing.styles";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { CustomTabs } from "../../components/Tab";
 import CustomTable from "../../components/CustomTable";
@@ -20,10 +21,14 @@ import images from "../../images";
 import TouchableImage from "../../components/TouchableImage";
 import { navigations } from "../../constants/routeNames";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+
 const CentreWiseCompanyListing = () => {
   const id = urlService.getQueryStringValue("id");
   const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const intl = useIntl();
+  const theme = useTheme()
+  const styles = getStyles(theme)
+
   const {
     allDataLoaded,
     currentRecords,

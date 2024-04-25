@@ -1,9 +1,11 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
+
 import { CustomTabs } from "../../components/Tab";
 import PositionInformation from "../PositionInformation";
 import CompanyProfileDetail from "../CompanyProfileDetail";
-import styles from "./styles";
+import getStyles from "./styles";
 import Header from "../../containers/CompanyDetail/Header";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router";
@@ -15,6 +17,9 @@ import Spinner from "../../components/Spinner";
 const CompanyDetail = () => {
   const intl = useIntl();
   const { centerId, companyId } = useParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const { profileInformation, isProfileLoading, profileError } =
     useCompanyDetail({
       centerId,
