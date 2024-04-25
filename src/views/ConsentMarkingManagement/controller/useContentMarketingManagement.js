@@ -13,7 +13,6 @@ import CustomImage from "../../../components/CustomImage";
 import styles from "../ConsentMarkingManagement.styles";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
-import { COMPANY_INACTIVE_SUBSCRIPTION_LISTING } from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
 import { urlService } from "../../../services/urlService";
@@ -22,6 +21,7 @@ import usePagination from "../../../hooks/usePagination";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import CustomModal from "../../../components/CustomModal";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 
 const useContentMarketingManagement = (onViewPress) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
@@ -32,6 +32,7 @@ const useContentMarketingManagement = (onViewPress) => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const navigate = useNavigate();
+  const { currentModule } = useGetCurrentUser();
   const intl = useIntl();
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
@@ -44,19 +45,19 @@ const useContentMarketingManagement = (onViewPress) => {
   const [showCurrentPopupmessageDetails, setCurrentPopupMessageDetails] =
     useState(0);
   const [showConsentModal, setShowConsentModal] = useState(0);
+
   const {
-    data: inactiveSubscriptionListData,
-    isLoading: isInactiveSubscriptionListLoading,
-    isError: isInactiveSubscriptionListError,
-    error: errorInactiveSubscriptionListData,
-    fetchData: fetchInactivePackage,
+    data: consentTitleData,
+    isLoading: isConsentTitleDataLoading,
+    isError: isConsentListError,
+    error: errorConsentTitleData,
+    fetchData: fetchConsentListing,
   } = useFetch({
-    url: `${COMPANY_INACTIVE_SUBSCRIPTION_LISTING}`,
+    url: `/member/${currentModule}/rounds/264/centres/42/companies/shotrlisted`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
-
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
     setCurrentPage,
@@ -75,7 +76,7 @@ const useContentMarketingManagement = (onViewPress) => {
         perPage: rowsPerPage,
         page: currentPage,
       };
-      const initialData = await fetchInactivePackage({
+      const initialData = await fetchConsentListing({
         queryParamsObject: requestedParams,
       });
       if (initialData && initialData?.records?.length > 0) {
@@ -93,7 +94,7 @@ const useContentMarketingManagement = (onViewPress) => {
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
   const updateCurrentRecords = async (params) => {
-    const newData = await fetchInactivePackage({
+    const newData = await fetchConsentListing({
       queryParamsObject: params,
     });
     setCurrentRecords(newData?.records);
@@ -103,7 +104,7 @@ const useContentMarketingManagement = (onViewPress) => {
     setLoadingMore(true);
     const nextPage = currentPage + 1;
     try {
-      const newData = await fetchInactivePackage({
+      const newData = await fetchConsentListing({
         queryParamsObject: {
           perPage: rowsPerPage,
           page: nextPage,
@@ -120,10 +121,7 @@ const useContentMarketingManagement = (onViewPress) => {
         setAllDataLoaded(true);
       }
     } catch (error) {
-      console.error(
-        "Error fetching Package Subscription History on load more:",
-        error
-      );
+      console.error("Error fetching data on load more:", error);
     } finally {
       setLoadingMore(false);
     }
@@ -150,7 +148,7 @@ const useContentMarketingManagement = (onViewPress) => {
     // setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
     if (isMob) {
       setCurrentPage(1);
-      const newData = await fetchInactivePackage({
+      const newData = await fetchConsentListing({
         queryParamsObject: {
           q: searchedData,
         },
@@ -205,7 +203,9 @@ const useContentMarketingManagement = (onViewPress) => {
   };
 
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading ? styles.tableHeadingText : styles.tableRowText;
+    const tableStyle = isHeading
+      ? styles.tableHeadingText
+      : styles.tableRowText;
     return [
       {
         content: isHeading ? (
@@ -395,16 +395,16 @@ const useContentMarketingManagement = (onViewPress) => {
     indexOfFirstRecord,
     indexOfLastRecord,
     isFirstPageReceived,
-    isInactiveSubscriptionListLoading,
+    isConsentTitleDataLoading,
     isHeading,
-    inactiveSubscriptionListData: currentRecords,
+    consentTitleData: currentRecords,
     loadingMore,
     rowsPerPage,
     subHeadingText,
     extraDetailsText,
     extraDetailsKey,
     tableIcon,
-    totalcards: inactiveSubscriptionListData?.meta?.total,
+    totalcards: consentTitleData?.meta?.total,
     onIconPress,
     showCurrentPopupmessage,
     setCurrentPopupMessage,

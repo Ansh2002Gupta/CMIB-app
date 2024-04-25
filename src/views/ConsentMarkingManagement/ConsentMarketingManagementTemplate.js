@@ -1,40 +1,23 @@
+import { View } from "@unthinkable/react-core-components";
 import React from "react";
-import {
-  Text,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 
-import styles from "./ConsentMarkingManagement.styles";
-import useIsWebView from "../../hooks/useIsWebView";
-import { CustomTabs } from "../../components/Tab";
+import colors from "../../assets/colors";
+import CustomModal from "../../components/CustomModal";
 import CustomTable from "../../components/CustomTable";
-import { TwoColumn, TwoRow } from "../../core/layouts";
+import DetailCard from "../../components/DetailCard";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
-import useContentMarketingManagement from "./controller/useContentMarketingManagement";
+import { CustomTabs } from "../../components/Tab";
+import TouchableImage from "../../components/TouchableImage";
 import {
-  ROUND_ONE_CONSENT_MARKETING_MANAGEMENT,
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   ROUND_ONE_CONSENT_MARKETING_MANAGEMENT as tableHeading,
 } from "../../constants/constants";
-import colors from "../../assets/colors";
-import AddTicketModal from "../../components/AddTicketModal/AddTicketModal";
-import PopupMessage from "../../components/PopupMessage/PopupMessage";
-import Chip from "../../components/Chip";
-import TouchableImage from "../../components/TouchableImage";
-import Modal from "../../components/Modal";
-import images from "../../images";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
-import CustomModal from "../../components/CustomModal";
-import DetailCard from "../../components/DetailCard";
-import {
-  recordDataAkola,
-  recordDataAhemdabad,
-  recordDataAurangabad,
-  recordDataGurgaon,
-} from "./dummyData";
+import useIsWebView from "../../hooks/useIsWebView";
+import styles from "./ConsentMarkingManagement.styles";
+import useContentMarketingManagement from "./controller/useContentMarketingManagement";
 
 const ConsentMarketingManagementTemplate = ({ intl }) => {
   const { isWebView } = useIsWebView();
@@ -61,7 +44,7 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
     extraDetailsKey,
     loadingMore,
     rowsPerPage,
-    inactiveSubscriptionListData,
+    consentTitleData,
     totalcards,
     headingTexts,
     tableIcon,
@@ -183,11 +166,15 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
           backgroundColor: colors.backgroundGrey,
           height: !isWebView && "100%",
           flex: 1,
-          display: 'block',
+          display: "block",
         }}
       >
         <SearchView
-          customParentStyle={{ width: isWebView ? "30%" : "60%", marginTop: 16, marginLeft: 16 }}
+          customParentStyle={{
+            width: isWebView ? "30%" : "60%",
+            marginTop: 16,
+            marginLeft: 16,
+          }}
           customSearchCriteria={() => {}}
           placeholder={"Search by company name"}
         />
@@ -214,9 +201,7 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
             isGeetingJobbSeekers,
             isHeading,
             loadingMore,
-            placeholder: intl.formatMessage({
-              id: "label.serach_by_applicant_name_id",
-            }),
+            placeholder: "",
             rowsLimit,
             rowsPerPage,
             subHeadingText,
@@ -254,19 +239,19 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
           tabs={[
             {
               label: intl.formatMessage({ id: "label.ahemdabad" }),
-              component: <CommonTableComponent data={recordDataAhemdabad} />,
+              component: <CommonTableComponent data={consentTitleData} />,
             },
             {
               label: intl.formatMessage({ id: "label.akola" }),
-              component: <CommonTableComponent data={recordDataAkola} />,
+              component: <CommonTableComponent data={consentTitleData} />,
             },
             {
               label: intl.formatMessage({ id: "label.aurangabad" }),
-              component: <CommonTableComponent data={recordDataAurangabad} />,
+              component: <CommonTableComponent data={consentTitleData} />,
             },
             {
               label: intl.formatMessage({ id: "label.gurgaon" }),
-              component: <CommonTableComponent data={recordDataGurgaon} />,
+              component: <CommonTableComponent data={consentTitleData} />,
             },
           ]}
         />
