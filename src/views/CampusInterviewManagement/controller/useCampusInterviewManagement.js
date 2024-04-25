@@ -187,7 +187,7 @@ const useCampusInterviewManagement = (onViewPress) => {
     });
   };
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading ? styles.tableHeadingText : {fontSize: 14, fontWeight:500};
+    const tableStyle = isHeading ? styles.tableHeadingText : styles.tableRowText;
     return [
       {
         content: isHeading ? (

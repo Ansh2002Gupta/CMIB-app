@@ -130,6 +130,9 @@ const styles = {
   tableHeadingText:{
     color: colors.darkGrey,
   },
+  tableRowText:{
+    fontSize: 14,
+  }
 };
 
 export default styles;

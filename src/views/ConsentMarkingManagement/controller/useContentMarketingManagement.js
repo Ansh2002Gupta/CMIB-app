@@ -205,7 +205,7 @@ const useContentMarketingManagement = (onViewPress) => {
   };
 
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading ? styles.tableHeadingText : {fontSize:14};
+    const tableStyle = isHeading ? styles.tableHeadingText : styles.tableRowText;
     return [
       {
         content: isHeading ? (
