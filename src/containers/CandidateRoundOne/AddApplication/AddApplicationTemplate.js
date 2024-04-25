@@ -74,7 +74,7 @@ const AddApplicationTemplate = ({
       : {};
 
   const getCurrentStepperDetails = () => {
-    switch (7) {
+    switch (selectedStepper.id) {
       case 1:
         return (
           <PersonalDetails
@@ -276,10 +276,10 @@ const AddApplicationTemplate = ({
         onExperienceDetailsSave();
         return
       case 5:
-        onJobPreferencesSave();
+        onHobbiesDetailsSave();
         return;
       case 6:
-        onHobbiesDetailsSave();
+        onJobPreferencesSave();
         return;
       default:
         return;

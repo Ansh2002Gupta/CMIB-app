@@ -13,13 +13,13 @@ import images from "../../../images";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import DeclarationForm from "./DeclarationForm";
 
-const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValidationChange = () => {}}, ref) => {
+const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValidationChange = () => {}, trainingDetails={}}, ref) => {
   //states
   const [isMembershipNumber, setIsMembershipNumber] = useState(1);
   const [membershipEnrollNumber, setMembershipEnrollNumber] = useState('');
   const [dateOfCompletion, setDateOfCompletion] = useState('');
   const [showDeclarationModal, setShowDeclarationModal] = useState(false);
-
+  const [isDeclarationCompleted, setIsDeclarationCompleted] = useState(false);
   //custom functions
   const handleGcmsNumberSelection = (val) => {
     // val is 0,1,2 .... here
@@ -47,10 +47,14 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
       onValidationChange(membershipEnrollNumber.length > 0 && dateOfCompletion);
     } else {
       // selected no
-      onValidationChange(true);
+      if(trainingDetails?.declaration_form) {
+        onValidationChange(true);
+      } else {
+        onValidationChange(isDeclarationCompleted);
+      }
     }
 
-  }, [isMembershipNumber, membershipEnrollNumber, dateOfCompletion, onValidationChange]);
+  }, [isMembershipNumber, membershipEnrollNumber, dateOfCompletion, onValidationChange, isDeclarationCompleted, trainingDetails]);
   
   return (
     <CardComponent customStyle={styles.cardContainer}>
@@ -97,7 +101,7 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
                 onChangeValue={setDateOfCompletion}
               />
             </>}
-            {Boolean(isMembershipNumber) && 
+            {Boolean(isMembershipNumber) && !trainingDetails?.declaration_form && 
               <View style={styles.submitFormContainer}>
                 <CommonText>{intl.formatMessage({ id: "label.submitDeclaration" })}</CommonText>
                 <CustomTouchableOpacity style={styles.submitButtonContainer} onPress={() => {setShowDeclarationModal(true)}}>
@@ -110,7 +114,7 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
               </View>
             }
           </View>
-          {showDeclarationModal && <DeclarationForm intl={intl} onPressIconCross={() => setShowDeclarationModal(false)}/>}
+          {showDeclarationModal && <DeclarationForm intl={intl} onPressIconCross={() => setShowDeclarationModal(false)} setIsDeclarationCompleted={setIsDeclarationCompleted}/>}
         </CardComponent>
   )
 };
