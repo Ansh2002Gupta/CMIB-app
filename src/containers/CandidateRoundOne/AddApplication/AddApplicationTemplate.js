@@ -49,7 +49,7 @@ const AddApplicationTemplate = ({
       : {};
 
   const getCurrentStepperDetails = () => {
-    switch (6) {
+    switch (selectedStepper.id) {
       case 1:
         return (
           <PersonalDetails
@@ -103,9 +103,9 @@ const AddApplicationTemplate = ({
             }}
           />
         );
+      // case 5:
+      //   return <HobbiesDetails intl={intl} isWebView={isWebView} />;
       case 5:
-        return <HobbiesDetails intl={intl} isWebView={isWebView} />;
-      case 6:
         return (
           <JobPreferenceDetails
             intl={intl}
@@ -149,6 +149,7 @@ const AddApplicationTemplate = ({
   const onEdDetailsSave = () => {
     const payload = edDetailsRef?.current?.getAllData();
     makeRequest({
+      overrideUrl: `/member/nqca-placements/rounds/264/academics`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
@@ -163,6 +164,7 @@ const AddApplicationTemplate = ({
   const onTrainingDetailsSave = () => {
     const payload = trainingDetailRef?.current?.getAllData();
     makeRequest({
+      overrideUrl: `/member/nqca-placements/rounds/264/training-details`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
@@ -190,40 +192,6 @@ const AddApplicationTemplate = ({
   };
 
   const onJobPreferencesSave = () => {
-    // const payload = {
-    //   posting_anywhere_in_india: true,
-    //   transferable_post_acceptable: false,
-    //   posting_outside_india: true,
-    //   category: "general",
-    //   physically_impaired: false,
-    //   economical_weaker_section: false,
-    //   participate_in_icai_residential_program: false,
-    //   preferred_region: "Some preferred region updated",
-    //   expected_annual_salary: "Some expected annual salary",
-    //   industry_preference: ["BPO", "Financial Services"],
-    //   functional_area_preference: ["Accounting"],
-    //   cv_path: "/path/to/cv",
-    //   job_photo_path: "/path/to/job/photo",
-    //   introduction_video_path: "/path/to/introduction/video",
-    //   start_date: "sss",
-    //   mock_interview_date: {
-    //     mock_interview_id: 1,
-    //     name: "Centre XX",
-    //     schedule_date: "2024-11-12",
-    //     start_time: "09:30:00",
-    //     end_time: "10:00:00",
-    //   },
-
-    //   campus_interview: {
-    //     campus_interview_apprearence_id: 1, // send null if create
-    //     big_centre_id: 21,
-    //     small_centre_id: 2,
-    //   },
-    //   orientation_centre: {
-    //     orientation_centre_apprearence_id: 1, // send null if create
-    //     orientation_centre_id: 14,
-    //   },
-    // };
     const payload = jobPreferneceref?.current?.getAllData();
     makeRequest({
       overrideUrl: `member/nqca-placements/rounds/264/job-preferences`,
@@ -249,6 +217,10 @@ const AddApplicationTemplate = ({
       case 3:
         onTrainingDetailsSave();
         return;
+      case 4:
+        onExperienceDetailsSave();
+      case 5:
+        onJobPreferencesSave();
       default:
         return;
     }
