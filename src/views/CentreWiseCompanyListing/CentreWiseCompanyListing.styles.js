@@ -11,7 +11,6 @@ const styles = {
   },
   mobileContainerStyle: {
     flexDirection: "row",
-    flex: 1,
     padding: 16,
   },
   iconStyle: {

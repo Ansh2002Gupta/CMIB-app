@@ -20,9 +20,8 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
   },
   headingContainer: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 16,
+    padding: 16,
+    alignItems: "center",
   },
   headingtext: {
     color: colors.black,
@@ -32,9 +31,17 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 32,
   },
+  headingtextWebMobView: {
+    color: colors.black,
+    fontSize: 20,
+  },
   headingContainerWeb: {
     paddingBottom: 24,
     paddingTop: 24,
+  },
+  mainContainerMob: {
+    alignItems: "center",
+    paddingBottom: 8,
   },
 });
 

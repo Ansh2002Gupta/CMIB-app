@@ -2,7 +2,7 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
-  container: {
+  container: (HEIGHT = 44) => ({
     justifyContent: "flex-start",
     backgroundColor: colors.white,
     marginBottom: 16,
@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 16,
     padding: 24,
-  },
+    height: HEIGHT,
+  }),
 
   barChartContainer: {
     backgroundColor: colors.white,
@@ -39,8 +40,14 @@ const styles = StyleSheet.create({
     fontFamily: "General Sans",
     fontWeight: "500",
   },
-  gridLine: { stroke: colors.secondaryGrey, strokeWidth: 1 },
-  barStyles: (barColor) => ({ fill: barColor, strokeWidth: 2 }),
+  gridLine: {
+    stroke: colors.secondaryGrey,
+    strokeWidth: 1,
+  },
+  barStyles: (barColor) => ({
+    fill: barColor,
+    strokeWidth: 2,
+  }),
   strokeNone: { stroke: "none" },
   flyoutStyle: {
     fill: colors.white,
@@ -56,8 +63,9 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   topLabelTextStyle: {
-    fontWeight: 'bold', color: colors.black
-  }
+    fontWeight: "bold",
+    color: colors.black,
+  },
 });
 
 export default styles;

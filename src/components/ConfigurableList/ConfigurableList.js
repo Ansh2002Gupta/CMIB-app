@@ -73,12 +73,15 @@ const ConfigurableList = ({
     <View style={{ ...styles.outerContainer, ...customOuterContianer }}>
       <View style={{ ...styles.componentContainer, ...componentContainer }}>
         <View style={styles.header}>
-          <CommonText customTextStyle={styles.titleStyles}>{title}</CommonText>
+          <CommonText customTextStyle={styles.titleStyles} fontWeight={"600"}>
+            {title}
+          </CommonText>
           {isEditable && (
             <TouchableImage
               onPress={onAdd}
               parentStyle={styles.iconAdd}
               source={images.iconAdd}
+              isSvg={false}
             />
           )}
         </View>
@@ -119,13 +122,14 @@ const ConfigurableList = ({
                   ]}
                 >
                   <CommonText
-                    customTextStyle={[
-                      styles.item,
-                      selectedOptions.includes(item.id)
+                    fontWeight={"500"}
+                    customTextStyle={{
+                      ...styles.item,
+                      ...(selectedOptions.includes(item.id)
                         ? styles.selectedTextColor
-                        : styles.unselectedTextColor,
-                    ]}
-                    customTextProps={{ className: classes["item--black"] }}
+                        : styles.unselectedTextColor),
+                    }}
+                    className={{ className: classes["item--black"] }}
                   >
                     {item.name}
                   </CommonText>
@@ -138,6 +142,7 @@ const ConfigurableList = ({
                           prevState: allOptions,
                         })
                       }
+                      isSvg={false}
                       source={images.iconTrashBlack}
                       style={styles.iconTrash}
                     />
@@ -145,7 +150,7 @@ const ConfigurableList = ({
                 </CustomTouchableOpacity>
               ))}
             {!menuOptions?.length && (
-              <CommonText customTextStyle={styles.message}>
+              <CommonText customTextStyle={styles.message} fontWeight={"500"}>
                 {intl.formatMessage({ id: "label.noResultFound" })}
               </CommonText>
             )}

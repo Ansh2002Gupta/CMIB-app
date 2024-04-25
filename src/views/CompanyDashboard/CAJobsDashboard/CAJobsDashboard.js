@@ -329,23 +329,24 @@ const CAJobsDashboard = () => {
             }
           />
         </View>
-        <ScrollView style={{ gap: 24 }} showsVerticalScrollIndicator={false}>
-          <BarChart
-            yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
-            domainPadding={20}
-            height={200}
-            label={intl.formatMessage({
-              id: "label.topDesignationsBasedCTCOffered",
-            })}
-            barColor={colors.green}
-            data={topCtcDesignationData}
-            toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
-            yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
-            xAxisTickAngle={-20}
-          />
-
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {topCtcDesignationData?.length > 0 && (
+            <BarChart
+              yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
+              domainPadding={20}
+              height={200}
+              label={intl.formatMessage({
+                id: "label.topDesignationsBasedCTCOffered",
+              })}
+              barColor={colors.green}
+              data={topCtcDesignationData}
+              toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
+              yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
+              xAxisTickAngle={-20}
+            />
+          )}
           <View style={styles.pieChartContiner}>
-            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+            <View style={isWebView ? { flex: 1 } : { width: "100%" }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
@@ -372,7 +373,7 @@ const CAJobsDashboard = () => {
                 labelColor={colors.darkGrey}
               />
             </View>
-            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+            <View style={isWebView ? { flex: 1 } : { width: "100%" }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
@@ -399,7 +400,7 @@ const CAJobsDashboard = () => {
                 labelColor={colors.darkGrey}
               />
             </View>
-            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+            <View style={isWebView ? { flex: 1 } : { width: "100%" }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
@@ -428,42 +429,44 @@ const CAJobsDashboard = () => {
               />
             </View>
           </View>
-          <View style={isWebView ? {} : { width: '100%' }}>
-
-            <BarChart
-              xAxisTickAngle={-20}
-              yAxisLabel={intl.formatMessage({
-                id: "label.candidates",
-              })}
-              domainPadding={20}
-              height={200}
-              label={intl.formatMessage({
-                id: "label.candidatesAcceptingOffersIndustries",
-              })}
-              toolTipLabel={({ datum }) => datum.y}
-              barColor={colors.purple}
-              data={candidatesAcceptingIndustriesData}
-            />
+          <View style={isWebView ? {} : { width: "100%" }}>
+            {candidatesAcceptingIndustriesData && (
+              <BarChart
+                xAxisTickAngle={-20}
+                yAxisLabel={intl.formatMessage({
+                  id: "label.candidates",
+                })}
+                domainPadding={20}
+                height={200}
+                label={intl.formatMessage({
+                  id: "label.candidatesAcceptingOffersIndustries",
+                })}
+                toolTipLabel={({ datum }) => datum.y}
+                barColor={colors.purple}
+                data={candidatesAcceptingIndustriesData}
+              />
+            )}
           </View>
-          <View style={isWebView ? {} : { width: '100%' }}>
-
-            <BarChart
-              xAxisTickAngle={-20}
-              yAxisLabel={intl.formatMessage({
-                id: "label.candidates",
-              })}
-              domainPadding={20}
-              height={200}
-              label={intl.formatMessage({
-                id: "label.candidatesAcceptingOffersIndustries",
-              })}
-              toolTipLabel={({ datum }) => datum.y}
-              barColor={colors.babyPink}
-              data={candidatesAcceptingAreasData}
-            />
+          <View style={isWebView ? {} : { width: "100%", marginBottom: 620 }}>
+            {candidatesAcceptingAreasData?.length > 0 && (
+              <BarChart
+                xAxisTickAngle={-20}
+                yAxisLabel={intl.formatMessage({
+                  id: "label.candidates",
+                })}
+                domainPadding={20}
+                height={200}
+                label={intl.formatMessage({
+                  id: "label.candidatesAcceptingOffersIndustries",
+                })}
+                toolTipLabel={({ datum }) => datum.y}
+                barColor={colors.babyPink}
+                data={candidatesAcceptingAreasData}
+              />
+            )}
           </View>
         </ScrollView>
-      </View >
+      </View>
     )
   );
 };

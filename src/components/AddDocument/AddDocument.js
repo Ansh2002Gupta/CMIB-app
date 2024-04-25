@@ -10,6 +10,7 @@ const AddDocument = ({
   isEditable,
 }) => {
   const {
+    nonEditableData,
     addDocumentModal,
     documentDetail,
     editDocumentModal,
@@ -24,11 +25,13 @@ const AddDocument = ({
   } = useAddDocument({
     requiredDocumentDetails,
     setRenderJobDetails,
+    addDocumentField,
   });
 
   return (
     <AddDocumentTemplate
       {...{
+        nonEditableData,
         addDocumentField,
         addDocumentModal,
         documentDetail,
