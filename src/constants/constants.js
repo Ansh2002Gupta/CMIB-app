@@ -275,17 +275,17 @@ export const MOBILE_CODES = [
 ];
 
 export const ADD_DOCUMENT = {
-  BOTH: "Both",
-  PHOTOCOPIES: "Photocopies",
+  BOTH: "both",
+  PHOTOCOPIES: "photocopies",
   DOCUMENT_NAME: "documentName",
   DOCUMENT_TYPE: "documentType",
   COPIESNUMBER: "copiesNumber",
-  ORIGINAL: "Original",
+  ORIGINAL: "original",
 };
 
 export const PLACE_OF_POSTING = {
   TOTAL: "total",
-  POSTING_PLACE: "postingPlace",
+  POSTING_PLACE: "place_of_posting",
 };
 
 export const SIGN_UP_STEPPER_OPTION = [
@@ -460,8 +460,8 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
   const currentModules =
     currentModule === NEWLY_QUALIFIED
       ? {
-        psychometric_test_fee: "Psychometric/ Written Test Fee",
-      }
+          psychometric_test_fee: "Psychometric/ Written Test Fee",
+        }
       : {};
   return {
     centre_name: "Centre Name",
@@ -925,7 +925,7 @@ export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT = {
   center_name: "Center Name",
   interview_dates: "Interview Dates",
   shortlisting_round: "Shortlisting Round",
-  written_test: "Written Test"
+  written_test: "Written Test",
 };
 
 export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT_CAMPUS = {
@@ -935,9 +935,8 @@ export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT_CAMPUS = {
   mode: "Mode",
   interview_dates_time: "Interview Dates & Time",
   offer_provided: "Offer Provided",
-  offer_acceptance_deadline: "Offer Acceptance Deadline"
+  offer_acceptance_deadline: "Offer Acceptance Deadline",
 };
-
 
 export const ROUND_ONE_CAMPUS_INTERVIEW_MANAGEMENT = {
   employer_name: "Employer Name",

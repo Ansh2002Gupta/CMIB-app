@@ -1,47 +1,65 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+function mapPosting(dataArray) {
+  const groupedData = {};
+  dataArray.forEach((item) => {
+    if (!groupedData[item.cellID]) {
+      groupedData[item.cellID] = {};
+    }
+    switch (item.key) {
+      case "place_of_posting":
+        groupedData[item.cellID].place_of_posting = item.value;
+        break;
+      case "general":
+        groupedData[item.cellID].general = item.value;
+        break;
+      case "obc":
+        groupedData[item.cellID].obc = item.value;
+        break;
+      case "sc":
+        groupedData[item.cellID].sc = item.value;
+        break;
+      case "st":
+        groupedData[item.cellID].st = item.value;
+        break;
+      case "ph":
+        groupedData[item.cellID].ph = item.value;
+        break;
+      case "others":
+        groupedData[item.cellID].others = item.value;
+        break;
+      case "total":
+        groupedData[item.cellID].total = item.value;
+        break;
+    }
+  });
+  const result = Object.keys(groupedData).map((key) => {
+    return groupedData[key];
+  });
+  return result;
+}
+
 const useAddPlaceOfPosting = ({
   requiredPostingPlaceDetail,
   setRenderJobDetails,
+  addPostingDetailsField,
 }) => {
   const [addPlaceModal, setAddPlaceModal] = useState(false);
   const [editPlaceModal, setEditPlaceModal] = useState(false);
   const [index, setIndex] = useState(-1);
   const [isFormValid, setIsFormValid] = useState(false);
-  const [postingPlaceDetail, setPostingPlaceDetail] = useState({
-    postingPlace: "",
-    general: null,
-    obc: null,
-    st: null,
-    sc: null,
-    ph: null,
-    others: null,
-    total: null,
-  });
+  const [postingPlaceDetail, setPostingPlaceDetail] = useState(null);
   const intl = useIntl();
 
-  useEffect(() => {
-    validateForm();
-  }, [postingPlaceDetail]);
+  const nonEditableData = mapPosting(requiredPostingPlaceDetail);
 
-  useEffect(() => {
-    if (editPlaceModal) {
-      setPostingPlaceDetail({
-        postingPlace: postingPlaceDetail.postingPlace,
-        general: postingPlaceDetail.general,
-        obc: postingPlaceDetail.obc,
-        st: postingPlaceDetail.st,
-        sc: postingPlaceDetail.sc,
-        ph: postingPlaceDetail.ph,
-        others: postingPlaceDetail.others,
-        total: postingPlaceDetail.total,
-      });
-    }
-  }, []);
-
-  const onClickAddPlace = () => {
+  const onClickAddPlace = (cellID) => {
     setAddPlaceModal(true);
+    setPostingPlaceDetail((prev) => ({
+      ...prev,
+      cellID: cellID,
+    }));
   };
 
   const validateForm = () => {
@@ -52,47 +70,80 @@ const useAddPlaceOfPosting = ({
 
   const onClickAddPlaceCancelButton = () => {
     setAddPlaceModal(false);
-    setEditPlaceModal(false);
-    setPostingPlaceDetail({
-      postingPlace: "",
-      general: null,
-      obc: null,
-      st: null,
-      sc: null,
-      ph: null,
-      others: null,
-      total: null,
-    });
+    setPostingPlaceDetail(null);
   };
 
   const onClickAddPlaceSaveButton = () => {
-    // Todo: Need to change logic for mobile
-    // if (editPlaceModal && index !== -1) {
-    //   setRequiredPostingPlaceDetail((prev) => {
-    //     const updatedList = [...prev];
-    //     updatedList[index] = { ...postingPlaceDetail };
-    //     return updatedList;
-    //   });
-    // } else {
-    //   setRequiredPostingPlaceDetail((prev) => [
-    //     ...prev,
-    //     { ...postingPlaceDetail },
-    //   ]);
-    // }
-    // setPostingPlaceDetail({
-    //   postingPlace: "",
-    //   general: null,
-    //   obc: null,
-    //   st: null,
-    //   sc: null,
-    //   ph: null,
-    //   others: null,
-    //   total: null,
-    // });
-    // setIsFormValid(false);
-    // setIndex(-1);
-    // setEditPlaceModal(false);
-    // setAddPlaceModal(false);
+    const {
+      place_of_posting,
+      general,
+      obc,
+      sc,
+      st,
+      ph,
+      others,
+      total,
+      cellID,
+    } = postingPlaceDetail;
+
+    let newData = addPostingDetailsField?.map((doc) => {
+      let val;
+      if (doc?.key === "place_of_posting") {
+        val = place_of_posting;
+      } else if (doc.key === "general") {
+        val = general;
+      } else if (doc.key === "obc") {
+        val = obc;
+      } else if (doc.key === "sc") {
+        val = sc;
+      } else if (doc.key === "st") {
+        val = st;
+      } else if (doc.key === "ph") {
+        val = ph;
+      } else if (doc.key === "total") {
+        val = total;
+      } else {
+        val = others;
+      }
+      return {
+        ...doc,
+        cellID,
+        value: val,
+      };
+    });
+
+    const updatedDocumentDetails = requiredPostingPlaceDetail.map((item) => {
+      if (item.cellID === cellID) {
+        switch (item.key) {
+          case "place_of_posting":
+            return { ...item, value: place_of_posting };
+          case "general":
+            return { ...item, value: general };
+          case "obc":
+            return { ...item, value: obc };
+          case "sc":
+            return { ...item, value: sc };
+          case "st":
+            return { ...item, value: st };
+          case "ph":
+            return { ...item, value: ph };
+          case "others":
+            return { ...item, value: others };
+          case "total":
+            return { ...item, value: total };
+          default:
+            return item;
+        }
+      }
+      return item;
+    });
+
+    setRenderJobDetails((prev) => ({
+      ...prev,
+      posting_details: [...updatedDocumentDetails, ...newData],
+    }));
+    setAddPlaceModal(false);
+    setPostingPlaceDetail(null);
   };
 
   const handlePostingPlaceChange = (propertyName, value) => {
@@ -102,28 +153,57 @@ const useAddPlaceOfPosting = ({
     }));
   };
 
-  const onClickDeletePlace = (index) => {
-    // Todo: Fix Logic for mobile
-    // setRequiredPostingPlaceDetail((prev) => prev.filter((_, i) => i !== index));
+  const onClickDeletePlace = (cellID) => {
+    setRenderJobDetails((prevDetail) => {
+      const filteredDocs = prevDetail?.posting_details?.filter(
+        (doc) => doc.cellID !== cellID
+      );
+      return { ...prevDetail, posting_details: filteredDocs };
+    });
   };
 
-  const onCLickEditPlace = (index) => {
-    const placeOfPostingToEdit = requiredPostingPlaceDetail[index];
-    if (placeOfPostingToEdit) {
-      setPostingPlaceDetail({
-        postingPlace: placeOfPostingToEdit.postingPlace,
-        general: placeOfPostingToEdit.general,
-        obc: placeOfPostingToEdit.obc,
-        st: placeOfPostingToEdit.st,
-        sc: placeOfPostingToEdit.sc,
-        ph: placeOfPostingToEdit.ph,
-        others: placeOfPostingToEdit.others,
-        total: placeOfPostingToEdit.total,
-      });
-      setIndex(index);
-    }
+  const onCLickEditPlace = (cellID) => {
+    const documentToEdit = requiredPostingPlaceDetail.find(
+      (doc) => doc.cellID === cellID
+    );
 
-    setEditPlaceModal(true);
+    if (documentToEdit) {
+      setPostingPlaceDetail({
+        place_of_posting:
+          requiredPostingPlaceDetail.find(
+            (item) => item.cellID === cellID && item.key === "place_of_posting"
+          )?.value || "",
+        general:
+          requiredPostingPlaceDetail.find(
+            (item) => item.cellID === cellID && item.key === "general"
+          )?.value || "",
+        obc:
+          requiredPostingPlaceDetail.find(
+            (item) => item.cellID === cellID && item.key === "obc"
+          )?.value || "",
+        sc:
+          requiredPostingPlaceDetail.find(
+            (item) => item.cellID === cellID && item.key === "sc"
+          )?.value || "",
+        st:
+          requiredPostingPlaceDetail.find(
+            (item) => item.cellID === cellID && item.key === "st"
+          )?.value || "",
+        ph:
+          requiredPostingPlaceDetail.find(
+            (item) => item.cellID === cellID && item.key === "ph"
+          )?.value || "",
+        others:
+          requiredPostingPlaceDetail.find(
+            (item) => item.cellID === cellID && item.key === "others"
+          )?.value || "",
+        total:
+          requiredPostingPlaceDetail.find(
+            (item) => item.cellID === cellID && item.key === "total"
+          )?.value || "",
+        cellID: cellID,
+      });
+    }
   };
 
   const handleMultiRowDocumentDetails = ({
@@ -173,7 +253,8 @@ const useAddPlaceOfPosting = ({
 
   return {
     addPlaceModal,
-    editPlaceModal,
+    editPlaceModal: postingPlaceDetail,
+    nonEditableData,
     handleMultiRowDocumentDetails,
     handlePostingPlaceChange,
     isFormValid,
