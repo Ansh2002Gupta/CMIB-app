@@ -1050,9 +1050,10 @@ const locale = {
   "label.interview_shortlist": "Interview Shortlist",
   "label.offered_candidates": "Offered Candidates",
   "label.offer_accepted_by_candidates": "Offer Accepted By Candidates",
+  "label.sameAsCorrespondance": "Same as correspondance address",
+  "label.selectSlot": "Select Slot",
   "label.noOfVacancy": "No. of Vacancy",
   "label.edit_designation": "Edit Designation",
-
   "label.more_details": "More Details",
   "label.vacancy": "Vacancy",
   "label.pyscometric_written_test": "Psychometric/ Written Test Fee",

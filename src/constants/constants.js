@@ -552,8 +552,14 @@ export const FEEDBACK_TABLE_HEADING = {
 export const getCandidatesRoundCards = ({ hasRoundone }) => {
   return [
     {
-      title: "label.application",
+      title: "label.centre_wise_company_detail",
       id: 1,
+      image: "iconDiscover",
+      subTitle: "label.centre_wise_company_detail_description",
+    },
+    {
+      title: "label.application",
+      id: 2,
       image: "iconApplication",
       subTitle: "label.application_description",
     },
@@ -561,16 +567,11 @@ export const getCandidatesRoundCards = ({ hasRoundone }) => {
       title: hasRoundone
         ? "label.download_id"
         : "label.download_id_and_print_id",
-      id: 2,
+      id: 3,
       image: "iconDownload",
       subTitle: "label.download_id_description",
     },
-    {
-      title: "label.centre_wise_company_detail",
-      id: 3,
-      image: "iconDiscover",
-      subTitle: "label.centre_wise_company_detail_description",
-    },
+    
     {
       title: "label.consent_marking_management",
       id: 4,
@@ -1266,6 +1267,33 @@ export const diagramSupportEnum = {
   RECTANGLE_CARD: "cardConfigOverRectangle",
   LINE_CARD: "cardConfigOverLine",
 };
+
+export const CATEGORIES =  [
+  {
+    label: 'General',
+    value: 'general'
+  },
+  {
+    label: 'OBC',
+    value: 'obc'
+  },
+  {
+    label: 'SC',
+    value: 'sc'
+  },
+  {
+    label: 'ST',
+    value: 'st'
+  },
+  {
+    label: 'PH',
+    value: 'ph'
+  },
+  {
+    label: 'Others',
+    value: 'others'
+  }
+];
 
 export const returnColorArray = (key) => {
   switch (key) {
