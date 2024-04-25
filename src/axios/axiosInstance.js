@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (request) => {
   request.headers["api-version"] = API_VERSION_NUMBER;
-  request.headers["ngrok-skip-browser-warning"] = 1;
   const token = (await CookieAndStorageService.get({ key: "auth" })) || null;
   if (token) {
     request.headers.Authorization = `Bearer ${token}`;
