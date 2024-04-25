@@ -170,6 +170,8 @@ const ShortListingConsentCandidate = () => {
             mobileComponentToRender={getMobileView}
             containerStyle={styles.customTableStyle}
             isTotalCardVisible={false}
+            defaultCategory={"Experience"}
+            unit={"Years"}
             selectedTabs={selectedTabs}
             ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
           />

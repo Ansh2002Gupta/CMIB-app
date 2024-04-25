@@ -44,6 +44,8 @@ const isMob = Platform.OS.toLowerCase() !== "web";
 
 const initialFilterState = {
   selectedExperience: 0,
+  selectedPercentage: 0,
+  selectedSalary: 0,
 
   ["selectedApproved/NotApproved"]: [],
 };
@@ -64,8 +66,8 @@ const useShortListingConsent = (id) => {
   const [selectedElement, setSelectedElements] = useState([]);
   const [filterState, setFilterState] = useState(initialFilterState);
   const [filterOptions, setFilterOptions] = useState({
-    [POSTED_JOB_LISTING_ENUM.activeorInactive]: "",
-    [POSTED_JOB_LISTING_ENUM.approvedNotApproved]: "",
+    selectedExperience: 0,
+    selectedPercentage: 0,
     searchData: "",
   });
   const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
@@ -165,11 +167,34 @@ const useShortListingConsent = (id) => {
     {
       refKey: "value",
       name: "Experience",
+      unit: "Years",
       type: FILTER_TYPE_ENUM.SLIDER,
       minimumSliderLimit: 0,
       maximumSliderLimit: 40,
       options: experienceData,
       selectedOptions: filterState?.selectedExperience,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "value",
+      name: "Percentage",
+      unit: "%",
+      type: FILTER_TYPE_ENUM.SLIDER,
+      minimumSliderLimit: 0,
+      maximumSliderLimit: 40,
+      options: experienceData,
+      selectedOptions: filterState.selectedPercentage,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "value",
+      name: "Salary",
+      unit: "INR",
+      type: FILTER_TYPE_ENUM.SLIDER,
+      minimumSliderLimit: 0,
+      maximumSliderLimit: 40,
+      options: experienceData,
+      selectedOptions: filterState.selectedSalary,
       handler: handleFilterChange,
     },
   ];
@@ -260,8 +285,8 @@ const useShortListingConsent = (id) => {
         queryParamsObject: {
           perPage: rowsPerPage,
           page: nextPage,
-          status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
-          approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
+          // status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
+          // approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
           listType: getQueryParams(selectedTabs),
           q: filterOptions.searchData,
         },
@@ -292,8 +317,8 @@ const useShortListingConsent = (id) => {
       q: filterOptions.searchData,
       perPage: rowsPerPage,
       page: page,
-      status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
-      approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
+      // status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
+      // approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
     });
   };
 
@@ -302,8 +327,8 @@ const useShortListingConsent = (id) => {
     await updateCurrentRecords({
       perPage: option.value,
       page: currentPage,
-      status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
-      approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
+      // status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
+      // approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
       q: filterOptions.searchData,
     });
   };
@@ -315,8 +340,8 @@ const useShortListingConsent = (id) => {
       const newData = await fetchCandidateData({
         queryParamsObject: {
           q: searchedData,
-          status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
-          approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
+          // status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
+          // approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
           listType: getQueryParams(selectedTabs),
         },
         overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidates`,
@@ -332,8 +357,8 @@ const useShortListingConsent = (id) => {
         q: searchedData,
         perPage: rowsPerPage,
         page: currentPage,
-        status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
-        approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
+        // status: filterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
+        // approved: filterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
       });
     }
   };
@@ -345,14 +370,15 @@ const useShortListingConsent = (id) => {
 
   const filterApplyHandler = async (filterInfo) => {
     const currentFilterOptions = {
-      [POSTED_JOB_LISTING_ENUM.activeorInactive]: returnSelectedFilterOption(
+      selectedExperience: returnSelectedFilterOption(
         filterInfo,
-        POSTED_JOB_LISTING_ENUM.activeorInactive
+        "selectedExperience"
       ),
-      [POSTED_JOB_LISTING_ENUM.approvedNotApproved]: returnSelectedFilterOption(
+      selectedPercentage: returnSelectedFilterOption(
         filterInfo,
-        POSTED_JOB_LISTING_ENUM.approvedNotApproved
+        "selectedPercentage"
       ),
+      selectedSalary: returnSelectedFilterOption(filterInfo, "selectedSalary"),
     };
     setFilterOptions((prev) => {
       return {
@@ -366,10 +392,10 @@ const useShortListingConsent = (id) => {
       const newData = await fetchCandidateData({
         queryParamsObject: {
           q: filterOptions.searchData,
-          status:
-            currentFilterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
-          approved:
-            currentFilterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
+          // status:
+          //   currentFilterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
+          // approved:
+          //   currentFilterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
           listType: getQueryParams(selectedTabs),
         },
         overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidates`,
@@ -383,9 +409,9 @@ const useShortListingConsent = (id) => {
     } else {
       await updateCurrentRecords({
         q: filterOptions.searchData,
-        status: currentFilterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
-        approved:
-          currentFilterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
+        // status: currentFilterOptions[POSTED_JOB_LISTING_ENUM.activeorInactive],
+        // approved:
+        //   currentFilterOptions[POSTED_JOB_LISTING_ENUM.approvedNotApproved],
         perPage: rowsPerPage,
         page: currentPage,
       });
@@ -396,7 +422,7 @@ const useShortListingConsent = (id) => {
   let subHeadingText = [];
   let statusText = [];
   let tableIcon = images.iconMore;
-  let filterCategory = ["Experience", "Approved/Not Approved"];
+  let filterCategory = ["Experience", "Percentage", "Salary"];
   let isHeading = true;
   const handleCheckbox = (item, isAllSelected) => {
     if (isAllSelected) {
