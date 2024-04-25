@@ -59,6 +59,9 @@ const styles = {
   profileNameSection: {
     flexDirection: "row",
   },
+  themeAndAccountBox: {
+    flexDirection: "row",
+  },
 };
 
 export default styles;
