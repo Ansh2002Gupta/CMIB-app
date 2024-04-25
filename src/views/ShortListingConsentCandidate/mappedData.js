@@ -1,3 +1,5 @@
+import { getPassRejected } from "../../constants/constants";
+
 export const tabsLabel = [
   {
     label: "Overview",
@@ -37,12 +39,30 @@ export const tabsLabel = [
   },
 ];
 export const getCenterLabel = (tempCompanyLocation) => {
-  return tempCompanyLocation?.map((item) => {
+  return tempCompanyLocation?.map((item, index) => {
     return {
       label: item.name,
       id: item.id,
+      index: index,
     };
   });
+};
+export const getMobileValue = (selectedTabs, item) => {
+  let dataMappingObject = {};
+  if (selectedTabs == 3) {
+    dataMappingObject.key = "Consent";
+    dataMappingObject.value = item?.consent ?? "-";
+  } else if (selectedTabs == 5) {
+    dataMappingObject.key = "Test";
+    dataMappingObject.value = getPassRejected[item?.test_result] ?? "-";
+  } else if (selectedTabs == 6) {
+    dataMappingObject.key = "Offered";
+    dataMappingObject.value = item?.job_offered ?? "-";
+  } else if (selectedTabs === 7) {
+    dataMappingObject.key = "Offer";
+    dataMappingObject.value = item?.offered_status ?? "-";
+  }
+  return dataMappingObject;
 };
 
 export const getQueryParams = (selectedTabs) => {
@@ -51,7 +71,7 @@ export const getQueryParams = (selectedTabs) => {
     2: "r2",
     3: "r1_short",
     4: "r2_short",
-    5: "final_concent",
+    5: "final_consent",
     6: "interview",
     7: "job_offer",
     8: "job_accepted",

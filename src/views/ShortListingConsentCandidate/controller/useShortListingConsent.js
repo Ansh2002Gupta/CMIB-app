@@ -17,8 +17,6 @@ import {
 import {
   DEFAULT_CATEGORY_FOR_FILTER_MODAL,
   FILTER_TYPE_ENUM,
-  JOB_STATUS_RESPONSE_CODE,
-  POSTED_JOB_LISTING_ENUM,
   ROWS_PER_PAGE_ARRAY,
   getPassRejected,
   yesOrNot,
@@ -30,7 +28,14 @@ import colors from "../../../assets/colors";
 import images from "../../../images";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { navigations } from "../../../constants/routeNames";
-import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
+import {
+  APPLICATION,
+  CENTRES,
+  POST_JOB,
+  ROUNDS,
+  STATUS_UPDATE,
+  USER_TYPE_COMPANY,
+} from "../../../services/apiServices/apiEndPoint";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ShortListingConsentCandidate.styles";
 import CheckBox from "../../../components/CheckBox";
@@ -39,6 +44,7 @@ import Chip from "../../../components/Chip";
 import { getQueryParams } from "../mappedData";
 import { useIntl } from "react-intl";
 import useOutsideClick from "../../../hooks/useOutsideClick";
+import { usePatch } from "../../../hooks/useApiRequest";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -46,8 +52,6 @@ const initialFilterState = {
   selectedExperience: 0,
   selectedPercentage: 0,
   selectedSalary: 0,
-
-  ["selectedApproved/NotApproved"]: [],
 };
 
 const useShortListingConsent = (id) => {
@@ -65,6 +69,9 @@ const useShortListingConsent = (id) => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [selectedElement, setSelectedElements] = useState([]);
   const [filterState, setFilterState] = useState(initialFilterState);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const markedElement = useRef(null);
   const [filterOptions, setFilterOptions] = useState({
     selectedExperience: 0,
     selectedPercentage: 0,
@@ -90,12 +97,29 @@ const useShortListingConsent = (id) => {
     isError: isErrorGetCandidateData,
     error: errorGetCandidateData,
   } = useFetch({
-    url: `company/${selectedModule?.key}/rounds/${id}/application/centres/32/candidates`,
+    url: `${USER_TYPE_COMPANY}/${selectedModule?.key}/rounds/${id}/application/centres/32/candidates`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
+  const {
+    makeRequest: updateShortListCandidate,
+    error: errorWhileUpdating,
+    setError: setErrorWhileUpdating,
+    isLoading: isShortlistCandidateLoading,
+    isError: isErrorWhileUpdating,
+  } = usePatch({
+    url:
+      USER_TYPE_COMPANY +
+      `/${selectedModule?.key}` +
+      ROUNDS +
+      `/${id}` +
+      APPLICATION +
+      CENTRES +
+      `/${id}` +
+      STATUS_UPDATE,
+  });
   const {
     data: companyLocation,
     isLoading: isCompanyLocationLoading,
@@ -253,8 +277,12 @@ const useShortListingConsent = (id) => {
         queryParamsObject: requestedParams,
         overrideUrl: `company/${selectedModule?.key}/rounds/${id}/application/centres/${companyLocation[seletedCenter].id}/candidates`,
       });
+
       if (initialData) {
         setCurrentRecords(initialData?.records);
+        if (initialData?.meta?.currentPage === initialData?.meta?.lastPage) {
+          setAllDataLoaded(true);
+        }
       }
       setIsFirstPageReceived(false);
     };
@@ -448,7 +476,44 @@ const useShortListingConsent = (id) => {
       }
     }
   };
+  const getUpdatedUrl = (selectedId) => {
+    return (
+      USER_TYPE_COMPANY +
+      `/${selectedModule?.key}` +
+      ROUNDS +
+      `/${id}` +
+      APPLICATION +
+      CENTRES +
+      `/${selectedId}` +
+      STATUS_UPDATE
+    );
+  };
 
+  const handleonClick = (selectedItem, item) => {
+    if (selectedItem.name == "Shortlist Candidate") {
+      const body = {
+        application_ids: [item.application_id],
+        status: "shortlisted",
+        shortlisting_round: selectedTabs === 1 ? "first" : "second",
+      };
+      updateShortListCandidate({
+        body,
+        overrideUrl: getUpdatedUrl(companyLocation[seletedCenter].id),
+      });
+    } else if (selectedItem.name == "Update Written Test Result") {
+      markedElement.current = {
+        item,
+        isMarked: false,
+      };
+      setIsModalVisible(true);
+    } else if (selectedItem.name == "Mark Candidate as Offered") {
+      markedElement.current = {
+        item,
+        isMarked: true,
+      };
+      setIsModalVisible(true);
+    }
+  };
   const getColoumConfigs = (item, isHeading, index, selectedTabs) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
@@ -636,7 +701,8 @@ const useShortListingConsent = (id) => {
             style={styles.checkboxViewStyle}
             isSelected={
               isHeading
-                ? selectedElement.length === currentRecords.length
+                ? currentRecords.length != 0 &&
+                  selectedElement.length === currentRecords.length
                 : selectedElement.includes(item.application_id)
             }
             id={item.application_id}
@@ -833,20 +899,7 @@ const useShortListingConsent = (id) => {
                       message={optionArray}
                       onPopupClick={(selectedItem) => {
                         setCurrentPopupMessage(-1);
-                        if (
-                          selectedItem.name ===
-                          intl.formatMessage({ id: "label.offer_job" })
-                        ) {
-                          const request = {
-                            status: JOB_STATUS_RESPONSE_CODE[selectedItem.name],
-                          };
-                          // handleUseApplicantStatus(
-                          //   item.application_id,
-                          //   request
-                          // );
-                        } else {
-                          // onClickAction(selectedItem.name, item);
-                        }
+                        handleonClick(selectedItem, item);
                       }}
                       labelName={"name"}
                       customStyle={{
@@ -907,6 +960,9 @@ const useShortListingConsent = (id) => {
     setSeletedCenter,
     selectedTabs,
     setSelectedTabs,
+    markedElement,
+    isModalVisible,
+    setIsModalVisible,
   };
 };
 

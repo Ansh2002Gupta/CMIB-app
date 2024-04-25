@@ -2,41 +2,31 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import CommonText from "../../components/CommonText";
-import CustomButton from "../../components/CustomButton";
-import useNavigateScreen from "../../services/hooks/useNavigateScreen";
-import { navigations } from "../../constants/routeNames";
 import styles from "./ShortListingConsentCandidate.styles";
 import {
   SHORTLISTING_TABLE_HEADING,
   ROWS_PER_PAGE_ARRAY as rowsLimit,
+  totalCardHeading,
 } from "../../constants/constants";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { CustomTabs, FormTabs } from "../../components/Tab";
 import { getCenterLabel, tabsLabel } from "./mappedData";
 import CustomTable from "../../components/CustomTable";
-import MobileCard from "../../containers/PostedJobs/MobileCard";
 import { useNavigate, useParams } from "react-router";
 import useShortListingConsent from "./controller/useShortListingConsent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
-import colors from "../../assets/colors";
+import useIsWebView from "../../hooks/useIsWebView";
+import CustomTextInput from "../../components/CustomTextInput";
+import MobileViewComponent from "../../containers/ShortListingConsentCandidate/MobileViewComponent";
+import UpdateTestResultModal from "../../containers/ShortListingConsentCandidate/UpdateTestResultModal";
 
 const ShortListingConsentCandidate = () => {
   const intl = useIntl();
   const { id } = useParams();
+  const { isWebView } = useIsWebView();
 
   const navigate = useNavigate();
-  const onViewPress = (item) => {
-    // navigate(
-    //   `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=0`
-    // );
-  };
-  const onEditPress = (item) => {
-    // navigate(
-    //   `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=edit&activeTab=0`
-    // );
-  };
 
   const {
     allDataLoaded,
@@ -80,46 +70,72 @@ const ShortListingConsentCandidate = () => {
     setSeletedCenter,
     selectedTabs,
     setSelectedTabs,
+    markedElement,
+    isModalVisible,
+    setIsModalVisible,
   } = useShortListingConsent(id);
 
   const getMobileView = (item, index) => {
     return (
-      <MobileCard
+      <MobileViewComponent
         item={item}
         getStatusStyle={getStatusStyle}
         lastElement={candidateData.length - 1 === index}
         statusData={statusData}
-        onEditPress={onEditPress}
-        onViewPress={onViewPress}
+        selectedTabs={selectedTabs}
       />
     );
   };
-
+  const onSubmit = () => {
+    setIsModalVisible(false);
+  };
   return (
     <View style={{ backgroundColor: "white" }}>
       <IconHeader
         headerText={"Shortlisting, Consent Marking & Interviews"}
-        customHeaderContainer={{ width: "61%" }}
+        customHeaderContainer={{ width: isWebView ? "61%" : "90%" }}
         isBorderVisible={false}
       />
       <View>
         {companyLocation && (
-          <FormTabs
-            tabs={getCenterLabel(companyLocation) ?? []}
-            cleanupFuntion={(index) => {
-              setSeletedCenter(index);
-            }}
-          />
+          <>
+            {isWebView ? (
+              <FormTabs
+                tabs={getCenterLabel(companyLocation) ?? []}
+                cleanupFuntion={(index) => {
+                  setSeletedCenter(index);
+                }}
+              />
+            ) : (
+              <View style={{ marginTop: 16, marginLeft: 16, marginRight: 16 }}>
+                <CustomTextInput
+                  isDropdown
+                  label={"Designation"}
+                  options={getCenterLabel(companyLocation) ?? []}
+                  value={getCenterLabel(companyLocation)[seletedCenter]?.label}
+                  valueField={"label"}
+                  selectAllField
+                  includeAllKeys
+                  onChangeValue={(item) => {
+                    setSeletedCenter(item.index);
+                  }}
+                />
+              </View>
+            )}
+          </>
         )}
       </View>
-      <CustomTabs
-        tabs={tabsLabel}
-        containerStyle={{ borderTopWidth: 0 }}
-        cleanupFuntion={(item) => {
-          setSelectedTabs(item);
-        }}
-      />
-      <>
+      <View style={{ height: isWebView ? undefined : 40 }}>
+        <CustomTabs
+          tabs={tabsLabel}
+          containerStyle={{ borderTopWidth: 0 }}
+          cleanupFuntion={(item) => {
+            setSelectedTabs(item);
+          }}
+        />
+      </View>
+
+      <View>
         {!isError && (
           <CustomTable
             {...{
@@ -165,13 +181,29 @@ const ShortListingConsentCandidate = () => {
             }}
             mobileComponentToRender={getMobileView}
             containerStyle={styles.customTableStyle}
-            isTotalCardVisible={false}
+            customTableTopSectionStyle={{
+              flex: undefined,
+            }}
+            customTableStyle={{
+              flex: undefined,
+            }}
+            isTotalCardVisible={totalCardHeading[selectedTabs] ? true : false}
             defaultCategory={"Experience"}
             unit={"Years"}
             selectedTabs={selectedTabs}
+            totalCardHeading={totalCardHeading[selectedTabs]}
             ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
           />
         )}
+        {isModalVisible && (
+          <UpdateTestResultModal
+            setIsModal={setIsModalVisible}
+            isMarked={markedElement.current.isMarked}
+            item={markedElement.current.item}
+            onSubmit={onSubmit}
+          />
+        )}
+
         {isError && !!getErrorDetails()?.errorMessage && (
           <View style={styles.marginTop24}>
             <ErrorComponent
@@ -180,7 +212,7 @@ const ShortListingConsentCandidate = () => {
             />
           </View>
         )}
-      </>
+      </View>
     </View>
   );
 };

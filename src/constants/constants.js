@@ -365,6 +365,16 @@ export const ADD_PLACE_OF_POSTING_HEADING = {
   others: "Others",
   total: "Total",
 };
+export const totalCardHeading = {
+  1: "Available for Round 1",
+  2: "Available for Round 2",
+  3: "Round 1 Shortlist",
+  4: "Round 2 Shortlist",
+  5: "Final Consent Marked List",
+  6: "Interview Shortlist",
+  7: "Offered Candidates",
+  8: "Offer Accepted by Candidates",
+};
 
 export const APPLICATION_FORM_STEPPER_OPTIONS = (hasRoundTwo) => {
   const roundOneSteps = [
@@ -506,8 +516,8 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
   const currentModules =
     currentModule === NEWLY_QUALIFIED
       ? {
-        psychometric_test_fee: "Psychometric/ Written Test Fee",
-      }
+          psychometric_test_fee: "Psychometric/ Written Test Fee",
+        }
       : {};
   return {
     centre_name: "Centre Name",
@@ -971,7 +981,7 @@ export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT = {
   center_name: "Center Name",
   interview_dates: "Interview Dates",
   shortlisting_round: "Shortlisting Round",
-  written_test: "Written Test"
+  written_test: "Written Test",
 };
 
 export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT_CAMPUS = {
@@ -981,9 +991,8 @@ export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT_CAMPUS = {
   mode: "Mode",
   interview_dates_time: "Interview Dates & Time",
   offer_provided: "Offer Provided",
-  offer_acceptance_deadline: "Offer Acceptance Deadline"
+  offer_acceptance_deadline: "Offer Acceptance Deadline",
 };
-
 
 export const ROUND_ONE_CAMPUS_INTERVIEW_MANAGEMENT = {
   employer_name: "Employer Name",
