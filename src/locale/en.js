@@ -1050,6 +1050,9 @@ const locale = {
   "label.interview_shortlist": "Interview Shortlist",
   "label.offered_candidates": "Offered Candidates",
   "label.offer_accepted_by_candidates": "Offer Accepted By Candidates",
+  "label.noOfVacancy": "No. of Vacancy",
+  "label.edit_designation": "Edit Designation",
+
 };
 
 export default locale;

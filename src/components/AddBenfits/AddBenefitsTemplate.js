@@ -10,13 +10,7 @@ import CustomTextInput from "../CustomTextInput";
 import EditDeleteAction from "../EditDeleteAction/EditDeleteAction";
 import useIsWebView from "../../hooks/useIsWebView";
 import ModalWithTitleButton from "../ModalWithTitleButton";
-import {
-  ADD_DOCUMENT,
-  DOCUMENT_TYPE,
-  OTHER_BENEFIT_HEADING,
-  benefits_key,
-} from "../../constants/constants";
-import { numericValidator } from "../../utils/validation";
+import { OTHER_BENEFIT_HEADING, benefits_key } from "../../constants/constants";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./AddBenefits.style";
 
@@ -171,7 +165,7 @@ const AddBenefitsTemplate = ({
             <AddIconText
               customViewStyle={styles.customAddIconTextStyle}
               label={intl.formatMessage({
-                id: "label.add_document",
+                id: "label.addBenefit",
               })}
               onPress={() => onClickAddDocument(dataArr.length + 1)}
             />

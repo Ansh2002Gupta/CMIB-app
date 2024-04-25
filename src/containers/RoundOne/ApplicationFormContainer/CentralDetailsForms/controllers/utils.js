@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import { addDocumentField } from "../../../../../components/AddBenfits/controllers/useAddBenefit";
 import { addDesignationField } from "../../../../../components/AddDesignation/controllers/useAddDesignation";
 import { interviewTypeOptions } from "../../../../../constants/constants";
@@ -7,7 +8,6 @@ import { validateEmail } from "../../../../../utils/validation";
 export const addValueOnField = (state, details, isEditable, countryData) => {
   return details?.map((item) => {
     return item?.map((val) => {
-      console.log(val, "val...");
       if (val?.isMobileNumber) {
         return {
           ...val,
@@ -323,7 +323,9 @@ export const getFormattedContactDetails = (contactDetail) => {
     [keys.mobileNumber]: contactDetail?.mobile_number ?? "",
     [keys.areaCode]: contactDetail?.std_country_code ?? "",
     [keys.telephoneNumber]: contactDetail?.telephone_number ?? "",
-    [keys.countryCode]: contactDetail?.mobile_country_code ?? "+91 (India)",
+    [keys.countryCode]:
+      contactDetail?.mobile_country_code ??
+      (Platform.OS === "web" ? "+91 (India)" : "+91"),
   };
 };
 

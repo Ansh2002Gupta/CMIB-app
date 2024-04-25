@@ -14,11 +14,13 @@ import {
   ADD_DESIGNATION_HEADING,
   ADD_DOCUMENT,
   DOCUMENT_TYPE,
+  designation_key,
 } from "../../constants/constants";
 import { extractValueDropdown } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./AddDesignation.style";
+import { createModuleOptions } from "./controllers/useAddDesignation";
 
 const AddDesignationTemplate = ({
   addDocumentModal,
@@ -37,6 +39,7 @@ const AddDesignationTemplate = ({
   onClickDeleteDocument,
   onCLickEditDocument,
   requiredDocumentDetails,
+  options,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
@@ -44,13 +47,16 @@ const AddDesignationTemplate = ({
     const groupedData = {};
     dataArray.forEach((item) => {
       if (!groupedData[item.cellID]) {
-        groupedData[item.cellID] = {};
+        groupedData[item.cellID] = { cellID: item?.cellID };
       }
       switch (item.key) {
         case "designation_details":
           groupedData[item.cellID].designation_details =
             extractValueDropdown(item);
           break;
+        case "number_of_vacancies":
+          groupedData[item.cellID].number_of_vacancies =
+            extractValueDropdown(item);
         case "number_of_vacancies":
           groupedData[item.cellID].number_of_vacancies =
             extractValueDropdown(item);
@@ -62,6 +68,7 @@ const AddDesignationTemplate = ({
     });
     return result;
   }
+
   const nonEditableData = mapDocuments(requiredDocumentDetails);
 
   const getColoumConfigs = (item, isHeading) => {
@@ -96,10 +103,7 @@ const AddDesignationTemplate = ({
       const group = acc[item.cellID];
 
       if (item.key === "designation_details") {
-        group.designation_details =
-          item?.options?.find((data) => data?.id === item.value)?.name ?? "-";
-      } else if (item.key === "document_type") {
-        group.document_type = item.value;
+        group.designation_details = item.value ?? "-";
       } else if (item.key === "number_of_vacancies") {
         group.number_of_vacancies = item.value;
       } else {
@@ -139,8 +143,7 @@ const AddDesignationTemplate = ({
         />
       ) : (
         <>
-          {dataArr.map((item, index) => {
-            const copiesNumber = item?.number_of_vacancies || "0";
+          {nonEditableData.map((item, index) => {
             return (
               <View>
                 <View
@@ -152,30 +155,27 @@ const AddDesignationTemplate = ({
                 />
                 <EditDeleteAction
                   topText={item?.designation_details}
-                  bottomLeftText={item?.document_type}
-                  bottomRightText={`${copiesNumber} ${intl.formatMessage({
-                    id: "label.photocopies",
-                  })} `}
-                  bottomView={
-                    <CommonText
-                      customTextStyle={styles.bottomText}
-                    >{`${copiesNumber} ${intl.formatMessage({
-                      id: "label.photocopies",
-                    })} `}</CommonText>
-                  }
                   onDeleteDocument={
                     isEditable
                       ? () => {
-                          onClickDeleteDocument(index);
+                          onClickDeleteDocument(item.cellID);
                         }
                       : null
                   }
                   onEditDocument={
                     isEditable
                       ? () => {
-                          onCLickEditDocument(index);
+                          onCLickEditDocument(item.cellID);
                         }
                       : null
+                  }
+                  bottomView={
+                    <CommonText customTextStyle={styles.bottomText}>
+                      {intl.formatMessage(
+                        { id: "label.formatVacancies" },
+                        { value: item?.number_of_vacancies }
+                      )}
+                    </CommonText>
                   }
                 />
               </View>
@@ -185,9 +185,9 @@ const AddDesignationTemplate = ({
             <AddIconText
               customViewStyle={styles.customAddIconTextStyle}
               label={intl.formatMessage({
-                id: "label.add_document",
+                id: "label.add_designation",
               })}
-              onPress={onClickAddDocument}
+              onPress={() => onClickAddDocument(dataArr.length + 1)}
             />
           )}
         </>
@@ -196,13 +196,14 @@ const AddDesignationTemplate = ({
         <ModalWithTitleButton
           enableBottomButton
           isRightDisabled={!Boolean(isFormValid)}
+          headerTextStyle={{ marginBottom: 12 }}
           heading={
             addDocumentModal
               ? intl.formatMessage({
-                  id: "label.add_document",
+                  id: "label.add_designation",
                 })
               : intl.formatMessage({
-                  id: "label.edit_document",
+                  id: "label.edit_designation",
                 })
           }
           leftLabelTxt={intl.formatMessage({
@@ -221,77 +222,46 @@ const AddDesignationTemplate = ({
           onClickLeftButton={onClickAddDocumentCancelButton}
           onClickRightButton={onClickAddDocumentSaveButton}
         >
-          <View>
-            <CustomMultiRowTextInput
-              customCardStyle={styles.multiRowTextStyle}
-              isEditProfile={isEditable}
-              startRowTemplate={addDocumentField}
-              gridTemplate={multiDocumentDetail}
-              setGridTemplate={setMultiDocumentDetail}
-              numColsInARow={3}
-              handleValueChange={({ propertyName, value, index }) => {
-                handleMultiRowDocumentDetails(propertyName, value, index);
-              }}
-              customContainerStyle={styles.customContainerStyle}
-              customWebContainerStyle={styles.customWebContainerStyle}
-              getColoumConfigs={getColoumConfigs}
-              tableData={nonEditableData}
-              tableHeading={ADD_DESIGNATION_HEADING}
-            />
-            {/* <CustomTextInput
-              customStyle={styles.documentNameInput}
-              label={intl.formatMessage({
-                id: "label.document_name",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.required_document_name",
-              })}
-              isMandatory
-              value={documentDetail?.documentName || ""}
-              onChangeText={(val) =>
-                handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_NAME, val)
-              }
-            ></CustomTextInput> */}
-            <View style={styles.inputView}>
-              <CustomTextInput
-                customStyle={styles.documentTypeInput}
-                label={intl.formatMessage({
-                  id: "label.document_type",
-                })}
-                placeholder={intl.formatMessage({
-                  id: "label.enter_document_type",
-                })}
-                isMandatory
-                isDropdown
-                options={DOCUMENT_TYPE}
-                value={documentDetail?.documentType || ""}
-                onChangeValue={(val) =>
-                  handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_TYPE, val)
-                }
-                search={false}
-              ></CustomTextInput>
-              {documentDetail?.documentType === ADD_DOCUMENT.BOTH ||
-              documentDetail?.documentType === ADD_DOCUMENT.PHOTOCOPIES ? (
-                <View style={styles.copiesInputStyle}>
-                  <CustomTextInput
-                    label={intl.formatMessage({
-                      id: "label.no_of_copies",
-                    })}
-                    placeholder={intl.formatMessage({
-                      id: "label.enter_no_of_copies",
-                    })}
-                    isMandatory
-                    value={documentDetail?.copiesNumber || null}
-                    onChangeText={(val) =>
-                      numericValidator(val) &&
-                      handleDocumentDetailChange(ADD_DOCUMENT.COPIESNUMBER, val)
-                    }
-                    maxLength={7}
-                  ></CustomTextInput>
-                </View>
-              ) : null}
-            </View>
-          </View>
+          <CustomTextInput
+            isDropdown
+            customStyle={styles.documentNameInput}
+            label={intl.formatMessage({
+              id: "label.add_designation",
+            })}
+            placeholder={intl.formatMessage({
+              id: "label.designation",
+            })}
+            isMandatory
+            valueField="id"
+            value={documentDetail?.designation_details || ""}
+            options={options?.map((option) =>
+              createModuleOptions(option, [], "designation", "designation")
+            )}
+            onChangeValue={(data) => {
+              handleDocumentDetailChange(
+                designation_key.DESIGNATION_DETAILS,
+                data
+              );
+            }}
+          />
+          <CustomTextInput
+            customStyle={styles.documentNameInput}
+            label={intl.formatMessage({
+              id: "label.noOfVacancy",
+            })}
+            placeholder={intl.formatMessage({
+              id: "label.noOfVacancy",
+            })}
+            isNumeric
+            isMandatory
+            value={documentDetail?.number_of_vacancies || ""}
+            onChangeText={(val) =>
+              handleDocumentDetailChange(
+                designation_key.NUMBER_OF_VACANCIES,
+                val
+              )
+            }
+          />
         </ModalWithTitleButton>
       )}
     </View>
