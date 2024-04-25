@@ -23,13 +23,13 @@ const useCandidateRoundOneCards = ({ hasRoundone, savedRoundId }) => {
       case 1:
         navigate(`${navigations.CONSENT_MARKING_MANAGEMENT}`);
         break;
-    case 2:
-      break;
-    case 3:
-      navigate(`${navigations.CENTRE_WISE_COMPANY}/${savedRoundId}`);
-      break;
-      case 4:
+      case 2:
         navigate(`${navigations.APPLICATION_FORM}`);
+        break;
+      case 3:
+        navigate(`${navigations.CENTRE_WISE_COMPANY}/${savedRoundId}`);
+        break;
+      case 4:
         break;
       case 5:
         navigate(`${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`);
