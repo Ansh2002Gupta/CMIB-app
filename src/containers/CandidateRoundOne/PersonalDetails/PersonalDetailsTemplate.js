@@ -14,7 +14,8 @@ const PersonalDetailsTemplate = ({
   intl,
   isWebView,
   onValidationChange = () => {},
-  personalDetails
+  personalDetails,
+  filledData,
 }, ref) => {
   const [gender, setGender] = useState('');
   const [maritalStatus, setMaritalStatus] = useState('');
@@ -45,6 +46,12 @@ const PersonalDetailsTemplate = ({
       personalDetails?.email && setEmail(personalDetails?.email);
     }
   }, [personalDetails]);
+
+  useEffect(() => {
+    filledData?.marital_status && setMaritalStatus(filledData?.marital_status);
+    filledData?.passport_number && setIsPassport(0);
+    filledData?.passport_number && setPassportNumber(filledData?.passport_number);
+  }, [filledData])
 
   useEffect(() => {
    let res = gender.length > 0 && maritalStatus.length > 0 && dob.length > 0 && email.length > 0;

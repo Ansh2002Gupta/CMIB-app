@@ -10,7 +10,8 @@ import styles from "./PersonalDetails.style";
 const PermanentAddress = ({
   intl,
   isWebView,
-  onValidationChange = () => {}
+  onValidationChange = () => {},
+  filledData
 }, ref) => {
   const [permanentAddress1, setPermanentAddress1] = useState('');
   const [permanentAddress2, setPermanentAddress2] = useState('');
@@ -50,6 +51,21 @@ const PermanentAddress = ({
     permanentPincode,
     permanentState,
     onValidationChange]);
+
+    useEffect(() => {
+      let tempData = filledData?.addresses?.filter(item => item.type === "Permanent");
+      if (tempData && tempData?.length > 0) {
+        let mainData = tempData[0];
+        mainData?.address_line_1 && setPermanentAddress1(mainData.address_line_1);
+        mainData?.address_line_2 && setPermanentAddress2(mainData.address_line_2);
+        mainData?.address_line_3 && setPermanentAddress3(mainData.address_line_3);
+        mainData?.city && setPermanentCity(mainData?.city);
+        mainData?.country && setPermanentCountry(mainData?.country);
+        mainData?.state && setPermanentState(mainData?.state);
+        mainData?.pincode && setPermanentPincode(mainData?.pincode);
+      }
+      //filledData?.phone_number && setPhoneNo(filledData?.phone_number)
+    }, [filledData]);
 
   return (
     <CardComponent customStyle={styles.cardContainer}>
