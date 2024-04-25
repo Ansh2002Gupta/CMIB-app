@@ -1,7 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import useNavigateScreen from "../../../services/hooks/useNavigateScreen";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../../core/layouts";
 
@@ -21,12 +22,14 @@ import {
 } from "../../../services/apiServices/apiEndPoint";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
-import colors from "../../../assets/colors";
-import styles from "./CAJobsDashboard.style";
+import getStyles from "./CAJobsDashboard.style";
 
 const CAJobsDashboard = () => {
   const intl = useIntl();
   const { navigateScreen } = useNavigateScreen();
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = getStyles(theme);
 
   const handleOnPress = () => {
     navigateScreen(`${navigations.MANAGE_SUBSCRIPTION}`);
@@ -345,7 +348,7 @@ const CAJobsDashboard = () => {
           />
 
           <View style={styles.pieChartContiner}>
-            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+            <View style={isWebView ? { flex: 1 } : { width: "100%" }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
@@ -372,7 +375,7 @@ const CAJobsDashboard = () => {
                 labelColor={colors.darkGrey}
               />
             </View>
-            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+            <View style={isWebView ? { flex: 1 } : { width: "100%" }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
@@ -399,7 +402,7 @@ const CAJobsDashboard = () => {
                 labelColor={colors.darkGrey}
               />
             </View>
-            <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+            <View style={isWebView ? { flex: 1 } : { width: "100%" }}>
               <PieChart
                 baseRadius={80}
                 colorScale={[
@@ -428,8 +431,7 @@ const CAJobsDashboard = () => {
               />
             </View>
           </View>
-          <View style={isWebView ? {} : { width: '100%' }}>
-
+          <View style={isWebView ? {} : { width: "100%" }}>
             <BarChart
               xAxisTickAngle={-20}
               yAxisLabel={intl.formatMessage({
@@ -445,8 +447,7 @@ const CAJobsDashboard = () => {
               data={candidatesAcceptingIndustriesData}
             />
           </View>
-          <View style={isWebView ? {} : { width: '100%' }}>
-
+          <View style={isWebView ? {} : { width: "100%" }}>
             <BarChart
               xAxisTickAngle={-20}
               yAxisLabel={intl.formatMessage({
@@ -463,7 +464,7 @@ const CAJobsDashboard = () => {
             />
           </View>
         </ScrollView>
-      </View >
+      </View>
     )
   );
 };

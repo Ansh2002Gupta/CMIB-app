@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Text,
   TouchableOpacity,
@@ -7,7 +8,7 @@ import {
 
 import CommonText from "../../components/CommonText";
 
-import styles from "./ConsentMarkingManagement.styles";
+import getStyles from "./ConsentMarkingManagement.styles";
 import useIsWebView from "../../hooks/useIsWebView";
 import { CustomTabs } from "../../components/Tab";
 import CustomTable from "../../components/CustomTable";
@@ -19,7 +20,6 @@ import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   ROUND_ONE_CONSENT_MARKETING_MANAGEMENT as tableHeading,
 } from "../../constants/constants";
-import colors from "../../assets/colors";
 import AddTicketModal from "../../components/AddTicketModal/AddTicketModal";
 import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import Chip from "../../components/Chip";
@@ -39,6 +39,11 @@ import {
 const ConsentMarketingManagementTemplate = ({ intl }) => {
   const { isWebView } = useIsWebView();
   const onViewPress = (item) => {};
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
+  const { colors } = theme;
+
   const {
     allDataLoaded,
     currentPage,

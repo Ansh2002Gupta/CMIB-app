@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
@@ -16,7 +16,7 @@ import {
   onConfirmPasswordBlur,
   strongPasswordValidator,
 } from "../../utils/validation";
-import styles from "./CreateNewPassword.style";
+import getStyles from "./CreateNewPassword.style";
 
 function CreateNewPasswordUI(props) {
   const {
@@ -34,6 +34,9 @@ function CreateNewPasswordUI(props) {
     setError,
     validationError,
   } = props;
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";

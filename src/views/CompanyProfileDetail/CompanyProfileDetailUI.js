@@ -1,11 +1,13 @@
-import { View } from "@unthinkable/react-core-components";
 import React from "react";
-import DetailCard from "../../components/DetailCard";
 import { useIntl } from "react-intl";
-import styles from "./styles";
+import { useTheme } from "@unthinkable/react-theme";
+import { View } from "@unthinkable/react-core-components";
+
+import DetailCard from "../../components/DetailCard";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import Spinner from "../../components/Spinner";
 import { STATUS_CODES } from "../../constants/constants";
+import getStyles from "./styles";
 
 const CompanyProfileDetailUI = ({
   companyDetails,
@@ -15,6 +17,8 @@ const CompanyProfileDetailUI = ({
   error,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   if (isLoading) {
     return (
