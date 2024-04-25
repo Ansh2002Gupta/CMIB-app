@@ -10,7 +10,6 @@ import Chip from "../../../components/Chip";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../JobApplicantsView.style";
 import {
   FILTERS,
   JOBS,
@@ -35,6 +34,8 @@ import { usePatch } from "../../../hooks/useApiRequest";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { urlService } from "../../../services/urlService";
+import getStyles from "../JobApplicantsView.style";
+import { useTheme } from "@unthinkable/react-theme";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -72,6 +73,8 @@ const useJobApplicants = () => {
   const navigate = useNavigate();
 
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const popMessageRef = useRef(null);
   useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
