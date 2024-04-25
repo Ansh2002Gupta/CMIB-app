@@ -14,13 +14,13 @@ const style = {
   innerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingRight: 16,
     alignItems: "flex-end",
   },
   tabContainer: {
     paddingTop: 16,
-    paddingRight: 16,
     paddingLeft: 16,
+    paddingRight:16,
+    backgroundColor: colors.white,
     flex: 1,
   },
   marginLeft8: {
@@ -32,9 +32,7 @@ const style = {
     paddingRight: 16,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
+    borderRadius: "8px 8px 0 0",
     cursor: "pointer",
   },
   editButtonViewStyle: {
@@ -55,12 +53,12 @@ const style = {
     width: 30,
   },
   activeItemContainer: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.blue,
     borderColor: "transparent",
   },
   itemText: {
     color: colors.black,
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 20,
   },
   activeItemText: {
@@ -68,6 +66,12 @@ const style = {
   },
   flex1: {
     flex: 1,
+  },
+
+  scrollViewContainer: { 
+    flex: 1,
+    borderBottomColor: colors.blue,
+    borderBottomWidth:1,
   },
 };
 
