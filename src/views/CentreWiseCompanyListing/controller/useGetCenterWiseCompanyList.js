@@ -142,8 +142,11 @@ const useGetCenterWiseCompanyList = (id) => {
       queryParamsObject: requestedParams,
       overrideUrl: `member/${selectedModule?.key}/rounds/${id}/centres/${centerId}/companies`,
     });
-    if (initialData) {
-      setCurrentRecords(initialData?.records ?? []);
+    if (initialData && initialData?.records?.length > 0) {
+      setCurrentRecords(initialData?.records);
+      if (initialData?.meta?.currentPage === initialData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      }
     }
     setIsFirstPageReceived(false);
   };
@@ -237,6 +240,12 @@ const useGetCenterWiseCompanyList = (id) => {
     setCurrentPopupMessage(item.id);
   };
 
+  const navigateToDetail = (item) => {
+    navigate(
+      `/${selectedModule?.key}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${id}/${selectedId.current}/${item.id}`
+    );
+  };
+
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
@@ -295,9 +304,7 @@ const useGetCenterWiseCompanyList = (id) => {
                       ]}
                       onPopupClick={(selectedItem) => {
                         setCurrentPopupMessage(-1);
-                        navigate(
-                          `${navigations.COMPANY_DETAILS}/${id}/${selectedId.current}/${item.id}`
-                        );
+                        navigateToDetail(item);
                       }}
                       labelName={"name"}
                       customStyle={styles.popupContainer}
@@ -350,6 +357,7 @@ const useGetCenterWiseCompanyList = (id) => {
 
     companyLocation,
     fetchCompanyName,
+    navigateToDetail,
   };
 };
 
