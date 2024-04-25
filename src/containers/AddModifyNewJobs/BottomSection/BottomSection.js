@@ -6,6 +6,8 @@ import React, {
   useState,
 } from "react";
 import dayjs from "dayjs";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, Text, View } from "@unthinkable/react-core-components";
 
 import CustomTextInput from "../../../components/CustomTextInput";
@@ -14,8 +16,7 @@ import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import CustomLabelView from "../../../components/CustomLabelView";
 
 import { jobType } from "../../../constants/constants";
-import { useIntl } from "react-intl";
-import styles from "./BottomSection.styles";
+import getStyles from "./BottomSection.styles";
 
 const today = new Date();
 const tomorrow = new Date(today);
@@ -31,6 +32,8 @@ const BottomSection = forwardRef(
     },
     ref
   ) => {
+    const theme = useTheme();
+    const styles = getStyles(theme);
     const getStyle = (style, styleColumn) => (isWebView ? style : styleColumn);
     const intl = useIntl();
     const [addJobs] = useContext(AddJobContext);

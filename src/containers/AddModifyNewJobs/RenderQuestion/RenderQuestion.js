@@ -1,11 +1,12 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 import CustomImage from "../../../components/CustomImage";
 import QuestionHeader from "./components/QuestionHeader";
 import QuestionMiddleSection from "./components/QuestionMiddleSection";
 import QuestionFooter from "./components/QuestionFooter/index";
 import images from "../../../images";
-import styles from "./RenderQuestion.styles";
+import getStyles from "./RenderQuestion.styles";
 
 const RenderQuestion = ({
   addNewQuestion,
@@ -22,6 +23,9 @@ const RenderQuestion = ({
   setIsModalVisible,
   setoptionData,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <View style={styles.container}>
       <View>

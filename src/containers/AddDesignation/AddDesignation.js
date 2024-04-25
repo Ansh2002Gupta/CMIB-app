@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 
 import CustomTextInput from "../../components/CustomTextInput";
 import ModalWithTitleButton from "../../components/ModalWithTitleButton";
 import MultiRow from "../../core/layouts/MultiRow";
 import { ENTITY_OPTIONS } from "../../constants/constants";
-import styles from "./AddDesignation.style";
+import getStyles from "./AddDesignation.style";
 
 const AddDesignation = ({ resultCallback }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const intl = useIntl();
   const [countValue, setCountValue] = useState(0);
   const [value, setValue] = useState("");

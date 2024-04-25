@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
@@ -10,7 +11,7 @@ import PersonalDetails from "../PersonalDetails";
 import Stepper from "../../../components/Stepper";
 import { ADD_APPLICATION_STEPPER } from "../../../constants/constants";
 import images from "../../../images";
-import styles from "./AddApplication.style";
+import getStyles from "./AddApplication.style";
 
 const AddApplicationTemplate = ({
   countryCodeData,
@@ -22,6 +23,8 @@ const AddApplicationTemplate = ({
   selectedStepper,
   stepperData,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {

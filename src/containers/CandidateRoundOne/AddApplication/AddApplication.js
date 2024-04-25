@@ -8,8 +8,13 @@ import useAddApplication from "./controller/useAddApplication";
 import useIsWebView from "../../../hooks/useIsWebView";
 import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 import styles from "./AddApplication.style";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./AddApplication.style";
 
 const AddApplication = () => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const {
     intl,
     onChangeStepper,
@@ -24,9 +29,11 @@ const AddApplication = () => {
 
   return (
     <>
-      {isLoading && <View style={styles.spinner}>
-        <Spinner />
-        </View>}
+      {isLoading && (
+        <View style={styles.spinner}>
+          <Spinner />
+        </View>
+      )}
       {isSuccess && (
         <AddApplicationTemplate
           countryCodeData={data}

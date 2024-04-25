@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../../core/layouts";
@@ -11,7 +12,7 @@ import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import IconHeader from "../../../components/IconHeader/IconHeader";
 import useIsWebView from "../../../hooks/useIsWebView";
 import classes from "../../../theme/styles/CssClassProvider";
-import styles from "./CandidateRoundOneContainer.style";
+import getStyles from "./CandidateRoundOneContainer.style";
 
 const CandidateRoundOneContainerTemplate = ({
   cardsData,
@@ -21,6 +22,8 @@ const CandidateRoundOneContainerTemplate = ({
   const { isWebView } = useIsWebView();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const cardComponentWebProps = isWebPlatform
     ? { className: classes["card-box__outline--green"] }
