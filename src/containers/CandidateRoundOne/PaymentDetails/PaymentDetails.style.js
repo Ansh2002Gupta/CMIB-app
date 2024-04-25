@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     padding: 24,
     flex: 1,
+    gap: 16,
     backgroundColor: colors.backgroundColor,
   },
   cardContainer: {
@@ -22,6 +23,16 @@ const styles = StyleSheet.create({
   buttonStyle: {
     maxWidth: 150,
   },
+  customTableStyle: {
+    backgroundColor: colors.white,
+    padding: 0,
+    marginBottom: 16,
+    borderRadius: 16,
+    overflow: "hidden",
+    borderWidth: 0.5,
+    borderColor: colors.lightGrey,
+  },
+  tableCard: { gap: 16 },
 });
 
 export default styles;
