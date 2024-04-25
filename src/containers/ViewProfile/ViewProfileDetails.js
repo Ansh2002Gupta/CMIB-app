@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
@@ -12,7 +13,7 @@ import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import TouchableImage from "../../components/TouchableImage";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import images from "../../images";
-import styles from "./ViewProfileDetails.style";
+import getStyles from "./ViewProfileDetails.style";
 
 const ViewProfileDetails = ({
   onPressCross,
@@ -21,6 +22,8 @@ const ViewProfileDetails = ({
   setShowDeleteAccountModal,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   const name = userProfileDetails?.name;

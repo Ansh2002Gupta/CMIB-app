@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { TouchableOpacity, View } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
 import CardComponent from "../../../../components/CardComponent/CardComponent";
 import CommonText from "../../../../components/CommonText";
@@ -16,7 +16,6 @@ import useIsWebView from "../../../../hooks/useIsWebView";
 import { gridStyles } from "../../../../theme/styles/commonStyles";
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
-import styles from "./JobDetails.style";
 import { JOB_TYPE, NEWLY_QUALIFIED } from "../../../../constants/constants";
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
@@ -25,6 +24,7 @@ import ConfigurableList from "../../../../components/ConfigurableList";
 import { getDocumentField, getPlaceOfPostingDetails } from "./MappedData";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
 import RenderHeadingAndValue from "../../../../components/RenderHeadingAndValue/RenderHeadingAndValue";
+import getStyles from "./JobDetails.style";
 
 const JobDetailsTemplate = ({
   validateError,
@@ -51,6 +51,8 @@ const JobDetailsTemplate = ({
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { currentModule } = useGetCurrentUser();
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];

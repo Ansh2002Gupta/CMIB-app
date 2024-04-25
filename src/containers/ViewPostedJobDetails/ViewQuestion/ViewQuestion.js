@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import RenderViewQuestion from "../RenderViewQuestion/RenderViewQuestion/RenderViewQuestion";
@@ -8,10 +9,12 @@ import CardComponent from "../../../components/CardComponent";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import LoadingScreen from "../../../components/LoadingScreen";
 import useFetch from "../../../hooks/useFetch";
-import styles from "./ViewQuestion.styles";
+import getStyles from "./ViewQuestion.styles";
 
 const ViewQuestion = ({ questionnaireData, url = "" }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const { data, isLoading, fetchData, isError, error } = useFetch({
     url: url,

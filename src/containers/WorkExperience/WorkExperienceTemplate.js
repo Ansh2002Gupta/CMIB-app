@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
@@ -11,6 +12,7 @@ import { yesNoToBoolean } from "../../utils/util";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { STATUS_CODES } from "../../constants/constants";
+import getStyles from "./WorkExperience.style";
 
 const WorkExperienceTemplate = ({
   isEditable = true,
@@ -36,6 +38,8 @@ const WorkExperienceTemplate = ({
   error,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   if (isPageLoading) {
     return (

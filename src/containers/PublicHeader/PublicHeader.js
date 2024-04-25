@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { useNavigate } from "../../routes";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import TouchableImage from "../../components/TouchableImage";
 import { navigations } from "../../constants/routeNames";
 import images from "../../images";
-import styles from "./PublicHeader.style";
+import getStyles from "./PublicHeader.style";
 
 const PublicHeader = () => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isMobileView = currentBreakpoint === "xs" || currentBreakpoint === "sm";
   const isWebView = currentBreakpoint !== "xs";

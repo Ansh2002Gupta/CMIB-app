@@ -43,6 +43,8 @@ import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
 import CardComponent from "../../../../components/CardComponent";
+import getStyles from "./PreInterviewPreferences.style";
+import { useTheme } from "@unthinkable/react-theme";
 
 const PreInterviewPreferencesTemplate = ({
   isEditable,
@@ -53,6 +55,8 @@ const PreInterviewPreferencesTemplate = ({
 }) => {
   let options_object = [];
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles();
   const params = useParams();
   const navigate = useNavigate();
   const { currentModule } = useGetCurrentUser();

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
@@ -30,7 +31,7 @@ import {
 } from "../../services/apiServices/apiEndPoint";
 import useFetch from "../../hooks/useFetch";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./ScheduleInterviewModal.style";
+import getStyles from "./ScheduleInterviewModal.style";
 
 const radioButtonOptions = ["Face to Face ", "Telephonic", "Remote"];
 const isMob = Platform.OS.toLowerCase() !== "web";
@@ -59,6 +60,8 @@ const getAPIInterViewType = (interviewType) => {
 
 const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const [primaryInterviewType, setPrimaryInterviewType] = useState(0);
   const [secondaryInterviewType, setSecondaryInterviewType] = useState(0);

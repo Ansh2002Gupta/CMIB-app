@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { useParams } from "react-router";
 import { View } from "@unthinkable/react-core-components";
 
@@ -20,10 +21,12 @@ import {
   SESSION_ID_QUERY_PARAM,
   UPDATED_API_VERSION,
 } from "../../../../../constants/constants";
-import styles from "../BillingInfo.style";
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
+import getStyles from "../BillingInfo.style";
 
 const useBillingInfo = () => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const intl = useIntl();
   const { id } = useParams();
   const { currentModule } = useGetCurrentUser();
