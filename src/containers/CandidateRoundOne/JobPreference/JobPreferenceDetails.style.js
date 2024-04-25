@@ -3,7 +3,7 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../../assets/colors";
 
 const styles = StyleSheet.create({
-  main:{
+  main: {
     paddingTop: 24,
     paddingLeft: 24,
     paddingRight: 24,
@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
   },
   gap: {
     marginTop: 24,
+    marginBottom: 24,
+    gap: 16,
   },
   gridView: {
     display: "grid",
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     marginTop: 24,
-    paddingBottom: 24
+    paddingBottom: 24,
   },
   extraStyle: {
     borderTopWidth: 1,
@@ -76,8 +78,8 @@ const styles = StyleSheet.create({
   },
   //job preference
   chipContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   textInputContainerWithoutBottomMargin: (isRightMargin) => ({
     marginRight: isRightMargin ? 16 : 0,

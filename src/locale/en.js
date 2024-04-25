@@ -744,21 +744,26 @@ const locale = {
   "label.trainingTo": "Training To",
   "label.noOfPartnersCaFirm": "No. of Partners in CA Firm",
   "label.natureOfWorkdone": "Nature of Work Done During Articleship",
-  "label.provideCompanyName": "Provide the Company Name for the Completed Assignment",
-  "label.provideIndustryName": "Provide the Industry Name for the Completed Assignment",
+  "label.provideCompanyName":
+    "Provide the Company Name for the Completed Assignment",
+  "label.provideIndustryName":
+    "Provide the Industry Name for the Completed Assignment",
   "label.otherAreas": "Other Areas, If Any",
   "label.secondmentExchange": "Secondment, Exchange, If Any",
   "label.addArticlesTraining": "Add Articles Training",
   "label.addIndustrialTraining": "Add Industrial Training",
   "label.industrialTraining": "Industrial Training",
   "label.nameOfOrg": "Name of the Organisation",
-  "label.natureOfWorkdoneIndustrial": "Nature of Work Done During Industrial Training",
-  "label.natureOfWorkdoneIndustrialArticles": "Nature of Work Done During Articles Industry, If Any",
+  "label.natureOfWorkdoneIndustrial":
+    "Nature of Work Done During Industrial Training",
+  "label.natureOfWorkdoneIndustrialArticles":
+    "Nature of Work Done During Articles Industry, If Any",
   "label.grossSalaryDrawnPa": "Gross Salary Drawn (pa)",
   "label.addWorkExperience": "Add Work Experience",
   "label.enterOtherAreas": "Enter other areas",
   "label.selectHobbies": "Select Hobbies",
-  "label.haveYouParticipatedInResidential": "Have you participated in One Month/Four Week residential program conducted by ICAI",
+  "label.haveYouParticipatedInResidential":
+    "Have you participated in One Month/Four Week residential program conducted by ICAI",
   "label.ews": "EWS (Economically Weeker Section)",
   "label.physicallyImpaired": "Physically Impaired",
   "label.selectIndustryPreference": "Select preference for kinf of industry",
@@ -766,7 +771,8 @@ const locale = {
   "label.center": "Center",
   "label.slot": "Slot",
   "label.mockInterviewSlots": "Mock Interview Slots",
-  "label.desireToAppear": "I desire to appear in Campus Interviews being organised by the Institue in the following city",
+  "label.desireToAppear":
+    "I desire to appear in Campus Interviews being organised by the Institue in the following city",
   "toggle.undefined": "--",
   "label.unsave_candidate_details": "Mark Unsave",
   "label.successful_save": "Saves Details Successfully!",
@@ -976,16 +982,28 @@ const locale = {
   "label.viewDoc": "View Doc",
   "label.viewPPT": "View PPT",
   "label.view": "View",
+  "label.firstCampusInterviewcentre": "First Campus Interview centre",
+  "label.secondCampusInterviewCentre": "Second Campus Interview centre",
+  "label.dateofOrientation": "Date of Orientation",
+  "label.venueofOrientation": "Venue of Orientation ",
+  "label.centreWantOrientationProgrammeBeforeInterviews":
+    "Centre from where you want to attend the Orientation Programme before the Interviews (select one)",
+  "label.center": "Center",
   "label.submitDeclaration": "Submit declaration form to become a member",
   "label.submitDeclarationform": "Submit Declaration Form",
   "label.declarationForm": "Declaration Form",
-  "label.underTaking": "Undertaking to become member of the Institute of Chartered Accountants of India (ICAI)",
+  "label.underTaking":
+    "Undertaking to become member of the Institute of Chartered Accountants of India (ICAI)",
   "label.stdRegNumber": "Student Registration No",
   "label.articleshipCompleteDate": "Articleship Completion Date",
   "label.mcsCompletionDate": "MCS Completion Date",
   "label.mcsCertificateNo": "MCS Certificate No",
   "label.declarationDetails": "Details should be same as main Application form",
-  "label.declarationConcent": "I Hereby Undertake And Declare That I Will Submit My ICAI Membership Application Form (Form 2) Along With Necessary Papers To The Concerned Regional Office Of ICAI In Accordance With The Deadlines Mentioned In The Eligibility Criteria’s For Appearing In The Campus Placement Programme For Newly Qualified Chartered Accountants Session name",
+  "label.declarationConcent":
+    "I Hereby Undertake And Declare That I Will Submit My ICAI Membership Application Form (Form 2) Along With Necessary Papers To The Concerned Regional Office Of ICAI In Accordance With The Deadlines Mentioned In The Eligibility Criteria’s For Appearing In The Campus Placement Programme For Newly Qualified Chartered Accountants Session name",
+  "label.payMentionedAmountsubmitapplication":
+    "Pay the below mentioned amount to submit the application",
+  "label.payAmount": "Pay Amount",
 };
 
 export default locale;
