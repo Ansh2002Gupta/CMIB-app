@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
@@ -18,15 +19,16 @@ import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import { moduleKeys } from "../../constants/sideBarHelpers";
-import styles from "./dashboard.style";
-import JobDetails from "../../containers/RoundOne/ApplicationFormContainer/JobDetails";
-import CompanyProfileForm from "../../containers/RoundOne/ApplicationFormContainer/CompanyProfileForm/CompanyProfileForm";
+import getStyles from "./dashboard.style";
 
 // Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
   const { isCompany } = useGetCurrentUser();
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const { selectedModule } = sideBarState;
   const { isWebView } = useIsWebView();

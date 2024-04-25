@@ -1,5 +1,4 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
+import { Platform } from "@unthinkable/react-core-components";
 import { baseChipStyle } from "../../theme/styles/commonStyles";
 
 const getStyles = (theme) => {

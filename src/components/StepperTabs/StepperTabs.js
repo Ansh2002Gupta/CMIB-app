@@ -10,7 +10,7 @@ import getStyles from "./StepperTabs.style";
 
 const StepperTabs = ({ activeStep, customStyle, steps }) => {
   const theme = useTheme();
-  const styles = getStyles();
+  const styles = getStyles(theme);
   const getStepStatus = (step) => {
     if (activeStep === step) return STEPPER_STATE.ACTIVE;
     if (activeStep > step) return STEPPER_STATE.DONE;

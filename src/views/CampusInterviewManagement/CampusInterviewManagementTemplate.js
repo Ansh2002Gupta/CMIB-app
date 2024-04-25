@@ -1,25 +1,28 @@
 import React from "react";
-import { Text, View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 
-import styles from "./CampusInterviewManagement.styles";
 import useIsWebView from "../../hooks/useIsWebView";
 import { CustomTabs } from "../../components/Tab";
 import CustomTable from "../../components/CustomTable";
-import { TwoColumn, TwoRow } from "../../core/layouts";
 import useCampusInterviewManagement from "./controller/useCampusInterviewManagement";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   ROUND_ONE_CONSENT_MARKETING_MANAGEMENT as tableHeading,
   ROUND_ONE_CONSENT_MARKETING_MANAGEMENT_CAMPUS as campusTableHeading,
 } from "../../constants/constants";
-import colors from "../../assets/colors";
 import { writtenTestData, campusInterviewData } from "./dummyData";
+import getStyles from "./CampusInterviewManagement.styles";
 
 const CampusInterviewManagementTemplate = ({ intl }) => {
   const { isWebView } = useIsWebView();
   const onViewPress = (item) => {};
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = getStyles(theme);
+
   const {
     allDataLoaded,
     currentPage,
