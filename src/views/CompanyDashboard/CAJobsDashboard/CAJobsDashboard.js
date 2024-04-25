@@ -381,7 +381,7 @@ const CAJobsDashboard = () => {
                 baseRadius={80}
                 colorScale={[
                   colors.errorRed,
-                  colors.green,
+                  colors.greenAccepted,
                   colors.mustardYellow,
                   colors.graphiteGray,
                   colors.yellowGreen,
@@ -415,7 +415,7 @@ const CAJobsDashboard = () => {
                   colors.purple,
                   colors.originalPurple,
                   colors.babyPink,
-                  colors.green,
+                  colors.greenAccepted,
                   colors.greenBlue,
                   colors.darkOrange,
                 ]}

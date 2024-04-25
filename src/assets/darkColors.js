@@ -20,6 +20,7 @@ const greenBlue = "#2FA5CB";
 /* Greens */
 const darkGreen = "#00873E";
 const green = "#D53920";
+const greenAccepted = "#04AF55";
 const greenOne = "#04af55";
 const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
@@ -157,5 +158,6 @@ const colors = {
   menuItem,
   menuItemActive,
   menuItemActiveBg,
+  greenAccepted,
 };
 export default colors;

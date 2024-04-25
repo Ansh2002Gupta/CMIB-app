@@ -180,7 +180,7 @@ const WomenMemberDashBoard = () => {
                 theme.colors.purple,
                 theme.colors.originalPurple,
                 theme.colors.babyPink,
-                theme.colors.green,
+                theme.colors.greenAccepted,
                 theme.colors.errorRed,
                 theme.colors.greenBlue,
                 theme.colors.darkOrange,

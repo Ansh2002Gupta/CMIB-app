@@ -393,7 +393,7 @@ const NQCACompanyDashboard = () => {
                 colors.purple,
                 colors.originalPurple,
                 colors.babyPink,
-                colors.green,
+                colors.greenAccepted,
                 colors.errorRed,
                 colors.greenBlue,
                 colors.darkOrange,

@@ -173,7 +173,7 @@ const CAJobsMemberDashboard = () => {
             <PieChart
               colorScale={[
                 colors.greenBlue,
-                colors.green,
+                colors.greenAccepted,
                 colors.babyPink,
                 colors.purple,
               ]}
@@ -225,7 +225,7 @@ const CAJobsMemberDashboard = () => {
                 colors.purple,
                 colors.originalPurple,
                 colors.babyPink,
-                colors.green,
+                colors.greenAccepted,
                 colors.errorRed,
                 colors.greenBlue,
                 colors.darkOrange,
