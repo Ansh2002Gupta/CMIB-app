@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 50,
     marginBottom: 50,
+    padding: 24,
     ...Platform.select({
       android: {
         transform: [{ rotate: "90deg" }],
@@ -24,8 +25,8 @@ const styles = StyleSheet.create({
   rectangle: {
     position: "relative",
     display: "flex",
-    width: 400,
-    height: 400,
+    width: 380,
+    height: 320,
     backgroundColor: colors.init_background,
   },
   borderSegment: {
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   line: {
     position: "relative",
     display: "flex",
-    width: 600,
+    width: 500,
     height: 1,
     backgroundColor: colors.white,
   },
