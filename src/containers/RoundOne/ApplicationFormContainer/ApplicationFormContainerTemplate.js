@@ -130,12 +130,12 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   };
 
   let tabConfig = [
-    {
-      component: CompanyProfile,
-    },
-    {
-      component: JobDetails,
-    },
+    // {
+    //   component: CompanyProfile,
+    // },
+    // {
+    //   component: JobDetails,
+    // },
     {
       component: PreInterviewPreferences,
     },
@@ -184,6 +184,13 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
               })}
               activeStep={activeStep}
               webActionButton={
+                !isEditable && (
+                  <View>
+                    {renderEditButton({ handleButtonClick: handleEditClick })}
+                  </View>
+                )
+              }
+              mobActionButton={
                 !isEditable && (
                   <View>
                     {renderEditButton({ handleButtonClick: handleEditClick })}

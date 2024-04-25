@@ -438,62 +438,48 @@ const JobDetailsTemplate = ({
     },
   ];
 
-  let filteredJobDetailsConfig = [];
   let filteredWebJobDetailsConfig = [];
-  if (currentBreakpoint === "xs") {
-    if (!addDesignation) {
-      filteredJobDetailsConfig = JobDetailsConfig.slice(0, 1);
-    } else {
-      filteredJobDetailsConfig = JobDetailsConfig.filter(
-        (_, index) => index !== 0
-      );
-    }
-  } else {
-    filteredWebJobDetailsConfig = JobDetailsConfig.filter(
-      (_, index) => index !== 0
-    );
-  }
+
+  filteredWebJobDetailsConfig = JobDetailsConfig.filter(
+    (_, index) => index !== 0
+  );
 
   return (
     <CustomScrollView style={styles.scrollViewStyle}>
-      {currentBreakpoint === "xs" ? (
-        <MultiRow rows={filteredJobDetailsConfig} />
-      ) : (
-        <View style={styles.mainContainer}>
-          <View style={styles.leftSectionStyle}>
-            <ConfigurableList
-              customOuterContianer={styles.configurableStyle}
-              componentContainer={styles.componentContainer}
-              title={intl.formatMessage({ id: "label.desgination" })}
-              searchQuery={configurableListQuery}
-              setSearchQuery={setConfigurableListQuery}
-              selectedOptions={selectedOptions}
-              onDelete={handleDelete}
-              onPress={handlePress}
-              onAdd={handleAdd}
-              options={desginationItems}
-              menuOptions={menuOptions}
-              setMenuOptions={setMenuOptions}
-              nameField={"designation"}
-              isEditable={isEditable}
-            />
-          </View>
-          <View style={styles.innerContainerStyle}>
-            {!!selectedOptions.length ? (
-              <MultiRow rows={filteredWebJobDetailsConfig} />
-            ) : (
-              <CardComponent customStyle={styles.emptyCard}>
-                <CommonText
-                  fontWeight={"600"}
-                  customTextStyle={styles.selectionProcessStyle}
-                >
-                  {intl.formatMessage({ id: "label.click_on_add_button" })}
-                </CommonText>
-              </CardComponent>
-            )}
-          </View>
+      <View style={isWebView ? styles.mainContainer : styles.mainContainerMob}>
+        <View style={isWebView ? styles.leftSectionStyle : {}}>
+          <ConfigurableList
+            customOuterContianer={styles.configurableStyle}
+            componentContainer={styles.componentContainer}
+            title={intl.formatMessage({ id: "label.desgination" })}
+            searchQuery={configurableListQuery}
+            setSearchQuery={setConfigurableListQuery}
+            selectedOptions={selectedOptions}
+            onDelete={handleDelete}
+            onPress={handlePress}
+            onAdd={handleAdd}
+            options={desginationItems}
+            menuOptions={menuOptions}
+            setMenuOptions={setMenuOptions}
+            nameField={"designation"}
+            isEditable={isEditable}
+          />
         </View>
-      )}
+        <View style={isWebView ? styles.innerContainerStyle : {}}>
+          {!!selectedOptions.length ? (
+            <MultiRow rows={filteredWebJobDetailsConfig} />
+          ) : (
+            <CardComponent customStyle={styles.emptyCard}>
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={styles.selectionProcessStyle}
+              >
+                {intl.formatMessage({ id: "label.click_on_add_button" })}
+              </CommonText>
+            </CardComponent>
+          )}
+        </View>
+      </View>
     </CustomScrollView>
   );
 };

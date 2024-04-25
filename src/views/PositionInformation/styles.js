@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: colors.white,
   },
-  twoColumn: {
+  twoColumnWeb: {
     flex: 1,
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "stretch",
     gap: 16,
+  },
+  twoColumn: {
     marginLeft: 16,
     marginRight: 16,
     marginTop: 16,
@@ -81,9 +81,7 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
   },
   requriedDocuments: {
-    marginTop: 16,
-    marginLeft: 16,
-    marginRight: 16,
+    margin: 16,
   },
   badgeContainer: {
     marginTop: 24,
@@ -101,6 +99,97 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     lineHeight: 20,
     color: colors.black,
+  },
+  labelText: {
+    fontSize: 16,
+    fontWeight: "600",
+    lineHeight: 20,
+    color: colors.black,
+  },
+  tableRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  commonTableCell: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+  },
+  yearlyData: {
+    marginTop: 16,
+  },
+  mobileCommonTable: {
+    marginBottom: 8,
+  },
+  mobileCommonTableCard: {
+    paddingBottom: 16,
+  },
+  dot: {
+    height: 4,
+    width: 4,
+    backgroundColor: colors.darkGrey,
+    marginLeft: 6,
+    marginRight: 6,
+    borderRadius: 2,
+  },
+  documentRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 2,
+  },
+  docName: {
+    fontSize: 14,
+    fontWeight: "500",
+    lineHeight: 20,
+    color: colors.black,
+  },
+  docText: {
+    fontSize: 12,
+    fontWeight: "500",
+    lineHeight: 16,
+    color: colors.darkGrey,
+  },
+  docItem: {
+    paddingTop: 11,
+    paddingBottom: 11,
+  },
+  docItemBorder: {
+    borderBottomWidth: 1,
+    borderColor: colors.greyOne,
+  },
+  categoriesStyle: {
+    color: colors.darkBlue,
+    marginLeft: 5,
+  },
+  placeHeadingStyle: {
+    fontSize: 14,
+    marginBottom: 2,
+  },
+  totalPositionStyle: {
+    color: colors.darkGrey,
+  },
+  iconArrow: {
+    height: 16,
+    width: 16,
+    marginLeft: 5,
+  },
+  mainRowContainer: {
+    marginTop: 11,
+    marginBottom: 11,
+  },
+  row: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  categoriesOptionsStyle: {
+    marginRight: 5,
+    marginTop: 5,
+    color: colors.darkGrey,
+  },
+  container: {
+    paddingBottom: 16,
   },
 });
 

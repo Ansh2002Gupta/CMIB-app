@@ -28,6 +28,7 @@ import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProv
 import { useParams } from "react-router";
 import useFetch from "../../../../../hooks/useFetch";
 import { areAllValuesEmpty } from "../../../../../utils/util";
+import useIsWebView from "../../../../../hooks/useIsWebView";
 
 const addDocumentField = () => [
   {
@@ -114,6 +115,7 @@ const useJobDetailForm = ({ isEditable, tabHandler }) => {
     modalMessage: "",
   });
   const [isLoading, setIsLoading] = useState(true);
+  const { isWebView } = useIsWebView();
 
   const renderJobDetails = isAddNewJob ? addNewJobDetails : editJobDetails;
   const setRenderJobDetails = isAddNewJob
@@ -291,7 +293,7 @@ const useJobDetailForm = ({ isEditable, tabHandler }) => {
     const fetchProfileData = async () => {
       if (!!currentDesginationID) {
         const newProfileData = await fetchJobDetailsData({});
-        setEditJobDetails(mapDataToUI(newProfileData, workExperienceOptions));
+        setEditJobDetails(mapDataToUI(newProfileData, isWebView));
         setIsLoading(false);
       }
     };

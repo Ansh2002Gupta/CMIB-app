@@ -451,7 +451,7 @@ const useSavedCandidates = () => {
               }}
               source={images.iconMore}
               imageStyle={styles.iconTicket}
-              isSvg={true}
+              isSvg
             />
             {showCurrentPopupmessage === index && (
               <View ref={popMessageRef}>

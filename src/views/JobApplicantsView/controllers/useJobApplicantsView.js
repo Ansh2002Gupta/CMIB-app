@@ -476,7 +476,7 @@ const useJobApplicants = () => {
               }}
               source={images.iconMore}
               imageStyle={styles.iconTicket}
-              isSvg={true}
+              isSvg
             />
 
             {showCurrentPopupmessage === item?.job_applicantion_id && (
