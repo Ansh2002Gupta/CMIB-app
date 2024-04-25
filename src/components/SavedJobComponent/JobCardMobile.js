@@ -17,7 +17,6 @@ import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, formatSalaryRange, timeAgo } from "../../utils/util";
 import images from "../../images";
-import colors from "../../assets/colors";
 import getStyles from "./SavedJobComponent.style";
 
 const JobCardMobile = ({
@@ -80,8 +79,8 @@ const JobCardMobile = ({
             id: "label.vacancies",
           })}`}
           isBackground
-          bgColor={colors.lightGray}
-          textColor={colors.black}
+          bgColor={theme.colors.lightGray}
+          textColor={theme.colors.black}
         />
       ),
       style: style.mobileChipStyle,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./styles";
+import getStyles from "./styles";
 import useIsWebView from "../../hooks/useIsWebView";
 import CommonText from "../../components/CommonText";
 import { TwoRow } from "../../core/layouts";
@@ -17,6 +17,7 @@ import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import PaginationFooter from "../../components/PaginationFooter";
 import { useNavigate } from "react-router";
 import { navigations } from "../../constants/routeNames";
+import { useTheme } from "@unthinkable/react-theme";
 
 const AllJobsTemplate = ({
   data,
@@ -34,6 +35,9 @@ const AllJobsTemplate = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const isWeb = Platform.OS.toLowerCase() === "web";
   const navigate = useNavigate();
   const [applyJobModal, setApplyJobModal] = useState(false);

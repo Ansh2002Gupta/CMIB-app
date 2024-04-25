@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Image, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText/CommonText";
 import images from "../../images";
 import { STEPPER_STATE } from "../../constants/constants";
-import { getAppropriateStyle, styles } from "./Stepper.style";
+import { getAppropriateStyle, getStyles } from "./Stepper.style";
 
 const Stepper = ({
   activeStep,
@@ -16,6 +17,9 @@ const Stepper = ({
 }) => {
   const { containerStyle, stepperCircle, stepperHeroLabelText, stepperLabel } =
     customStyle;
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const getStepStatus = (step) => {
     if (activeStep === step) return STEPPER_STATE.ACTIVE;
@@ -42,6 +46,7 @@ const Stepper = ({
                     fieldName: "circle",
                     stepValue: index,
                     getStepStatus,
+                    theme,
                   }),
                   ...(getStepStatus(index) !== STEPPER_STATE.DONE
                     ? styles.activeOrPendingCircle
@@ -59,6 +64,7 @@ const Stepper = ({
                         fieldName: "circleText",
                         stepValue: index,
                         getStepStatus,
+                        theme,
                       }),
                     }}
                     fontWeight="600"
@@ -81,6 +87,7 @@ const Stepper = ({
                         fieldName: "label",
                         stepValue: index,
                         getStepStatus,
+                        theme,
                       }),
                       ...stepperLabel,
                     }}
@@ -103,6 +110,7 @@ const Stepper = ({
                     fieldName: "line",
                     stepValue: index,
                     getStepStatus,
+                    theme,
                   }),
                 }}
               ></View>
