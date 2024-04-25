@@ -73,6 +73,8 @@ const ShortListingConsentCandidate = () => {
     markedElement,
     isModalVisible,
     setIsModalVisible,
+    updateShortListCandidate,
+    getUpdatedUrl,
   } = useShortListingConsent(id);
 
   const getMobileView = (item, index) => {
@@ -86,8 +88,27 @@ const ShortListingConsentCandidate = () => {
       />
     );
   };
-  const onSubmit = () => {
+  const onSubmit = (item, selectedToggle, isMarked) => {
+    let body = {};
+
+    if (isMarked) {
+      body = {
+        application_ids: [item.application_id],
+        status: "offer-accepted",
+        interview_result: selectedToggle === 0 ? "pass" : "fail",
+      };
+    } else {
+      body = {
+        application_ids: [item.application_id],
+        interview_result: selectedToggle === 0 ? "pass" : "fail",
+      };
+    }
+
     setIsModalVisible(false);
+    updateShortListCandidate({
+      body,
+      overrideUrl: getUpdatedUrl(companyLocation[seletedCenter].id),
+    });
   };
   return (
     <View style={{ backgroundColor: "white" }}>

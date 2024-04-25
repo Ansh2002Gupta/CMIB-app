@@ -963,6 +963,8 @@ const useShortListingConsent = (id) => {
     markedElement,
     isModalVisible,
     setIsModalVisible,
+    updateShortListCandidate,
+    getUpdatedUrl,
   };
 };
 
