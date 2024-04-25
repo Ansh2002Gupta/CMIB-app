@@ -18,10 +18,13 @@ import { getImageSource } from "../../utils/util";
 import { setUserDetails } from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import images from "../../images";
-import styles from "./EditProfileImage.style";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./EditProfileImage.style";
 
 const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [file, setFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [isDeleteImageRequested, setIsDeleteImageRequested] = useState(false);

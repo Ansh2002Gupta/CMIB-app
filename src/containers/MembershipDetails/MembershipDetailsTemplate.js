@@ -1,15 +1,16 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import CustomScrollView from "../../components/CustomScrollView";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
-import style from "./MembershipDetails.style";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { STATUS_CODES } from "../../constants/constants";
+import getStyles from "./MembershipDetails.style";
 
 const MembershipDetailsTemplate = ({
   isEditable = true,
@@ -29,6 +30,8 @@ const MembershipDetailsTemplate = ({
   isLoadingPage,
   isErrorLoadingPage,
 }) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
   const intl = useIntl();
 
   const scrollViewMobileProps =

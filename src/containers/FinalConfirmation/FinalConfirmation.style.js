@@ -1,13 +1,14 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = StyleSheet.create({
-  buttonTwo: {
-    backgroundColor: colors.errorRed,
-  },
-  buttonTwoText: {
-    textColor: colors.white,
-  },
-});
+  return {
+    buttonTwo: {
+      backgroundColor: colors.errorRed,
+    },
+    buttonTwoText: {
+      textColor: colors.white,
+    },
+  };
+};
 
-export default styles;
+export default getStyles;

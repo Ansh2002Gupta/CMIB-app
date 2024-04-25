@@ -1,14 +1,15 @@
 import {
-    StyleSheet,
-    Platform,
-    Dimensions,
-  } from "@unthinkable/react-core-components";
-  
-  import colors from "../../assets/colors";
-  
-  const { height: HEIGHT } = Dimensions.get("window");
-  
-  const styles = StyleSheet.create({
+  StyleSheet,
+  Platform,
+  Dimensions,
+} from "@unthinkable/react-core-components";
+
+const { height: HEIGHT } = Dimensions.get("window");
+
+const getStyles = (theme) => {
+  const { colors } = theme;
+
+  return {
     container: {
       flex: 1,
       justifyContent: "flex-start",
@@ -34,7 +35,7 @@ import {
       backgroundColor: colors.secondaryGrey,
       borderColor: colors.secondaryGrey,
     },
-  
+
     webComponentStyle: {
       flexDirection: "column",
       padding: 16,
@@ -83,8 +84,8 @@ import {
       // wordBreak: "break-word",
       // overFlow: "hidden",
       // whiteSpace: "break-space",
-      display: 'flex',
-      flexDirection: 'row',
+      display: "flex",
+      flexDirection: "row",
       // alignItems: 'flex-end',
       // justifyContent: 'space-between',
     },
@@ -131,7 +132,7 @@ import {
       lineHeight: 44,
       color: colors.black,
     },
-  });
-  
-  export default styles;
-  
+  };
+};
+
+export default getStyles;

@@ -1,9 +1,10 @@
 import React from "react";
 import { View, ScrollView } from "@unthinkable/react-core-components";
-import style from "./EducationDetails.style";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import DetailCard from "../../components/DetailCard";
-import { useIntl } from "react-intl";
+import getStyles from "./EducationDetails.style";
 const EducationDetailsUI = ({
   education_detail,
   higher_secondary_detail,
@@ -21,6 +22,8 @@ const EducationDetailsUI = ({
   onClickCancel,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   return (
     <View

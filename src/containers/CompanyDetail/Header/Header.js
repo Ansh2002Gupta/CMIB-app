@@ -1,11 +1,14 @@
 import { View, Text, Row, Image } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import React from "react";
-import styles from "./styles";
 import useIsWebView from "../../../hooks/useIsWebView";
 import { useIntl } from "react-intl";
 import CommonText from "../../../components/CommonText";
+import getStyles from "./styles";
 
 const Header = ({ centreName, comanyLogo = "", companyName }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 

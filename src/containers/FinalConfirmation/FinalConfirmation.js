@@ -4,7 +4,8 @@ import CustomModal from "../../components/CustomModal";
 import { useIntl } from "react-intl";
 import { KEYS } from "../../constants/constants";
 import images from "../../images";
-import styles from "./FinalConfirmation.style";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./FinalConfirmation.style";
 
 const FinalConfirmation = ({
   handleConfirmation,
@@ -13,6 +14,8 @@ const FinalConfirmation = ({
   modalDetails,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <CustomModal
       isSuccess
