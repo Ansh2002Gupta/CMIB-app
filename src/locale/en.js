@@ -1001,6 +1001,9 @@ const locale = {
   "label.declarationDetails": "Details should be same as main Application form",
   "label.declarationConcent":
     "I Hereby Undertake And Declare That I Will Submit My ICAI Membership Application Form (Form 2) Along With Necessary Papers To The Concerned Regional Office Of ICAI In Accordance With The Deadlines Mentioned In The Eligibility Criteria’s For Appearing In The Campus Placement Programme For Newly Qualified Chartered Accountants Session name",
+  "label.payMentionedAmountsubmitapplication":
+    "Pay the below mentioned amount to submit the application",
+  "label.payAmount": "Pay Amount",
 };
 
 export default locale;

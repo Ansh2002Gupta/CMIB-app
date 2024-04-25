@@ -6,6 +6,7 @@ import CommonText from "../../../components/CommonText";
 import CustomButton from "../../../components/CustomButton";
 import EducationalDetails from "../EducationalDetails";
 import NumberAndTextStepper from "../../NumberAndTextStepper";
+import PaymentDetails from "../PaymentDetails/PaymentDetails";
 import PersonalDetails from "../PersonalDetails";
 import Stepper from "../../../components/Stepper";
 import { ADD_APPLICATION_STEPPER } from "../../../constants/constants";
@@ -49,7 +50,7 @@ const AddApplicationTemplate = ({
       : {};
 
   const getCurrentStepperDetails = () => {
-    switch (selectedStepper.id) {
+    switch (7) {
       case 1:
         return (
           <PersonalDetails
@@ -103,14 +104,26 @@ const AddApplicationTemplate = ({
             }}
           />
         );
-      // case 5:
-      //   return <HobbiesDetails intl={intl} isWebView={isWebView} />;
       case 5:
+        return <HobbiesDetails intl={intl} isWebView={isWebView} />;
+      case 6:
         return (
           <JobPreferenceDetails
             intl={intl}
             isWebView={isWebView}
             ref={jobPreferneceref}
+            handleSave={(val) => {
+              if (val !== isSaveEnabled) {
+                setIsSaveEnaabled(val);
+              }
+            }}
+          />
+        );
+      case 7:
+        return (
+          <PaymentDetails
+            intl={intl}
+            isWebView={isWebView}
             handleSave={(val) => {
               if (val !== isSaveEnabled) {
                 setIsSaveEnaabled(val);
