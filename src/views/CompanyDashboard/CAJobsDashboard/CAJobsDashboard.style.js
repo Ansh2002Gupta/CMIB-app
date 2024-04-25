@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {},
   activePackage: {
-    background: colors.darkPurple,
+    backgroundColor: colors.darkPurple,
     borderRadius: 24,
     padding: 24,
     marginBottom: 24,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     maxHeight: 36,
     maxWidth: 114,
   },
-  pieChartContiner: { gap: 24, flexDirection: "row", flexWrap: "wrap" },
+  pieChartContiner: { gap: 24, flexDirection: "row" },
   customHeaderText: {
     maxWidth: "80%",
   },
