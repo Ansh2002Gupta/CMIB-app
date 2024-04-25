@@ -11,12 +11,11 @@ import colors from "../../assets/colors";
 const TextInputWithChip = ({
   placeholderText,
   onValueChange,
-  value = [],
+  value,
   isEditable,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [chips, setChips] = useState(Array.isArray(value) ? [...value] : []);
-
   useEffect(() => {
     onValueChange(chips);
     return;
@@ -47,14 +46,17 @@ const TextInputWithChip = ({
         style={styles.input}
       />
       <ScrollView style={styles.chipContainer} horizontal>
-        {chips.map((chip, index) => (
-          <CustomChipCard
-            key={index}
-            message={chip}
-            onPress={() => handleRemoveChip(index)}
-            isEditable={isEditable}
-          />
-        ))}
+        {(value ?? chips).map(
+          (chip, index) =>
+            chip && (
+              <CustomChipCard
+                key={index}
+                message={chip}
+                onPress={() => handleRemoveChip(index)}
+                isEditable={isEditable}
+              />
+            )
+        )}
       </ScrollView>
     </View>
   );

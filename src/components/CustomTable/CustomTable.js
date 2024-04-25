@@ -5,6 +5,7 @@ import {
   FlatList,
   Platform,
   Row,
+  ScrollView,
   View,
 } from "@unthinkable/react-core-components";
 
@@ -80,6 +81,11 @@ const CustomTable = ({
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
+  isStatusTextBoolean,
+  popUpMessage,
+  selectedTabs,
+  customTableTopSectionStyle,
+  totalCardHeading,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -188,7 +194,9 @@ const CustomTable = ({
                     ...styles.textSize,
                   }}
                 >
-                  {intl.formatMessage({ id: "label.tickets" })}
+                  {totalCardHeading
+                    ? totalCardHeading
+                    : intl.formatMessage({ id: "label.tickets" })}
                   &nbsp;&#58;&nbsp;
                 </CommonText>
 
@@ -206,7 +214,7 @@ const CustomTable = ({
         isBottomFillSpace
         bottomSection={
           <TwoRow
-            style={styles.tableTopSection}
+            style={{ ...styles.tableTopSection, ...customTableTopSectionStyle }}
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
@@ -223,7 +231,12 @@ const CustomTable = ({
                     <View style={isWebView ? styles.tableSectionForweb : {}}>
                       {isWebView && tableHeading && (
                         <MultiColumn
-                          columns={getColoumConfigs(tableHeading, isHeading)}
+                          columns={getColoumConfigs(
+                            tableHeading,
+                            isHeading,
+                            0,
+                            selectedTabs
+                          )}
                           style={
                             !!data
                               ? styles.columnHeaderStyle
@@ -244,7 +257,8 @@ const CustomTable = ({
                                   columns={getColoumConfigs(
                                     item,
                                     !isHeading,
-                                    index
+                                    index,
+                                    selectedTabs
                                   )}
                                   style={{
                                     ...((tableHeading || index > 0) &&
@@ -273,9 +287,8 @@ const CustomTable = ({
                                           >
                                             {getRenderText(
                                               item,
-                                              subHeadingText,
-                                              formatConfig
-                                            )}
+                                              subHeadingText
+                                            ) || "-"}
                                           </CommonText>
                                           {!!extraDetailsText && (
                                             <>

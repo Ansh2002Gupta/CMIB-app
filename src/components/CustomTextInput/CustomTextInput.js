@@ -113,6 +113,8 @@ const CustomTextInput = (props) => {
     showMonthYearPicker,
     datePickerContainer,
     checkBoxTextStyle,
+    isViewMode = false,
+    viewText,
     customErrorViewStyle,
     ...remainingProps
   } = props;
@@ -501,7 +503,7 @@ const CustomTextInput = (props) => {
     >
       {!!label && showLabel && (
         <View style={style.innerLabelContainer}>
-          <CustomLabelView label={label} isMandatory={isMandatory} />
+          <CustomLabelView label={label} isMandatory={isMandatory} customLabelStyle={customLabelStyle} />
           {!!label2 && (
             <CommonText customContainerStyle={style.marginRight10}>
               {label2}
@@ -509,6 +511,7 @@ const CustomTextInput = (props) => {
           )}
         </View>
       )}
+      {isViewMode ? <CommonText>{viewText}</CommonText> : <>
       {renderTextInput()}
       {(isError || isMultiline) && (
         <View
@@ -533,6 +536,7 @@ const CustomTextInput = (props) => {
           )}
         </View>
       )}
+      </>}
     </View>
   );
 };
@@ -674,6 +678,8 @@ CustomTextInput.propTypes = {
   isTextInputWithChip: PropTypes.bool,
   showLabel: PropTypes.bool,
   onChipUpdate: PropTypes.func,
+  isViewMode: PropTypes.bool,
+  viewText: PropTypes.string,
 };
 
 export default CustomTextInput;

@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     maxHeight: 44,
     maxWidth: 92,
   },
-  buttonText:{
+  buttonText: {
     fontWeight: "500",
   },
   customButtonContainer: {
@@ -29,18 +29,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
-  row:{
+  row: {
     flexDirection: "row",
     marginLeft: 24,
     marginTop: 24,
   },
-  spinner:{
+  spinner: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  stepperContainer:{
+  stepperContainer: {
     marginTop: 24,
+    overflowX: "auto",
   },
   stepperText: {
     marginBottom: 16,

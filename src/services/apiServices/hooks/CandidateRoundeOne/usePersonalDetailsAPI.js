@@ -12,10 +12,11 @@ const usePersonalDetailsAPI = () => {
 
   const { Http } = useHttpService();
 
-  const handlePersonalDetails = async ({ successCallback, errorCallback }) => {
+  const handlePersonalDetails = async () => {
     try {
       setApiStatus(API_STATUS.LOADING);
       apiError && setApiError("");
+      
       const res = await Http.get(MEMBER_PERSONAL_DETAILS);
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
@@ -23,10 +24,10 @@ const usePersonalDetailsAPI = () => {
       ) {
         setApiStatus(API_STATUS.SUCCESS);
         setPersonalDetails(res.data);
-        successCallback && successCallback(res.data);
+        
         return;
       }
-      errorCallback && errorCallback();
+     
       setApiStatus(API_STATUS.ERROR);
       setApiError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
@@ -34,7 +35,6 @@ const usePersonalDetailsAPI = () => {
       setApiError(
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
       );
-      errorCallback && errorCallback();
     }
   };
 
