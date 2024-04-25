@@ -125,7 +125,6 @@ const useGetApplicantList = (id, onEditPress) => {
   };
 
   const handleLoadMore = async () => {
-    console.log(loadingMore, allDataLoaded, "allDataLoaded");
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
     const nextPage = currentPage + 1;
