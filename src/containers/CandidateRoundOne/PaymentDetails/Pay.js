@@ -7,7 +7,7 @@ import CustomLabelView from "../../../components/CustomLabelView";
 import CustomButton from "../../../components/CustomButton";
 import useFetch from "../../../hooks/useFetch";
 import { usePost } from "../../../hooks/useApiRequest";
-import useGetUserDetails from "../../../services/apiServices/hooks/UserProfile/useGetUserDetails";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import {
   PAYMENT_INFO,
   PAY,
@@ -19,13 +19,13 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "./PaymentDetails.style";
 
 const Pay = ({ intl, isWebView }) => {
-  const { currentModules } = useGetUserDetails;
-  const id = useParams();
+  const { currentModule } = useGetCurrentUser();
+  const { id } = useParams();
   const { data: paymentData } = useFetch({
-    url: `${USER_TYPE_MEMBER}/${currentModules}${ROUNDS}/${id}${PAYMENT_INFO}`,
+    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${PAYMENT_INFO}`,
   });
   const { makeRequest: payCandidateAmount } = usePost({
-    url: `${USER_TYPE_MEMBER}/${currentModules}${ROUNDS}/${id}${PAY}`,
+    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${PAY}`,
   });
 
   const payAmount = () => {

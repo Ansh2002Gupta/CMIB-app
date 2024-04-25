@@ -6,7 +6,7 @@ import MultiRow from "../../../core/layouts/MultiRow";
 import styles from "./JobPreferenceDetails.style";
 import { View } from "@unthinkable/react-core-components";
 import useFetch from "../../../hooks/useFetch";
-import useGetUserDetails from "../../../services/apiServices/hooks/UserProfile/useGetUserDetails";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import {
   ROUNDS,
   JOB_PREFERENCES,
@@ -26,7 +26,7 @@ const JobPreferenceDetails = (
   const citySelectionRef = useRef();
   const mockInterviewRef = useRef();
   const cvUploadRef = useRef();
-  const { currentModules } = useGetUserDetails();
+  const { currentModule } = useGetCurrentUser();
   const { id } = useParams();
 
   const [isPreferenceRegardingCompleted, setIsPreferenceRegardingCompleted] =
@@ -43,7 +43,7 @@ const JobPreferenceDetails = (
     isLoading: isGettingJobPreference,
     error: errorWhileGettingJobPreference,
   } = useFetch({
-    url: `${USER_TYPE_MEMBER}/${currentModules}${ROUNDS}/${id}${JOB_PREFERENCES}`,
+    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${JOB_PREFERENCES}`,
   });
   // const { handleExamDetails} = useExamDetailsAPI();
 

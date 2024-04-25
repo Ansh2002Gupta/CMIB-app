@@ -1,5 +1,5 @@
 //Libraries
-import React, { useImperativeHandle, useRef, useState } from "react";
+import React, { useImperativeHandle, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 //UI & Styling
 import WorkExperienceDetailsTemplate from "./WorkExperienceDetailsTemplate";
@@ -21,7 +21,7 @@ const WorkExperienceDetails = (
   ref
 ) => {
   const { currentModule } = useGetCurrentUser();
-  const id = useParams();
+  const { id } = useParams();
   const {
     fetchData: getWorkExperience,
     data: workExperienceData,

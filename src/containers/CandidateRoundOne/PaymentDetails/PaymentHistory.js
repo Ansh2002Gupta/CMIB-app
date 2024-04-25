@@ -6,7 +6,7 @@ import CardComponent from "../../../components/CardComponent";
 import CustomTable from "../../../components/CustomTable";
 import CommonText from "../../../components/CommonText";
 import useFetch from "../../../hooks/useFetch";
-import useGetUserDetails from "../../../services/apiServices/hooks/UserProfile/useGetUserDetails";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import { TRANSACTION_LIST_HEADING_FOR_NQCA } from "../../../constants/constants";
 import { formatDate, formatTime } from "../../../utils/util";
 import {
@@ -19,10 +19,10 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "./PaymentDetails.style";
 
 const PaymentHistory = ({ intl, isWebView }) => {
-  const { currentModules } = useGetUserDetails;
-  const id = useParams();
+  const { currentModule } = useGetCurrentUser();
+  const { id } = useParams();
   const { data: paymentList } = useFetch({
-    url: `${USER_TYPE_MEMBER}/${currentModules}${ROUNDS}/${id}${TRANSACTIONS}`,
+    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${TRANSACTIONS}`,
   });
 
   function getStatusStyle(status) {
