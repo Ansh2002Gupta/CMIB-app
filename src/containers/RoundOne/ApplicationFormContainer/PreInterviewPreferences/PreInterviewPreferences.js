@@ -3,7 +3,7 @@ import React from "react";
 import PreInterviewPreferencesTemplate from "./PreInterviewPreferencesTemplate";
 import usePreInterviewForm from "./controllers/usePreInterviewForm";
 
-const PreInterviewPreferences = ({ tabHandler, isEditable }) => {
+const PreInterviewPreferences = ({ tabHandler, isEditable, setIsEditable }) => {
   const { handleInterviewPreferences, preInterviewDetails } =
     usePreInterviewForm();
 
@@ -14,6 +14,7 @@ const PreInterviewPreferences = ({ tabHandler, isEditable }) => {
         tabHandler,
         handleInterviewPreferences,
         preInterviewDetails,
+        setIsEditable,
       }}
     />
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useIntl } from "react-intl";
 import {
   Row,
@@ -14,6 +14,7 @@ import styles from "./FormTabs.style.js";
 import images from "../../images";
 import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity.js";
 import CustomImage from "../CustomImage/CustomImage.js";
+import useIsWebView from "../../hooks/useIsWebView.js";
 
 export const FormTabs = ({
   isEditButtonVisible,
@@ -22,7 +23,7 @@ export const FormTabs = ({
   tabs,
 }) => {
   const intl = useIntl();
-
+  const { isWebView } = useIsWebView();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [alertOnTabSwitch, setAlertOnTabSwitch] = useState({
     showAlert: false,
@@ -51,61 +52,60 @@ export const FormTabs = ({
       tabIndex: -1,
     });
   };
+  const CustomScroll = isWebView ? ScrollView : Fragment;
 
   return (
     <>
-      <ScrollView style={styles.container} contentContainerStyle={styles.flex1}>
-        <View style={styles.innerContainer}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <Row gap={12} style={styles.tabContainer}>
-              {tabs.map((tab, index) => {
-                const { label } = tab;
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      handleTabChange({ tab, index });
-                    }}
-                    key={index}
-                    style={{
-                      ...styles.itemContainer,
+      <View style={styles.innerContainer}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Row gap={12} style={styles.tabContainer}>
+            {tabs.map((tab, index) => {
+              const { label } = tab;
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    handleTabChange({ tab, index });
+                  }}
+                  key={index}
+                  style={{
+                    ...styles.itemContainer,
+                    ...(index === activeTabIndex
+                      ? styles.activeItemContainer
+                      : {}),
+                  }}
+                >
+                  <CommonText
+                    fontWeight={"500"}
+                    customTextStyle={{
+                      ...styles.itemText,
                       ...(index === activeTabIndex
-                        ? styles.activeItemContainer
+                        ? styles.activeItemText
                         : {}),
                     }}
                   >
-                    <CommonText
-                      fontWeight={"500"}
-                      customTextStyle={{
-                        ...styles.itemText,
-                        ...(index === activeTabIndex
-                          ? styles.activeItemText
-                          : {}),
-                      }}
-                    >
-                      {label}
-                    </CommonText>
-                  </TouchableOpacity>
-                );
-              })}
-            </Row>
-          </ScrollView>
-          {isEditButtonVisible && (
-            <CustomTouchableOpacity
-              style={styles.editButtonViewStyle}
-              onPress={onEditClick}
-            >
-              <CustomImage
-                source={images.iconEdit}
-                style={styles.editIconStyle}
-              />
-              <CommonText customContainerStyle={styles.marginLeft8}>
-                {intl.formatMessage({ id: "label.edit" })}
-              </CommonText>
-            </CustomTouchableOpacity>
-          )}
-        </View>
-        {tabs[activeTabIndex].component}
-      </ScrollView>
+                    {label}
+                  </CommonText>
+                </TouchableOpacity>
+              );
+            })}
+          </Row>
+        </ScrollView>
+        {isEditButtonVisible && (
+          <CustomTouchableOpacity
+            style={styles.editButtonViewStyle}
+            onPress={onEditClick}
+          >
+            <CustomImage
+              source={images.iconEdit}
+              style={styles.editIconStyle}
+            />
+            <CommonText customContainerStyle={styles.marginLeft8}>
+              {intl.formatMessage({ id: "label.edit" })}
+            </CommonText>
+          </CustomTouchableOpacity>
+        )}
+      </View>
+      <CustomScroll>{tabs[activeTabIndex].component}</CustomScroll>
       {alertOnTabSwitch?.showAlert && (
         <ConfirmationModal
           headingText={intl.formatMessage({

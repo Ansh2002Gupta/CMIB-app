@@ -37,7 +37,8 @@ const iconDivider = appendAppBaseURl("/images/iconDivider/iconDivider.png");
 const iconUpload = appendAppBaseURl("/images/iconUpload/iconUpload.png");
 const iconTrash = appendAppBaseURl("/images/iconTrash/iconTrash.png");
 const iconTrashSvg = appendAppBaseURl("/images/svg/iconTrash.svg");
-const iconEye = appendAppBaseURl("/images/iconEye/iconEye.png");
+const iconEye = appendAppBaseURl("/images/svg/iconEye.svg");
+const iconEyeSlash = appendAppBaseURl("/images/svg/iconEyeSlash.svg");
 const iconFacebook = appendAppBaseURl("/images/iconFacebook/iconFacebook.png");
 const iconInstagram = appendAppBaseURl(
   "/images/iconInstagram/iconInstagram.png"
@@ -54,7 +55,6 @@ const iconCross = appendAppBaseURl("/images/iconCross/iconCross.png");
 const iconTelegram = appendAppBaseURl("/images/iconTelegram/iconTelegram.png");
 const iconTwitter = appendAppBaseURl("/images/iconTwitter/iconTwitter.png");
 const iconYoutube = appendAppBaseURl("/images/iconYoutube/iconYoutube.png");
-const iconEyeSlash = appendAppBaseURl("/images/iconEyeSlash.png");
 const iconAddApplicationForm = appendAppBaseURl(
   "/images/iconAddApplicationForm/iconAddApplicationForm.png"
 );
@@ -269,11 +269,17 @@ const iconCircleCross = appendAppBaseURl("/images/svg/close-circle.svg");
 const handShakeIcon = appendAppBaseURl("/images/svg/handShakeIcon.svg");
 const iconDefaultLogo = appendAppBaseURl("/images/svg/iconDefaultLogo.svg");
 const iconEditBlue = appendAppBaseURl("/images/svg/iconEditBlue.svg");
+const iconSheildTick = appendAppBaseURl("/images/svg/iconSheildTick.svg");
+const iconShieldTickDisable = appendAppBaseURl(
+  "/images/svg/iconShieldTickDisable.svg"
+);
+const iconShieldSuccess = appendAppBaseURl("/images/svg/iconShieldSuccess.svg");
 const iconDocument = appendAppBaseURl("/images/svg/iconDocument.svg");
 const iconPPT = appendAppBaseURl("/images/svg/iconPPT.svg");
 const iconPDF = appendAppBaseURl("/images/svg/iconPDF.svg");
 const iconDoc = appendAppBaseURl("/images/svg/iconDoc.svg");
 const rightArrowGreen = appendAppBaseURl("/images/svg/rightArrowGreen.svg");
+const defaultImage = appendAppBaseURl("/images/svg/defaultImage.svg");
 
 const images = {
   iconArrowUp,
@@ -467,11 +473,15 @@ const images = {
   iconView,
   iconDefaultLogo,
   iconEditBlue,
+  iconSheildTick,
+  iconShieldTickDisable,
+  iconShieldSuccess,
   iconDocument,
   iconPPT,
   iconPDF,
   iconDoc,
   rightArrowGreen,
+  defaultImage,
 };
 
 export default images;

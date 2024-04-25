@@ -6,6 +6,7 @@ import { TwoRow } from "../../../core/layouts";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
 import CompanyProfile from "./CompanyProfileForm/CompanyProfileForm";
+import CustomButton from "../../../components/CustomButton";
 import JobDetails from "./JobDetails";
 import PreInterviewPreferences from "./PreInterviewPreferences";
 import CustomScrollView from "../../../components/CustomScrollView";
@@ -18,27 +19,29 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import useNavigateScreen from "../../../services/hooks/useNavigateScreen";
+import { urlService } from "../../../services/urlService";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { useParams } from "react-router";
 import {
   API_VERSION_QUERY_PARAM,
+  FORM_STATES,
+  PAGINATION_PROPERTIES,
   SESSION_ID_QUERY_PARAM,
   UPDATED_API_VERSION,
 } from "../../../constants/constants";
 import useFetch from "../../../hooks/useFetch";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import CardComponent from "../../../components/CardComponent";
-import CustomImage from "../../../components/CustomImage";
-import CommonText from "../../../components/CommonText";
+import images from "../../../images";
+import { getValidMode } from "../../../utils/validation";
+import { View } from "@unthinkable/react-core-components";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const [sideBarState] = useContext(SideBarContext);
   const sessionId = sideBarState?.selectedSession?.value;
   const { currentModule } = useGetCurrentUser();
-  const [applicationFormData, setApplicationFormData] = useState({
-    isEditable: true,
-    isFilled: false,
-  });
+  const [isEditable, setIsEditable] = useState();
+  const { navigateScreen } = useNavigateScreen();
+  const [applicationFormData, setApplicationFormData] = useState(null);
 
   const intl = useIntl();
   const { id } = useParams();
@@ -67,17 +70,62 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
         setApplicationFormData({
           isEditable: newData?.application_form?.is_editable,
           isFilled: newData?.application_form?.is_filled,
+          isSubmitted: newData?.application_form?.is_submitted,
         });
       }
     };
     fetchData();
   }, [sessionId, currentModule]);
 
-  const renderEditButton = ({ handleButtonClick, buttonTitle }) => {
+  useEffect(() => {
+    if (applicationFormData) {
+      if (!applicationFormData?.isSubmitted) {
+        urlService.setQueryStringValue(
+          PAGINATION_PROPERTIES?.MODE,
+          FORM_STATES.EDITABLE
+        );
+        setIsEditable(true);
+      } else {
+        if (
+          getValidMode(
+            urlService.getQueryStringValue(PAGINATION_PROPERTIES?.MODE)
+          )
+        ) {
+          if (
+            urlService.getQueryStringValue(PAGINATION_PROPERTIES?.MODE) ===
+            FORM_STATES.EDITABLE
+          ) {
+            urlService.setQueryStringValue(
+              PAGINATION_PROPERTIES?.MODE,
+              FORM_STATES.EDITABLE
+            );
+            setIsEditable(true);
+          } else {
+            urlService.setQueryStringValue(
+              PAGINATION_PROPERTIES?.MODE,
+              FORM_STATES.VIEW_ONLY
+            );
+            setIsEditable(false);
+          }
+        } else {
+          urlService.setQueryStringValue(
+            PAGINATION_PROPERTIES?.MODE,
+            FORM_STATES.VIEW_ONLY
+          );
+          setIsEditable(false);
+        }
+      }
+    }
+  }, [applicationFormData?.isSubmitted]);
+
+  const renderEditButton = ({ handleButtonClick }) => {
     return (
-      <CustomTouchableOpacity onPress={handleButtonClick}>
-        <></>
-      </CustomTouchableOpacity>
+      <CustomButton
+        iconLeft={{ leftIconSource: images.iconEdit }}
+        onPress={handleButtonClick}
+      >
+        {intl.formatMessage({ id: "label.edit" })}
+      </CustomButton>
     );
   };
 
@@ -105,6 +153,26 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const activeTabIndex = Math.min(activeStep, tabConfig.length - 1);
   const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
+  const handleEditClick = () => {
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES?.MODE,
+      FORM_STATES.EDITABLE
+    );
+    setIsEditable(true);
+  };
+
+  const handleCancel = (val) => {
+    if (applicationFormData?.isSubmitted) {
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES?.MODE,
+        FORM_STATES.VIEW_ONLY
+      );
+      setIsEditable(val);
+      return;
+    }
+    navigateScreen(-1);
+  };
+
   return (
     <>
       <CustomScrollView style={{ flex: 1 }}>
@@ -115,13 +183,27 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
                 id: "label.add_application_form",
               })}
               activeStep={activeStep}
-              // webActionButton={() => renderEditButton()}
+              webActionButton={
+                !isEditable && (
+                  <View>
+                    {renderEditButton({ handleButtonClick: handleEditClick })}
+                  </View>
+                )
+              }
+              mobActionButton={
+                !isEditable && (
+                  <View>
+                    {renderEditButton({ handleButtonClick: handleEditClick })}
+                  </View>
+                )
+              }
             />
           }
           bottomSection={
             <ActiveTabComponent
               tabHandler={onHandleTab}
-              isEditable={applicationFormData?.isEditable}
+              isEditable={isEditable}
+              setIsEditable={handleCancel}
             />
           }
           isBottomFillSpace

@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const screenHeight = Dimensions.get("window").height;
-const maxHeight = screenHeight * 0.8;
+const maxHeight = screenHeight * 0.5;
 
 const styles = StyleSheet.create({
   mainView: {
@@ -11,8 +11,6 @@ const styles = StyleSheet.create({
   },
   bottomMargin: {
     marginBottom: 16,
-    marginLeft: 16,
-    marginRight: 16,
   },
   companyRequireToggleStyle: {
     paddingTop: 12,
@@ -34,7 +32,9 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   postingPlaceMapView: {
-    width: "45%",
+    width: "100%",
+    flexWrap: "wrap",
+    flexDirection: "row",
     marginBottom: 24,
   },
   multiRowTextStyle: {
@@ -56,6 +56,10 @@ const styles = StyleSheet.create({
       marginRight: 0,
       maxHeight: maxHeight,
     },
+  },
+  ctcTextInputStyle: {
+    maxHeight: maxHeight,
+    overflowY: "auto",
   },
   addDocumentViewStyle: {
     paddingBottom: 24,

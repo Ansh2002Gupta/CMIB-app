@@ -29,6 +29,7 @@ import {
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
 import {
+  ADD_PREINTERVIEW_PREFERNCES_HEADING,
   API_VERSION_QUERY_PARAM,
   COMPANY,
   HEAD_CONTACT,
@@ -41,12 +42,14 @@ import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./PreInterviewPreferences.style";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
+import CardComponent from "../../../../components/CardComponent";
 
 const PreInterviewPreferencesTemplate = ({
   isEditable,
   tabHandler,
   handleInterviewPreferences,
   preInterviewDetails,
+  setIsEditable,
 }) => {
   let options_object = [];
   const intl = useIntl();
@@ -61,9 +64,9 @@ const PreInterviewPreferencesTemplate = ({
     Platform.OS.toLowerCase() === "web"
       ? {
           buttonOneStyle: styles.buttonStyle,
-          buttonTwoStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonTwoStyle,
           buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyle,
         }
       : {};
   const [sideBarState] = useContext(SideBarContext);
@@ -162,8 +165,12 @@ const PreInterviewPreferencesTemplate = ({
         "label.participating",
         !!apiData?.["participating_for_first_time"]
           ? apiData?.["participating_for_first_time"].toLowerCase() === "yes"
-            ? 0
-            : 1
+            ? isEditable
+              ? 0
+              : "Yes"
+            : isEditable
+            ? 1
+            : "No"
           : false
       );
       handleInterviewPreferences(
@@ -278,7 +285,7 @@ const PreInterviewPreferencesTemplate = ({
     if (!!selectedModule?.key) {
       fetchData();
     }
-  }, [selectedModule?.key]);
+  }, [selectedModule?.key, isEditable]);
 
   const getRowData = ({ data }) => {
     const groupedData = data?.reduce((acc, item) => {
@@ -410,6 +417,140 @@ const PreInterviewPreferencesTemplate = ({
     setErrorUpdateHeadContactData(null);
   };
 
+  function mapDocuments(dataArray) {
+    const groupedData = {};
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "designation":
+          groupedData[item.cellID].designation = item.value;
+          break;
+        case "name":
+          groupedData[item.cellID].name = item.value;
+          break;
+        case "email":
+          groupedData[item.cellID].email = item.value;
+          break;
+        case "mobile_country_code":
+          groupedData[item.cellID].mobile_country_code = item.value;
+          break;
+        case "mobile_number":
+          groupedData[item.cellID].mobile_number = item.value;
+          break;
+        case "std_country_code":
+          groupedData[item.cellID].std_country_code = item.value;
+          break;
+        case "telephone_number":
+          groupedData[item.cellID].telephone_number = item.value;
+          break;
+      }
+    });
+    const result = Object.keys(groupedData).map((key) => {
+      return groupedData[key];
+    });
+    return result;
+  }
+  const nonEditableData = mapDocuments(headContactDetails);
+
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.designation || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.name || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.email || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("25%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.mobile_country_code || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.std_country_code || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.telephone_number || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+    ];
+  };
+
+  const renderCustomMultiRowComponent = () => {
+    return (
+      <CustomMultiRowTextInput
+        customCardStyle={{
+          ...styles.multiRowTextStyle,
+        }}
+        customTableStyle={styles.tableStyle}
+        customWebContainerStyle={
+          isEditable
+            ? styles.customWebContainerStyle
+            : styles.customViewModeStyle
+        }
+        startRowTemplate={[...startRowTemplateConfig.current]}
+        gridTemplate={headContactDetails}
+        setGridTemplate={setHeadContactDetails}
+        numColsInARow={9}
+        isEditProfile={isEditable}
+        handleValueChange={({ propertyName, value, id, cellID }) => {
+          handleHeadContactDetails({
+            propertyName,
+            value,
+            id,
+            cellID,
+          });
+        }}
+        getColoumConfigs={getColoumConfigs}
+        tableData={nonEditableData}
+        tableHeading={ADD_PREINTERVIEW_PREFERNCES_HEADING}
+        isHeading
+        headerId={"label.head_contacts"}
+        footerId={"label.at_least_one_mandatory_with_star"}
+      />
+    );
+  };
+
   const JobDetailsConfig = [
     {
       content: (
@@ -424,32 +565,15 @@ const PreInterviewPreferencesTemplate = ({
       ),
     },
     {
-      content: (
-        <CustomMultiRowTextInput
-          customCardStyle={{
-            ...styles.multiRowTextStyle,
-          }}
-          customWebContainerStyle={
-            isEditable
-              ? styles.customWebContainerStyle
-              : styles.customViewModeStyle
-          }
-          startRowTemplate={[...startRowTemplateConfig.current]}
-          gridTemplate={headContactDetails}
-          setGridTemplate={setHeadContactDetails}
-          numColsInARow={9}
-          isEditProfile={isEditable}
-          handleValueChange={({ propertyName, value, id, cellID }) => {
-            handleHeadContactDetails({
-              propertyName,
-              value,
-              id,
-              cellID,
-            });
-          }}
-          headerId={"label.head_contacts"}
-          footerId={"label.at_least_one_mandatory_with_star"}
-        />
+      content: isEditable ? (
+        renderCustomMultiRowComponent()
+      ) : (
+        <CardComponent customStyle={styles.CardComponentStyle}>
+          <CommonText customTextStyle={commonStyles.headingStyle}>
+            {intl.formatMessage({ id: "label.head_contacts" })}
+          </CommonText>
+          {renderCustomMultiRowComponent()}
+        </CardComponent>
       ),
     },
   ];
@@ -484,23 +608,43 @@ const PreInterviewPreferencesTemplate = ({
               {intl.formatMessage({ id: "label.back" })}
             </CommonText>
           </CustomButton>
-          <ActionPairButton
-            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            buttonTwoText={intl.formatMessage({ id: "label.save_and_next" })}
-            onPressButtonOne={() => navigate(-1)}
-            onPressButtonTwo={() => {
-              handleSaveAndNext();
-            }}
-            customStyles={{
-              ...isWebProps,
-              customContainerStyle: commonStyles.customContainerStyle,
-              buttonTwoStyle: styles.saveAndNextButton,
-            }}
-            displayLoader={isLoadingUpdateContactData}
-            isDisabled={errorOnPage || isLoadingUpdateContactData}
-            isLoading={isLoadingUpdateContactData}
-            isButtonTwoGreen
-          />
+          {isEditable ? (
+            <ActionPairButton
+              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+              buttonTwoText={intl.formatMessage({
+                id: "label.save_and_next",
+              })}
+              onPressButtonOne={() => {
+                isEditable ? setIsEditable(false) : navigate(-1);
+              }}
+              onPressButtonTwo={() => {
+                handleSaveAndNext();
+              }}
+              customStyles={{
+                ...isWebProps,
+                customContainerStyle: commonStyles.customContainerStyle,
+              }}
+              displayLoader={isLoadingUpdateContactData}
+              isButtonTwoGreen
+              isLoading={isLoadingUpdateContactData}
+              isDisabled={errorOnPage || isLoadingUpdateContactData}
+            />
+          ) : (
+            <CustomButton
+              withGreenBackground
+              style={styles.buttonStyle}
+              onPress={() => {
+                tabHandler("next");
+              }}
+            >
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={commonStyles.nextButtonStyle}
+              >
+                {intl.formatMessage({ id: "label.next" })}
+              </CommonText>
+            </CustomButton>
+          )}
         </View>
       </ScrollView>
     </>

@@ -28,6 +28,7 @@ import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProv
 import { useParams } from "react-router";
 import useFetch from "../../../../../hooks/useFetch";
 import { areAllValuesEmpty } from "../../../../../utils/util";
+import useIsWebView from "../../../../../hooks/useIsWebView";
 
 const addDocumentField = () => [
   {
@@ -83,7 +84,7 @@ const initialState = {
   errors: "",
 };
 
-const useJobDetailForm = ({ tabHandler }) => {
+const useJobDetailForm = ({ isEditable, tabHandler }) => {
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
   const [documentState, setDocumentState] = useState([addDocumentField()]);
@@ -114,6 +115,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     modalMessage: "",
   });
   const [isLoading, setIsLoading] = useState(true);
+  const { isWebView } = useIsWebView();
 
   const renderJobDetails = isAddNewJob ? addNewJobDetails : editJobDetails;
   const setRenderJobDetails = isAddNewJob
@@ -265,7 +267,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     if (!!error) {
       setIsLoading(false);
     }
-  }, [currentModule, sessionId]);
+  }, [currentModule, sessionId, isEditable]);
 
   useEffect(() => {
     setRenderJobDetails((prev) => ({
@@ -275,7 +277,7 @@ const useJobDetailForm = ({ tabHandler }) => {
       required_docs: getDocumentField(),
       posting_details: getPlaceOfPostingDetails(),
     }));
-  }, [isAddNewJob]);
+  }, [isAddNewJob, isEditable]);
 
   useEffect(() => {
     if (deleteDesginationId) {
@@ -285,13 +287,13 @@ const useJobDetailForm = ({ tabHandler }) => {
         },
       });
     }
-  }, [deleteDesginationId]);
+  }, [deleteDesginationId, isEditable]);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       if (!!currentDesginationID) {
         const newProfileData = await fetchJobDetailsData({});
-        setEditJobDetails(mapDataToUI(newProfileData, workExperienceOptions));
+        setEditJobDetails(mapDataToUI(newProfileData, isWebView));
         setIsLoading(false);
       }
     };
@@ -299,7 +301,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     if (!!error) {
       setIsLoading(false);
     }
-  }, [currentDesginationID]);
+  }, [currentDesginationID, isEditable]);
 
   const handleInputChange = (fieldName, value, subFieldName) => {
     if (fieldName === "bond_details") {
@@ -561,7 +563,6 @@ const useJobDetailForm = ({ tabHandler }) => {
             });
           });
           setCurrentDesginationID(newId);
-          tabHandler("next");
         },
         onErrorCallback: (errorMessage) => {
           setCurrentError(errorMessage);

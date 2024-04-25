@@ -19,7 +19,9 @@ import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { formateErrors } from "../../../../utils/util";
 
-const JobDetails = ({ tabHandler, isEditable }) => {
+const isWeb = Platform.OS.toLowerCase() === "web";
+
+const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
   const {
     isButtonLoading,
     deleteDesignationFromList,
@@ -50,17 +52,16 @@ const JobDetails = ({ tabHandler, isEditable }) => {
     isLoading,
     error,
     validateError,
-  } = useJobDetailForm({ tabHandler });
+  } = useJobDetailForm({ isEditable, tabHandler });
 
-  const isWebProps =
-    Platform.OS.toLowerCase() === "web"
-      ? {
-          buttonOneStyle: styles.buttonStyle,
-          buttonTwoStyle: styles.buttonTwoStyle,
-          buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonTwoStyle,
-        }
-      : {};
+  const isWebProps = isWeb
+    ? {
+        buttonOneStyle: styles.buttonStyle,
+        buttonTwoStyle: styles.buttonTwoStyle,
+        buttonOneContainerStyle: styles.buttonStyle,
+        buttonTwoContainerStyle: styles.buttonTwoStyle,
+      }
+    : {};
 
   const navigate = useNavigate();
   const intl = useIntl();
@@ -101,7 +102,7 @@ const JobDetails = ({ tabHandler, isEditable }) => {
           bottomSection={
             <View style={styles.actionBtnContainer}>
               <CustomButton
-                style={styles.buttonStyle}
+                style={isWeb ? styles.buttonStyle : {}}
                 iconLeft={{
                   leftIconSource: images.iconArrowLeft,
                 }}
@@ -116,38 +117,57 @@ const JobDetails = ({ tabHandler, isEditable }) => {
                   {intl.formatMessage({ id: "label.back" })}
                 </CommonText>
               </CustomButton>
-              <View style={styles.rightSection}>
+              {isEditable ? (
+                <View style={styles.rightSection}>
+                  <CustomButton
+                    style={styles.buttonStyle}
+                    onPress={() => {
+                      isEditable ? setIsEditable(false) : navigate(-1);
+                    }}
+                  >
+                    <CommonText
+                      fontWeight={"600"}
+                      customTextStyle={styles.backButtonStyle}
+                    >
+                      {intl.formatMessage({ id: "label.cancel" })}
+                    </CommonText>
+                  </CustomButton>
+                  <ActionPairButton
+                    buttonOneText={intl.formatMessage({ id: "label.save" })}
+                    buttonTwoText={intl.formatMessage({
+                      id: "label.next",
+                    })}
+                    onPressButtonOne={() => handleSaveAndNext()}
+                    onPressButtonTwo={() => {
+                      tabHandler("next");
+                    }}
+                    disableLeftStyle={styles.disabled}
+                    isButtonOneDisabled={isDisabled}
+                    isDisabled={isDisabled}
+                    displayLoaderLeft={isButtonLoading}
+                    customStyles={{
+                      ...isWebProps,
+                      customContainerStyle: commonStyles.customContainerStyle,
+                    }}
+                    isButtonTwoGreen
+                  />
+                </View>
+              ) : (
                 <CustomButton
-                  style={styles.buttonStyle}
-                  onPress={() => navigate(-1)}
+                  withGreenBackground
+                  style={isWeb ? styles.buttonStyle : {}}
+                  onPress={() => {
+                    tabHandler("next");
+                  }}
                 >
                   <CommonText
                     fontWeight={"600"}
-                    customTextStyle={styles.backButtonStyle}
+                    customTextStyle={commonStyles.nextButtonStyle}
                   >
-                    {intl.formatMessage({ id: "label.cancel" })}
+                    {intl.formatMessage({ id: "label.next" })}
                   </CommonText>
                 </CustomButton>
-                <ActionPairButton
-                  buttonOneText={intl.formatMessage({ id: "label.save" })}
-                  buttonTwoText={intl.formatMessage({
-                    id: "label.next",
-                  })}
-                  onPressButtonOne={() => handleSaveAndNext()}
-                  onPressButtonTwo={() => {
-                    tabHandler("next");
-                  }}
-                  disableLeftStyle={styles.disabled}
-                  isButtonOneDisabled={isDisabled}
-                  isDisabled={isDisabled}
-                  displayLoaderLeft={isButtonLoading}
-                  customStyles={{
-                    ...isWebProps,
-                    customContainerStyle: commonStyles.customContainerStyle,
-                  }}
-                  isButtonTwoGreen
-                />
-              </View>
+              )}
             </View>
           }
         />

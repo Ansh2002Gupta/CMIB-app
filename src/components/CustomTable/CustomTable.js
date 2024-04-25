@@ -17,7 +17,6 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
-import PopupMessage from "../PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
@@ -46,11 +45,9 @@ const CustomTable = ({
   getStatusStyle,
   handleLoadMore,
   handlePageChange,
-  handleTicketModal,
   handleRowPerPageChange,
   handleSearchResults,
   headingTexts,
-  handleSaveAddTicket,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
@@ -71,12 +68,7 @@ const CustomTable = ({
   showInterviewTimeModal,
   statusText,
   subHeadingText,
-  statusLabels,
-  showPopUpWithID,
   setShowPopUpWithID,
-  setModalData,
-  setShowJobOfferResponseModal,
-  setShowInterviewTimeModal,
   tableHeading,
   tableIcon,
   totalcards,
@@ -84,13 +76,9 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
-  statusData,
-  queryTypeData,
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
-  isStatusTextBoolean,
-  popUpMessage,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -231,7 +219,7 @@ const CustomTable = ({
                       ...containerStyle,
                     }}
                   >
-                    {isWebView && (
+                    {isWebView && tableHeading && (
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
                         style={
@@ -247,11 +235,6 @@ const CustomTable = ({
                       style={styles.flatListStyle}
                       keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
-                        const statusRenderText = getRenderText(
-                          item,
-                          statusText,
-                          formatConfig
-                        );
                         return (
                           <>
                             {isWebView ? (
@@ -261,7 +244,10 @@ const CustomTable = ({
                                   !isHeading,
                                   index
                                 )}
-                                style={styles.columnStyleBorder}
+                                style={{
+                                  ...((tableHeading || index > 0) &&
+                                    styles.columnStyleBorder),
+                                }}
                               />
                             ) : (
                               <>
@@ -459,33 +445,33 @@ CustomTable.defaultProps = {
 
 CustomTable.propTypes = {
   addNewTicket: PropTypes.bool,
-  allDataLoaded: PropTypes.bool.isRequired,
-  currentPage: PropTypes.number.isRequired,
+  allDataLoaded: PropTypes.bool,
+  currentPage: PropTypes.number,
   data: PropTypes.array,
   formatConfig: PropTypes.object,
-  filterCategory: PropTypes.array.isRequired,
-  getColoumConfigs: PropTypes.func.isRequired,
+  filterCategory: PropTypes.array,
+  getColoumConfigs: PropTypes.func,
   getStatusStyle: PropTypes.func,
   isShowPagination: PropTypes.bool,
   filterApplyHandler: PropTypes.func,
-  handlePageChange: PropTypes.func.isRequired,
-  handleRowPerPageChange: PropTypes.func.isRequired,
-  handleSearchResults: PropTypes.func.isRequired,
-  handleLoadMore: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func,
+  handleRowPerPageChange: PropTypes.func,
+  handleSearchResults: PropTypes.func,
+  handleLoadMore: PropTypes.func,
   handleTicketModal: PropTypes.func,
   headingTexts: PropTypes.array,
-  isHeading: PropTypes.bool.isRequired,
+  isHeading: PropTypes.bool,
   isTicketListingLoading: PropTypes.bool,
   isGeetingJobbSeekers: PropTypes.bool,
   indexOfFirstRecord: PropTypes.number,
   indexOfLastRecord: PropTypes.number,
-  loadingMore: PropTypes.bool.isRequired,
+  loadingMore: PropTypes.bool,
   onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
   isRenderFooterComponent: PropTypes.bool,
   renderFooterComponenet: PropTypes.func,
-  rowsLimit: PropTypes.array.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
+  rowsLimit: PropTypes.array,
+  rowsPerPage: PropTypes.number,
   showSearchBar: PropTypes.bool,
   statusData: PropTypes.array,
   workModeData: PropTypes.array,
@@ -500,9 +486,9 @@ CustomTable.propTypes = {
   industryData: PropTypes.array,
   statusText: PropTypes.string,
   selectedFilterOptions: PropTypes.array,
-  subHeadingText: PropTypes.array,
-  tableHeading: PropTypes.object.isRequired,
-  tableIcon: PropTypes.any.isRequired,
+  subHeadingText: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  tableHeading: PropTypes.object,
+  tableIcon: PropTypes.any,
   totalcards: PropTypes.number,
   placeholder: PropTypes.string,
 };

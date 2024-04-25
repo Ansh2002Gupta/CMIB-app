@@ -100,6 +100,9 @@ const useGetApplicantList = (id, onEditPress) => {
       });
       if (initialData && initialData?.records?.length > 0) {
         setCurrentRecords(initialData?.records);
+        if (initialData?.meta?.currentPage === initialData?.meta?.lastPage) {
+          setAllDataLoaded(true);
+        }
       }
       setIsFirstPageReceived(false);
     };
@@ -307,7 +310,7 @@ const useGetApplicantList = (id, onEditPress) => {
                   }}
                   source={images.iconMore}
                   imageStyle={{ height: 20, width: 20 }}
-                  isSvg={true}
+                  isSvg
                 />
                 {currentPopUpMessage === item.id && (
                   <View ref={popupRef}>

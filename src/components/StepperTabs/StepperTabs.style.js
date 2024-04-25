@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     gap: 24,
+    overflow: "auto",
+    width: "100%",
   },
   stepperContainer: {
     flexDirection: "row",

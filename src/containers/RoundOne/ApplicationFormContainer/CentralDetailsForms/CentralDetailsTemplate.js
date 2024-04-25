@@ -1,30 +1,35 @@
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import React from "react";
-import styles from "./CentralDetailsForms.styles";
-import DetailCard from "../../../../components/DetailCard";
 import { useIntl } from "react-intl";
-import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
-import ConfigurableList from "../../../../components/ConfigurableList";
-import SaveCancelButton from "../../../../components/SaveCancelButton";
-import { keys } from "./controllers/utils";
-import CommonText from "../../../../components/CommonText";
-import SingleSelectionModal from "../../../../components/SingleSelectionModal";
-import Spinner from "../../../../components/Spinner";
-import CardComponent from "../../../../components/CardComponent";
-import DetailComponent from "../../../../components/DetailComponent";
-import CustomToggleComponent from "../../../../components/CustomToggleComponent";
-import UploadImage from "../../../../components/UploadImage";
+import { useNavigate } from "../../../../routes";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+
+import { TwoRow } from "../../../../core/layouts";
+
+import ActionPairButton from "../../../../components/ActionPairButton";
 import AddBenefits from "../../../../components/AddBenfits";
 import AddDesignation from "../../../../components/AddDesignation";
+import CardComponent from "../../../../components/CardComponent";
+import Chip from "../../../../components/Chip";
 import CheckBox from "../../../../components/CheckBox";
+import CommonText from "../../../../components/CommonText";
+import ConfigurableList from "../../../../components/ConfigurableList";
 import CustomButton from "../../../../components/CustomButton";
-import images from "../../../../images";
-import ActionPairButton from "../../../../components/ActionPairButton";
-import { useNavigate } from "react-router";
-import commonStyles from "../../../../theme/styles/commonStyles";
-import { TwoRow } from "../../../../core/layouts";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
+import CustomToggleComponent from "../../../../components/CustomToggleComponent";
+import CustomLabelView from "../../../../components/CustomLabelView";
+import DetailCard from "../../../../components/DetailCard";
+import DetailComponent from "../../../../components/DetailComponent";
 import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent";
+import PreviewImage from "../../../../components/PreviewImage";
+import SingleSelectionModal from "../../../../components/SingleSelectionModal";
+import Spinner from "../../../../components/Spinner";
+import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
+import UploadImage from "../../../../components/UploadImage";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
+import { keys } from "./controllers/utils";
+import images from "../../../../images";
+import colors from "../../../../assets/colors";
+import commonStyles from "../../../../theme/styles/commonStyles";
+import styles from "./CentralDetailsForms.styles";
 
 const CentralDetailsTemplate = ({
   handleContactDetailsChange,
@@ -74,13 +79,17 @@ const CentralDetailsTemplate = ({
   handleClickOnSelectionProcess,
   selectionProcess,
   tabHandler,
+  handleSubmit,
   selectionFieldError,
-
+  hasRoundTwo,
+  submitApplications,
   errorWhileUpdating,
   isPageLoading,
   fetchErrors,
   centerListError,
   saveRoundDetailLoading,
+  isEditable,
+  setIsEditable,
 }) => {
   const {
     fileUploadResult,
@@ -100,30 +109,45 @@ const CentralDetailsTemplate = ({
   const intl = useIntl();
   const navigate = useNavigate();
 
+  const { isSubmitting, errorWhileSubmitting, setErrorWhileSubmiting } =
+    submitApplications;
+
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
           buttonOneStyle: styles.buttonStyle,
           buttonTwoStyle: styles.buttonTwoStyle,
           buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonTwoStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyleContainer,
         }
       : {};
 
-  const renderSelectionProcess = () => {
+  const renderSelectionProcess = ({ isEditable }) => {
     return (
-      <View style={styles.checkBoxStyle}>
-        {selectionProcess?.map((item, index) => (
-          <CheckBox
-            key={item.key}
-            id={item.key}
-            index={index}
-            title={item.label}
-            isSelected={item.isSelected}
-            handleCheckbox={handleClickOnSelectionProcess}
-            isFillSpace={true}
-          />
-        ))}
+      <View>
+        <View
+          style={isEditable ? styles.checkBoxStyle : styles.viewCheckBoxStyle}
+        >
+          {selectionProcess?.map((item, index) =>
+            isEditable ? (
+              <CheckBox
+                key={item.key}
+                id={item.key}
+                index={index}
+                title={item.label}
+                isSelected={item.isSelected}
+                handleCheckbox={handleClickOnSelectionProcess}
+                isFillSpace={true}
+              />
+            ) : (
+              <Chip
+                label={item.key}
+                bgColor={colors.secondaryGrey}
+                textColor={colors.black}
+              />
+            )
+          )}
+        </View>
       </View>
     );
   };
@@ -155,15 +179,13 @@ const CentralDetailsTemplate = ({
           </CommonText>
           <DetailCard
             details={contactDetails}
-            headerId={intl.formatMessage({
-              id: "label.company_details",
-            })}
+            headerId={"label.company_details"}
             handleChange={(fieldName, value, codeValue) => {
               handleContactDetailsChange(fieldName, value, codeValue);
             }}
             customCardStyle={styles.customCardStyle}
             isColumnVariableWidth
-            isEditProfile={isEditProfile}
+            isEditProfile={isEditable}
             customContainerStyle={styles.customContainerStyle}
             handleBlur={(key, index) => {
               handleBlur(key, keys.contactDetails);
@@ -180,7 +202,7 @@ const CentralDetailsTemplate = ({
               handleInterviewDetailChange(fieldName, value, codeValue);
             }}
             isColumnVariableWidth
-            isEditProfile={isEditProfile}
+            isEditProfile={isEditable}
             customContainerStyle={styles.customContainerStyle}
             handleMultiSelect={handleInterviewDetailMultiSelect}
           />
@@ -199,9 +221,10 @@ const CentralDetailsTemplate = ({
                 {" *"}
               </CommonText>
             </View>
-            {renderSelectionProcess()}
+            {renderSelectionProcess({ isEditable })}
           </View>
           <AddDesignation
+            isEditable={isEditable}
             options={desginationData}
             requiredDocumentDetails={designationDetatils}
             setRequiredDocumentDetails={setDesignationDetatils}
@@ -219,7 +242,7 @@ const CentralDetailsTemplate = ({
     );
   };
 
-  const renderBottomSection = () => {
+  const renderBottomSection = ({ isEditable }) => {
     return (
       <View>
         <CardComponent customStyle={styles.cardStyle}>
@@ -228,36 +251,56 @@ const CentralDetailsTemplate = ({
             headerTextCustomStyles={styles.headerTextStyle}
           />
           <View style={styles.toggleComponent}>
-            <CustomToggleComponent
-              label={intl.formatMessage({ id: "label.company_ppt" })}
-              value={isCompanyPPt}
-              onValueChange={(item) => setIsCompanyPPT(item)}
-              customToggleStyle={styles.customToggleStyle}
-              customLabelStyle={styles.customLabelStyle}
-            />
+            {isEditable ? (
+              <CustomToggleComponent
+                label={intl.formatMessage({ id: "label.company_ppt" })}
+                value={isCompanyPPt}
+                onValueChange={(item) => setIsCompanyPPT(item)}
+                customToggleStyle={styles.customToggleStyle}
+                customLabelStyle={styles.customLabelStyle}
+              />
+            ) : (
+              <CustomLabelView
+                label={intl.formatMessage({ id: "label.company_ppt" })}
+              >
+                {intl.formatMessage({ id: `toggle.${isCompanyPPt ? 0 : 1}` })}
+              </CustomLabelView>
+            )}
           </View>
 
           {!isCompanyPPt && (
             <View style={styles.imageContainer}>
-              <UploadImage
-                {...{
-                  onDeleteImage,
-                  errorWhileUpload,
-                  fileUploadResult: updatedFileUploadResult,
-                  handleFileUpload,
-                  isUploadingImageToServer,
-                  setFileUploadResult,
-                  uploadPercentage,
-                  hideIconDelete: false,
-                  isDocumentUpload: true,
-                  fileTypes: ".pdf, .ppt, .pptx",
-                  fileLabel: "label.supported_document_PPT_PDF",
-                }}
-              />
+              {isEditable ? (
+                <UploadImage
+                  {...{
+                    onDeleteImage,
+                    errorWhileUpload,
+                    fileUploadResult: updatedFileUploadResult,
+                    handleFileUpload,
+                    isUploadingImageToServer,
+                    setFileUploadResult,
+                    uploadPercentage,
+                    hideIconDelete: false,
+                    isDocumentUpload: true,
+                  }}
+                />
+              ) : (
+                updatedFileUploadResult?.data?.url && (
+                  <PreviewImage
+                    fileUrl={updatedFileUploadResult?.data?.url}
+                    isDocumentUpload
+                    hideIconDelete
+                  />
+                )
+              )}
             </View>
           )}
           <AddBenefits
-            {...{ setRequiredDocumentDetails, requiredDocumentDetails }}
+            {...{
+              isEditable,
+              setRequiredDocumentDetails,
+              requiredDocumentDetails,
+            }}
           />
         </CardComponent>
       </View>
@@ -311,12 +354,15 @@ const CentralDetailsTemplate = ({
                   id: String(option["centre_id"]),
                   name: String(option["centre_name"]),
                 })}
+                isEditable={isEditable}
               />
               <View style={styles.innerContainerStyle}>
                 {renderRoundDetail()}
               </View>
             </View>
-            {!innerPageLoading && roundCenterDetails && renderBottomSection()}
+            {!innerPageLoading &&
+              roundCenterDetails &&
+              renderBottomSection({ isEditable })}
           </>
         }
         bottomSection={
@@ -337,38 +383,99 @@ const CentralDetailsTemplate = ({
                 {intl.formatMessage({ id: "label.back" })}
               </CommonText>
             </CustomButton>
-            <View style={styles.rightSection}>
+            {isEditable ? (
+              <View style={styles.rightSection}>
+                <CustomButton
+                  style={styles.buttonStyle}
+                  onPress={() => {
+                    isEditable ? setIsEditable(false) : navigate(-1);
+                  }}
+                >
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={styles.backButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.cancel" })}
+                  </CommonText>
+                </CustomButton>
+                {hasRoundTwo ? (
+                  <ActionPairButton
+                    buttonOneText={
+                      isEditable
+                        ? intl.formatMessage({
+                            id: "label.save",
+                          })
+                        : ""
+                    }
+                    buttonTwoText={
+                      isEditable
+                        ? intl.formatMessage({
+                            id: "label.submit",
+                          })
+                        : intl.formatMessage({ id: "label.done" })
+                    }
+                    onPressButtonOne={() => handleSave()}
+                    onPressButtonTwo={() => {
+                      if (isEditable) {
+                        handleSubmit();
+                      } else {
+                        navigate(-1);
+                      }
+                    }}
+                    disableLeftStyle={styles.disabled}
+                    isButtonOneDisabled={buttonDisabled}
+                    displayLoaderLeft={saveRoundDetailLoading}
+                    customLoadingStyleButtonOne={styles.loader}
+                    isDisabled={buttonDisabled}
+                    displayLoader={isSubmitting}
+                    customStyles={{
+                      ...isWebProps,
+                      customContainerStyle: commonStyles.customContainerStyle,
+                    }}
+                    isButtonTwoGreen
+                  />
+                ) : (
+                  <ActionPairButton
+                    buttonOneText={intl.formatMessage({ id: "label.save" })}
+                    buttonTwoText={intl.formatMessage({
+                      id: "label.next",
+                    })}
+                    onPressButtonOne={() => handleSave()}
+                    onPressButtonTwo={() => tabHandler("next")}
+                    disableLeftStyle={styles.disabled}
+                    isButtonOneDisabled={buttonDisabled}
+                    isDisabled={buttonDisabled}
+                    displayLoaderLeft={saveRoundDetailLoading}
+                    customStyles={{
+                      ...isWebProps,
+                      customContainerStyle: commonStyles.customContainerStyle,
+                    }}
+                    isButtonTwoGreen
+                  />
+                )}
+              </View>
+            ) : (
               <CustomButton
+                withGreenBackground
                 style={styles.buttonStyle}
-                onPress={() => navigate(-1)}
+                onPress={() => {
+                  if (hasRoundTwo) {
+                    navigate(-1);
+                  } else {
+                    tabHandler("next");
+                  }
+                }}
               >
                 <CommonText
                   fontWeight={"600"}
-                  customTextStyle={styles.backButtonStyle}
+                  customTextStyle={styles.nextButtonStyle}
                 >
-                  {intl.formatMessage({ id: "label.cancel" })}
+                  {hasRoundTwo
+                    ? intl.formatMessage({ id: "label.done" })
+                    : intl.formatMessage({ id: "label.next" })}
                 </CommonText>
               </CustomButton>
-              <ActionPairButton
-                buttonOneText={intl.formatMessage({ id: "label.save" })}
-                buttonTwoText={intl.formatMessage({
-                  id: "label.next",
-                })}
-                onPressButtonOne={() => handleSave()}
-                onPressButtonTwo={() => {
-                  tabHandler("next");
-                }}
-                disableLeftStyle={styles.disabled}
-                isButtonOneDisabled={buttonDisabled}
-                isDisabled={buttonDisabled}
-                displayLoaderLeft={saveRoundDetailLoading}
-                customStyles={{
-                  ...isWebProps,
-                  customContainerStyle: commonStyles.customContainerStyle,
-                }}
-                isButtonTwoGreen
-              />
-            </View>
+            )}
           </View>
         }
       />
@@ -388,11 +495,12 @@ const CentralDetailsTemplate = ({
           centerListError={centerListError}
         />
       )}
-      {!!errorWhileUpdating && (
+      {(!!errorWhileUpdating || !!errorWhileSubmitting) && (
         <ToastComponent
-          toastMessage={errorWhileUpdating}
+          toastMessage={errorWhileUpdating || errorWhileSubmitting}
           onDismiss={() => {
             setErrorWhileUpdating("");
+            setDesignationDetatils("");
           }}
         />
       )}

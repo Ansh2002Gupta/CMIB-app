@@ -173,7 +173,7 @@ export const mapPostedPlaceApiToUI = () => {
   ];
 };
 
-export const mapDataToUI = (data) => {
+export const mapDataToUI = (data, isWebView) => {
   return {
     designation: data?.designation || "-",
     compensation: convertStringtoNumber(data?.compensation) || "-",
@@ -191,7 +191,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_basic) || "-",
         placeholder: "label.basic",
         isMandatory: true,
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -202,7 +202,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_hra) || "-",
         isMandatory: true,
         placeholder: "label.hra",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -213,7 +213,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_other) || "-",
         isMandatory: true,
         placeholder: "label.others",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -224,7 +224,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_fixed_pay) || "-",
         isMandatory: true,
         placeholder: "label.fixedPay",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -236,7 +236,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.monthly?.monthly_variable_pay) || "-",
         isMandatory: true,
         placeholder: "label.variablePay",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -248,7 +248,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.monthly?.monthly_semi_variable) || "-",
         isMandatory: true,
         placeholder: "label.semiVariable",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -259,7 +259,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_take_home) || "-",
         isMandatory: true,
         placeholder: "label.takeHome",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -271,7 +271,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.monthly?.monthly_gross_salary) || "-",
         isMandatory: true,
         placeholder: "label.enter_gross_Salary",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isEditable: false,
@@ -286,7 +286,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.yearly?.yearly_one_time_payment) || "-",
         isMandatory: true,
         placeholder: "label.oneTimePayment",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -298,7 +298,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.yearly?.yearly_total_gross_salary) || "-",
         isMandatory: true,
         placeholder: "label.totalGrossSalary",
-        isRow: true,
+        isRow: isWebView,
         isEditable: false,
         maxLength: 9,
         isRupee: true,
@@ -683,7 +683,7 @@ export const mapDataToPayload = (data, currentModule) => {
     } else if (item.key === "document_type") {
       acc[cellID].doc_type = item.value;
     } else if (item.key === "no_of_copies") {
-      acc[cellID].no_of_photocopies = parseInt(item.value, 10);
+      acc[cellID].no_of_photocopies = item.value || 0;
     }
     if (!!item.id) {
       acc[cellID].id = item?.id;

@@ -39,7 +39,9 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
     try {
       let modifiedURL = overrideUrl || url; // Use overrideUrl if provided, otherwise use the default url
       if (queryParamsObject && objectToQueryString(queryParamsObject)) {
-        modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;
+        modifiedURL = `${modifiedURL}?${objectToQueryString(
+          queryParamsObject
+        )}`;
       }
       setApiStatus(API_STATUS.LOADING);
       error && setError("");

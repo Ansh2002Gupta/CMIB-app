@@ -103,11 +103,9 @@ const JobDetailsTemplate = ({
               errorMessage={validateError?.designation}
             />
           ) : (
-            <RenderHeadingAndValue
-              label={intl.formatMessage({ id: "label.designation" })}
-              value={renderJobDetails?.designation}
-              isMandatory={true}
-            />
+            <CommonText customTextStyle={styles.roundHeaderText}>
+              {renderJobDetails?.designation}
+            </CommonText>
           )}
 
           <View style={containerStyle}>
@@ -173,9 +171,11 @@ const JobDetailsTemplate = ({
               handleInputChange("role_responsibility", val)
             }
             disabled={!isEditable}
-            isViewMore
             customHandleBlur={() => handleBlur("role_responsibility")}
             errorMessage={validateError?.role_responsibility}
+            quilStyle={
+              isEditable ? styles.editCustomQuilStyle : styles.customQuilStyle
+            }
           />
           {isEditable ? (
             <CustomTextInput
@@ -286,14 +286,14 @@ const JobDetailsTemplate = ({
       content: (
         <View style={styles.bottomMargin}>
           <DetailCard
-            headerId={intl.formatMessage({ id: "label.monthly" })}
+            headerId={"label.monthly"}
             details={renderJobDetails?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile={isEditable}
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
-            headerId={intl.formatMessage({ id: "label.yearly" })}
+            headerId={"label.yearly"}
             details={renderJobDetails?.yearly}
             handleChange={handleYearlyData}
             isEditProfile={isEditable}
@@ -438,61 +438,48 @@ const JobDetailsTemplate = ({
     },
   ];
 
-  let filteredJobDetailsConfig = [];
   let filteredWebJobDetailsConfig = [];
-  if (currentBreakpoint === "xs") {
-    if (!addDesignation) {
-      filteredJobDetailsConfig = JobDetailsConfig.slice(0, 1);
-    } else {
-      filteredJobDetailsConfig = JobDetailsConfig.filter(
-        (_, index) => index !== 0
-      );
-    }
-  } else {
-    filteredWebJobDetailsConfig = JobDetailsConfig.filter(
-      (_, index) => index !== 0
-    );
-  }
+
+  filteredWebJobDetailsConfig = JobDetailsConfig.filter(
+    (_, index) => index !== 0
+  );
 
   return (
     <CustomScrollView style={styles.scrollViewStyle}>
-      {currentBreakpoint === "xs" ? (
-        <MultiRow rows={filteredJobDetailsConfig} />
-      ) : (
-        <View style={styles.mainContainer}>
-          <View>
-            <ConfigurableList
-              customOuterContianer={styles.configurableStyle}
-              componentContainer={styles.componentContainer}
-              title={intl.formatMessage({ id: "label.desgination" })}
-              searchQuery={configurableListQuery}
-              setSearchQuery={setConfigurableListQuery}
-              selectedOptions={selectedOptions}
-              onDelete={handleDelete}
-              onPress={handlePress}
-              onAdd={handleAdd}
-              options={desginationItems}
-              menuOptions={menuOptions}
-              setMenuOptions={setMenuOptions}
-              nameField={"designation"}
-            />
-          </View>
-          <View style={styles.innerContainerStyle}>
-            {!!selectedOptions.length ? (
-              <MultiRow rows={filteredWebJobDetailsConfig} />
-            ) : (
-              <CardComponent customStyle={styles.emptyCard}>
-                <CommonText
-                  fontWeight={"600"}
-                  customTextStyle={styles.selectionProcessStyle}
-                >
-                  {intl.formatMessage({ id: "label.click_on_add_button" })}
-                </CommonText>
-              </CardComponent>
-            )}
-          </View>
+      <View style={isWebView ? styles.mainContainer : styles.mainContainerMob}>
+        <View style={isWebView ? styles.leftSectionStyle : {}}>
+          <ConfigurableList
+            customOuterContianer={styles.configurableStyle}
+            componentContainer={styles.componentContainer}
+            title={intl.formatMessage({ id: "label.desgination" })}
+            searchQuery={configurableListQuery}
+            setSearchQuery={setConfigurableListQuery}
+            selectedOptions={selectedOptions}
+            onDelete={handleDelete}
+            onPress={handlePress}
+            onAdd={handleAdd}
+            options={desginationItems}
+            menuOptions={menuOptions}
+            setMenuOptions={setMenuOptions}
+            nameField={"designation"}
+            isEditable={isEditable}
+          />
         </View>
-      )}
+        <View style={isWebView ? styles.innerContainerStyle : {}}>
+          {!!selectedOptions.length ? (
+            <MultiRow rows={filteredWebJobDetailsConfig} />
+          ) : (
+            <CardComponent customStyle={styles.emptyCard}>
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={styles.selectionProcessStyle}
+              >
+                {intl.formatMessage({ id: "label.click_on_add_button" })}
+              </CommonText>
+            </CardComponent>
+          )}
+        </View>
+      </View>
     </CustomScrollView>
   );
 };

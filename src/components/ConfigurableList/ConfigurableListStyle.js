@@ -19,11 +19,9 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGray,
     borderWidth: 1,
     overflow: "hidden",
-    minWidth: 300,
     minHeight: 360,
   },
   titleStyles: {
-    fontWeight: 600,
     fontSize: 16,
   },
   header: {
@@ -100,14 +98,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexShrink: 1,
     padding: 8,
-    maxWidth: 300,
     gap: 15,
   },
   item: {
     paddingLeft: 12,
     paddingRight: 12,
     fontSize: 14,
-    fontWeight: 500,
     color: colors.darkGrey,
     ...Platform.select({
       web: {
@@ -129,7 +125,6 @@ const styles = StyleSheet.create({
   },
   message: {
     textAlign: "center",
-    fontWeight: 500,
     color: colors.darkGrey,
     marginTop: 20,
   },

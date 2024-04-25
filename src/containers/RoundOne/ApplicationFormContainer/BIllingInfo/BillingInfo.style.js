@@ -46,5 +46,6 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderTopWidth: 0.5,
   },
+  nextButtonStyle: { fontSize: 14, color: colors.white },
 });
 export default styles;
