@@ -3,7 +3,6 @@ import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { TextInput } from "@unthinkable/react-core-components";
 
-import colors from "../../assets/colors";
 import getStyles from "./TextArea.style";
 
 const TextArea = ({ customStyle, height, placeholderTextColor, ...props }) => {
@@ -14,7 +13,7 @@ const TextArea = ({ customStyle, height, placeholderTextColor, ...props }) => {
     <TextInput
       height={height}
       multiline
-      placeholderTextColor={placeholderTextColor}
+      placeholderTextColor={placeholderTextColor || theme.colors.darkGrey}
       style={{ ...styles.inputStyle, customStyle }}
       {...props}
     />
@@ -24,7 +23,6 @@ const TextArea = ({ customStyle, height, placeholderTextColor, ...props }) => {
 TextArea.defaultProps = {
   customStyle: {},
   height: 84,
-  placeholderTextColor: colors.darkGrey,
 };
 
 TextArea.propTypes = {

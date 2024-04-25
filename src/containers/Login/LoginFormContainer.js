@@ -1,7 +1,7 @@
 //TODO: Add the current Login code here. Currently these files are just for reference
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import {
   ScrollView,
   TouchableOpacity,
@@ -16,7 +16,7 @@ import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLa
 import FollowUsIcons from "../../components/FollowUsIcons";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import useLoginForm from "./controllers/useLoginForm";
-import { getResponsiveStyles, styles } from "./LoginFormContainer.style";
+import { getResponsiveStyles, getStyles } from "./LoginFormContainer.style";
 
 const LoginFormContainer = () => {
   const {
@@ -39,6 +39,8 @@ const LoginFormContainer = () => {
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const isWebView = currentBreakpoint !== "xs";
 
@@ -56,7 +58,11 @@ const LoginFormContainer = () => {
             label={intl.formatMessage({ id: "label.secure_login_access" })}
             customTextStyle={
               isWebView
-                ? getResponsiveStyles({ str: "label.cmib", currentBreakpoint })
+                ? getResponsiveStyles({
+                    str: "label.cmib",
+                    currentBreakpoint,
+                    theme,
+                  })
                 : {}
             }
             customSecondHeadingStyles={

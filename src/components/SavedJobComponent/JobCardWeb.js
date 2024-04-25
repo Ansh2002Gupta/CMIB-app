@@ -18,7 +18,6 @@ import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo, formatSalaryRange } from "../../utils/util";
 import images from "../../images";
-import colors from "../../assets/colors";
 import getStyles from "./SavedJobComponent.style";
 
 const JobCardWeb = ({
@@ -55,8 +54,8 @@ const JobCardWeb = ({
         content: (
           <Chip
             label={item?.name || item}
-            textColor={colors.black}
-            bgColor={colors.white}
+            textColor={theme.colors.black}
+            bgColor={theme.colors.white}
             customContainerStyle={style.customContainerStyle}
           />
         ),
@@ -71,8 +70,8 @@ const JobCardWeb = ({
           label={`${vaccancies} ${intl.formatMessage({
             id: "label.vacancies",
           })}`}
-          bgColor={colors.lightGray}
-          textColor={colors.black}
+          bgColor={theme.colors.lightGray}
+          textColor={theme.colors.black}
         />
       ),
       style: style.chipStyle,

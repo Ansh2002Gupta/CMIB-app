@@ -7,7 +7,6 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import CommonText from "../CommonText";
 import PopupMessage from "../PopupMessage/PopupMessage";
 import { convertGraphData } from "../../utils/util";
-import colors from "../../assets/colors";
 import getStyles from "./PieChart.style";
 
 const PieChart = ({
@@ -74,7 +73,7 @@ const PieChart = ({
           labels={renderLabel}
           style={{
             data: {
-              stroke: colors.white,
+              stroke: theme.colors.white,
               strokeWidth: 0.25,
             },
 

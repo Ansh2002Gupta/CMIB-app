@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../components/ActionPairButton";
@@ -9,7 +10,7 @@ import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
 import MultiRow from "../../core/layouts/MultiRow";
 import images from "../../images";
-import styles, {
+import getStyles, {
   getButtonStyle,
   getTextStyle,
 } from "./ConfirmationModal.style";
@@ -30,6 +31,9 @@ const ConfirmationModal = ({
   severity,
   subHeading,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const getIcon = () => {
     switch (severity) {
       case "error":
@@ -73,9 +77,12 @@ const ConfirmationModal = ({
       content: hasSingleButton ? (
         <CustomButton
           onPress={onPressButtonOne}
-          style={{ ...getButtonStyle(severity) }}
+          style={{ ...getButtonStyle(severity, theme) }}
           customStyle={{
-            customTextStyle: { ...getTextStyle(severity), ...buttonOneStyle },
+            customTextStyle: {
+              ...getTextStyle(severity, theme),
+              ...buttonOneStyle,
+            },
           }}
         >
           {buttonOneText}
@@ -86,10 +93,13 @@ const ConfirmationModal = ({
           buttonTwoText={buttonTwoText}
           customStyles={{
             buttonOneStyle: buttonOneStyle,
-            buttonTwoStyle: { ...getButtonStyle(severity), ...buttonTwoStyle },
+            buttonTwoStyle: {
+              ...getButtonStyle(severity, theme),
+              ...buttonTwoStyle,
+            },
             buttonOneTextStyle: buttonOneTextStyle,
             buttonTwoTextStyle: {
-              ...getTextStyle(severity),
+              ...getTextStyle(severity, theme),
               ...buttonTwoTextStyle,
             },
           }}

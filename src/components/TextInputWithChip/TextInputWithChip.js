@@ -6,7 +6,6 @@ import {
 } from "@unthinkable/react-core-components";
 import React, { useEffect, useState } from "react";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
-import colors from "../../assets/colors";
 import getStyles from "./TextInputWithChip.style";
 
 const TextInputWithChip = ({
@@ -44,7 +43,7 @@ const TextInputWithChip = ({
         value={inputValue}
         onChangeText={setInputValue}
         placeholder={placeholderText}
-        placeholderTextColor={colors.darkGrey}
+        placeholderTextColor={theme.colors.darkGrey}
         onSubmitEditing={handleAddChip}
         returnKeyType="done"
         style={styles.input}

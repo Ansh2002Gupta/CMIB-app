@@ -28,7 +28,6 @@ import UploadImage from "../../../../components/UploadImage";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { keys } from "./controllers/utils";
 import images from "../../../../images";
-import colors from "../../../../assets/colors";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import getStyles from "./CentralDetailsForms.styles";
 
@@ -146,8 +145,8 @@ const CentralDetailsTemplate = ({
             ) : (
               <Chip
                 label={item.key}
-                bgColor={colors.secondaryGrey}
-                textColor={colors.black}
+                bgColor={theme.colors.secondaryGrey}
+                textColor={theme.colors.black}
               />
             )
           )}

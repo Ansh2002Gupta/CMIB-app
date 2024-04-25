@@ -1,5 +1,3 @@
-import colors from "../../assets/colors";
-
 const getStyles = (theme) => {
   const { colors } = theme;
 
