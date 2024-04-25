@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { useNavigate } from "../../../../routes";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
@@ -29,7 +30,7 @@ import { keys } from "./controllers/utils";
 import images from "../../../../images";
 import colors from "../../../../assets/colors";
 import commonStyles from "../../../../theme/styles/commonStyles";
-import styles from "./CentralDetailsForms.styles";
+import getStyles from "./CentralDetailsForms.styles";
 
 const CentralDetailsTemplate = ({
   handleContactDetailsChange,
@@ -98,6 +99,9 @@ const CentralDetailsTemplate = ({
     setFileUploadResult,
     uploadPercentage,
   } = uploadImageToServerUtils;
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const hasCompanyLogo = false;
   const defaultUploadResult = hasCompanyLogo ? { data: { url: false } } : null;

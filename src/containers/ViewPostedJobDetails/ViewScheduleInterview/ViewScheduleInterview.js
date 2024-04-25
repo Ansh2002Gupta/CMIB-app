@@ -1,5 +1,6 @@
 import { View } from "@unthinkable/react-core-components";
 import React, { useRef, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import MobileCard from "../../PostedJobs/MobileCard";
 import CustomTable from "../../../components/CustomTable";
 import DownloadMoreComponent from "../../PostedJobs/DownloadMoreComponent";
@@ -7,7 +8,6 @@ import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   SCHEDULE_LISTING as tableHeading,
 } from "../../../constants/constants";
-import styles from "./ViewScheduleInterview.styles";
 import { useIntl } from "react-intl";
 import useGetScheduleList from "../../../views/ViewPostedJobDetails/controller/useGetScheduleList";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
@@ -15,12 +15,15 @@ import ViewInterviewDetails from "../../ViewInterviewDetails";
 import ScheduleInterviewModal from "../../ScheduleInterviewModal/ScheduleInterviewModal";
 import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
+import getStyles from "./ViewScheduleInterview.styles";
 
 const ViewScheduleInterview = ({ id }) => {
   const [isModalVisible, setIsModalVisible] = useState(null);
   const selectedApplicant = useRef(null);
   const applicantId = useRef(null);
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const onClickAction = (selectedItem, item) => {
     applicantId.current = item.application_id;

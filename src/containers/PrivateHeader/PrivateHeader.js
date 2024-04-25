@@ -16,6 +16,8 @@ import UserAccountInfo from "../../components/UserAccountInfo";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { navigations } from "../../constants/routeNames";
 import styles from "./PrivateHeader.style";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./PrivateHeader.style";
 
 const PrivateHeader = ({
   onPressLeftIcon = () => {},
@@ -24,6 +26,8 @@ const PrivateHeader = ({
   rightIcon,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const location = useLocation();
   const windowDimensions = useWindowDimensions();
   const [userProfileState] = useContext(UserProfileContext);

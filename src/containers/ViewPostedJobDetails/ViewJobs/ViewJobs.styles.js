@@ -1,11 +1,14 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  backgroundColorWhite: {
-    backgroundColor: "white",
-  },
-});
-export default styles;
+  return {
+    container: {
+      flex: 1,
+    },
+    backgroundColorWhite: {
+      backgroundColor: "white",
+    },
+  };
+};
+
+export default getStyles;

@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { useNavigate } from "../../../../routes";
 import { View, Platform } from "@unthinkable/react-core-components";
 
@@ -18,7 +19,7 @@ import useBillingInfo from "./controller/useBillingInfo";
 import { BILLING_INFO_HEADING_FOR_NQCA } from "../../../../constants/constants";
 import images from "../../../../images";
 import commonStyles from "../../../../theme/styles/commonStyles";
-import styles from "./BillingInfo.style";
+import getStyles from "./BillingInfo.style";
 
 const BillingInfo = ({ isEditable, tabHandler, setIsEditable }) => {
   const {
@@ -32,6 +33,8 @@ const BillingInfo = ({ isEditable, tabHandler, setIsEditable }) => {
     totalAmount,
   } = useBillingInfo();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const navigate = useNavigate();
   const isWebProps =
     Platform.OS.toLowerCase() === "web"

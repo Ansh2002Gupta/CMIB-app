@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import {
@@ -16,7 +17,7 @@ import CommonText from "../../../components/CommonText";
 import IconHeader from "../../../components/IconHeader/IconHeader";
 import useIsWebView from "../../../hooks/useIsWebView";
 import classes from "../../../theme/styles/CssClassProvider";
-import styles from "./MainContainer.style";
+import getStyles from "./MainContainer.style";
 
 const MainContainerTemplate = ({
   onPressCard,
@@ -26,6 +27,8 @@ const MainContainerTemplate = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
   const cardComponentWebProps = isWebPlatform

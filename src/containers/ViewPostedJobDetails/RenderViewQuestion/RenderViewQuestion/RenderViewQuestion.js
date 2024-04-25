@@ -1,12 +1,15 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../../components/CardComponent";
 import CommonText from "../../../../components/CommonText";
-import styles from "./RenderViewQuestion.styles";
 import { getQuestionType } from "../../../../utils/util";
+import getStyles from "./RenderViewQuestion.styles";
 
 const RenderViewQuestion = ({ item, index }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <View style={styles.container}>
       <CardComponent>

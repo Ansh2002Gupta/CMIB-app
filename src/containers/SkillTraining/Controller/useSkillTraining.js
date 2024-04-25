@@ -10,6 +10,8 @@ import {
   updateState,
 } from "./utils";
 import styles from "../SkillTraining.style";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "../SkillTraining.style";
 
 const languageSkill = [
   {
@@ -129,6 +131,8 @@ const otherSkillField = (value) => [
 
 export const useSkillTraining = ({ state, isEditable }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [languagesKnownState, setLanguagesKnownState] = useState([
     languagesKnownField(),
   ]);

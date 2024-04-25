@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { useNavigate } from "../../../../routes";
 import { View, Platform } from "@unthinkable/react-core-components";
 
@@ -15,7 +16,6 @@ import LoadingScreen from "../../../../components/LoadingScreen";
 import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent";
 import usePaymentForm from "./controllers/usePaymentForm";
 import images from "../../../../images";
-import styles from "./PaymentForm.style";
 
 import { TRANSACTION_LIST_HEADING_FOR_NQCA } from "../../../../constants/constants";
 import { TwoRow } from "../../../../core/layouts";
@@ -23,6 +23,7 @@ import ActionPairButton from "../../../../components/ActionPairButton";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { formateErrors } from "../../../../utils/util";
+import getStyles from "./PaymentForm.style";
 
 const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
   const {
@@ -49,6 +50,8 @@ const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
   } = usePaymentForm({ isEditable });
 
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const navigate = useNavigate();
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
