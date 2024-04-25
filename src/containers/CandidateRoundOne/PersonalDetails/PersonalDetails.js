@@ -21,7 +21,7 @@ const PersonalDetails = (
 ) => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
-  const { handlePersonalDetails, personalDetails } = usePersonalDetailsAPI();
+  const { handlePersonalDetails, personalDetails, filledData, fetchFilledData } = usePersonalDetailsAPI();
 
   const [isPersonalDetailsCompleted, setisPersonalDetailsCompleted] =
     useState(false);
@@ -68,6 +68,7 @@ const PersonalDetails = (
 
   useEffect(() => {
     handlePersonalDetails();
+    fetchFilledData();
     //BUG: adding deps causes infinite loop
   }, []);
 
@@ -80,6 +81,7 @@ const PersonalDetails = (
           isWebView={isWebView}
           onValidationChange={handlePersonalDetailsFields}
           personalDetails={personalDetails}
+          filledData={filledData}
         />
       ),
     },
@@ -92,6 +94,7 @@ const PersonalDetails = (
           countryCodeData={countryCodeData}
           onValidationChange={handleCorresponAddFields}
           userProfileDetails={userProfileDetails}
+          filledData={filledData}
         />
       ),
     },
@@ -102,6 +105,7 @@ const PersonalDetails = (
           intl={intl}
           isWebView={isWebView}
           onValidationChange={handlePermanentAddFields}
+          filledData={filledData}
         />
       ),
     },

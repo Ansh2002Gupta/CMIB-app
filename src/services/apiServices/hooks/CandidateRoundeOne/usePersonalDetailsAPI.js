@@ -8,6 +8,7 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/erro
 const usePersonalDetailsAPI = () => {
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [personalDetails, setPersonalDetails] = useState({});
+  const [filledData, setFilledData] = useState({});
   const [apiError, setApiError] = useState("");
 
   const { Http } = useHttpService();
@@ -38,6 +39,24 @@ const usePersonalDetailsAPI = () => {
     }
   };
 
+  const fetchFilledData = async () => {
+    try {
+      
+      const res = await Http.get('/member/nqca-placements/rounds/264/personal');
+      if (
+        res.status === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_STATUS
+      ) {
+        setFilledData(res.data);
+        
+        return;
+      }
+     
+    } catch (err) {
+      
+    }
+  };
+
   const isLoading = apiStatus === API_STATUS.LOADING;
   const isSuccess = apiStatus === API_STATUS.SUCCESS;
   const isError = apiStatus === API_STATUS.ERROR;
@@ -50,6 +69,8 @@ const usePersonalDetailsAPI = () => {
     isLoading,
     isSuccess,
     personalDetails,
+    fetchFilledData,
+    filledData,
   };
 };
 
