@@ -36,6 +36,8 @@ export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`;
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DETAIL = `/detail`;
+export const CENTRES = "/centres";
+export const STATUS_UPDATE = "/status-update";
 
 //sub routes
 export const ACADEMICS = "/academics";
