@@ -44,6 +44,7 @@ export const ACTIVITIES = "/activities";
 export const APPLICANT = "/applicant";
 export const APPLICATION = "/application";
 export const BILLING_INFO = "/billing-info";
+export const DECLARATION_FORM = "/declaration-form";
 export const FILTERS = "/filters";
 export const INTERVIEWS = "/interviews";
 export const INTERVIEW = "/interview";

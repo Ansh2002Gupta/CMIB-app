@@ -1,5 +1,6 @@
 //Libraries
 import React, { useImperativeHandle, useRef, useState } from "react";
+import { useParams } from "react-router";
 //UI & Styling
 import WorkExperienceDetailsTemplate from "./WorkExperienceDetailsTemplate";
 import useExamDetailsAPI from "../../../services/apiServices/hooks/CandidateRoundeOne/useExamDetailsAPI";
@@ -20,13 +21,14 @@ const WorkExperienceDetails = (
   ref
 ) => {
   const { currentModule } = useGetCurrentUser();
+  const id = useParams();
   const {
     fetchData: getWorkExperience,
     data: workExperienceData,
     isLoading: isGettingWorkExperience,
     error: errorWhileGettingWorkExperience,
   } = useFetch({
-    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/264${MEMBER_WORK_EXPERIENCE}`,
+    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${MEMBER_WORK_EXPERIENCE}`,
   });
 
   const [
