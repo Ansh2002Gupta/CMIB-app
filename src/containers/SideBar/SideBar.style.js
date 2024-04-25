@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   changeText: {
     color: colors.white,
-    fontSize: 14,
+    fontSize: 16,
   },
   menuItemsText: {
     color: colors.darkBlueShade,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   visitWebsiteText: {
     color: colors.lightGrey,
     paddingLeft: 12,
-    fontSize: 14,
+    fontSize: 16,
   },
   logoStyle: {
     margin: 20,
