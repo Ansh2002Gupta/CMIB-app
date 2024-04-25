@@ -4,14 +4,10 @@ import CommonText from "../../../../components/CommonText";
 import TouchableImage from "../../../../components/TouchableImage";
 import images from "../../../../images";
 import styles from "./RenderMobileItems.styles";
-import { useIntl } from "react-intl";
 import { formatDate } from "../../../../utils/util";
 const RenderMobileItem = ({ item, lastElement, onPress }) => {
-  const intl = useIntl();
-
-
   const onIconPress = (item) => {
-    onPress(item)
+    onPress(item);
   };
 
   return (
@@ -22,12 +18,15 @@ const RenderMobileItem = ({ item, lastElement, onPress }) => {
       }}
     >
       <View style={styles.flex1}>
-        <CommonText customTextStyle={styles.font14} customTextProps={{ numberOfLines: 1 }}>
+        <CommonText
+          customTextStyle={styles.font14}
+          customTextProps={{ numberOfLines: 1 }}
+        >
           {item?.package_name ?? "-"}
         </CommonText>
         <View style={styles.innerContainer}>
           <CommonText customTextStyle={styles.textStyle}>
-            {item?.price?? "-"}
+            {item?.price ?? "-"}
           </CommonText>
           <TouchableImage
             source={images.dotIcon}
@@ -49,7 +48,9 @@ const RenderMobileItem = ({ item, lastElement, onPress }) => {
             customContainerStyle={styles.marginLeft(4)}
             customTextStyle={styles.textStyle}
           >
-            {formatDate(item?.start_date) + '-' + formatDate(item?.validity_date) ?? "-"}
+            {formatDate(item?.start_date) +
+              "-" +
+              formatDate(item?.validity_date) ?? "-"}
           </CommonText>
         </View>
       </View>
@@ -60,7 +61,7 @@ const RenderMobileItem = ({ item, lastElement, onPress }) => {
           }}
           source={images.iconEyeSvg}
           imageStyle={{ height: 20, width: 20 }}
-          isSvg={true}
+          isSvg
         />
       </View>
     </View>

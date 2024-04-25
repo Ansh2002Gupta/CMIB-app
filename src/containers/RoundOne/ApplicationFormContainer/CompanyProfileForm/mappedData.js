@@ -292,8 +292,8 @@ export const mapApiDataToUI = ({
       {
         key: "state",
         label: "label.state",
-        value: checkValue(state?.code),
-        defaultValue: checkValue(state?.name),
+        value: checkValue(state?.state_code),
+        defaultValue: checkValue(state?.state),
         isMajor: true,
         placeholder: "label.state",
         isMandatory: true,

@@ -969,6 +969,9 @@ const locale = {
   "label.viewPPT": "View PPT",
   "label.view": "View",
   "label.contact_details": "Contact details",
+  "label.totalPosition": "Total Position: ",
+  "label.categories": "Categories",
+  "label.add_contact": "Add Contact",
 };
 
 export default locale;

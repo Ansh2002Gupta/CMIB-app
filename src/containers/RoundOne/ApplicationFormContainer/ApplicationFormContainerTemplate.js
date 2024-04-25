@@ -131,12 +131,12 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   };
 
   let tabConfig = [
-    // {
-    //   component: CompanyProfile,
-    // },
-    // {
-    //   component: JobDetails,
-    // },
+    {
+      component: CompanyProfile,
+    },
+    {
+      component: JobDetails,
+    },
     {
       component: PreInterviewPreferences,
     },
