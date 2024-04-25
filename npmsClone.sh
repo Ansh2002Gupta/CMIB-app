@@ -5,7 +5,7 @@ cd src/npms
 git clone https://x-token-auth:ATCTT3xFfGN0Q7JAFDWFD2M1RhPAsuPbXp5i05-L9rg9E9tFspPJTpWqlfI-_kFtkuTpWkuDZKE1_AkolNkpqBT4SaZ5_vEU84ch4t4MgHNuKeDqM76zRPuvSCoFTNq1MbUyvQe9TUammi41sfcPbDsOzN2tPfoBK4qplh38FgO3Spyg7Cbj43s=6B67B175@bitbucket.org/daffodilsoftware/react-core.git
 cd react-core
 git config credential.helper store
-git checkout 2dc145bbc065a459428b013e1f4be958c3b5039b # master
+git checkout a100e460245bf461e4cfe7bac2cd7104b768d912 # master
 cd ..
 
 git clone https://x-token-auth:ATCTT3xFfGN0v1JIfP53ZtlyOwCFeX665APaYSMbANGeZXym9jRU3VIogLlgBab3VDLAp3HfUX3ZNyeb09M8RkO1Avv_49ofA8YoGJyFVihFmU5zpJAw0u2DZEd5FHDCZBgmelA7AL7lKe__nq7swxgAHxvRTo2EGXQW57bTwrlU5HYw6dIxOCM=B2F27283@bitbucket.org/daffodilsoftware/unthinkable-react-button.git react-button

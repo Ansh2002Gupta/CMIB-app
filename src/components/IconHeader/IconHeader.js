@@ -37,7 +37,6 @@ const IconHeader = ({
   subHeading,
   showInWeb,
   showHeaderContent = true,
-  customHeaderContainer,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -94,9 +93,7 @@ const IconHeader = ({
               !isWebView ? styles.titleContainer : styles.titleContainerWeb
             }
           >
-            <View
-              style={{ ...styles.headingContainer, ...customHeaderContainer }}
-            >
+            <View style={styles.headingContainer}>
               <CommonText
                 customTextStyle={{
                   ...(!isWebView

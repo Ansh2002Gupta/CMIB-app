@@ -164,10 +164,10 @@ const FilterModal = ({
         <View style={styles.customExperienceContainer}>
           <CommonText customTextStyle={styles.customExperience}>
             {`${
-              !!filterState[`selected${filterObj?.name}`]
-                ? filterState[`selected${filterObj?.name}`]
+              !!filterState?.selectedExperience
+                ? filterState?.selectedExperience
                 : 0
-            } ${filterObj?.unit ?? "Years"}`}
+            } ${unit}`}
           </CommonText>
         </View>
         <Slider
@@ -176,24 +176,20 @@ const FilterModal = ({
           minimumValue={filterObj?.minimumSliderLimit}
           step={1}
           onChange={(val) =>
-            filterObj?.handler(
-              { value: val },
-              filterObj?.name ?? "Experience",
-              "value"
-            )
+            filterObj?.handler({ value: val }, "Experience", "value")
           }
           value={
-            !!filterState[`selected${filterObj?.name}`]
-              ? filterState[`selected${filterObj?.name}`]
+            !!filterState?.selectedExperience
+              ? filterState?.selectedExperience
               : 0
           }
         />
         <View style={styles.limitsContainer}>
           <CommonText customTextStyle={styles.sliderLimitLabel}>
-            {`${filterObj?.minimumSliderLimit} ${filterObj?.unit ?? "Years"}`}
+            {`${filterObj?.minimumSliderLimit} ${unit}`}
           </CommonText>
           <CommonText customTextStyle={styles.sliderLimitLabel}>
-            {`${filterObj?.maximumSliderLimit} ${filterObj?.unit ?? "Years"}`}
+            {`${filterObj?.maximumSliderLimit} ${unit}`}
           </CommonText>
         </View>
       </View>
