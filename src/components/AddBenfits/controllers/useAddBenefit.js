@@ -38,10 +38,7 @@ const useAddBenefit = ({
   const [editDocumentModal, setEditDocumentModal] = useState();
   const [editDocumentIndex, setEditDocumentIndex] = useState();
   const [isFormValid, setIsFormValid] = useState(false);
-  const [documentDetail, setDocumentDetail] = useState({
-    benefitsDetails: "",
-    benefitAmount: "",
-  });
+  const [documentDetail, setDocumentDetail] = useState(null);
   const [isInitialDataAdded, setIsInitialDataAdded] = useState(false);
   useEffect(() => {
     if (editDocumentModal) {
@@ -67,13 +64,17 @@ const useAddBenefit = ({
     }
   }, [isInitialDataAdded, requiredDocumentDetails]);
 
-  const onClickAddDocument = () => {
+  const onClickAddDocument = (cellID) => {
+    setDocumentDetail({ cellID });
     setAddDocumentModal(true);
   };
 
   const validateForm = () => {
-    const isDocumentNameValid = documentDetail.benefitsDetails.trim() !== "";
-    const isDocumentTypeValid = documentDetail.benefitAmount.trim() !== "";
+    const isDocumentNameValid =
+      documentDetail?.benefits_details &&
+      documentDetail?.benefits_details !== "";
+    const isDocumentTypeValid =
+      documentDetail?.benefits_amount && documentDetail?.benefits_amount !== "";
 
     setIsFormValid(
       (isDocumentNameValid && isDocumentTypeValid && true) || false
@@ -83,10 +84,7 @@ const useAddBenefit = ({
   const onClickAddDocumentCancelButton = () => {
     setAddDocumentModal(false);
     setEditDocumentModal(false);
-    setDocumentDetail({
-      benefitsDetails: "",
-      benefitAmount: "",
-    });
+    setDocumentDetail(null);
   };
 
   const handleMultiRowDocumentDetails = (propertyName, value, id) => {
@@ -111,39 +109,72 @@ const useAddBenefit = ({
   };
 
   const onClickAddDocumentSaveButton = () => {
-    if (editDocumentModal && editDocumentIndex !== -1) {
-      setRequiredDocumentDetails((prev) => {
-        const updatedList = [...prev];
-        updatedList[editDocumentIndex] = { ...documentDetail };
-        return updatedList;
+    const { benefits_details, benefits_amount, cellID } = documentDetail;
+
+    if (editDocumentIndex !== -1) {
+      const updatedDocumentDetails = requiredDocumentDetails.map((item) => {
+        if (item.cellID === cellID) {
+          switch (item.key) {
+            case "benefits_details":
+              return { ...item, value: benefits_details };
+            case "benefits_amount":
+              return { ...item, value: benefits_amount };
+            default:
+              return item;
+          }
+        }
+        return item;
       });
+
+      setRequiredDocumentDetails([...updatedDocumentDetails]);
     } else {
-      setRequiredDocumentDetails((prev) => [...prev, { ...documentDetail }]);
+      let newData = addDocumentField?.map((doc) => {
+        let val;
+        if (doc?.key === "benefits_details") {
+          val = benefits_details;
+        } else if (doc.key === "benefits_amount") {
+          val = benefits_amount;
+        }
+        return {
+          ...doc,
+          cellID,
+          value: val,
+        };
+      });
+      setRequiredDocumentDetails((prev) => [...prev, ...newData]);
     }
-    setDocumentDetail({
-      benefitsDetails: "",
-      benefitAmount: "",
-    });
+    setDocumentDetail(null);
     setIsFormValid(false);
     setEditDocumentIndex(-1);
     setEditDocumentModal(false);
     setAddDocumentModal(false);
   };
 
-  const onClickDeleteDocument = (index) => {
-    setRequiredDocumentDetails((prev) => prev.filter((_, i) => i !== index));
+  const onClickDeleteDocument = (cellID) => {
+    setRequiredDocumentDetails((prev) =>
+      prev.filter((doc) => doc.cellID !== cellID)
+    );
   };
 
-  const onCLickEditDocument = (index) => {
-    const documentToEdit = requiredDocumentDetails[index];
+  const onCLickEditDocument = (cellID) => {
+    const documentToEdit = requiredDocumentDetails.find(
+      (doc) => doc.cellID === cellID
+    );
+
     if (documentToEdit) {
       setDocumentDetail({
-        benefitsDetails: documentToEdit.benefitsDetails,
-        benefitAmount: documentToEdit.benefitAmount,
+        benefits_details:
+          requiredDocumentDetails.find(
+            (item) => item.cellID === cellID && item.key === "benefits_details"
+          )?.value || "",
+        benefits_amount:
+          requiredDocumentDetails.find(
+            (item) => item.cellID === cellID && item.key === "benefits_amount"
+          )?.value || "",
+        cellID: cellID,
       });
-      setEditDocumentIndex(index);
+      setEditDocumentIndex(cellID);
     }
-    setEditDocumentModal(true);
   };
 
   return {
@@ -152,7 +183,7 @@ const useAddBenefit = ({
     multiDocumentDetail,
     setMultiDocumentDetail,
     documentDetail,
-    editDocumentModal,
+    editDocumentModal: editDocumentIndex > -1,
     handleMultiRowDocumentDetails,
     handleDocumentDetailChange,
     isFormValid,

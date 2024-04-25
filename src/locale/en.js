@@ -970,6 +970,8 @@ const locale = {
   "label.view": "View",
   "label.totalPosition": "Total Position: ",
   "label.categories": "Categories",
+  "label.addBenefit": "Add Benefit",
+  "label.editBenefit": "Edit Benefit",
 };
 
 export default locale;

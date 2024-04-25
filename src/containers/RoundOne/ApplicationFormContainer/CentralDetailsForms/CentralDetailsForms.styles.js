@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   chipStyle: {
-    backgroundColor: colors.colors.secondaryGrey,
+    backgroundColor: colors.secondaryGrey,
   },
   chipCustomStyle: {
     paddingTop: 14,

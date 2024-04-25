@@ -14,6 +14,7 @@ import {
   ADD_DOCUMENT,
   DOCUMENT_TYPE,
   OTHER_BENEFIT_HEADING,
+  benefits_key,
 } from "../../constants/constants";
 import { numericValidator } from "../../utils/validation";
 import commonStyles from "../../theme/styles/commonStyles";
@@ -132,9 +133,6 @@ const AddBenefitsTemplate = ({
       ) : (
         <>
           {dataArr.map((item, index) => {
-            const isOriginal = item?.documentType === ADD_DOCUMENT.ORIGINAL;
-            const isBoth = item?.documentType === ADD_DOCUMENT.BOTH;
-            const copiesNumber = item?.copiesNumber || "0";
             return (
               <View>
                 <View
@@ -149,14 +147,14 @@ const AddBenefitsTemplate = ({
                   onDeleteDocument={
                     isEditable
                       ? () => {
-                          onClickDeleteDocument(index);
+                          onClickDeleteDocument(item.cellID);
                         }
                       : null
                   }
                   onEditDocument={
                     isEditable
                       ? () => {
-                          onCLickEditDocument(index);
+                          onCLickEditDocument(item.cellID);
                         }
                       : null
                   }
@@ -175,7 +173,7 @@ const AddBenefitsTemplate = ({
               label={intl.formatMessage({
                 id: "label.add_document",
               })}
-              onPress={onClickAddDocument}
+              onPress={() => onClickAddDocument(dataArr.length + 1)}
             />
           )}
         </>
@@ -187,15 +185,16 @@ const AddBenefitsTemplate = ({
           heading={
             addDocumentModal
               ? intl.formatMessage({
-                  id: "label.add_document",
+                  id: "label.addBenefit",
                 })
               : intl.formatMessage({
-                  id: "label.edit_document",
+                  id: "label.editBenefit",
                 })
           }
           leftLabelTxt={intl.formatMessage({
             id: "label.cancel",
           })}
+          headerTextStyle={{ marginBottom: 12 }}
           rightLabelTxt={
             addDocumentModal
               ? intl.formatMessage({
@@ -213,56 +212,32 @@ const AddBenefitsTemplate = ({
             <CustomTextInput
               customStyle={styles.documentNameInput}
               label={intl.formatMessage({
-                id: "label.document_name",
+                id: "label.benefit_details",
               })}
               placeholder={intl.formatMessage({
-                id: "label.required_document_name",
+                id: "label.enter_benefit_details",
               })}
               isMandatory
-              value={documentDetail?.documentName || ""}
+              value={documentDetail?.[benefits_key.BENEFITS_DETAILS] || ""}
               onChangeText={(val) =>
-                handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_NAME, val)
+                handleDocumentDetailChange(benefits_key.BENEFITS_DETAILS, val)
               }
-            ></CustomTextInput>
-            <View style={styles.inputView}>
-              <CustomTextInput
-                customStyle={styles.documentTypeInput}
-                label={intl.formatMessage({
-                  id: "label.document_type",
-                })}
-                placeholder={intl.formatMessage({
-                  id: "label.enter_document_type",
-                })}
-                isMandatory
-                isDropdown
-                options={DOCUMENT_TYPE}
-                value={documentDetail?.documentType || ""}
-                onChangeValue={(val) =>
-                  handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_TYPE, val)
-                }
-                search={false}
-              ></CustomTextInput>
-              {documentDetail?.documentType === ADD_DOCUMENT.BOTH ||
-              documentDetail?.documentType === ADD_DOCUMENT.PHOTOCOPIES ? (
-                <View style={styles.copiesInputStyle}>
-                  <CustomTextInput
-                    label={intl.formatMessage({
-                      id: "label.no_of_copies",
-                    })}
-                    placeholder={intl.formatMessage({
-                      id: "label.enter_no_of_copies",
-                    })}
-                    isMandatory
-                    value={documentDetail?.copiesNumber || null}
-                    onChangeText={(val) =>
-                      numericValidator(val) &&
-                      handleDocumentDetailChange(ADD_DOCUMENT.COPIESNUMBER, val)
-                    }
-                    maxLength={7}
-                  ></CustomTextInput>
-                </View>
-              ) : null}
-            </View>
+            />
+            <CustomTextInput
+              customStyle={styles.documentNameInput}
+              label={intl.formatMessage({
+                id: "label.amount",
+              })}
+              placeholder={intl.formatMessage({
+                id: "label.enter_amount",
+              })}
+              isNumeric
+              isMandatory
+              value={documentDetail?.[benefits_key.BENEFITS_AMOUNT] || ""}
+              onChangeText={(val) =>
+                handleDocumentDetailChange(benefits_key.BENEFITS_AMOUNT, val)
+              }
+            />
           </View>
         </ModalWithTitleButton>
       )}

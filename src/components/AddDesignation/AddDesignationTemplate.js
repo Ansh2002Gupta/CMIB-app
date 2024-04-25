@@ -89,6 +89,7 @@ const AddDesignationTemplate = ({
       },
     ];
   };
+
   const dataArr = Object.values(
     requiredDocumentDetails.reduce((acc, item) => {
       if (!acc[item.cellID]) acc[item.cellID] = {};
@@ -194,7 +195,7 @@ const AddDesignationTemplate = ({
       {(addDocumentModal || editDocumentModal) && (
         <ModalWithTitleButton
           enableBottomButton
-          isRightDisabled={!isFormValid}
+          isRightDisabled={!Boolean(isFormValid)}
           heading={
             addDocumentModal
               ? intl.formatMessage({
@@ -221,7 +222,23 @@ const AddDesignationTemplate = ({
           onClickRightButton={onClickAddDocumentSaveButton}
         >
           <View>
-            <CustomTextInput
+            <CustomMultiRowTextInput
+              customCardStyle={styles.multiRowTextStyle}
+              isEditProfile={isEditable}
+              startRowTemplate={addDocumentField}
+              gridTemplate={multiDocumentDetail}
+              setGridTemplate={setMultiDocumentDetail}
+              numColsInARow={3}
+              handleValueChange={({ propertyName, value, index }) => {
+                handleMultiRowDocumentDetails(propertyName, value, index);
+              }}
+              customContainerStyle={styles.customContainerStyle}
+              customWebContainerStyle={styles.customWebContainerStyle}
+              getColoumConfigs={getColoumConfigs}
+              tableData={nonEditableData}
+              tableHeading={ADD_DESIGNATION_HEADING}
+            />
+            {/* <CustomTextInput
               customStyle={styles.documentNameInput}
               label={intl.formatMessage({
                 id: "label.document_name",
@@ -234,7 +251,7 @@ const AddDesignationTemplate = ({
               onChangeText={(val) =>
                 handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_NAME, val)
               }
-            ></CustomTextInput>
+            ></CustomTextInput> */}
             <View style={styles.inputView}>
               <CustomTextInput
                 customStyle={styles.documentTypeInput}
