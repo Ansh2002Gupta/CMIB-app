@@ -365,16 +365,6 @@ export const ADD_PLACE_OF_POSTING_HEADING = {
   others: "Others",
   total: "Total",
 };
-export const totalCardHeading = {
-  1: "Available for Round 1",
-  2: "Available for Round 2",
-  3: "Round 1 Shortlist",
-  4: "Round 2 Shortlist",
-  5: "Final Consent Marked List",
-  6: "Interview Shortlist",
-  7: "Offered Candidates",
-  8: "Offer Accepted by Candidates",
-};
 
 export const APPLICATION_FORM_STEPPER_OPTIONS = (hasRoundTwo) => {
   const roundOneSteps = [
@@ -465,52 +455,6 @@ export const SCHEDULE_LISTING = {
   primary_interview_date: "Primary Interview Date",
   primary_interview_time: "Primary Interview Time",
   status: "Status",
-};
-export const SHORTLISTING_TABLE_HEADING = (centerSelected) => {
-  let additionalColumn;
-  if (centerSelected == 3 || centerSelected == 4) {
-    additionalColumn = {
-      consent: "Consent Given",
-    };
-  } else if (centerSelected == 5) {
-    additionalColumn = {
-      test_result: "Written Test",
-    };
-  } else if (centerSelected == 6) {
-    additionalColumn = {
-      job_offered: "Offered",
-    };
-  } else if (centerSelected == 7) {
-    additionalColumn = {
-      offered_status: "Offer Status",
-    };
-  } else {
-    additionalColumn = {};
-  }
-
-  return {
-    application_number: "Registration Number",
-    name: "Name",
-    gender: "Gender",
-    age: "Age",
-    city: "City",
-    country: "Country",
-    ca_inter_rank: "CA Inter %",
-    ca_final_rank: "CA Final %",
-    ca_experience_rank: "Experience (Years)",
-    rank: "Rank",
-    category: "Category",
-    expected_salary: "Expected Salary",
-    ...additionalColumn,
-  };
-};
-export const getPassRejected = {
-  pass: "Pass",
-  reject: "Reject",
-};
-export const yesOrNot = {
-  yes: "Yes",
-  no: "No",
 };
 export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
   const currentModules =

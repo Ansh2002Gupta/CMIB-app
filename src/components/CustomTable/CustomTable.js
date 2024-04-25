@@ -5,7 +5,6 @@ import {
   FlatList,
   Platform,
   Row,
-  ScrollView,
   View,
 } from "@unthinkable/react-core-components";
 
@@ -80,11 +79,6 @@ const CustomTable = ({
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
-  isStatusTextBoolean,
-  popUpMessage,
-  selectedTabs,
-  customTableTopSectionStyle,
-  totalCardHeading,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -193,9 +187,7 @@ const CustomTable = ({
                     ...styles.textSize,
                   }}
                 >
-                  {totalCardHeading
-                    ? totalCardHeading
-                    : intl.formatMessage({ id: "label.tickets" })}
+                  {intl.formatMessage({ id: "label.tickets" })}
                   &nbsp;&#58;&nbsp;
                 </CommonText>
 
@@ -213,7 +205,7 @@ const CustomTable = ({
         isBottomFillSpace
         bottomSection={
           <TwoRow
-            style={{ ...styles.tableTopSection, ...customTableTopSectionStyle }}
+            style={styles.tableTopSection}
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
@@ -227,166 +219,144 @@ const CustomTable = ({
                       ...containerStyle,
                     }}
                   >
-                    <ScrollView>
-                      {isWebView && tableHeading && (
-                        <MultiColumn
-                          columns={getColoumConfigs(
-                            tableHeading,
-                            isHeading,
-                            0,
-                            selectedTabs
-                          )}
-                          style={
-                            !!data
-                              ? styles.columnHeaderStyle
-                              : styles.columnHeaderStyleWithBorder
-                          }
-                        />
-                      )}
-                      <FlatList
-                        data={data || []}
-                        showsVerticalScrollIndicator={false}
-                        style={styles.flatListStyle}
-                        keyExtractor={(item, index) => index?.toString()}
-                        renderItem={({ item, index }) => {
-                          return (
-                            <>
-                              {isWebView ? (
-                                <MultiColumn
-                                  columns={getColoumConfigs(
-                                    item,
-                                    !isHeading,
-                                    index,
-                                    selectedTabs
-                                  )}
-                                  style={{
-                                    ...((tableHeading || index > 0) &&
-                                      styles.columnStyleBorder),
-                                  }}
-                                />
-                              ) : (
-                                <>
-                                  {mobileComponentToRender ? (
-                                    mobileComponentToRender(item, index)
-                                  ) : (
-                                    <View style={styles.mobileContainer}>
-                                      <View style={styles.mobileDetailRow}>
+                    {isWebView && tableHeading && (
+                      <MultiColumn
+                        columns={getColoumConfigs(tableHeading, isHeading)}
+                        style={
+                          !!data
+                            ? styles.columnHeaderStyle
+                            : styles.columnHeaderStyleWithBorder
+                        }
+                      />
+                    )}
+                    <FlatList
+                      data={data || []}
+                      showsVerticalScrollIndicator={false}
+                      style={styles.flatListStyle}
+                      keyExtractor={(item, index) => index?.toString()}
+                      renderItem={({ item, index }) => {
+                        return (
+                          <>
+                            {isWebView ? (
+                              <MultiColumn
+                                columns={getColoumConfigs(
+                                  item,
+                                  !isHeading,
+                                  index
+                                )}
+                                style={{
+                                  ...((tableHeading || index > 0) &&
+                                    styles.columnStyleBorder),
+                                }}
+                              />
+                            ) : (
+                              <>
+                                {mobileComponentToRender ? (
+                                  mobileComponentToRender(item, index)
+                                ) : (
+                                  <View style={styles.mobileContainer}>
+                                    <View style={styles.mobileDetailRow}>
+                                      <CommonText
+                                        fontWeight={"600"}
+                                        customTextStyle={styles.cellTextStyle()}
+                                      >
+                                        {getRenderText(item, headingTexts) ||
+                                          "-"}
+                                      </CommonText>
+                                      <Row style={styles.rowStyling}>
                                         <CommonText
-                                          fontWeight={"600"}
-                                          customTextStyle={styles.cellTextStyle()}
+                                          customTextStyle={
+                                            styles.tableQueryText
+                                          }
                                         >
-                                          {getRenderText(item, headingTexts) ||
-                                            "-"}
+                                          {getRenderText(
+                                            item,
+                                            subHeadingText,
+                                            formatConfig
+                                          )}
                                         </CommonText>
-                                        <Row style={styles.rowStyling}>
-                                          <CommonText
-                                            fontWeight={"600"}
-                                            customTextStyle={styles.cellTextStyle()}
-                                          >
-                                            {getRenderText(
-                                              item,
-                                              headingTexts
-                                            ) || "-"}
-                                          </CommonText>
-                                          <Row style={styles.rowStyling}>
+                                        {!!extraDetailsText && (
+                                          <>
+                                            <View style={styles.dot} />
                                             <CommonText
                                               customTextStyle={
                                                 styles.tableQueryText
                                               }
                                             >
-                                              {getRenderText(
-                                                item,
-                                                subHeadingText,
-                                                formatConfig
-                                              )}
+                                              {extraDetailsText +
+                                                ": " +
+                                                getRenderText(
+                                                  item,
+                                                  extraDetailsKey
+                                                )}
                                             </CommonText>
-                                            {!!extraDetailsText && (
-                                              <>
-                                                <View style={styles.dot} />
-                                                <CommonText
-                                                  customTextStyle={
-                                                    styles.tableQueryText
-                                                  }
-                                                >
-                                                  {extraDetailsText +
-                                                    ": " +
-                                                    getRenderText(
-                                                      item,
-                                                      extraDetailsKey
-                                                    )}
-                                                </CommonText>
-                                              </>
-                                            )}
-                                          </Row>
-                                        </Row>
-                                      </View>
-                                      <View style={styles.rowsPerPageWeb}>
-                                        {!!item.status && (
-                                          <Chip
-                                            label={getRenderText(
-                                              item,
-                                              statusText
-                                            )}
-                                            style={getStatusStyle(
-                                              !!item?.active
-                                                ? item.active
-                                                : item.status
-                                            )}
-                                          />
+                                          </>
                                         )}
-                                        <TouchableImage
-                                          onPress={() => {
-                                            onIconPress(item);
-                                          }}
-                                          source={tableIcon}
-                                          style={styles.iconTicket}
-                                        />
-                                      </View>
+                                      </Row>
                                     </View>
-                                  )}
-                                </>
-                              )}
-                            </>
+                                    <View style={styles.rowsPerPageWeb}>
+                                      {!!item.status && (
+                                        <Chip
+                                          label={getRenderText(
+                                            item,
+                                            statusText
+                                          )}
+                                          style={getStatusStyle(
+                                            !!item?.active
+                                              ? item.active
+                                              : item.status
+                                          )}
+                                        />
+                                      )}
+                                      <TouchableImage
+                                        onPress={() => {
+                                          onIconPress(item);
+                                        }}
+                                        source={tableIcon}
+                                        style={styles.iconTicket}
+                                      />
+                                    </View>
+                                  </View>
+                                )}
+                              </>
+                            )}
+                          </>
+                        );
+                      }}
+                      {...flatlistProps}
+                      ListFooterComponent={() => {
+                        if ((!data || !!data) && !data?.length)
+                          return (
+                            <CommonText
+                              customContainerStyle={styles.loadingStyleNoData}
+                              customTextStyle={styles.noMoreData}
+                            >
+                              {intl.formatMessage({ id: "label.no_data" })}
+                            </CommonText>
                           );
-                        }}
-                        {...flatlistProps}
-                        ListFooterComponent={() => {
-                          if ((!data || !!data) && !data?.length)
-                            return (
-                              <CommonText
-                                customContainerStyle={styles.loadingStyleNoData}
-                                customTextStyle={styles.noMoreData}
-                              >
-                                {intl.formatMessage({ id: "label.no_data" })}
-                              </CommonText>
-                            );
-                          if (isRenderFooterComponent) {
-                            return renderFooterComponenet();
-                          }
-                          if (loadingMore && !isFirstPageReceived) {
-                            return (
-                              <View style={styles.loadingStyle}>
-                                <Spinner thickness={2} {...webProps} />
-                              </View>
-                            );
-                          }
-                          if (allDataLoaded) {
-                            return (
-                              <CommonText
-                                customContainerStyle={styles.loadingStyle}
-                                customTextStyle={styles.noMoreData}
-                              >
-                                {intl.formatMessage({
-                                  id: "label.no_more_data",
-                                })}
-                              </CommonText>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                    </ScrollView>
-
+                        if (isRenderFooterComponent) {
+                          return renderFooterComponenet();
+                        }
+                        if (loadingMore && !isFirstPageReceived) {
+                          return (
+                            <View style={styles.loadingStyle}>
+                              <Spinner thickness={2} {...webProps} />
+                            </View>
+                          );
+                        }
+                        if (allDataLoaded) {
+                          return (
+                            <CommonText
+                              customContainerStyle={styles.loadingStyle}
+                              customTextStyle={styles.noMoreData}
+                            >
+                              {intl.formatMessage({ id: "label.no_more_data" })}
+                            </CommonText>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
                     {isWebView && isShowPagination && (
                       <PaginationFooter
                         {...{
