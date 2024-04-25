@@ -280,6 +280,7 @@ const iconPDF = appendAppBaseURl("/images/svg/iconPDF.svg");
 const iconDoc = appendAppBaseURl("/images/svg/iconDoc.svg");
 const defaultImage = appendAppBaseURl("/images/svg/defaultImage.svg");
 const checkboxRed = appendAppBaseURl("/images/svg/checkboxRed.svg");
+const partialSelectIcon = appendAppBaseURl("/images/svg/partialSelectIcon.svg");
 
 const images = {
   iconArrowUp,
@@ -482,6 +483,7 @@ const images = {
   iconDoc,
   defaultImage,
   checkboxRed,
+  partialSelectIcon,
 };
 
 export default images;

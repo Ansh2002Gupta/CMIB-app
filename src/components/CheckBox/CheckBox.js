@@ -40,8 +40,14 @@ const CheckBox = ({
     return Images.iconCheckbox;
   };
 
+  const PartialIcon = () => {
+    if (colorMode === "dark") {
+      return Images.partialSelectIcon;
+    }
+    return Images.iconPartial;
+  };
+
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
-  const PartialIcon = Images.iconPartial;
   const DisabledCheckBoxIcon = Images.iconDisabledCheck;
 
   const getCheckBoxIcon = () => {
@@ -49,7 +55,7 @@ const CheckBox = ({
       return DisabledCheckBoxIcon;
     }
     if (isPartial) {
-      return PartialIcon;
+      return PartialIcon();
     }
     if (isSelected) {
       return CheckIcon();

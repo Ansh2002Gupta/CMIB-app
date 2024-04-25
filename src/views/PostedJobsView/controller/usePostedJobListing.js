@@ -27,7 +27,6 @@ import useChangeJobStatusApi from "../../../services/apiServices/hooks/useChange
 import usePagination from "../../../hooks/usePagination";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { urlService } from "../../../services/urlService";
-import colors from "../../../assets/colors";
 import images from "../../../images";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { navigations } from "../../../constants/routeNames";
@@ -451,7 +450,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 <CommonText
                   customTextStyle={{
                     ...tableStyle,
-                    ...(!isHeading && { color: colors.darkBlue }),
+                    ...(!isHeading && { color: theme.colors.darkBlue }),
                   }}
                   fontWeight={!isHeading && 600}
                 >
@@ -493,7 +492,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 <CommonText
                   customTextStyle={{
                     ...tableStyle,
-                    ...(!isHeading && { color: colors.darkBlue }),
+                    ...(!isHeading && { color: theme.colors.darkBlue }),
                   }}
                   fontWeight={!isHeading && 600}
                 >

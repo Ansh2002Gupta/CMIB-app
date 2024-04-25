@@ -1,10 +1,15 @@
-import { View } from "@unthinkable/react-core-components";
 import React from "react";
+import { View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
+
 import CommonText from "../../../../components/CommonText";
-import styles from "./styles";
 import CustomTextEditor from "../../../../components/CustomTextEditor";
+import getStyles from "./styles";
 
 const Description = ({ data, title, description, style }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const renderContent = (item) => {
     const { header, content, type } = item;
     let descriptionContent = null;

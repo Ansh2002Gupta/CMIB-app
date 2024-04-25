@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import BarChart from "../../../components/BarChart";
@@ -16,11 +17,14 @@ import {
   USER_TYPE_MEMBER,
 } from "../../../services/apiServices/apiEndPoint";
 import colors from "../../../assets/colors";
-import styles from "./NQCACandidateDashboard.style";
+import getStyles from "./NQCACandidateDashboard.style";
 
 const NQCACandidateDashboard = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const {
     data: interviewChartData,
     isLoading: isGettingInterview,

@@ -3,12 +3,13 @@ import { useIntl } from "react-intl";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
+import { useTheme } from "@unthinkable/react-theme";
 
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useIsWebView from "../../hooks/useIsWebView";
 import CommonText from "../../components/CommonText";
 import CardComponent from "../../components/CardComponent";
-import styles from "./PreviousSubscriptionDetail.styles";
+import getStyles from "./PreviousSubscriptionDetail.styles";
 import { ImageBackground, View } from "@unthinkable/react-core-components";
 import {
   COMPANY_INACTIVE_SUBSCRIPTION_LISTING,
@@ -27,6 +28,8 @@ const PreviousSubscriptionDetail = () => {
   const { isWebView } = useIsWebView();
   const params = useParams();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const higher_secondary_detail = () => [
     {

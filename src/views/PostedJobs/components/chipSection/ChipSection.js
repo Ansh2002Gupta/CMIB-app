@@ -1,11 +1,15 @@
-import { View } from "@unthinkable/react-core-components";
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
+import { View } from "@unthinkable/react-core-components";
+
 import Chip from "../../../../components/Chip";
-import styles from "./styles";
-import colors from "../../../../assets/colors";
 import CommonText from "../../../../components/CommonText";
+import getStyles from "./styles";
 
 const ChipSection = ({ headerText = "", data = [], style = {} }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <View style={{ ...styles.container, ...style }}>
       <CommonText customTextStyle={{ ...styles.headerTextStyle }}>
@@ -18,8 +22,8 @@ const ChipSection = ({ headerText = "", data = [], style = {} }) => {
               <Chip
                 label={value}
                 style={styles.chip}
-                bgColor={colors.white}
-                textColor={colors.black}
+                bgColor={theme.colors.white}
+                textColor={theme.colors.black}
               />
             </View>
           );

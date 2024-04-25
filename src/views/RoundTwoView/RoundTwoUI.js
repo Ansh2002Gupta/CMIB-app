@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CandidateRoundOneContainer from "../../containers/CandidateRoundOne/CandidateRoundOneContainer";
@@ -25,10 +25,12 @@ import {
 } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { isObjectFilled } from "../../utils/util";
-import styles from "./RoundTwo.style";
+import getStyles from "./RoundTwo.style";
 
 function RoundTwoUI(props) {
   const [userProfileDetails] = useContext(UserProfileContext);
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const selectedModule = sideBarState?.selectedModule?.key;
