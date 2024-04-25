@@ -8,7 +8,7 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -37,9 +37,8 @@ import {
   UNMARK_PREFER,
 } from "../../services/apiServices/apiEndPoint";
 import { COMPANY, MODULES } from "../../constants/constants";
-import colors from "../../assets/colors";
 import images from "../../images";
-import style, { getResponsiveStyles } from "./ViewDetailsScreen.style";
+import getStyles, { getResponsiveStyles } from "./ViewDetailsScreen.style";
 
 const SaveButton = ({
   errorInSaving,
@@ -54,6 +53,9 @@ const SaveButton = ({
 }) => {
   const intl = useIntl();
   const isWebView = useIsWebView();
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const isMob = Platform.OS.toLowerCase() !== "web";
   const webProps = !isMob ? { size: "xs" } : {};
   const [isSaveButton, setIsSaveButton] = useState(isSaveDefault);
@@ -101,7 +103,7 @@ const SaveButton = ({
             width={20}
           />
         ) : (
-          <Spinner color={colors.lightGrey} thickness={1} {...webProps} />
+          <Spinner color={theme.colors.lightGrey} thickness={1} {...webProps} />
         )}
         {(currentBreakpoint === "md" || currentBreakpoint === "lg") && (
           <CommonText customTextStyle={style.textStyle} fontWeight="600">
@@ -128,6 +130,9 @@ const ViewDetailsScreen = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
   const [candidateProfile, setCandidateProfile] = useState();
+
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   const returnModuleWiseUrl = (module) => {
     switch (module) {
@@ -202,6 +207,7 @@ const ViewDetailsScreen = () => {
                       customTextStyle={getResponsiveStyles({
                         str: "titleText",
                         currentBreakpoint: currentBreakpoint,
+                        theme,
                       })}
                     >
                       {intl.formatMessage({ id: "label.candidate_details" })}

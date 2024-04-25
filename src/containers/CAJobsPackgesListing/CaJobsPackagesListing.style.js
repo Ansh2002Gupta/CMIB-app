@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Platform,
-  Dimensions,
-} from "@unthinkable/react-core-components";
-
-import colors from "../../assets/colors";
+import { Platform, Dimensions } from "@unthinkable/react-core-components";
 
 const { height: HEIGHT } = Dimensions.get("window");
 

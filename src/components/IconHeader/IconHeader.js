@@ -12,7 +12,6 @@ import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import Switch from "../Switch";
 import useIsWebView from "../../hooks/useIsWebView";
-import colors from "../../assets/colors";
 import images from "../../images";
 import getStyles from "./IconHeader.style";
 
@@ -69,8 +68,8 @@ const IconHeader = ({
     const subHeading = subHeadingText.toLowerCase();
     const statusColors = colorConfig[subHeading] || colorConfig.default;
     return {
-      bgColor: colors[statusColors.bg],
-      textColor: colors[statusColors.text],
+      bgColor: theme.colors[statusColors.bg],
+      textColor: theme.colors[statusColors.text],
     };
   };
 

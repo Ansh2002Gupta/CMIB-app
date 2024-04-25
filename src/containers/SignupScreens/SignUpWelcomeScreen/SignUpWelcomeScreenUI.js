@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { FlatList, View } from "@unthinkable/react-core-components";
 
 import CustomButton from "../../../components/CustomButton/CustomButton";
@@ -10,7 +10,7 @@ import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWit
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
-import { getResponsiveStyles, style } from "./SignUpWelcomeScreen.style";
+import { getResponsiveStyles, getStyles } from "./SignUpWelcomeScreen.style";
 import images from "../../../images";
 
 const SignUpWelcomeScreenUI = ({
@@ -27,6 +27,9 @@ const SignUpWelcomeScreenUI = ({
 }) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const showContentHeader =
     currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
@@ -64,7 +67,11 @@ const SignUpWelcomeScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+          ? getResponsiveStyles({
+              str: "signupContainer",
+              currentBreakpoint,
+              theme,
+            })
           : style.innerContainer
       }
     >
