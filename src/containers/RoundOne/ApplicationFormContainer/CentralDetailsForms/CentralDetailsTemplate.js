@@ -449,7 +449,7 @@ const CentralDetailsTemplate = ({
                     isButtonOneDisabled={buttonDisabled}
                     isDisabled={buttonDisabled}
                     displayLoaderLeft={saveRoundDetailLoading}
-                    buttonOneLoaderColor={colors.green}
+                    buttonOneLoaderColor={theme.colors.green}
                     customStyles={{
                       ...isWebProps,
                       customContainerStyle: commonStyles.customContainerStyle,
