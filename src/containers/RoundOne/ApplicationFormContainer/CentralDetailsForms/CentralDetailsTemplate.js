@@ -30,6 +30,7 @@ import images from "../../../../images";
 import colors from "../../../../assets/colors";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./CentralDetailsForms.styles";
+import useIsWebView from "../../../../hooks/useIsWebView";
 
 const CentralDetailsTemplate = ({
   handleContactDetailsChange,
@@ -108,7 +109,7 @@ const CentralDetailsTemplate = ({
 
   const intl = useIntl();
   const navigate = useNavigate();
-
+  const { isWebView } = useIsWebView();
   const { isSubmitting, errorWhileSubmitting, setErrorWhileSubmiting } =
     submitApplications;
 
@@ -124,30 +125,28 @@ const CentralDetailsTemplate = ({
 
   const renderSelectionProcess = ({ isEditable }) => {
     return (
-      <View>
-        <View
-          style={isEditable ? styles.checkBoxStyle : styles.viewCheckBoxStyle}
-        >
-          {selectionProcess?.map((item, index) =>
-            isEditable ? (
-              <CheckBox
-                key={item.key}
-                id={item.key}
-                index={index}
-                title={item.label}
-                isSelected={item.isSelected}
-                handleCheckbox={handleClickOnSelectionProcess}
-                isFillSpace={true}
-              />
-            ) : (
-              <Chip
-                label={item.key}
-                bgColor={colors.secondaryGrey}
-                textColor={colors.black}
-              />
-            )
-          )}
-        </View>
+      <View
+        style={isEditable ? styles.checkBoxStyle : styles.viewCheckBoxStyle}
+      >
+        {selectionProcess?.map((item, index) =>
+          isEditable ? (
+            <CheckBox
+              key={item.key}
+              id={item.key}
+              index={index}
+              title={item.label}
+              isSelected={item.isSelected}
+              handleCheckbox={handleClickOnSelectionProcess}
+              isFillSpace={true}
+            />
+          ) : (
+            <Chip
+              label={item.key}
+              bgColor={colors.secondaryGrey}
+              textColor={colors.black}
+            />
+          )
+        )}
       </View>
     );
   };
@@ -263,7 +262,9 @@ const CentralDetailsTemplate = ({
               <CustomLabelView
                 label={intl.formatMessage({ id: "label.company_ppt" })}
               >
-                {intl.formatMessage({ id: `toggle.${isCompanyPPt ? 0 : 1}` })}
+                <CommonText>
+                  {intl.formatMessage({ id: `toggle.${isCompanyPPt ? 0 : 1}` })}
+                </CommonText>
               </CustomLabelView>
             )}
           </View>
@@ -331,7 +332,12 @@ const CentralDetailsTemplate = ({
         isTopFillSpace={true}
         topSection={
           <>
-            <View style={styles.topContainer}>
+            <View
+              style={{
+                ...styles.topContainer,
+                ...(!isWebView ? styles.mobileTopContainer : {}),
+              }}
+            >
               <ConfigurableList
                 title={intl.formatMessage({ id: "label.centers" })}
                 searchQuery={configurableListQuery}

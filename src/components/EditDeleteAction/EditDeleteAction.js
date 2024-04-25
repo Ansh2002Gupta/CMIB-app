@@ -21,6 +21,7 @@ const EditDeleteAction = ({
   onDeleteDocument,
   requiredPostingPlaceDetail,
   topText,
+  bottomView,
 }) => {
   const intl = useIntl();
   const [isCategoriesVisible, setIsCategoriesVisible] = useState(false);
@@ -41,59 +42,79 @@ const EditDeleteAction = ({
             <CommonText customTextStyle={styles.topTextStyle}>
               {topText}
             </CommonText>
-            <View style={styles.textViewStyle}>
-              <View style={styles.middleDotView}>
-                <CommonText customTextStyle={styles.bottomLeftTextStyle}>
-                  {bottomLeftText}
-                </CommonText>
-                {!isCategory && <View style={styles.middleDotStyle} />}
-              </View>
-              {!isCategory && (
-                <CommonText customTextStyle={styles.bottomRightTextStyle}>
-                  {bottomRightText}
-                </CommonText>
-              )}
-              {isCategory ? (
-                <CustomTouchableOpacity onPress={toggleCategories}>
-                  <CommonText
-                    customContainerStyle={styles.customContainerStyle}
-                    customTextStyle={styles.catrgoryTextStyle}
-                    fontWeight="600"
-                  >
-                    {intl.formatMessage({ id: "label.categories" })}
+            {!bottomView ? (
+              <View style={styles.textViewStyle}>
+                <View style={styles.middleDotView}>
+                  {bottomLeftText ? (
+                    <CommonText customTextStyle={styles.bottomLeftTextStyle}>
+                      {bottomLeftText}
+                    </CommonText>
+                  ) : (
+                    <></>
+                  )}
+                  {!isCategory || bottomLeftText ? (
+                    <View style={styles.middleDotStyle} />
+                  ) : (
+                    <></>
+                  )}
+                </View>
+                {!isCategory ? (
+                  <CommonText customTextStyle={styles.bottomRightTextStyle}>
+                    {bottomRightText}
                   </CommonText>
-                  <CustomImage
-                    source={
-                      isCategoriesVisible
-                        ? images.iconUpArrow
-                        : images.iconDownArrow
-                    }
-                    style={styles.iconDownArrowStyle}
-                  />
-                </CustomTouchableOpacity>
-              ) : null}
-            </View>
+                ) : (
+                  <></>
+                )}
+                {isCategory ? (
+                  <CustomTouchableOpacity onPress={toggleCategories}>
+                    <CommonText
+                      customContainerStyle={styles.customContainerStyle}
+                      customTextStyle={styles.catrgoryTextStyle}
+                      fontWeight="600"
+                    >
+                      {intl.formatMessage({ id: "label.categories" })}
+                    </CommonText>
+                    <CustomImage
+                      source={
+                        isCategoriesVisible
+                          ? images.iconUpArrow
+                          : images.iconDownArrow
+                      }
+                      style={styles.iconDownArrowStyle}
+                    />
+                  </CustomTouchableOpacity>
+                ) : null}
+              </View>
+            ) : (
+              bottomView
+            )}
           </View>
         }
         isLeftFillSpace
         rightSection={
-          <View style={styles.rightSectionStyle}>
-            <CustomTouchableOpacity onPress={onEditDocument}>
-              <CustomImage
-                source={images.iconEditBlue}
-                style={styles.iconEditStyle}
-              />
-            </CustomTouchableOpacity>
-            <CustomTouchableOpacity onPress={onDeleteDocument}>
-              <CustomImage
-                source={images.iconTrash}
-                style={styles.iconDeleteStyle}
-              />
-            </CustomTouchableOpacity>
-          </View>
+          (onEditDocument || onDeleteDocument) && (
+            <View style={styles.rightSectionStyle}>
+              {onEditDocument && (
+                <CustomTouchableOpacity onPress={onEditDocument}>
+                  <CustomImage
+                    source={images.iconEditBlue}
+                    style={styles.iconEditStyle}
+                  />
+                </CustomTouchableOpacity>
+              )}
+              {onDeleteDocument && (
+                <CustomTouchableOpacity onPress={onDeleteDocument}>
+                  <CustomImage
+                    source={images.iconTrash}
+                    style={styles.iconDeleteStyle}
+                  />
+                </CustomTouchableOpacity>
+              )}
+            </View>
+          )
         }
       />
-      {isCategoriesVisible && (
+      {isCategoriesVisible ? (
         <CommonText customTextStyle={styles.categoriesText}>
           {entries
             .filter(
@@ -105,6 +126,8 @@ const EditDeleteAction = ({
             .map(([key, value]) => `${key.toUpperCase()}: ${value}`)
             .join("   ·  ")}
         </CommonText>
+      ) : (
+        <></>
       )}
     </>
   );

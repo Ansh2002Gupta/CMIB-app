@@ -89,6 +89,25 @@ const AddDesignationTemplate = ({
       },
     ];
   };
+  const dataArr = Object.values(
+    requiredDocumentDetails.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+
+      if (item.key === "designation_details") {
+        group.designation_details =
+          item?.options?.find((data) => data?.id === item.value)?.name ?? "-";
+      } else if (item.key === "document_type") {
+        group.document_type = item.value;
+      } else if (item.key === "number_of_vacancies") {
+        group.number_of_vacancies = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
 
   return (
     <View>
@@ -119,10 +138,8 @@ const AddDesignationTemplate = ({
         />
       ) : (
         <>
-          {requiredDocumentDetails.map((item, index) => {
-            const isOriginal = item?.documentType === ADD_DOCUMENT.ORIGINAL;
-            const isBoth = item?.documentType === ADD_DOCUMENT.BOTH;
-            const copiesNumber = item?.copiesNumber || "0";
+          {dataArr.map((item, index) => {
+            const copiesNumber = item?.number_of_vacancies || "0";
             return (
               <View>
                 <View
@@ -131,38 +148,47 @@ const AddDesignationTemplate = ({
                       ? { ...styles.documentBorderStyle }
                       : { ...styles.notBorderStyle }
                   }
-                ></View>
+                />
                 <EditDeleteAction
-                  topText={item?.documentName}
-                  bottomLeftText={
-                    isOriginal || isBoth
-                      ? intl.formatMessage({
-                          id: "label.original",
-                        })
-                      : intl.formatMessage({
-                          id: "label.not_original",
-                        })
-                  }
+                  topText={item?.designation_details}
+                  bottomLeftText={item?.document_type}
                   bottomRightText={`${copiesNumber} ${intl.formatMessage({
                     id: "label.photocopies",
                   })} `}
-                  onDeleteDocument={() => {
-                    onClickDeleteDocument(index);
-                  }}
-                  onEditDocument={() => {
-                    onCLickEditDocument(index);
-                  }}
+                  bottomView={
+                    <CommonText
+                      customTextStyle={styles.bottomText}
+                    >{`${copiesNumber} ${intl.formatMessage({
+                      id: "label.photocopies",
+                    })} `}</CommonText>
+                  }
+                  onDeleteDocument={
+                    isEditable
+                      ? () => {
+                          onClickDeleteDocument(index);
+                        }
+                      : null
+                  }
+                  onEditDocument={
+                    isEditable
+                      ? () => {
+                          onCLickEditDocument(index);
+                        }
+                      : null
+                  }
                 />
               </View>
             );
           })}
-          <AddIconText
-            customViewStyle={styles.customAddIconTextStyle}
-            label={intl.formatMessage({
-              id: "label.add_document",
-            })}
-            onPress={onClickAddDocument}
-          />
+          {isEditable && (
+            <AddIconText
+              customViewStyle={styles.customAddIconTextStyle}
+              label={intl.formatMessage({
+                id: "label.add_document",
+              })}
+              onPress={onClickAddDocument}
+            />
+          )}
         </>
       )}
       {(addDocumentModal || editDocumentModal) && (

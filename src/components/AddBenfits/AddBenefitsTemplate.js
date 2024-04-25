@@ -86,6 +86,23 @@ const AddBenefitsTemplate = ({
       },
     ];
   };
+
+  const dataArr = Object.values(
+    requiredDocumentDetails.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+      if (item.key === "benefits_details") {
+        group.benefits_details = item.value ?? "-";
+      } else if (item.key === "benefits_amount") {
+        group.benefits_amount = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
+
   return (
     <View>
       <CommonText
@@ -114,7 +131,7 @@ const AddBenefitsTemplate = ({
         />
       ) : (
         <>
-          {requiredDocumentDetails.map((item, index) => {
+          {dataArr.map((item, index) => {
             const isOriginal = item?.documentType === ADD_DOCUMENT.ORIGINAL;
             const isBoth = item?.documentType === ADD_DOCUMENT.BOTH;
             const copiesNumber = item?.copiesNumber || "0";
@@ -128,36 +145,39 @@ const AddBenefitsTemplate = ({
                   }
                 ></View>
                 <EditDeleteAction
-                  topText={item?.documentName}
-                  bottomLeftText={
-                    isOriginal || isBoth
-                      ? intl.formatMessage({
-                          id: "label.original",
-                        })
-                      : intl.formatMessage({
-                          id: "label.not_original",
-                        })
+                  topText={item?.benefits_details}
+                  onDeleteDocument={
+                    isEditable
+                      ? () => {
+                          onClickDeleteDocument(index);
+                        }
+                      : null
                   }
-                  bottomRightText={`${copiesNumber} ${intl.formatMessage({
-                    id: "label.photocopies",
-                  })} `}
-                  onDeleteDocument={() => {
-                    onClickDeleteDocument(index);
-                  }}
-                  onEditDocument={() => {
-                    onCLickEditDocument(index);
-                  }}
+                  onEditDocument={
+                    isEditable
+                      ? () => {
+                          onCLickEditDocument(index);
+                        }
+                      : null
+                  }
+                  bottomView={
+                    <CommonText customTextStyle={styles.bottomText}>
+                      {`${item?.benefits_amount ?? "-"} INR`}
+                    </CommonText>
+                  }
                 />
               </View>
             );
           })}
-          <AddIconText
-            customViewStyle={styles.customAddIconTextStyle}
-            label={intl.formatMessage({
-              id: "label.add_document",
-            })}
-            onPress={onClickAddDocument}
-          />
+          {isEditable && (
+            <AddIconText
+              customViewStyle={styles.customAddIconTextStyle}
+              label={intl.formatMessage({
+                id: "label.add_document",
+              })}
+              onPress={onClickAddDocument}
+            />
+          )}
         </>
       )}
       {(addDocumentModal || editDocumentModal) && (

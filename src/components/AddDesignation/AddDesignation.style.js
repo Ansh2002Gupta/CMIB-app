@@ -175,6 +175,11 @@ const styles = StyleSheet.create({
     gridTemplateColumns: "10fr 4fr 1fr ",
     overflowY: "auto",
   },
+  bottomText: {
+    fontSize: 12,
+    marginTop: 2,
+    color: colors.darkGrey,
+  },
 });
 
 export default styles;

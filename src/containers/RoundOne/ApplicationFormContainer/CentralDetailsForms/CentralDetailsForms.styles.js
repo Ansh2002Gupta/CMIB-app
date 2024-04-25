@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: undefined,
     marginTop: 24,
     marginLeft: 16,
+    marginRight: 16,
     marginBottom: 16,
   },
   componentContainer: {
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     display: "flex",
+    flexWrap: "wrap",
     gap: 8,
   },
   selectionProcessStyle: {
@@ -179,6 +181,15 @@ const styles = StyleSheet.create({
   },
   loader: {
     color: colors.green,
+  },
+  mobileTopContainer: {
+    flexDirection: "column",
+  },
+  chipStyle: {
+    backgroundColor: colors.colors.secondaryGrey,
+  },
+  chipCustomStyle: {
+    paddingTop: 14,
   },
 });
 
