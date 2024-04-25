@@ -15,7 +15,7 @@ const Chip = ({
   isBackground,
 }) => {
   const theme = useTheme();
-  const { styles } = getStyles(theme);
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
 
   return (
