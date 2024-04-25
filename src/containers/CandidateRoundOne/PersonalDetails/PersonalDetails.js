@@ -28,7 +28,6 @@ const PersonalDetails = (
     useState(false);
   const [isCorresponAddCompleted, setIsCorresponAddCompleted] = useState(false);
   const [isPermanentAddCompleted, setIsPermanentAddCompleted] = useState(false);
-  const [isAllFieldsCompleted, setIsAllFieldsCompleted] = useState(false);
 
   const personalDetailsTemplateRef = useRef();
   const correspondanceAddRef = useRef();

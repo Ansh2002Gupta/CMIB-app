@@ -59,11 +59,11 @@ const CitySelection = (
     getState: () => {
       return {
         campus_interview: {
-          big_centre_id: firstCenter, // add id for update
-          small_centre_id: secondCenter,
+          big_centre_id: parseInt(firstCenter), // add id for update
+          small_centre_id: parseInt(secondCenter),
         },
         orientation_centre: {
-          orientation_centre_id: orientationCenter
+          orientation_centre_id: parseInt(orientationCenter)
         },
       };
     },

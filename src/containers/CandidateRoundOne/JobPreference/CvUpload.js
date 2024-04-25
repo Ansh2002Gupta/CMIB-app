@@ -45,8 +45,8 @@ const CvUpload = (
   useImperativeHandle(ref, () => ({
     getState: () => {
       return {
-        job_photo_path: uploadImagePath,
-        cv_path: uploadCVPath,
+        job_photo_path: uploadImagePath || '',
+        cv_path: uploadCVPath || '',
       };
     },
   }));

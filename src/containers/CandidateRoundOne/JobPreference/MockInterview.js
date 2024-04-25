@@ -37,7 +37,7 @@ const MockInterview = (
       return {
         mock_interview_date: {
           name: center,
-          mock_interview_id: center,
+          mock_interview_id: parseInt(center),
           schedule_date: selectedSlot?.current?.schedule_date,
           start_time: selectedSlot?.current?.start_time,
           end_time: selectedSlot?.current?.end_time,
@@ -68,7 +68,7 @@ const MockInterview = (
       let data = slotsData.map((item, index) => {
         return {
           label: convertTo12HourFormat(item),
-          data: item?.id,
+          value: item?.id,
         }
       })
       setSlotDropDownData(data);
@@ -83,7 +83,10 @@ const MockInterview = (
 
   const handleSlotSelection = (sId) => {
     setSlot(sId);
-    selectedSlot.current = slotsData.filter((item, index) => item.id == sId);
+    let data = slotsData.filter((item, index) => item.id == sId);
+    if (data?.length > 0) {
+      selectedSlot.current  = data[0];
+    }
   }
 
   console.log("setSlotsData", slotsData)
@@ -112,7 +115,7 @@ const MockInterview = (
           isMandatory={!isViewMode}
           customStyle={styles.textInputContainer(isWebView)}
           isPaddingNotRequired
-          placeholder={intl.formatMessage({ id: "label.selectHobbies" })}
+          placeholder={intl.formatMessage({ id: "label.selectSlot" })}
           label={intl.formatMessage({ id: "label.slot" })}
           isDropdown
           options={slotDropDownData}

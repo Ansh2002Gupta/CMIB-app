@@ -6,12 +6,14 @@ import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./PersonalDetails.style";
+import CheckBox from "../../../components/CheckBox";
+import images from "../../../images";
 
 const PermanentAddress = ({
   intl,
   isWebView,
   onValidationChange = () => {},
-  filledData
+  filledData,
 }, ref) => {
   const [permanentAddress1, setPermanentAddress1] = useState('');
   const [permanentAddress2, setPermanentAddress2] = useState('');
@@ -20,6 +22,7 @@ const PermanentAddress = ({
   const [permanentCountry, setPermanentCountry] = useState('');
   const [permanentPincode, setPermanentPincode] = useState('');
   const [permanentState, setPermanentState] = useState('');
+  const [isPermanentSameAsCorrespondance, setIsPermanentSameAsCorrespondance] = useState(false);
 
   useImperativeHandle(ref, () => ({
     getState: () => {
@@ -72,6 +75,14 @@ const PermanentAddress = ({
           <CommonText customTextStyle={styles.titleText} fontWeight={"600"}>
             {intl.formatMessage({ id: "label.permanent_address" })}
           </CommonText>
+          {/* <CheckBox
+            title={intl.formatMessage({ id: "label.sameAsCorrespondance" })}
+            isSelected={isPermanentSameAsCorrespondance}
+            handleCheckbox={setIsPermanentSameAsCorrespondance}
+            iconCheck={images.iconCheckbox}
+            iconUnCheck={images.iconUnCheck}
+            checkBoxTextStyle={styles.checkBoxTextStyle}
+          /> */}
           <View style={isWebView ? styles.gridView : styles.gap}>
             <CustomTextInput
               customStyle={styles.textInputContainer(isWebView)}
