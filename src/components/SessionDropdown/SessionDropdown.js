@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import styles from "./SessionDropdown.style";
+import getStyles from "./SessionDropdown.style";
 
 const SessionDropdown = ({
   includeAllKeys,
@@ -17,6 +17,9 @@ const SessionDropdown = ({
   sessionRef,
   valueField,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const getAllKeys = (option) => {
     let finalObj = {};
     Object.keys(option).forEach((key) => {

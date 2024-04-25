@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import ImageZoom from "react-native-image-pan-zoom";
 import { Dimensions, Modal, View } from "@unthinkable/react-core-components";
@@ -7,11 +8,13 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomImage from "../CustomImage";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
-import styles from "./ImagePreview.style";
+import getStyles from "./ImagePreview.style";
 
 const { height: HEIGHT, width: WIDTH } = Dimensions.get("window");
 
 const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [modalVisible, setModalVisible] = useState(false);
   const handleModalClose = () => {
     setModalVisible(false);

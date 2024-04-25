@@ -1,9 +1,12 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
-import { styles } from "../RangeSlider.styles";
+import getStyles from "../RangeSlider.styles";
 
 const Thumb = () => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return <View style={styles.thumbStyle} />;
 };
 

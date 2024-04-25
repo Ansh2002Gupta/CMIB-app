@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Platform, TextInput, View } from "@unthinkable/react-core-components";
@@ -7,6 +8,7 @@ import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import { DEBOUNCE_TIME } from "../../constants/constants";
 import styles from "./searchView.style";
+import getStyles from "./searchView.style";
 
 const SearchView = ({
   customInputStyle,
@@ -17,6 +19,8 @@ const SearchView = ({
   placeholder,
   onChangeDropDownText,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const SearchIcon = images.iconSearch;
   const ClearIcon = images.iconCross;
   const [query, setQuery] = useState("");

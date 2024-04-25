@@ -1,11 +1,14 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
-import style from "./LabelWithLinkText.style";
+import getStyles from "./LabelWithLinkText.style";
 
 const LabelWithLinkText = ({ labelText, linkText, onLinkClick }) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
   return (
     <View style={style.textContainer}>
       {!!labelText && (

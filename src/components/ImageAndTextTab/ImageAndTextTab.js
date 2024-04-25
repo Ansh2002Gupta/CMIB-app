@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import {
   View,
@@ -7,7 +8,7 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import style from "./ImageAndTextTab.style";
+import getStyles from "./ImageAndTextTab.style";
 
 const ImageAndTextTab = ({
   onPress,
@@ -17,6 +18,8 @@ const ImageAndTextTab = ({
   text,
   containerStyle,
 }) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
   const containerDynamicStyle = isActive
     ? containerStyle || style.activeStyleDashboard
     : style.inActiveStyle;

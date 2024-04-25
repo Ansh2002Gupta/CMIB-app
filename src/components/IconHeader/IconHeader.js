@@ -1,4 +1,6 @@
 import React from "react";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router";
 import { Image, View } from "@unthinkable/react-core-components";
@@ -12,8 +14,7 @@ import Switch from "../Switch";
 import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
 import images from "../../images";
-import styles from "./IconHeader.style";
-import { useIntl } from "react-intl";
+import getStyles from "./IconHeader.style";
 
 const IconHeader = ({
   actionButtonIcon,
@@ -40,6 +41,8 @@ const IconHeader = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const navigate = useNavigate();
 
   const onGoBack = () => {

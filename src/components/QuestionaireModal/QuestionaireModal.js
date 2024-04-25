@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -19,10 +20,12 @@ import { POST_JOB, QUESTIONAIRE } from "../../services/apiServices/apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { isValueEmpty } from "../../utils/util";
 import { APPLY_JOB } from "../../services/apiServices/apiEndPoint";
-import styles from "./QuestionaireModal.style";
+import getStyles from "./QuestionaireModal.style";
 
 const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [questions, setQuestions] = useState();
   const { isWebView } = useIsWebView();
   const isWeb = Platform.OS.toLowerCase() === "web";

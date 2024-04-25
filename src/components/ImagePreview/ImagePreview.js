@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { View } from "@unthinkable/react-core-components";
@@ -9,9 +10,11 @@ import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
 import { MIN_ZOOM_SCALE, MAX_ZOOM_SCALE } from "../../constants/constants";
 import images from "../../images";
-import styles from "./ImagePreview.style";
+import getStyles from "./ImagePreview.style";
 
 const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [modalVisible, setModalVisible] = useState(false);
   const [scale, setScale] = useState(1);
 

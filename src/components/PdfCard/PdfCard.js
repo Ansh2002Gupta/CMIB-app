@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Linking, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
@@ -7,7 +8,7 @@ import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import images from "../../images";
 import { getFileExtension, getValidUrl } from "../../utils/util";
-import styles from "./PdfCard.styles";
+import getStyles from "./PdfCard.styles";
 
 const getFileTypeLabel = (ext) => {
   let extObj = {
@@ -34,6 +35,8 @@ const getDocIcon = (ext) => {
 
 const PdfCard = ({ pdfUrl }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const icon = getDocIcon(getFileExtension({ fileName: pdfUrl }));
 
   return (
