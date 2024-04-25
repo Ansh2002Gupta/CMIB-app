@@ -43,6 +43,7 @@ import { navigations } from "../constants/routeNames";
 import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
+import ShortlistingConsentInterviewDiagram from "../containers/ShortlistingConsentInterviewDiagram/ShortlistingConsentInterviewDiagram";
 import AllJobs from "../views/AllJobs/AllJobs";
 import PreviousSubscriptionDetail from "../views/PreviousSubscriptionDetails";
 import OtherPackages from "../containers/OtherPackages";
@@ -270,6 +271,10 @@ const config = [
       {
         viewPath: navigations.ROUND_TWO,
         element: <RoundTwo />,
+      },
+      {
+        viewPath: navigations.DUMMY,
+        element: <ShortlistingConsentInterviewDiagram />,
       },
     ],
   },

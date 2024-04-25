@@ -908,6 +908,93 @@ export const JOB_STATUS_RESPONSE_CODE = {
   "Job Not Offered": 9,
 };
 
+export const cardConfigOverRectangle = [
+  {
+    data: { count: 500, textId: "label.available_round_1" },
+    position: { top: "-15%", left: "-15%" },
+    refKey: "round_1_available",
+  },
+  {
+    data: { count: 120, textId: "label.round_1_shortlist" },
+    position: { top: "-15%", right: "25%" },
+    refKey: "round_1_shortlist",
+  },
+  {
+    data: { count: 90, textId: "label.available_round_2" },
+    position: { bottom: "-15%", left: "-15%" },
+    refKey: "round_2_available",
+  },
+  {
+    data: { count: 10, textId: "label.round_2_shortlist" },
+    position: { bottom: "-15%", right: "25%" },
+    refKey: "round_2_shortlist",
+  },
+];
+
+export const cardConfigOverRectangleColorArray = [
+  colors.darkBlue,
+  colors.glowingPurple,
+  colors.extraDarkPurple,
+  colors.extraDarkPurple,
+  colors.medicineBlue,
+];
+
+export const cardConfigOverLine = [
+  {
+    data: { count: 500, textId: "label.final_consent_marked_list" },
+    position: { top: -65, left: -75 },
+    refKey: "final_concent",
+  },
+  {
+    data: { count: 120, textId: "label.interview_shortlist" },
+    position: { top: -65, left: "24%" },
+    refKey: "interview_shortlist",
+  },
+  {
+    data: { count: 90, textId: "label.offered_candidates" },
+    position: { top: -65, left: "60%" },
+    refKey: "job_offered",
+  },
+  {
+    data: { count: 10, textId: "label.offer_accepted_by_candidates" },
+    position: { top: -65, left: "96%" },
+    refKey: "offer_accepted",
+  },
+];
+
+export const cardConfigOverLineColorArray = [
+  colors.hotPink,
+  colors.ambientOrange,
+  colors.paleYellow,
+  colors.green,
+];
+
+export const lineSegmentStylesForRectangle = [
+  "topFirstHalf",
+  "bottomFirstHalf",
+  "leftFirstHalf",
+  "leftSecondHalf",
+];
+
+export const lineSegmentStylesForLine = [
+  "firstLineSegment",
+  "secondLineSegment",
+  "thirdLineSegment",
+];
+
+export let dataCircleConfig = [
+  {
+    data: 10,
+    refKey: "round_1_consent",
+    styleKey: "dataCircle1",
+  },
+  {
+    data: 11,
+    refKey: "round_2_consent",
+    styleKey: "dataCircle2",
+  },
+];
+
 export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];
 export const GET_INTERVIEW_TYPE = {
   "Face-To-Face": 0,
@@ -1054,4 +1141,20 @@ export const FORM_STATES = {
   VIEW_ONLY: "view",
   EDITABLE: "edit",
   EMPTY: "empty",
+};
+
+export const diagramSupportEnum = {
+  RECTANGLE_CARD: "cardConfigOverRectangle",
+  LINE_CARD: "cardConfigOverLine",
+};
+
+export const returnColorArray = (key) => {
+  switch (key) {
+    case diagramSupportEnum.RECTANGLE_CARD:
+      return cardConfigOverRectangleColorArray;
+    case diagramSupportEnum.LINE_CARD:
+      return cardConfigOverLineColorArray;
+    default:
+      return cardConfigOverRectangleColorArray;
+  }
 };

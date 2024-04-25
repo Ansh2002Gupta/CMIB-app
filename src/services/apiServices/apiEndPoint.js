@@ -8,6 +8,7 @@ export const ADMIN = "admin";
 
 /* API Endpoints */
 export const CANDIDATES = "/candidates";
+export const CENTRES = `centres`;
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password/confirm`;
 export const COMPANY_LOGIN = `${USER_TYPE_COMPANY}/login`;
 export const COMPANY_CHANGE_PASSWORD_OTP = `${USER_TYPE_COMPANY}/user/password`;
@@ -142,3 +143,6 @@ export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;
 
 //api endpoint: Round-1>NQCA Placements>Pre-Interview Placements
 export const PRE_INTERVIEW = `/pre-interview`;
+
+//API endpoint for NQCA Shortlisting, Consent and Interview module.
+export const OVERVIEW_DATA = "overview-data";
