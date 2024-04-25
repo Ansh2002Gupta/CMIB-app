@@ -1,11 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, Image } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText/CommonText";
-import styles from "./CustomAvatar.style";
+import getStyles from "./CustomAvatar.style";
 
 const CustomAvatar = ({ image = null, text = "" }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   if (image) {
     return <Image source={{ uri: image }} style={styles.initialsContainer} />;
   }

@@ -39,6 +39,7 @@ const ActionPairButton = ({
   const { buttonOneType, buttonTwoType } = buttonsType || {};
   const theme = useTheme();
   const styles = getStyles(theme);
+  
   return (
     <TwoColumn
       style={{ ...styles.containerStyle, ...customContainerStyle }}

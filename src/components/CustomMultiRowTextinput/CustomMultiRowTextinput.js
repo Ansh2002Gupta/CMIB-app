@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 
-import DetailCard from "../DetailCard/DetailCard";
-import styles from "./CustomMultiRowTextinput.style";
-import { document_keys } from "../../constants/constants";
 import CustomTable from "../CustomTable";
+import DetailCard from "../DetailCard/DetailCard";
+import getStyles from "./CustomMultiRowTextinput.style";
 
 const CustomMultiRowTextInput = ({
   customWebContainerStyle,
@@ -29,6 +29,10 @@ const CustomMultiRowTextInput = ({
   customContainerStyle,
 }) => {
   const intl = useIntl();
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const handleChange = (label, inputValue, index, id, changedCellID) => {
     handleValueChange({
       propertyName: label,

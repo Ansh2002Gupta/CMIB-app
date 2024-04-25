@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   FlatList,
   Platform,
@@ -25,7 +26,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
-import styles from "./CustomTable.style";
+import getStyles from "./CustomTable.style";
 
 const CustomTable = ({
   addNewTicket,
@@ -93,6 +94,9 @@ const CustomTable = ({
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const popUpRef = useRef(null);
 

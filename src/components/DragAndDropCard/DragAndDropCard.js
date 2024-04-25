@@ -1,6 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   Platform,
@@ -13,7 +14,7 @@ import CommonText from "../CommonText";
 import Spinner from "../Spinner";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./DragAndDropCard.style";
+import getStyles from "./DragAndDropCard.style";
 
 const DragAndDropCard = ({
   errorMessage,
@@ -31,6 +32,9 @@ const DragAndDropCard = ({
   fileLabel,
 }) => {
   const isPlatformWeb = Platform.OS.toLowerCase() === "web";
+  const theme = useTheme();
+
+  const styles = getStyles(theme);
 
   const webProps = isPlatformWeb
     ? {

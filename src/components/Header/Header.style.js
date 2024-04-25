@@ -1,21 +1,23 @@
-import colors from "../../assets/colors";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const style = {
-  container: {
-    backgroundColor: colors.white,
-  },
-  headerContainerStyle: {
-    padding:16,
-  },
-  formHeaderStyle: {
-    color: colors.black,
-    fontSize: 20,
-    fontWeight: "700",
-  },
-  borderStyle: {
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-  },
+  return {
+    container: {
+      backgroundColor: colors.white,
+    },
+    headerContainerStyle: {
+      padding: 16,
+    },
+    formHeaderStyle: {
+      color: colors.black,
+      fontSize: 20,
+      fontWeight: "700",
+    },
+    borderStyle: {
+      borderWidth: 1,
+      borderColor: colors.lightGrey,
+    },
+  };
 };
 
-export default style;
+export default getStyles;

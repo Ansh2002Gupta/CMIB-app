@@ -1,12 +1,13 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent";
 import useIsWebView from "../../hooks/useIsWebView";
-import style from "./DetailCard.style";
+import getStyles from "./DetailCard.style";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
@@ -44,6 +45,10 @@ const DetailCard = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const headerTextValue = !!headerId
     ? intl.formatMessage({ id: headerId })
     : "";
@@ -85,7 +90,7 @@ const DetailCard = ({
           handleCheckBoxSelection,
           datePickerContainer,
           checkBoxTextStyle,
-          customErrorViewStyle
+          customErrorViewStyle,
         }}
       />
       {!!otherDetails && (

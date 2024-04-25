@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { Linking, View } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../BadgeLabel/BadgeLabel";
@@ -16,13 +16,12 @@ import { getValidUrl } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
 import images from "../../images";
 import { gridStyles } from "../../theme/styles/commonStyles";
-import styles, {
+import getStyles, {
   getContainerStyles,
   getRowStyle,
 } from "./DetailComponent.style";
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
-import colors from "../../assets/colors";
 import CustomTextEditor from "../CustomTextEditor";
 
 const DetailComponent = ({
@@ -57,6 +56,8 @@ const DetailComponent = ({
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
@@ -374,7 +375,7 @@ const DetailComponent = ({
             <CommonText
               customTextStyle={{
                 ...styles.containerStyle,
-                color: colors.darkGrey,
+                color: theme.colors.darkGrey,
                 fontSize: 12,
               }}
               fontWeight={500}

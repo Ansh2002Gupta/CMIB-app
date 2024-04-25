@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
-import colors from "../../assets/colors";
 import getStyles from "./Chip.style";
 
 const Chip = ({
@@ -24,8 +23,11 @@ const Chip = ({
       customContainerStyle={customContainerStyle}
       customTextStyle={{
         ...(isWebView || isBackground
-          ? styles.chipStyleWeb(textColor, bgColor)
-          : styles.chipStyle(textColor)),
+          ? styles.chipStyleWeb(
+              textColor || theme.colors.orange,
+              bgColor || theme.colors.lightOrange
+            )
+          : styles.chipStyle(textColor || theme.colors.orange)),
         ...style,
       }}
     >
@@ -35,9 +37,7 @@ const Chip = ({
 };
 
 Chip.defaultProps = {
-  bgColor: colors.lightOrange,
   style: {},
-  textColor: colors.orange,
   customContainerStyle: {},
   isBackground: false,
 };

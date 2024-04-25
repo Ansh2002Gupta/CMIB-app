@@ -1,13 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
-import styles from "./CustomChipCard.style";
+import getStyles from "./CustomChipCard.style";
 
 const CustomChipCard = ({ message, onPress, isEditable = true }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const handleClickOnImage = () => {
     onPress && onPress();
   };

@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ReactQuill from "react-quill";
 import { useIntl } from "react-intl";
-import "quill/dist/quill.snow.css";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
+import "quill/dist/quill.snow.css";
+
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
 import {
@@ -17,7 +19,7 @@ import {
   PREVIEWED_LENGTH,
 } from "../../constants/constants";
 import "./styles.css";
-import styles from "./CustomTextEditor.style";
+import getStyles from "./CustomTextEditor.style";
 
 const CustomTextEditor = (props) => {
   const {
@@ -47,6 +49,9 @@ const CustomTextEditor = (props) => {
     ],
   };
   const intl = useIntl();
+  const theme = useTheme();
+
+  const styles = getStyles(theme);
 
   const handleProcedureContentChange = (content) => {
     onChangeText && onChangeText(content);

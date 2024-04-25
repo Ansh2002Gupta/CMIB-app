@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   Platform,
@@ -23,9 +24,8 @@ import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getImageSource, yesNoToBoolean } from "../../utils/util";
 import images from "../../images";
-import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
-import style from "./CustomTextInput.style";
+import getStyles from "./CustomTextInput.style";
 import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 import TextInputWithChip from "../TextInputWithChip/TextInputWithChip";
@@ -120,6 +120,9 @@ const CustomTextInput = (props) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWebPlatform = Platform.OS === "web";
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
 
@@ -139,7 +142,7 @@ const CustomTextInput = (props) => {
   const platformSpecificProps = Platform.select({
     web: {},
     default: {
-      placeholderTextColor: colors.darkGrey,
+      placeholderTextColor: theme.colors.darkGrey,
     },
   });
 
@@ -158,7 +161,7 @@ const CustomTextInput = (props) => {
   };
 
   const webProps = isWebPlatform
-    ? { size: "xs", thickness: 3, color: colors.white }
+    ? { size: "xs", thickness: 3, color: theme.colors.white }
     : {};
 
   const textInputWebProps = isWebPlatform

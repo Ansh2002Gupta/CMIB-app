@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import Button from "../Button";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import Spinner from "../Spinner";
-import colors from "../../assets/colors";
-import styles from "./CustomButton.style";
+import getStyles from "./CustomButton.style";
 
 const CustomButton = ({
   children,
@@ -24,8 +24,13 @@ const CustomButton = ({
   type,
   withGreenBackground,
 }) => {
-  const webProps = Platform.OS === "web" ? { size: "xs" } : {};
+  const webProps =
+    Platform.OS === "web"
+      ? { size: "xs", customStyle: customLoadingStyle }
+      : {};
   const { customTextStyle, textFontWeight } = customStyle || {};
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <Button
@@ -43,11 +48,7 @@ const CustomButton = ({
       {isLoading ? (
         <Spinner
           thickness={3}
-          color={
-            withGreenBackground || isLoading
-              ? { ...colors.white, ...customLoadingStyle }
-              : ""
-          }
+          color={withGreenBackground || isLoading ? theme.colors.white : ""}
           {...webProps}
         />
       ) : (

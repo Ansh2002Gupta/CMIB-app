@@ -1,26 +1,32 @@
 import React from "react";
-import { Dimensions, View, Text } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
+import { Dimensions, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
 import CommonText from "../CommonText";
-import styles from "./DonutChart.style";
-import Pie from 'react-native-pie'
+import getStyles from "./DonutChart.style";
+import Pie from "react-native-pie";
 import { convertMobileDonutChartData } from "../../utils/util";
 import { useIntl } from "react-intl";
 
 const DonutChart = ({ colorScale, data, height, label }) => {
   const screenWidth = Dimensions.get("window").width;
   const intl = useIntl();
+  const theme = useTheme();
 
-  const result = Object.keys(data).map((key) => ({ label: key, value: data[key] }));
+  const styles = getStyles(theme);
+
+  const result = Object.keys(data).map((key) => ({
+    label: key,
+    value: data[key],
+  }));
 
   const sections = result.map(function (value, index) {
     return { percentage: result[index].value, color: colorScale[index] };
   });
 
   const legendData = convertMobileDonutChartData(data, colorScale);
-
 
   return (
     <TwoRow
@@ -39,7 +45,7 @@ const DonutChart = ({ colorScale, data, height, label }) => {
                 innerRadius={40}
                 sections={sections}
                 dividerSize={2}
-                strokeCap={'butt'}
+                strokeCap={"butt"}
               />
             </View>
             <View style={styles.legendContainer}>
@@ -63,9 +69,7 @@ const DonutChart = ({ colorScale, data, height, label }) => {
 
 export default DonutChart;
 
-
 // To be reviewed.....
-
 
 // import React from "react";
 // import { useIntl } from "react-intl";

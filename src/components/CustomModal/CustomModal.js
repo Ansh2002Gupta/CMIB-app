@@ -1,6 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
 
@@ -12,7 +13,7 @@ import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
 import useEscKeyListener from "../../hooks/useEscKeyListener";
 import images from "../../images";
-import style from "./CustomModal.style";
+import getStyles from "./CustomModal.style";
 
 const CustomModal = ({
   buttonTitle,
@@ -43,6 +44,9 @@ const CustomModal = ({
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
   const webProps = isWeb ? { maxWidth } : { onBackdropPress };
+
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   useEscKeyListener(onPressIconCross);
 

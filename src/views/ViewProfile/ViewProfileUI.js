@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "@unthinkable/react-core-components";
+
 import CardComponent from "../../components/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal/ConfirmationModal";
@@ -17,7 +19,7 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useDeleteUserAPI from "../../services/apiServices/hooks/UserProfile/useDeleteUserAPI";
 import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
-import style from "./ViewProfile.style";
+import getStyles from "./ViewProfile.style";
 
 const ViewProfileUI = ({
   handleEditPopup,
@@ -26,6 +28,9 @@ const ViewProfileUI = ({
   showEditModal,
   userProfileDetails,
 }) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const [errorMessage, setErrorMessage] = useState("");
   const [showDeletePopUp, setShowDeletePopUp] = useState(false);
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);

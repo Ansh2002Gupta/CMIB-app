@@ -1,13 +1,14 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { VictoryPie, VictoryLegend } from "victory";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
-import CommonText from "../CommonText";
 
 import { TwoRow } from "../../core/layouts";
 
+import CommonText from "../CommonText";
 import { convertDonutChartData } from "../../utils/util";
-import styles from "./DonutChart.style";
+import getStyles from "./DonutChart.style";
 
 const DonutChart = ({
   colorScale,
@@ -21,6 +22,10 @@ const DonutChart = ({
 }) => {
   const convertedData = convertDonutChartData(data);
   const intl = useIntl();
+  const theme = useTheme();
+
+  const styles = getStyles(theme);
+
   return (
     <TwoRow
       style={styles.donutChartContainer}

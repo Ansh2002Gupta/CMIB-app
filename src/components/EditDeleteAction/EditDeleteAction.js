@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
@@ -10,7 +11,7 @@ import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import { PLACE_OF_POSTING } from "../../constants/constants";
 import images from "../../images";
-import styles from "./EditDeleteAction.style";
+import getStyles from "./EditDeleteAction.style";
 
 const EditDeleteAction = ({
   bottomLeftText,
@@ -23,6 +24,9 @@ const EditDeleteAction = ({
   topText,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [isCategoriesVisible, setIsCategoriesVisible] = useState(false);
   const toggleCategories = () => {
     setIsCategoriesVisible((prevState) => !prevState);

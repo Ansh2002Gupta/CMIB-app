@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import {
   getResponsiveStyles,
-  style,
+  getStyles,
 } from "./HeaderTextWithLabelAndDescription.style";
 
 const HeaderTextWithLabelAndDescription = ({
@@ -20,6 +20,9 @@ const HeaderTextWithLabelAndDescription = ({
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
+
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   return (
     <View style={{ ...customContainerStyles }}>

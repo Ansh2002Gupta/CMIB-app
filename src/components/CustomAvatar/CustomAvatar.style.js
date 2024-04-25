@@ -1,17 +1,20 @@
-import colors from "../../assets/colors";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = {
-  initialsContainer: {
-    justifyContent: "center",
-    backgroundColor: colors.secondaryGrey,
-    borderRadius: 20,
-    alignItems: "center",
-    height: 40,
-    width: 40,
-    marginRight: 8,
-  },
-  initialsText: {
-    fontSize: 14,
-  },
+  return {
+    initialsContainer: {
+      justifyContent: "center",
+      backgroundColor: colors.secondaryGrey,
+      borderRadius: 20,
+      alignItems: "center",
+      height: 40,
+      width: 40,
+      marginRight: 8,
+    },
+    initialsText: {
+      fontSize: 14,
+    },
+  };
 };
-export default styles;
+
+export default getStyles;

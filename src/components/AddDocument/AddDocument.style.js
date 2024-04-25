@@ -1,10 +1,4 @@
-import {
-  Dimensions,
-  Platform,
-  StyleSheet,
-} from "@unthinkable/react-core-components";
-
-import colors from "../../assets/colors";
+import { Dimensions, Platform } from "@unthinkable/react-core-components";
 
 const screenHeight = Dimensions.get("window").height;
 const maxHeight = screenHeight * 0.8;

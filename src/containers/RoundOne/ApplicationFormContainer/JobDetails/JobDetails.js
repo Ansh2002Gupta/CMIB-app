@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../../../core/layouts";
@@ -11,7 +12,7 @@ import CustomButton from "../../../../components/CustomButton";
 import CommonText from "../../../../components/CommonText";
 import { useNavigate } from "../../../../routes";
 import commonStyles from "../../../../theme/styles/commonStyles";
-import styles from "./JobDetails.style";
+import getStyles from "./JobDetails.style";
 import images from "../../../../images";
 import ConfirmationModal from "../../../ConfirmationModal";
 import LoadingScreen from "../../../../components/LoadingScreen";
@@ -51,6 +52,9 @@ const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
     error,
     validateError,
   } = useJobDetailForm({ isEditable, tabHandler });
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const isWebProps =
     Platform.OS.toLowerCase() === "web"

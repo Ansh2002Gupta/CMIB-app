@@ -10,7 +10,8 @@ import images from "../../images";
 import { useIntl } from "react-intl";
 import { convertToTime, formatDate } from "../../utils/util";
 import classes from "../../theme/styles/CssClassProvider";
-import styles from "./DatePickerModal.style";
+import getStyles from "./DatePickerModal.style";
+import { useTheme } from "@unthinkable/react-theme";
 
 const accountComponentProp = classes["react_datepicker__input_container"];
 function DatePickerModal({
@@ -33,6 +34,10 @@ function DatePickerModal({
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
+  const theme = useTheme();
+
+  const styles = getStyles(theme);
+
   const handleDropDown = () => {
     setOpen((prev) => {
       return !prev;

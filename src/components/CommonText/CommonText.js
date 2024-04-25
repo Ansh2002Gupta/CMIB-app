@@ -3,7 +3,6 @@ import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { Text, View } from "@unthinkable/react-core-components";
 
-import colors from "../../assets/colors";
 import getStyles from "./CommonText.style";
 
 const CommonText = ({
@@ -39,7 +38,7 @@ const CommonText = ({
       {isunderLine && (
         <View
           style={{
-            ...styles.horizontalLine(underLinecolor),
+            ...styles.horizontalLine(underLinecolor || theme.colors.back),
             ...underLineStyle,
           }}
         />
@@ -55,7 +54,6 @@ CommonText.defaultProps = {
   customTextStyle: {},
   fontWeight: "500",
   isunderLine: false,
-  underLinecolor: colors.black,
   underLineStyle: {},
 };
 
