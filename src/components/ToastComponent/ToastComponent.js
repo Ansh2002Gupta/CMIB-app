@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import { TOAST_TIMEOUT } from "../../constants/constants";
-import style from "./ToastComponent.style";
+import getStyles from "./ToastComponent.style";
 
 const ToastComponent = (props) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
   const { customToastStyle, duration, onDismiss, toastMessage } = props;
 
   useEffect(() => {

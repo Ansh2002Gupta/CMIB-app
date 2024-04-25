@@ -1,3 +1,5 @@
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   View,
   TouchableOpacity,
@@ -9,7 +11,7 @@ import styles from "./styles";
 import CommonText from "../CommonText";
 import SaveCancelButton from "../SaveCancelButton";
 import Spinner from "../Spinner";
-import { useIntl } from "react-intl";
+import getStyles from "./styles";
 
 const SingleSelectionModal = ({
   title,
@@ -24,6 +26,8 @@ const SingleSelectionModal = ({
   isDataLoading,
   centerListError,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const intl = useIntl();
 
   const renderList = () => {
@@ -44,7 +48,7 @@ const SingleSelectionModal = ({
         </View>
       );
     }
-    
+
     if (!data?.length) {
       return (
         <View style={styles.flexCenterContainer}>

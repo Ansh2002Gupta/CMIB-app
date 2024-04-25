@@ -1,8 +1,10 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import classes from "../../theme/styles/CssClassProvider";
 import styles from "./TextArea.style";
+import getStyles from "./TextArea.style";
 
 const TextArea = ({
   cols,
@@ -12,6 +14,9 @@ const TextArea = ({
   rows,
   ...props
 }) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   return (
     <textarea
       rows={rows}

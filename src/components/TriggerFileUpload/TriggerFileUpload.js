@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { TextInput } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
 import CustomButton from "../CustomButton";
 import images from "../../images";
-import styles from "./TriggerFileUpload.style";
+import getStyles from "./TriggerFileUpload.style";
 
 const TriggerFileUpload = ({
   buttonTitle,
@@ -17,6 +18,8 @@ const TriggerFileUpload = ({
 }) => {
   const { isLeftIconNotSvg, leftIconSource } = iconLeft;
   const fileInputRef = useRef(null);
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const onValidImageUpload = ({ uploadedFile }) => {
     setFile(uploadedFile);

@@ -175,8 +175,8 @@ const getStyles = (theme) => {
   };
 };
 
-export const getRowStyle = (detail) => {
-  const styles = getStyles({});
+export const getRowStyle = (detail, theme) => {
+  const styles = getStyles(theme);
 
   if (detail.isMajor) {
     return styles.rowStyle;
@@ -194,8 +194,9 @@ export const getContainerStyles = ({
   columnCount,
   isColumnVariableWidth,
   isWebView,
+  theme,
 }) => {
-  const styles = getStyles({});
+  const styles = getStyles(theme);
 
   if (isColumnVariableWidth) {
     return {};
