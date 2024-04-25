@@ -20,6 +20,8 @@ import useIsWebView from "../../hooks/useIsWebView";
 import CustomTextInput from "../../components/CustomTextInput";
 import MobileViewComponent from "../../containers/ShortListingConsentCandidate/MobileViewComponent";
 import UpdateTestResultModal from "../../containers/ShortListingConsentCandidate/UpdateTestResultModal";
+import ShortlistingConsentInterviewDiagram from "../../containers/ShortlistingConsentInterviewDiagram/ShortlistingConsentInterviewDiagram";
+import colors from "../../assets/colors";
 
 const ShortListingConsentCandidate = () => {
   const intl = useIntl();
@@ -100,7 +102,7 @@ const ShortListingConsentCandidate = () => {
     } else {
       body = {
         application_ids: [item.application_id],
-        interview_result: selectedToggle === 0 ? "pass" : "fail",
+        status: selectedToggle === 0 ? "pass" : "fail",
       };
     }
 
@@ -157,64 +159,77 @@ const ShortListingConsentCandidate = () => {
       </View>
 
       <View>
-        {!isError && (
-          <CustomTable
-            {...{
-              customFilterInfo,
-              allDataLoaded,
-              currentPage,
-              currentRecords,
-              data: candidateData,
-              defaultCategory,
-              filterApplyHandler,
-              filterCategory,
-              getColoumConfigs,
-              getStatusStyle,
-              handleLoadMore,
-              handlePageChange,
-              handleRowPerPageChange,
-              handleSearchResults,
-              handleSaveAddTicket,
-              headingTexts,
-              indexOfFirstRecord,
-              indexOfLastRecord,
-              isHeading,
-              isTicketListingLoading,
-              isFirstPageReceived,
-              initialFilterState,
-              loadingMore,
-              onIconPress,
-              queryTypeData,
-              rowsLimit,
-              rowsPerPage,
-              setCurrentRecords,
-              selectedFilterOptions: filterState,
-              setSelectedFilterOptions: setFilterState,
-              statusData,
-              statusText,
-              subHeadingText,
-              tableHeading: SHORTLISTING_TABLE_HEADING(selectedTabs),
-              tableIcon,
-              totalcards,
-              placeholder: intl.formatMessage({
-                id: "label.search_by_designation",
-              }),
-            }}
-            mobileComponentToRender={getMobileView}
-            containerStyle={styles.customTableStyle}
-            customTableTopSectionStyle={{
-              flex: undefined,
-            }}
-            customTableStyle={{
-              flex: undefined,
-            }}
-            isTotalCardVisible={totalCardHeading[selectedTabs] ? true : false}
-            defaultCategory={"Experience"}
-            unit={"Years"}
-            selectedTabs={selectedTabs}
-            totalCardHeading={totalCardHeading[selectedTabs]}
-            ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
-          />
+        {!isError && companyLocation && (
+          <View style={{ backgroundColor: colors.white }}>
+            {selectedTabs === 0 ? (
+              <View>
+                <ShortlistingConsentInterviewDiagram
+                  round_id={id}
+                  centre_id={companyLocation[seletedCenter].id}
+                />
+              </View>
+            ) : (
+              <CustomTable
+                {...{
+                  customFilterInfo,
+                  allDataLoaded,
+                  currentPage,
+                  currentRecords,
+                  data: candidateData,
+                  defaultCategory,
+                  filterApplyHandler,
+                  filterCategory,
+                  getColoumConfigs,
+                  getStatusStyle,
+                  handleLoadMore,
+                  handlePageChange,
+                  handleRowPerPageChange,
+                  handleSearchResults,
+                  handleSaveAddTicket,
+                  headingTexts,
+                  indexOfFirstRecord,
+                  indexOfLastRecord,
+                  isHeading,
+                  isTicketListingLoading,
+                  isFirstPageReceived,
+                  initialFilterState,
+                  loadingMore,
+                  onIconPress,
+                  queryTypeData,
+                  rowsLimit,
+                  rowsPerPage,
+                  setCurrentRecords,
+                  selectedFilterOptions: filterState,
+                  setSelectedFilterOptions: setFilterState,
+                  statusData,
+                  statusText,
+                  subHeadingText,
+                  tableHeading: SHORTLISTING_TABLE_HEADING(selectedTabs),
+                  tableIcon,
+                  totalcards,
+                  placeholder: intl.formatMessage({
+                    id: "label.search_by_designation",
+                  }),
+                }}
+                mobileComponentToRender={getMobileView}
+                containerStyle={styles.customTableStyle}
+                customTableTopSectionStyle={{
+                  flex: undefined,
+                }}
+                customTableStyle={{
+                  flex: undefined,
+                }}
+                isTotalCardVisible={
+                  totalCardHeading[selectedTabs] ? true : false
+                }
+                defaultCategory={"Experience"}
+                unit={"Years"}
+                selectedTabs={selectedTabs}
+                totalCardHeading={totalCardHeading[selectedTabs]}
+                ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
+              />
+            )}
+          </View>
         )}
         {isModalVisible && (
           <UpdateTestResultModal

@@ -47,6 +47,9 @@ export const navigations = {
   ADD_NEW_JOBS: "add-new-jobs",
   DETAILS_JOBS: "posted-jobs/:id",
   EDIT_JOB: "edit-job",
+
+  //dummy route
+  DUMMY: "dummy",
   JOB_DETAIL: "job-detail",
   JOB_PROFILE: "/job-profile",
   VIEW_JOB_DETAILS: "applicant-job-details",

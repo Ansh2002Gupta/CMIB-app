@@ -1040,6 +1040,14 @@ const locale = {
   "label.totalPosition": "Total Position: ",
   "label.categories": "Categories",
   "label.add_contact": "Add Contact",
+  "label.available_round_1": "Available for Round 1",
+  "label.round_1_shortlist": "Round 1 Shortlist",
+  "label.available_round_2": "Available for Round 2",
+  "label.round_2_shortlist": "Round 2 Shortlist",
+  "label.final_consent_marked_list": "Final Consent Marked List",
+  "label.interview_shortlist": "Interview Shortlist",
+  "label.offered_candidates": "Offered Candidates",
+  "label.offer_accepted_by_candidates": "Offer Accepted By Candidates",
 };
 
 export default locale;
