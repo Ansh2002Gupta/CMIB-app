@@ -9,7 +9,11 @@ import useCentralDetails from "./controllers/useCentralDetails";
 const CentralDetailsForm = ({ isEditable, tabHandler, setIsEditable }) => {
   const location = useLocation();
   const hasRoundTwo = location?.pathname.includes("round-two");
-  const centerDetails = useCentralDetails({ tabHandler, hasRoundTwo });
+  const centerDetails = useCentralDetails({
+    isEditable,
+    tabHandler,
+    hasRoundTwo,
+  });
   return (
     <CentralDetailsTemplate
       {...{

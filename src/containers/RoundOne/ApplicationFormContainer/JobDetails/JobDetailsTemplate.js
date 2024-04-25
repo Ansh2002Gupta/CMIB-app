@@ -103,11 +103,9 @@ const JobDetailsTemplate = ({
               errorMessage={validateError?.designation}
             />
           ) : (
-            <RenderHeadingAndValue
-              label={intl.formatMessage({ id: "label.designation" })}
-              value={renderJobDetails?.designation}
-              isMandatory={true}
-            />
+            <CommonText customTextStyle={styles.roundHeaderText}>
+              {renderJobDetails?.designation}
+            </CommonText>
           )}
 
           <View style={containerStyle}>
@@ -175,6 +173,9 @@ const JobDetailsTemplate = ({
             disabled={!isEditable}
             customHandleBlur={() => handleBlur("role_responsibility")}
             errorMessage={validateError?.role_responsibility}
+            quilStyle={
+              isEditable ? styles.editCustomQuilStyle : styles.customQuilStyle
+            }
           />
           {isEditable ? (
             <CustomTextInput
