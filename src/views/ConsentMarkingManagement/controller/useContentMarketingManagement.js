@@ -210,7 +210,7 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.employer_name ? item.employer_name : "-"}
             </CommonText>
             <CustomImage
@@ -233,7 +233,7 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.interview_type ? item.interview_type : "-"}
             </CommonText>
           </CustomTouchableOpacity>
@@ -248,7 +248,7 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.mode ? item.mode : "-"}
             </CommonText>
           </CustomTouchableOpacity>
@@ -263,7 +263,7 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.interview_dates ? item.interview_dates : "-"}
             </CommonText>
           </CustomTouchableOpacity>
@@ -278,7 +278,7 @@ const useContentMarketingManagement = (onViewPress) => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity>
-            <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.shortlisting_round ? item.shortlisting_round : "-"}
             </CommonText>
           </CustomTouchableOpacity>

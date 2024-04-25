@@ -129,7 +129,6 @@ const styles = {
   },
   tableHeadingText:{
     color: colors.darkGrey,
-    fontWeight: 600,
   },
 };
 
