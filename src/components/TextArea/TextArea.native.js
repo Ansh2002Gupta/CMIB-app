@@ -1,11 +1,15 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { TextInput } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
-import styles from "./TextArea.style";
+import getStyles from "./TextArea.style";
 
 const TextArea = ({ customStyle, height, placeholderTextColor, ...props }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <TextInput
       height={height}

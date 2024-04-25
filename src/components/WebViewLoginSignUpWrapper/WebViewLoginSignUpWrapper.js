@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
 import { View } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
 import FollowUsIcons from "../FollowUsIcons/FollowUsIcons.js";
-import style from "./WebViewLoginSignUpWrapper.style.js";
+import getStyles from "./WebViewLoginSignUpWrapper.style.js";
 
 const WebViewLoginSignUpWrapper = ({
   children,
   shouldApplyStyles,
   shouldShowFollowUs,
 }) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWidthLessThan1800 = currentBreakpoint === "xl";
   const isWidthLessThan1400 = currentBreakpoint === "lg";

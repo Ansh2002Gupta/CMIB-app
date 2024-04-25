@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Row,
   ScrollView,
@@ -14,6 +15,7 @@ import styles from "./FormTabs.style.js";
 import images from "../../images";
 import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity.js";
 import CustomImage from "../CustomImage/CustomImage.js";
+import getStyles from "./FormTabs.style.js";
 
 export const FormTabs = ({
   isEditButtonVisible,
@@ -22,6 +24,8 @@ export const FormTabs = ({
   tabs,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [alertOnTabSwitch, setAlertOnTabSwitch] = useState({
