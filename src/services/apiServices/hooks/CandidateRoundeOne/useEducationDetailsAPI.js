@@ -5,7 +5,7 @@ import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { MEMBER_PERSONAL_DETAILS } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
-const useEducationDetails = () => {
+const useEducationDetailsApi = () => {
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [educationFilledDetails, setEducationFilledDetails] = useState({});
   const [apiError, setApiError] = useState("");
@@ -53,4 +53,4 @@ const useEducationDetails = () => {
   };
 };
 
-export default useEducationDetails;
+export default useEducationDetailsApi;

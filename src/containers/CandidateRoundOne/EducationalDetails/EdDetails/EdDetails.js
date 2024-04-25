@@ -6,19 +6,9 @@ import useExamDetailsAPI from "../../../../services/apiServices/hooks/CandidateR
 import MultiRow from "../../../../core/layouts/MultiRow";
 import styles from "./EdDetail.style";
 
-const EdDetails = ({ intl, isWebView, isViewMode = false }, ref) => {
+const EdDetails = ({ intl, isWebView, isViewMode = false, educationFilledDetails }, ref) => {
     //refs
     const edDetailsRef = useRef();
-    // const { handleExamDetails} = useExamDetailsAPI();
-
-    // useEffect(() => {
-    //     handleExamDetails ({
-    //       successCallback: (examDetails) => {
-    //         updateExamDetails(examDetails);
-    //       },
-    //       errorCallback: () => {},
-    //     });
-    //   }, []);
 
     useImperativeHandle(ref, () => ({
       getState: () => {
@@ -28,7 +18,7 @@ const EdDetails = ({ intl, isWebView, isViewMode = false }, ref) => {
 
     const edDetailsConfig = [
         {
-          content: <EdDetailTemplate ref={edDetailsRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>,
+          content: <EdDetailTemplate ref={edDetailsRef} intl={intl} isWebView={isWebView} isViewMode={isViewMode} educationFilledDetails={educationFilledDetails}/>,
         }
       ];
 
