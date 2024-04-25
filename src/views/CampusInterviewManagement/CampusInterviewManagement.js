@@ -2,9 +2,18 @@ import React from "react";
 
 import CommonText from "../../components/CommonText";
 import styles from "./CampusInterviewManagement.styles";
+import CampusInterviewManagementTemplate from "./CampusInterviewManagementTemplate";
+import useCampusInterviewManagement from "./controller/useCampusInterviewManagement";
 
 const CampusInterviewManagement = () => {
-  return <CommonText>CampusInterviewManagement</CommonText>;
+  const {
+    intl,
+  } = useCampusInterviewManagement();
+  return <>
+    <CampusInterviewManagementTemplate
+      intl={intl}
+    />
+  </>;
 };
 
 export default CampusInterviewManagement;

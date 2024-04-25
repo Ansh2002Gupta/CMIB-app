@@ -4,6 +4,7 @@ import AddBenefitsTemplate from "./AddBenefitsTemplate.js";
 import useAddBenefit from "./controllers/useAddBenefit.js";
 
 const AddBenefits = ({
+  isEditable,
   requiredDocumentDetails,
   setRequiredDocumentDetails,
 }) => {
@@ -29,6 +30,7 @@ const AddBenefits = ({
       {...{
         addDocumentModal,
         documentDetail,
+        isEditable,
         multiDocumentDetail,
         setMultiDocumentDetail,
         addDocumentField,

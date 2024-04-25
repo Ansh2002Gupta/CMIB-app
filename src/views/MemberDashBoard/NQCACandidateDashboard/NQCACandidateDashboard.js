@@ -151,7 +151,6 @@ const NQCACandidateDashboard = () => {
             />
           </View>
         </View>
-
         {highestOffetChartData.length > 0 && (
           <BarChart
             yAxisLabel={intl.formatMessage({ id: "label.numberJobsOffered" })}
@@ -177,6 +176,7 @@ const NQCACandidateDashboard = () => {
             data={hightCtcChartData}
             toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
             yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
+            heightOfOneBar={70}
           />
         )}
       </ScrollView>

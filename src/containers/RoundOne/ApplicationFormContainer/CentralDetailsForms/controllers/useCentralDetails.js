@@ -13,12 +13,23 @@ import {
   selectionProcessFields,
 } from "./utils";
 import useFetch from "../../../../../hooks/useFetch";
-import { COUNTRY_CODE } from "../../../../../services/apiServices/apiEndPoint";
+import {
+  APPLICATION,
+  COUNTRY_CODE,
+  SUBMIT,
+  USER_TYPE_COMPANY,
+} from "../../../../../services/apiServices/apiEndPoint";
 import { useParams } from "react-router";
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
-import { useDelete, usePost, usePut } from "../../../../../hooks/useApiRequest";
+import {
+  useDelete,
+  usePatch,
+  usePost,
+  usePut,
+} from "../../../../../hooks/useApiRequest";
 import { useIntl } from "react-intl";
 import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import useNavigateScreen from "../../../../../services/hooks/useNavigateScreen";
 import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import { formateErrors } from "../../../../../utils/util";
 import { moduleKeys } from "../../../../../constants/sideBarHelpers";
@@ -27,8 +38,9 @@ import {
   SESSION_ID_QUERY_PARAM,
   UPDATED_API_VERSION,
 } from "../../../../../constants/constants";
+import { navigations } from "../../../../../constants/routeNames";
 
-const useCentralDetails = ({ tabHandler }) => {
+const useCentralDetails = ({ isEditable, tabHandler, hasRoundTwo }) => {
   const [contactDetailsState, setContactDetailsState] = useState({});
   const [interviewDetailsState, setInterviewDetailsState] = useState({
     [keys.campusDates]: [],
@@ -58,6 +70,7 @@ const useCentralDetails = ({ tabHandler }) => {
 
   const [selectionFieldError, setSelectionFieldError] = useState("");
   const [error, setError] = useState("");
+  const { navigateScreen } = useNavigateScreen();
 
   const { data: countryData } = useFetch({
     url: COUNTRY_CODE,
@@ -170,6 +183,20 @@ const useCentralDetails = ({ tabHandler }) => {
       },
     });
 
+  const {
+    makeRequest: submitApplication,
+    isLoading: isSubmitting,
+    error: errorWhileSubmitting,
+    setError: setErrorWhileSubmiting,
+  } = usePatch({
+    url:
+      USER_TYPE_COMPANY +
+      `/${selectedModule.key}` +
+      APPLICATION +
+      `/${roundId}` +
+      SUBMIT,
+  });
+
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
 
@@ -277,7 +304,7 @@ const useCentralDetails = ({ tabHandler }) => {
       fetchDesignationData({});
       fetchMappedCentersList();
     }
-  }, [selectedModule, roundId]);
+  }, [isEditable, selectedModule, roundId]);
 
   useEffect(() => {
     if (applicationDetail) {
@@ -315,7 +342,7 @@ const useCentralDetails = ({ tabHandler }) => {
         );
       }
     }
-  }, [applicationDetail, desginationData]);
+  }, [isEditable, applicationDetail, desginationData]);
 
   const findFieldByKeyOrLabel = (value, details) => {
     return details
@@ -454,6 +481,14 @@ const useCentralDetails = ({ tabHandler }) => {
     setSelectedCenterData(null);
   };
 
+  const handleSubmit = () => {
+    submitApplication({
+      onSuccessCallback: () => {
+        navigateScreen(`/${selectedModule.key}/${navigations.ROUND_TWO}`);
+      },
+    });
+  };
+
   const handleSave = () => {
     const body = getFormattedData(
       contactDetailsState,
@@ -471,10 +506,7 @@ const useCentralDetails = ({ tabHandler }) => {
     saveRoundDetails({
       overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedOptions[0]?.detailId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
       body,
-      onSuccessCallback: () => {
-        console.log("onSuccessCallback,onSuccessCallback");
-        tabHandler("next");
-      },
+      onSuccessCallback: () => {},
       onErrorCallback: (error) => {
         setError(formateErrors(error));
       },
@@ -528,7 +560,7 @@ const useCentralDetails = ({ tabHandler }) => {
     mappedCentersList,
     configurableListQuery,
     setConfigurableListQuery,
-
+    handleSubmit,
     selectedOptions,
     handleDelete,
     handlePress,
@@ -566,6 +598,11 @@ const useCentralDetails = ({ tabHandler }) => {
       isUploadingImageToServer,
       setFileUploadResult,
       uploadPercentage,
+    },
+    submitApplications: {
+      isSubmitting,
+      errorWhileSubmitting,
+      setErrorWhileSubmiting,
     },
     buttonDisabled,
     uploadPercentage,

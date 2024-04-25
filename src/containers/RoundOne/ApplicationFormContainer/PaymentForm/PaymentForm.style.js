@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
     zIndex: 1,
   },
+  doneButtonStyle: { fontSize: 14, color: colors.white },
 });
 
 export default styles;

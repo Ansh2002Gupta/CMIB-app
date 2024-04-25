@@ -7,6 +7,7 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./DetailCard.style";
+import CommonText from "../CommonText";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
@@ -85,7 +86,7 @@ const DetailCard = ({
           handleCheckBoxSelection,
           datePickerContainer,
           checkBoxTextStyle,
-          customErrorViewStyle
+          customErrorViewStyle,
         }}
       />
       {!!otherDetails && (
@@ -105,7 +106,7 @@ const DetailCard = ({
       )}
       {!!footerId && (
         <View style={style.footerContainer}>
-          {intl.formatMessage({ id: footerId })}
+          <CommonText> {intl.formatMessage({ id: footerId })}</CommonText>
         </View>
       )}
     </CardComponent>

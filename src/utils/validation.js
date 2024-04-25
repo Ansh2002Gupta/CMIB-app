@@ -1,5 +1,6 @@
 import {
   alphaNumericRegex,
+  FORM_STATES,
   numRegex,
   VALID_EMAIL,
   VALID_GSTIN,
@@ -117,4 +118,14 @@ export const handleNewPasswordChange = ({
   if (!!confirmNewPassword && !!val && confirmNewPassword === val) {
     setError("");
   }
+};
+
+export const getValidMode = (mode) => {
+  if (
+    mode?.toLowerCase() === FORM_STATES.EDITABLE ||
+    mode?.toLowerCase() === FORM_STATES.VIEW_ONLY
+  ) {
+    return true;
+  }
+  return false;
 };

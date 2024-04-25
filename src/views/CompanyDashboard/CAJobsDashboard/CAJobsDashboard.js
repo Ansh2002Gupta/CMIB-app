@@ -329,7 +329,7 @@ const CAJobsDashboard = () => {
             }
           />
         </View>
-        <ScrollView style={{ gap: 24 }} showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {topCtcDesignationData?.length > 0 && (
             <BarChart
               yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
@@ -345,7 +345,6 @@ const CAJobsDashboard = () => {
               xAxisTickAngle={-20}
             />
           )}
-
           <View style={styles.pieChartContiner}>
             <View style={isWebView ? { flex: 1 } : { width: "100%" }}>
               <PieChart
@@ -448,7 +447,7 @@ const CAJobsDashboard = () => {
               />
             )}
           </View>
-          <View style={isWebView ? {} : { width: "100%" }}>
+          <View style={isWebView ? {} : { width: "100%", marginBottom: 620 }}>
             {candidatesAcceptingAreasData?.length > 0 && (
               <BarChart
                 xAxisTickAngle={-20}

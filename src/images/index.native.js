@@ -21,7 +21,6 @@ import iconWalkthroughSignUpLast from "../../public/images/iconWalkthroughSignUp
 import iconDivider from "../../public/images/iconDivider/iconDivider.png";
 import iconUpload from "../../public/images/iconUpload/iconUpload.png";
 import iconTrash from "../../public/images/iconTrash/iconTrash.png";
-import iconEye from "../../public/images/iconEye/iconEye.png";
 import iconFacebook from "../../public/images/iconFacebook/iconFacebook.png";
 import iconInstagram from "../../public/images/iconInstagram/iconInstagram.png";
 import iconLinkedin from "../../public/images/iconLinkedin/iconLinkedin.png";
@@ -38,7 +37,6 @@ import iconCross from "../../public/images/iconCross/iconCross.png";
 import iconTelegram from "../../public/images/iconTelegram/iconTelegram.png";
 import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
 import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
-import iconEyeSlash from "../../public/images/iconEyeSlash.png";
 import ticketIcon from "../../public/images/ticketIcon/ticketIcon.png";
 import iconSend from "../../public/images/iconSend/iconSend.png";
 import iconSetting from "../../public/images/iconSetting/iconSetting.png";
@@ -59,6 +57,7 @@ import iconEyeSvg from "../../public/images/svg/iconEyeSvg.svg";
 import iconFooter from "../../public/images/svg/iconFooter.svg";
 import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
+import iconEyeSlash from "../../public/images/svg/iconEyeSlash.svg";
 import iconAdd from "../../public/images/svg/iconAdd.svg";
 import iconAddWhite from "../../public/images/svg/iconAddWhite.svg";
 import iconAddBlack from "../../public/images/svg/iconAddBlack.svg";
@@ -68,6 +67,7 @@ import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
 import iconWarning from "../../public/images/svg/iconWarning.svg";
 import iconTick from "../../public/images/iconTick/iconTick.png";
 import iconDashboard from "../../public/images/svg/iconDashboard.svg";
+import iconEye from "../../public/images/svg/iconEye.svg";
 import iconDashboardWeb from "../../public/images/svg/iconDashboardWeb.svg";
 import iconDashboardActive from "../../public/images/svg/iconDashboardActive.svg";
 import iconRound1 from "../../public/images/svg/iconRoundOne.svg";
@@ -165,10 +165,14 @@ import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile
 import iconDefaultLogo from "../../public/images/svg/iconDefaultLogo.svg";
 import iconEditBlue from "../../public/images/svg/iconEditBlue.svg";
 import iconWallet from "../../public/images/svg/wallet.svg";
+import iconSheildTick from "../../public/images/svg/iconSheildTick.svg";
+import iconShieldTickDisable from "../../public/images/svg/iconShieldTickDisable.svg";
+import iconShieldSuccess from "../../public/images/svg/iconShieldSuccess.svg";
 import iconDocument from "../../public/images/svg/iconDocument.svg";
 import iconPPT from "../../public/images/svg/iconPPT.svg";
 import iconPDF from "../../public/images/svg/iconPDF.svg";
 import iconDoc from "../../public/images/svg/iconDoc.svg";
+import defaultImage from "../../public/images/svg/defaultImage.svg";
 
 const images = {
   iconArrowUp,
@@ -337,10 +341,14 @@ const images = {
   iconDefaultLogo,
   iconEditBlue,
   iconWallet,
+  iconSheildTick,
+  iconShieldTickDisable,
+  iconShieldSuccess,
   iconDocument,
   iconPPT,
   iconPDF,
   iconDoc,
+  defaultImage,
 };
 
 export default images;

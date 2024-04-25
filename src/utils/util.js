@@ -826,3 +826,10 @@ export const changeBooltoBinary = (value) => {
     return 0;
   }
 };
+
+export const extractValueDropdown = (item) => {
+  if (item?.isDropdown) {
+    return item.options.find((val) => val.id == item.value).label;
+  }
+  return item?.value;
+};

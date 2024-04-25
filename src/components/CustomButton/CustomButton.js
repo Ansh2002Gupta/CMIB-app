@@ -12,6 +12,7 @@ import styles from "./CustomButton.style";
 const CustomButton = ({
   children,
   customStyle,
+  customLoadingStyle,
   disabled,
   disabledStyle,
   iconRight,
@@ -23,7 +24,10 @@ const CustomButton = ({
   type,
   withGreenBackground,
 }) => {
-  const webProps = Platform.OS === "web" ? { size: "xs" } : {};
+  const webProps =
+    Platform.OS === "web"
+      ? { size: "xs", customStyle: customLoadingStyle }
+      : {};
   const { customTextStyle, textFontWeight } = customStyle || {};
 
   return (
@@ -97,6 +101,7 @@ CustomButton.defaultProps = {
     rightIconSource: "",
   },
   isLoading: false,
+  customLoadingStyle: {},
   onPress: () => {},
   style: {},
   type: "button",
@@ -112,6 +117,7 @@ CustomButton.propTypes = {
   iconRight: PropTypes.object,
   isLeftIconNotSvg: PropTypes.bool,
   isLoading: PropTypes.bool,
+  customLoadingStyle: PropTypes.object,
   isRightIconNotSvg: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
