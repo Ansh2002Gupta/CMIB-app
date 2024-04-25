@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   Row,
-  Text,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import { useIntl } from "react-intl";
 
 import { CustomTabs } from "../../components/Tab";
 import PersonalDetails from "../../containers/PersonalDetails";
@@ -21,7 +21,7 @@ import CardComponent from "../../components/CardComponent";
 import CustomImage from "../../components/CustomImage";
 import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
 import useIsWebView from "../../hooks/useIsWebView";
-import style from "./JobProfile.style";
+import getStyles from "./JobProfile.style";
 import images from "../../images";
 import useFetch from "../../hooks/useFetch";
 import { GET_MEMBER_COMPLETION } from "../../services/apiServices/apiEndPoint";
@@ -33,6 +33,10 @@ import CircularProgress from "../../components/CircularProgress";
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   if (isEditable) return null;
   if (isWebView) {
     return (
@@ -76,6 +80,8 @@ const EditButton = ({ isEditable, handleEdit }) => {
 const CompletionPercent = ({ value }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   return isWebView ? (
     <View
@@ -148,6 +154,8 @@ const JobProfileTab = ({
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   const [isEditable, setIsEditable] = useState(false);
   const { data: completionPercentData, fetchData } = useFetch({

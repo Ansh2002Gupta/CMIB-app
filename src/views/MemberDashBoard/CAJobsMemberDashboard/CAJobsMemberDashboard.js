@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import BarChart from "../../../components/BarChart";
@@ -15,12 +16,16 @@ import {
   ROUND_ONE_DASHBOARD,
   USER_TYPE_MEMBER,
 } from "../../../services/apiServices/apiEndPoint";
-import colors from "../../../assets/colors";
-import styles from "./CAJobsMemberDashboard.style";
+import getStyles from "./CAJobsMemberDashboard.style";
 
 const CAJobsMemberDashboard = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = getStyles(theme);
+
   const {
     data: interviewChartData,
     isLoading: isGettingInterview,
@@ -135,7 +140,11 @@ const CAJobsMemberDashboard = () => {
     !error && (
       <ScrollView style={{ gap: 24 }} showsVerticalScrollIndicator={false}>
         <View style={styles.pieChartContiner}>
-          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
+          <View
+            style={
+              isWebView ? styles.webGraphContainer : styles.mobileGraphContainer
+            }
+          >
             <DonutChart
               colorScale={[
                 colors.disabledGrey,
@@ -156,7 +165,11 @@ const CAJobsMemberDashboard = () => {
               labelColor={colors.white}
             />
           </View>
-          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
+          <View
+            style={
+              isWebView ? styles.webGraphContainer : styles.mobileGraphContainer
+            }
+          >
             <PieChart
               colorScale={[
                 colors.greenBlue,
@@ -177,7 +190,11 @@ const CAJobsMemberDashboard = () => {
           </View>
         </View>
         <View style={styles.pieChartContiner}>
-          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
+          <View
+            style={
+              isWebView ? styles.webGraphContainer : styles.mobileGraphContainer
+            }
+          >
             <PieChart
               colorScale={[colors.errorRed, colors.grassGreen]}
               data={urgentChartData}
@@ -192,10 +209,14 @@ const CAJobsMemberDashboard = () => {
               // popupMessage={intl.formatMessage({
               //   id: "label.viewAllUrgentJobs",
               // })}
-              onPopupClick={() => { }}
+              onPopupClick={() => {}}
             />
           </View>
-          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
+          <View
+            style={
+              isWebView ? styles.webGraphContainer : styles.mobileGraphContainer
+            }
+          >
             <PieChart
               colorScale={[
                 colors.mustardYellow,

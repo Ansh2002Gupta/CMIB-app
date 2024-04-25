@@ -1,22 +1,19 @@
-import { StyleSheet, Dimensions } from "@unthinkable/react-core-components";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-import colors from "../../../assets/colors";
+  return {
+    container: {
+      flex: 1,
+      backgroundColor: colors.backgroundGrey,
+    },
+    pieChartContiner: { gap: 24, flexDirection: "row", flexWrap: "wrap" },
+    webGraphContainer: {
+      flex: 1,
+    },
+    mobileGraphContainer: {
+      width: "100%",
+    },
+  };
+};
 
-const { width: WIDTH } = Dimensions.get("window");
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.backgroundGrey,
-  },
-  pieChartContiner: { gap: 24, flexDirection: "row", flexWrap: "wrap" },
-  webGraphContainer: {
-    flex: 1
-  }
-  ,
-  mobileGraphContainer: {
-    width: '100%'
-  }
-});
-
-export default styles;
+export default getStyles;

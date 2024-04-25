@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
@@ -14,7 +14,7 @@ import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./ForgotPassword.style";
+import getStyles from "./ForgotPassword.style";
 
 const ForgotPasswordUI = (props) => {
   const {
@@ -34,6 +34,8 @@ const ForgotPasswordUI = (props) => {
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const getResponsiveStyles = (str) => {
     switch (str) {
