@@ -34,7 +34,7 @@ const PersonalDetailsTemplate = ({
         dob: personalDetails?.dob || dob,
         email,
         passport_number: passportNumber,
-        has_passport: isPassport === 1 ? 0 : 1,
+        has_passport: isPassport === 1 ? 'false' : 'true',
       };
     },
   }));

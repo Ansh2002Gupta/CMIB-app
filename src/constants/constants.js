@@ -1263,6 +1263,33 @@ export const diagramSupportEnum = {
   LINE_CARD: "cardConfigOverLine",
 };
 
+export const CATEGORIES =  [
+  {
+    label: 'General',
+    value: 'general'
+  },
+  {
+    label: 'OBC',
+    value: 'obc'
+  },
+  {
+    label: 'SC',
+    value: 'sc'
+  },
+  {
+    label: 'ST',
+    value: 'st'
+  },
+  {
+    label: 'PH',
+    value: 'ph'
+  },
+  {
+    label: 'Others',
+    value: 'others'
+  }
+];
+
 export const returnColorArray = (key) => {
   switch (key) {
     case diagramSupportEnum.RECTANGLE_CARD:

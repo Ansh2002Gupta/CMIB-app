@@ -39,10 +39,10 @@ const usePersonalDetailsAPI = () => {
     }
   };
 
-  const fetchFilledData = async () => {
+  const fetchFilledData = async (roundId) => {
     try {
       
-      const res = await Http.get('/member/nqca-placements/rounds/264/personal');
+      const res = await Http.get(`/member/nqca-placements/rounds/${roundId}/personal`);
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
         res.code === STATUS_CODES.SUCCESS_STATUS
