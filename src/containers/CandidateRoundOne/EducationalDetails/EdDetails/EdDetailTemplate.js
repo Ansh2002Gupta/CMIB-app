@@ -26,7 +26,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
   const [higherSecondaryMarks, setHigherSecondaryMarks] = useState('');
   const [higherSecondaryRank, setHigherSecondaryRank] = useState(''); 
   //graduation states
-  const [isGraduated, setIsGraduated] = useState(true);
+  const [isGraduated, setIsGraduated] = useState(1);
   const [graduationExaminationName, setGraduationExaminationName] = useState('');
   const [graduationStatus, setGraduationStatus] = useState('');
   const [graduationBoard, setGraduationBoard] = useState('');
@@ -34,7 +34,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
   const [graduationMarks, setGraduationMarks] = useState('');
   const [graduationRank, setGraduationRank] = useState('');
   //post graduation states
-  const [isPostGraduated, setIsPostGraduated] = useState(true);
+  const [isPostGraduated, setIsPostGraduated] = useState(1);
   const [postGraduationExaminationName, setPostGraduationExaminationName] = useState('');
   const [postGraduationStatus, setPostGraduationStatus] = useState('');
   const [postGraduationBoard, setPostGraduationBoard] = useState('');
@@ -232,6 +232,8 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
               onValueChange={setIsGraduated}
             />
           </View>
+          {!Boolean(isGraduated) && 
+          <>
           <CustomTextInput
             isViewMode={isViewMode}
             isPaddingNotRequired
@@ -290,6 +292,8 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             value={graduationRank}
             onChangeText={setGraduationRank}
           />
+          </>
+          }
           {/* graduation details code ends here */}
         </View>
         <View style={[isWebView ? styles.gridView : styles.gap, styles.extraStyle]}>
@@ -306,6 +310,8 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
               onValueChange={setIsPostGraduated}
             />
           </View>
+          {!Boolean(isPostGraduated) && 
+          <>
           <CustomTextInput
             isViewMode={isViewMode}
             isPaddingNotRequired
@@ -364,6 +370,7 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
             value={postGraduationRank}
             onChangeText={setPostGraduationRank}
           />
+          </>}
           {/* post graduation details code ends here */}
         </View>
       </View>

@@ -32,7 +32,7 @@ const PersonalDetailsTemplate = ({
         marital_status: maritalStatus,
         dob: personalDetails?.dob || dob,
         email,
-        passportNumber,
+        passport_number: passportNumber,
         has_passport: isPassport === 1 ? 0 : 1,
       };
     },
