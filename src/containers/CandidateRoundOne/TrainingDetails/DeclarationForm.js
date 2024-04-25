@@ -27,14 +27,13 @@ const DeclarationForm = ({intl, onValidationChange = () => {}, onPressIconCross,
     makeRequest,
     isLoading,
   } = usePost({
-    url: 'member/nqca-placements/application/162/declaration-form',
+    url: 'member/nqca-placements/application/264/declaration-form',
   });
 
-  const isSubmitButtonDisabled = name?.length > 0 && stdRegNo?.length > 0 && month?.length > 0 && year?.length > 0 && articleshipDate && mcsDate && isConcent;
+  const isSubmitButtonDisabled = name?.length > 0 && stdRegNo?.length > 0 && month?.length > 0 && year?.length > 0 && articleshipDate && mcsDate && isConcent &&  mcsCertificateNumber?.length > 0;
 
   const handleSubmit = () => {
     let payload = {
-        "candidate_id":162,
         name,
         "student_registration_no": mcsCertificateNumber,
         "final_exam_month": month,
@@ -120,6 +119,7 @@ const DeclarationForm = ({intl, onValidationChange = () => {}, onPressIconCross,
                 isPaddingNotRequired
                 label={intl.formatMessage({ id: "label.mcsCertificateNo" })}
                 placeholder={'Certificate Number'}
+                isMandatory
                 value={mcsCertificateNumber}
                 onChangeText={setMcsCertificateNumber}
             />
