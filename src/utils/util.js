@@ -825,7 +825,7 @@ export const changeBooltoBinary = (value) => {
   } else {
     return 0;
   }
-}
+};
 
 export const extractValueDropdown = (item) => {
   if (item?.isDropdown) {
