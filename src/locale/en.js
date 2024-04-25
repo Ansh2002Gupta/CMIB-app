@@ -1048,6 +1048,9 @@ const locale = {
   "label.interview_shortlist": "Interview Shortlist",
   "label.offered_candidates": "Offered Candidates",
   "label.offer_accepted_by_candidates": "Offer Accepted By Candidates",
+  "label.more_details": "More Details",
+  "label.vacancy": "Vacancy",
+  "label.pyscometric_written_test": "Psychometric/ Written Test Fee",
 };
 
 export default locale;

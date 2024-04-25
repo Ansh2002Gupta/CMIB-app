@@ -26,6 +26,7 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
+import CustomFlatList from "../CustomFlatList";
 
 const CustomTable = ({
   addNewTicket,
@@ -227,7 +228,7 @@ const CustomTable = ({
                       ...containerStyle,
                     }}
                   >
-                    <ScrollView>
+                    <View style={isWebView ? styles.tableSectionForweb : {}}>
                       {isWebView && tableHeading && (
                         <MultiColumn
                           columns={getColoumConfigs(
@@ -243,7 +244,7 @@ const CustomTable = ({
                           }
                         />
                       )}
-                      <FlatList
+                      <CustomFlatList
                         data={data || []}
                         showsVerticalScrollIndicator={false}
                         style={styles.flatListStyle}
@@ -280,44 +281,32 @@ const CustomTable = ({
                                         </CommonText>
                                         <Row style={styles.rowStyling}>
                                           <CommonText
-                                            fontWeight={"600"}
-                                            customTextStyle={styles.cellTextStyle()}
+                                            customTextStyle={
+                                              styles.tableQueryText
+                                            }
                                           >
                                             {getRenderText(
                                               item,
-                                              headingTexts
+                                              subHeadingText
                                             ) || "-"}
                                           </CommonText>
-                                          <Row style={styles.rowStyling}>
-                                            <CommonText
-                                              customTextStyle={
-                                                styles.tableQueryText
-                                              }
-                                            >
-                                              {getRenderText(
-                                                item,
-                                                subHeadingText,
-                                                formatConfig
-                                              )}
-                                            </CommonText>
-                                            {!!extraDetailsText && (
-                                              <>
-                                                <View style={styles.dot} />
-                                                <CommonText
-                                                  customTextStyle={
-                                                    styles.tableQueryText
-                                                  }
-                                                >
-                                                  {extraDetailsText +
-                                                    ": " +
-                                                    getRenderText(
-                                                      item,
-                                                      extraDetailsKey
-                                                    )}
-                                                </CommonText>
-                                              </>
-                                            )}
-                                          </Row>
+                                          {!!extraDetailsText && (
+                                            <>
+                                              <View style={styles.dot} />
+                                              <CommonText
+                                                customTextStyle={
+                                                  styles.tableQueryText
+                                                }
+                                              >
+                                                {extraDetailsText +
+                                                  ": " +
+                                                  getRenderText(
+                                                    item,
+                                                    extraDetailsKey
+                                                  )}
+                                              </CommonText>
+                                            </>
+                                          )}
                                         </Row>
                                       </View>
                                       <View style={styles.rowsPerPageWeb}>
@@ -385,8 +374,7 @@ const CustomTable = ({
                           return null;
                         }}
                       />
-                    </ScrollView>
-
+                    </View>
                     {isWebView && isShowPagination && (
                       <PaginationFooter
                         {...{
