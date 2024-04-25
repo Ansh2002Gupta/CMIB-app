@@ -5,15 +5,31 @@ import CommonText from "../../../components/CommonText";
 import CustomLabelView from "../../../components/CustomLabelView";
 import CustomButton from "../../../components/CustomButton";
 import useFetch from "../../../hooks/useFetch";
+import { usePost } from "../../../hooks/useApiRequest";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "./PaymentDetails.style";
 
 const Pay = ({ intl, isWebView }) => {
   const { data: paymentData } = useFetch({
-    url: `/api/member/nqca-placements/rounds/264/payment-info`,
+    url: `member/nqca-placements/rounds/264/payment-info`,
   });
-  const payAmount = () => {};
+  const { makeRequest: payCandidateAmount } = usePost({
+    url: `member/nqca-placements/rounds/264/pay`,
+  });
+  const payAmount = () => {
+    payCandidateAmount({
+      onSuccessCallback: async (data) => {
+        if (isWebView) {
+          if (data?.data && data?.data?.url) {
+            window.open(data?.data?.url, "_self");
+          } else {
+            window.location.reload();
+          }
+        }
+      },
+    });
+  };
   return (
     <View style={styles.cardContainer}>
       <CommonText customTextStyle={styles.customTextStyle}>
@@ -27,6 +43,7 @@ const Pay = ({ intl, isWebView }) => {
         <CommonText>{`₹${paymentData?.amount}`}</CommonText>
       </CustomLabelView>
       <CustomButton
+        disabled={paymentData?.is_paid}
         onPress={payAmount}
         withGreenBackground
         iconRight={{ rightIconSource: images.iconArrowRightWhite }}

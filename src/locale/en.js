@@ -1036,6 +1036,10 @@ const locale = {
   "label.payMentionedAmountsubmitapplication":
     "Pay the below mentioned amount to submit the application",
   "label.payAmount": "Pay Amount",
+  "label.contact_details": "Contact details",
+  "label.totalPosition": "Total Position: ",
+  "label.categories": "Categories",
+  "label.add_contact": "Add Contact",
 };
 
 export default locale;

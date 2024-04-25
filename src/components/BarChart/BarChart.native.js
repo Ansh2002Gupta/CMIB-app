@@ -10,7 +10,9 @@ import styles from "./BarChart.style";
 const BarChart = ({ barColor, data, label, heightOfOneBar = 60 }) => {
   return (
     <TwoRow
-      style={styles.container(data.length > 0 ? data.length * heightOfOneBar : 90)}
+      style={styles.container(
+        data.length > 0 ? data.length * heightOfOneBar : 90
+      )}
       topSection={
         <CommonText customTextStyle={styles.headerText} fontWeight="600">
           {label}

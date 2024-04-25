@@ -17,6 +17,7 @@ import WorkExperienceDetails from "../WorkExperience";
 import HobbiesDetails from "../Hobbies";
 import JobPreferenceDetails from "../JobPreference";
 import { usePut } from "../../../hooks/useApiRequest";
+import { usePatch } from "../../../hooks/useApiRequest";
 import useFetch from "../../../hooks/useFetch";
 
 const AddApplicationTemplate = ({
@@ -40,6 +41,10 @@ const AddApplicationTemplate = ({
 
   const { isLoading, makeRequest, error } = usePut({
     url: "/member/nqca-placements/rounds/264/training-details",
+  });
+
+  const { makeRequest: submit } = usePatch({
+    url: "member/nqca-placements/application/264/submit",
   });
 
   const {
@@ -250,6 +255,17 @@ const AddApplicationTemplate = ({
     });
   };
 
+  const onsubmit = () => {
+    const payload = hobbiesRef?.current?.getAllData();
+    submit({
+      body: { data: payload },
+      onErrorCallback: (errorMessage) => {},
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
   const onHobbiesDetailsSave = () => {
     const payload = hobbiesRef?.current?.getAllData();
     makeRequestHobbies({
@@ -274,12 +290,14 @@ const AddApplicationTemplate = ({
         return;
       case 4:
         onExperienceDetailsSave();
-        return
+        return;
       case 5:
         onHobbiesDetailsSave();
         return;
       case 6:
         onJobPreferencesSave();
+      case 7:
+        onsubmit();
         return;
       default:
         return;
@@ -337,16 +355,20 @@ const AddApplicationTemplate = ({
                 ? "label.back"
                 : "label.cancel",
           })}
-          buttonTwoText={intl.formatMessage({ id: "label.next" })}
+          buttonTwoText={intl.formatMessage({
+            id: selectedStepper?.id === 7 ? "label.submit" : "label.next",
+          })}
           customStyles={{
             ...isWebProps,
             customContainerStyle: styles.customButtonContainer,
             buttonOneTextStyle: styles.buttonText,
             buttonTwoTextStyle: styles.buttonText,
           }}
-          iconRight={{
-            rightIconSource: images.iconArrowRightWhite,
-          }}
+          iconRight={
+            selectedStepper?.id !== 7 && {
+              rightIconSource: images.iconArrowRightWhite,
+            }
+          }
           iconLeft={
             !isWebView &&
             selectedStepper.id != 1 && {
