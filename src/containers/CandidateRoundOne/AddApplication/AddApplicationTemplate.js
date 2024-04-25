@@ -36,7 +36,7 @@ const AddApplicationTemplate = ({
   const jobPreferneceref = useRef();
 
   const { isLoading, makeRequest, error } = usePut({
-    url: "/member/nqca-placements/rounds/264/academics",
+    url: "/member/nqca-placements/rounds/264/training-details",
   });
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
@@ -160,6 +160,20 @@ const AddApplicationTemplate = ({
     });
   };
 
+  const onTrainingDetailsSave = () => {
+    const payload = trainingDetailRef?.current?.getAllData();
+    makeRequest({
+      body: payload,
+      onErrorCallback: (errorMessage) => {
+        //
+        console.log("error");
+      },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
   const onExperienceDetailsSave = () => {
     const payload = workExperienceDetailsref?.current?.getAllData();
     makeRequest({
@@ -225,18 +239,15 @@ const AddApplicationTemplate = ({
   };
 
   const handleSavePress = () => {
-    switch (6) {
+    switch (selectedStepper.id) {
       case 1:
         onPersonalDetailSave();
         return;
       case 2:
         onEdDetailsSave();
         return;
-      case 4:
-        onExperienceDetailsSave();
-        return;
-      case 6:
-        onJobPreferencesSave();
+      case 3:
+        onTrainingDetailsSave();
         return;
       default:
         return;

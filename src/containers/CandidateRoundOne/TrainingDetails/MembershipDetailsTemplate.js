@@ -8,12 +8,17 @@ import styles from "./TrainingDetails.style";
 import CustomLabelView from "../../../components/CustomLabelView";
 import CustomToggleComponent from "../../../components/CustomToggleComponent";
 import { formatDate } from "../../../utils/util";
+import CustomImage from "../../../components/CustomImage";
+import images from "../../../images";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import DeclarationForm from "./DeclarationForm";
 
 const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValidationChange = () => {}}, ref) => {
   //states
   const [isMembershipNumber, setIsMembershipNumber] = useState(1);
   const [membershipEnrollNumber, setMembershipEnrollNumber] = useState('');
   const [dateOfCompletion, setDateOfCompletion] = useState('');
+  const [showDeclarationModal, setShowDeclarationModal] = useState(false);
 
   //custom functions
   const handleGcmsNumberSelection = (val) => {
@@ -28,9 +33,9 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
   useImperativeHandle(ref, () => ({
     getState: () => {
       return {
-        isMembershipNumber: !Boolean(isMembershipNumber),
-        membershipEnrollNumber,
-        dateOfCompletion,
+        has_membership: !Boolean(isMembershipNumber),
+        membership_enrollment_number: membershipEnrollNumber,
+        membership_completion_date: dateOfCompletion ? formatDate(dateOfCompletion, 'YYYY-MM-DD') : '',
       };
     },
   }));
@@ -39,7 +44,7 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
   useEffect(() => {
     if(!Boolean(isMembershipNumber)) {
       // selected yes
-      onValidationChange(membershipEnrollNumber.length > 0 && dateOfCompletion.length > 0);
+      onValidationChange(membershipEnrollNumber.length > 0 && dateOfCompletion);
     } else {
       // selected no
       onValidationChange(true);
@@ -89,10 +94,23 @@ const MembershipDetailsTemplate = ({intl, isWebView, isViewMode = false, onValid
                 format={'DD/MM/YYYY'}
                 maxDate={new Date()}
                 value={dateOfCompletion}
-                onChangeText={setDateOfCompletion}
+                onChangeValue={setDateOfCompletion}
               />
             </>}
+            {Boolean(isMembershipNumber) && 
+              <View style={styles.submitFormContainer}>
+                <CommonText>{intl.formatMessage({ id: "label.submitDeclaration" })}</CommonText>
+                <CustomTouchableOpacity style={styles.submitButtonContainer} onPress={() => {setShowDeclarationModal(true)}}>
+                  <CommonText customTextStyle={{color: '#04AF55', fontWeight: 600}}>{intl.formatMessage({ id: "label.submitDeclarationform" })}</CommonText>
+                  <CustomImage
+                    source={images.rightArrowGreen}
+                    style={styles.imageStyle}
+                  />
+                </CustomTouchableOpacity>
+              </View>
+            }
           </View>
+          {showDeclarationModal && <DeclarationForm intl={intl} onPressIconCross={() => setShowDeclarationModal(false)}/>}
         </CardComponent>
   )
 };

@@ -1,4 +1,4 @@
-import React, {useState, useImperativeHandle, useEffect} from "react";
+import React, {useState, useImperativeHandle, useEffect, useRef} from "react";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../components/CardComponent";
@@ -13,50 +13,43 @@ import ArticlesTraining from "./ArticlesTraining";
 import IndustrialTraining from "./IndustrialTraining";
 
 const CaTrainingDetailsTemplate = ({intl, isWebView, isViewMode, onValidationChange = () => {}}, ref) => {
-  //states
-  const [isMembershipNumber, setIsMembershipNumber] = useState(1);
-  const [membershipEnrollNumber, setMembershipEnrollNumber] = useState('');
-  const [dateOfCompletion, setDateOfCompletion] = useState('');
-
-  //custom functions
-  const handleGcmsNumberSelection = (val) => {
-    // val is 0,1,2 .... here
-    setIsMembershipNumber(val);
-    if(Boolean(val)) {
-      setMembershipEnrollNumber('');
-      setDateOfCompletion('')
-    }
-  }
+  //refs
+  const articleRef = useRef();
+  const industryRef = useRef();
+  //state
+  const [isArticleCompleted, setIsArticleCompleted] = useState(false);
+  const [isIndustryCompleted, setIsIndustryCompleted] = useState(false);
 
   useImperativeHandle(ref, () => ({
     getState: () => {
       return {
-        isMembershipNumber: !Boolean(isMembershipNumber),
-        membershipEnrollNumber,
-        dateOfCompletion,
+        ...articleRef?.current?.getState(),
+        ...industryRef?.current?.getState(),
       };
     },
   }));
 
-  //Lifecycle
-  useEffect(() => {
-    if(!Boolean(isMembershipNumber)) {
-      // selected yes
-      onValidationChange(membershipEnrollNumber.length > 0 && dateOfCompletion.length > 0);
-    } else {
-      // selected no
-      onValidationChange(true);
+  const handleArticleChange = (val) => {
+    if (val !== isArticleCompleted) {
+      setIsArticleCompleted(val);
+      onValidationChange(val && isIndustryCompleted);
     }
+  }
 
-  }, [isMembershipNumber, membershipEnrollNumber, dateOfCompletion, onValidationChange]);
+  const handleIndustryChange = (val) => {
+    if (val !== isIndustryCompleted) {
+      setIsIndustryCompleted(val);
+      onValidationChange(val && isArticleCompleted);
+    }
+  }
   
   return (
     <CardComponent customStyle={styles.cardContainer}>
           <CommonText customTextStyle={styles.titleText} fontWeight={"600"}>
             {intl.formatMessage({ id: "label.membershipDetails" })}
           </CommonText>
-          <ArticlesTraining intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>
-          <IndustrialTraining  intl={intl} isWebView={isWebView} isViewMode={isViewMode}/>
+          <ArticlesTraining intl={intl} isWebView={isWebView} isViewMode={isViewMode} ref={articleRef} onValidationChange={handleArticleChange}/>
+          <IndustrialTraining  intl={intl} isWebView={isWebView} isViewMode={isViewMode} ref={industryRef} onValidationChange={handleIndustryChange}/>
     </CardComponent>
   )
 };
