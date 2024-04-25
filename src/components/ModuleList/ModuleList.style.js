@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     borderRadius: 12,
     maxWidth: 700,
+    minHeight: 500,
   },
   modalContainerTabStyle: {
     width: "60%",

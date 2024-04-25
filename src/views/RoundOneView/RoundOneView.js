@@ -103,7 +103,7 @@ const RoundOneView = () => {
     <Base style={styles.containerViewStyle}>
       {userProfileDetails?.userDetails?.user_type?.toLowerCase() ===
       USER_TYPE_CANDIDATE ? (
-        <CandidateRoundOneContainer hasRoundone />
+        <CandidateRoundOneContainer hasRoundone savedRoundId={savedRoundId} />
       ) : (
         <>
           {(isCardsDataLoading || cardsApiStatus === API_STATUS.IDLE) && (
@@ -111,7 +111,7 @@ const RoundOneView = () => {
           )}
           {!isCardsDataLoading && !isErrorOnCardsData && !!cardsData && (
             <RoundOneContainer
-              cardsData={cardsData}
+              cardsData={cardsData?.application_form}
               hasRoundone
               roundId={roundOneId}
             />

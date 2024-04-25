@@ -10,13 +10,19 @@ import CustomTextInput from "../CustomTextInput";
 import EditDeleteAction from "../EditDeleteAction/EditDeleteAction";
 import useIsWebView from "../../hooks/useIsWebView";
 import ModalWithTitleButton from "../ModalWithTitleButton";
-import { ADD_DOCUMENT, DOCUMENT_TYPE } from "../../constants/constants";
+import {
+  ADD_DOCUMENT,
+  DOCUMENT_TYPE,
+  OTHER_BENEFIT_HEADING,
+} from "../../constants/constants";
 import { numericValidator } from "../../utils/validation";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./AddBenefits.style";
 
 const AddBenefitsTemplate = ({
   addDocumentModal,
   documentDetail,
+  isEditable,
   multiDocumentDetail,
   setMultiDocumentDetail,
   addDocumentField,
@@ -34,6 +40,52 @@ const AddBenefitsTemplate = ({
   const intl = useIntl();
   const { isWebView } = useIsWebView();
 
+  function mapDocuments(dataArray) {
+    const groupedData = {};
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "benefits_details":
+          groupedData[item.cellID].benefits_details = item.value;
+          break;
+        case "benefits_amount":
+          groupedData[item.cellID].benefits_amount = item.value;
+          break;
+      }
+    });
+    const result = Object.keys(groupedData).map((key) => {
+      return groupedData[key];
+    });
+    return result;
+  }
+  const nonEditableData = mapDocuments(requiredDocumentDetails);
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.benefits_details || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.benefits_amount || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+    ];
+  };
   return (
     <View>
       <CommonText
@@ -47,6 +99,7 @@ const AddBenefitsTemplate = ({
       {isWebView ? (
         <CustomMultiRowTextInput
           customCardStyle={styles.multiRowTextStyle}
+          isEditProfile={isEditable}
           startRowTemplate={addDocumentField}
           gridTemplate={multiDocumentDetail}
           setGridTemplate={setMultiDocumentDetail}
@@ -55,6 +108,9 @@ const AddBenefitsTemplate = ({
             handleMultiRowDocumentDetails(propertyName, value, index);
           }}
           customWebContainerStyle={styles.customWebContainerStyle}
+          getColoumConfigs={getColoumConfigs}
+          tableData={nonEditableData}
+          tableHeading={OTHER_BENEFIT_HEADING}
         />
       ) : (
         <>

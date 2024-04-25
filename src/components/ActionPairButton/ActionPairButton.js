@@ -13,6 +13,7 @@ const ActionPairButton = ({
   disableLeftStyle,
   displayLoader,
   displayLoaderLeft,
+  customLoadingStyleButtonOne,
   disableRightStyle,
   iconRight,
   iconLeft,
@@ -40,35 +41,40 @@ const ActionPairButton = ({
     <TwoColumn
       style={{ ...styles.containerStyle, ...customContainerStyle }}
       leftSection={
-        <CustomButton
-          disabledStyle={disableLeftStyle}
-          disabled={isButtonOneDisabled || isDisabledLeft}
-          isLoading={displayLoaderLeft}
-          iconLeft={iconLeft}
-          onPress={onPressButtonOne}
-          customStyle={{ customTextStyle: buttonOneTextStyle }}
-          style={{ ...styles.buttonStyle, ...buttonOneStyle }}
-          type={buttonOneType}
-          withGreenBackground={isButtonOneGreen}
-        >
-          {buttonOneText}
-        </CustomButton>
+        !!buttonOneText && (
+          <CustomButton
+            disabledStyle={disableLeftStyle}
+            disabled={isButtonOneDisabled || isDisabledLeft}
+            isLoading={displayLoaderLeft}
+            customLoadingStyle={customLoadingStyleButtonOne}
+            iconLeft={iconLeft}
+            onPress={onPressButtonOne}
+            customStyle={{ customTextStyle: buttonOneTextStyle }}
+            style={{ ...styles.buttonStyle, ...buttonOneStyle }}
+            type={buttonOneType}
+            withGreenBackground={isButtonOneGreen}
+          >
+            {buttonOneText}
+          </CustomButton>
+        )
       }
       // temporarly comented apply button as this functionality may come in near future
       rightSection={
-        <CustomButton
-          disabledStyle={disableRightStyle}
-          disabled={isDisabled || isButtonTwoDisabled}
-          customStyle={{ customTextStyle: buttonTwoTextStyle }}
-          iconRight={iconRight}
-          isLoading={displayLoader}
-          onPress={onPressButtonTwo}
-          style={buttonTwoStyle}
-          type={buttonTwoType}
-          withGreenBackground={isButtonTwoGreen}
-        >
-          {buttonTwoText}
-        </CustomButton>
+        !!buttonTwoText && (
+          <CustomButton
+            disabledStyle={disableRightStyle}
+            disabled={isDisabled || isButtonTwoDisabled}
+            customStyle={{ customTextStyle: buttonTwoTextStyle }}
+            iconRight={iconRight}
+            isLoading={displayLoader}
+            onPress={onPressButtonTwo}
+            style={buttonTwoStyle}
+            type={buttonTwoType}
+            withGreenBackground={isButtonTwoGreen}
+          >
+            {buttonTwoText}
+          </CustomButton>
+        )
       }
       leftSectionStyle={{ ...styles.buttonStyle, ...buttonOneContainerStyle }}
       rightSectionStyle={{

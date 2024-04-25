@@ -1,15 +1,13 @@
 import React from "react";
-import { Dimensions, View } from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
+import { BarChart as BarChartComponent } from "react-native-gifted-charts";
 
 import { TwoRow } from "../../core/layouts";
 
-import { convertMobileBarData } from "../../utils/util";
 import CommonText from "../CommonText";
-import colors from "../../assets/colors";
 import styles from "./BarChart.style";
-import { BarChart as BarChartComponent } from "react-native-gifted-charts";
 
-const BarChart = ({ barColor, data, label, height }) => {
+const BarChart = ({ barColor, data, label }) => {
   return (
     <TwoRow
       style={styles.container}
@@ -19,7 +17,7 @@ const BarChart = ({ barColor, data, label, height }) => {
         </CommonText>
       }
       bottomSection={
-        <View style={{}}>
+        !!data?.length ? (
           <BarChartComponent
             horizontal
             barWidth={22}
@@ -35,16 +33,21 @@ const BarChart = ({ barColor, data, label, height }) => {
             roundedBottom={false}
             roundedTop={false}
             noOfSections={data.length}
-            topLabelTextStyle={{ fontWeight: 'bold', color: colors.black }}
+            topLabelTextStyle={styles.topLabelTextStyle}
             rulesType="solid"
-            autoShiftLabels={true}
-            style={{ backgroundColor: 'red' }}
+            autoShiftLabels
           />
-        </View>
+        ) : null
       }
       bottomSectionStyle={styles.bottomSectionStyle}
     />
   );
+};
+
+BarChart.propTypes = {
+  barColor: PropTypes.string,
+  data: PropTypes.array,
+  label: PropTypes.string,
 };
 
 export default BarChart;

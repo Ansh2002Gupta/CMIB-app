@@ -18,7 +18,6 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
-import PopupMessage from "../PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
@@ -47,11 +46,9 @@ const CustomTable = ({
   getStatusStyle,
   handleLoadMore,
   handlePageChange,
-  handleTicketModal,
   handleRowPerPageChange,
   handleSearchResults,
   headingTexts,
-  handleSaveAddTicket,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
@@ -72,12 +69,7 @@ const CustomTable = ({
   showInterviewTimeModal,
   statusText,
   subHeadingText,
-  statusLabels,
-  showPopUpWithID,
   setShowPopUpWithID,
-  setModalData,
-  setShowJobOfferResponseModal,
-  setShowInterviewTimeModal,
   tableHeading,
   tableIcon,
   totalcards,
@@ -85,8 +77,6 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
-  statusData,
-  queryTypeData,
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
@@ -233,52 +223,57 @@ const CustomTable = ({
                       ...containerStyle,
                     }}
                   >
-                    <ScrollView>
-                      {isWebView && (
-                        <MultiColumn
-                          columns={getColoumConfigs(
-                            tableHeading,
-                            isHeading,
-                            0,
-                            selectedTabs
-                          )}
-                          style={
-                            !!data
-                              ? styles.columnHeaderStyle
-                              : styles.columnHeaderStyleWithBorder
-                          }
-                        />
-                      )}
-                      <FlatList
-                        data={data || []}
-                        showsVerticalScrollIndicator={false}
-                        style={styles.flatListStyle}
-                        keyExtractor={(item, index) => index?.toString()}
-                        renderItem={({ item, index }) => {
-                          const statusRenderText = getRenderText(
-                            item,
-                            statusText,
-                            formatConfig
-                          );
-                          return (
-                            <>
-                              {isWebView ? (
-                                <MultiColumn
-                                  columns={getColoumConfigs(
-                                    item,
-                                    !isHeading,
-                                    index,
-                                    selectedTabs
-                                  )}
-                                  style={styles.columnStyleBorder}
-                                />
-                              ) : (
-                                <>
-                                  {mobileComponentToRender ? (
-                                    mobileComponentToRender(item, index)
-                                  ) : (
-                                    <View style={styles.mobileContainer}>
-                                      <View style={styles.mobileDetailRow}>
+                    {isWebView && tableHeading && (
+                      <MultiColumn
+                        columns={getColoumConfigs(
+                          tableHeading,
+                          isHeading,
+                          0,
+                          selectedTabs
+                        )}
+                        style={
+                          !!data
+                            ? styles.columnHeaderStyle
+                            : styles.columnHeaderStyleWithBorder
+                        }
+                      />
+                    )}
+                    <FlatList
+                      data={data || []}
+                      showsVerticalScrollIndicator={false}
+                      style={styles.flatListStyle}
+                      keyExtractor={(item, index) => index?.toString()}
+                      renderItem={({ item, index }) => {
+                        return (
+                          <>
+                            {isWebView ? (
+                              <MultiColumn
+                                columns={getColoumConfigs(
+                                  item,
+                                  !isHeading,
+                                  index,
+                                  selectedTabs
+                                )}
+                                style={{
+                                  ...((tableHeading || index > 0) &&
+                                    styles.columnStyleBorder),
+                                }}
+                              />
+                            ) : (
+                              <>
+                                {mobileComponentToRender ? (
+                                  mobileComponentToRender(item, index)
+                                ) : (
+                                  <View style={styles.mobileContainer}>
+                                    <View style={styles.mobileDetailRow}>
+                                      <CommonText
+                                        fontWeight={"600"}
+                                        customTextStyle={styles.cellTextStyle()}
+                                      >
+                                        {getRenderText(item, headingTexts) ||
+                                          "-"}
+                                      </CommonText>
+                                      <Row style={styles.rowStyling}>
                                         <CommonText
                                           fontWeight={"600"}
                                           customTextStyle={styles.cellTextStyle()}
@@ -316,73 +311,73 @@ const CustomTable = ({
                                             </>
                                           )}
                                         </Row>
-                                      </View>
-                                      <View style={styles.rowsPerPageWeb}>
-                                        {!!item.status && (
-                                          <Chip
-                                            label={getRenderText(
-                                              item,
-                                              statusText
-                                            )}
-                                            style={getStatusStyle(
-                                              !!item?.active
-                                                ? item.active
-                                                : item.status
-                                            )}
-                                          />
-                                        )}
-                                        <TouchableImage
-                                          onPress={() => {
-                                            onIconPress(item);
-                                          }}
-                                          source={tableIcon}
-                                          style={styles.iconTicket}
-                                        />
-                                      </View>
+                                      </Row>
                                     </View>
-                                  )}
-                                </>
-                              )}
-                            </>
+                                    <View style={styles.rowsPerPageWeb}>
+                                      {!!item.status && (
+                                        <Chip
+                                          label={getRenderText(
+                                            item,
+                                            statusText
+                                          )}
+                                          style={getStatusStyle(
+                                            !!item?.active
+                                              ? item.active
+                                              : item.status
+                                          )}
+                                        />
+                                      )}
+                                      <TouchableImage
+                                        onPress={() => {
+                                          onIconPress(item);
+                                        }}
+                                        source={tableIcon}
+                                        style={styles.iconTicket}
+                                      />
+                                    </View>
+                                  </View>
+                                )}
+                              </>
+                            )}
+                          </>
+                        );
+                      }}
+                      {...flatlistProps}
+                      ListFooterComponent={() => {
+                        if ((!data || !!data) && !data?.length)
+                          return (
+                            <CommonText
+                              customContainerStyle={styles.loadingStyleNoData}
+                              customTextStyle={styles.noMoreData}
+                            >
+                              {intl.formatMessage({ id: "label.no_data" })}
+                            </CommonText>
                           );
-                        }}
-                        {...flatlistProps}
-                        ListFooterComponent={() => {
-                          if ((!data || !!data) && !data?.length)
-                            return (
-                              <CommonText
-                                customContainerStyle={styles.loadingStyleNoData}
-                                customTextStyle={styles.noMoreData}
-                              >
-                                {intl.formatMessage({ id: "label.no_data" })}
-                              </CommonText>
-                            );
-                          if (isRenderFooterComponent) {
-                            return renderFooterComponenet();
-                          }
-                          if (loadingMore && !isFirstPageReceived) {
-                            return (
-                              <View style={styles.loadingStyle}>
-                                <Spinner thickness={2} {...webProps} />
-                              </View>
-                            );
-                          }
-                          if (allDataLoaded) {
-                            return (
-                              <CommonText
-                                customContainerStyle={styles.loadingStyle}
-                                customTextStyle={styles.noMoreData}
-                              >
-                                {intl.formatMessage({
-                                  id: "label.no_more_data",
-                                })}
-                              </CommonText>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                    </ScrollView>
+                        if (isRenderFooterComponent) {
+                          return renderFooterComponenet();
+                        }
+                        if (loadingMore && !isFirstPageReceived) {
+                          return (
+                            <View style={styles.loadingStyle}>
+                              <Spinner thickness={2} {...webProps} />
+                            </View>
+                          );
+                        }
+                        if (allDataLoaded) {
+                          return (
+                            <CommonText
+                              customContainerStyle={styles.loadingStyle}
+                              customTextStyle={styles.noMoreData}
+                            >
+                              {intl.formatMessage({
+                                id: "label.no_more_data",
+                              })}
+                            </CommonText>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
 
                     {isWebView && isShowPagination && (
                       <PaginationFooter
@@ -472,33 +467,33 @@ CustomTable.defaultProps = {
 
 CustomTable.propTypes = {
   addNewTicket: PropTypes.bool,
-  allDataLoaded: PropTypes.bool.isRequired,
-  currentPage: PropTypes.number.isRequired,
+  allDataLoaded: PropTypes.bool,
+  currentPage: PropTypes.number,
   data: PropTypes.array,
   formatConfig: PropTypes.object,
-  filterCategory: PropTypes.array.isRequired,
-  getColoumConfigs: PropTypes.func.isRequired,
+  filterCategory: PropTypes.array,
+  getColoumConfigs: PropTypes.func,
   getStatusStyle: PropTypes.func,
   isShowPagination: PropTypes.bool,
   filterApplyHandler: PropTypes.func,
-  handlePageChange: PropTypes.func.isRequired,
-  handleRowPerPageChange: PropTypes.func.isRequired,
-  handleSearchResults: PropTypes.func.isRequired,
-  handleLoadMore: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func,
+  handleRowPerPageChange: PropTypes.func,
+  handleSearchResults: PropTypes.func,
+  handleLoadMore: PropTypes.func,
   handleTicketModal: PropTypes.func,
   headingTexts: PropTypes.array,
-  isHeading: PropTypes.bool.isRequired,
+  isHeading: PropTypes.bool,
   isTicketListingLoading: PropTypes.bool,
   isGeetingJobbSeekers: PropTypes.bool,
   indexOfFirstRecord: PropTypes.number,
   indexOfLastRecord: PropTypes.number,
-  loadingMore: PropTypes.bool.isRequired,
+  loadingMore: PropTypes.bool,
   onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
   isRenderFooterComponent: PropTypes.bool,
   renderFooterComponenet: PropTypes.func,
-  rowsLimit: PropTypes.array.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
+  rowsLimit: PropTypes.array,
+  rowsPerPage: PropTypes.number,
   showSearchBar: PropTypes.bool,
   statusData: PropTypes.array,
   workModeData: PropTypes.array,
@@ -513,9 +508,9 @@ CustomTable.propTypes = {
   industryData: PropTypes.array,
   statusText: PropTypes.string,
   selectedFilterOptions: PropTypes.array,
-  subHeadingText: PropTypes.array,
-  tableHeading: PropTypes.object.isRequired,
-  tableIcon: PropTypes.any.isRequired,
+  subHeadingText: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  tableHeading: PropTypes.object,
+  tableIcon: PropTypes.any,
   totalcards: PropTypes.number,
   placeholder: PropTypes.string,
 };

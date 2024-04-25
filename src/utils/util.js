@@ -739,7 +739,7 @@ export const formateErrors = (errorResponse) => {
 };
 
 export const convertStringtoNumber = (val) => {
-  return +val;
+  return !!val ? +val : 0;
 };
 
 export const convertGraphData = (data) => {
@@ -813,4 +813,11 @@ export const formatText = (text, delimitter = "-") => {
     return word[0].toUpperCase() + word.slice(1).toLowerCase();
   });
   return newWordList.join(" ");
+};
+
+export const extractValueDropdown = (item) => {
+  if (item?.isDropdown) {
+    return item.options.find((val) => val.id == item.value).label;
+  }
+  return item?.value;
 };

@@ -10,7 +10,7 @@ import {
 } from "../../../../constants/constants";
 import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 
-const useMainContainerTabs = ({ cardsData, roundId }) => {
+const useMainContainerTabs = ({ cardsData, roundId, hasRoundone }) => {
   const intl = useIntl();
   const { is_editable, is_filled } = cardsData;
   const navigate = useNavigate();
@@ -26,13 +26,15 @@ const useMainContainerTabs = ({ cardsData, roundId }) => {
     subTitle: intl.formatMessage({ id: card.subTitle }),
   }));
 
+  const currentApplicationFormNavigation = hasRoundone
+    ? `/${currentModule}/${navigations.ROUND_ONE}/application-form/${roundId}`
+    : `/${currentModule}/${navigations.ROUND_TWO}/application-form/${roundId}`;
+
   const onPressCard = (id) => {
     setSelectedTab(id);
     switch (id) {
       case 1:
-        navigate(
-          `/${currentModule}/${navigations.ROUND_ONE}/application-form/${roundId}`
-        );
+        navigate(currentApplicationFormNavigation);
         break;
       case 2:
         navigate(

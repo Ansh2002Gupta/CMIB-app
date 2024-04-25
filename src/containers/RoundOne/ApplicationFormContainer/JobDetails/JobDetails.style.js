@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 import colors from "../../../../assets/colors";
 
@@ -6,9 +6,16 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
   },
+  roundHeaderText: {
+    color: colors.black,
+    fontSize: 20,
+    fontWeight: "600",
+  },
   twoMainSTyle: { backgroundColor: colors.backgroundColor },
   mainContainer: {
     flexDirection: "row",
+    padding: 24,
+    gap: 16,
   },
   customCardComponentStyle: {
     marginTop: 16,
@@ -20,6 +27,12 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
     borderWidth: 0,
     borderRadius: 8,
+  },
+  responsiveStyle: {
+    flexDirection: "column",
+    width: "100%",
+    padding: 24,
+    gap: 16,
   },
   MultiRowPhoneStyle: {
     backgroundColor: colors.backgroundColor,
@@ -47,8 +60,6 @@ const styles = StyleSheet.create({
   },
   bottomMargin: {
     marginBottom: 16,
-    marginRight: 16,
-    marginLeft: 16,
   },
   bondIfAnyView: {
     marginBottom: 16,
@@ -95,10 +106,7 @@ const styles = StyleSheet.create({
   customStyleCompensation: {
     marginRight: 24,
   },
-  addDesignationView: {
-    marginLeft: 16,
-    marginRight: 16,
-  },
+  addDesignationView: {},
   customLabelStyle: {
     color: colors.darkGrey,
   },
@@ -117,15 +125,18 @@ const styles = StyleSheet.create({
   scrollViewStyle: {
     backgroundColor: colors.backgroundColor,
     paddingTop: 16,
-    // width: "100%",
   },
   actionBtnContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     gap: 16,
     padding: 24,
     backgroundColor: colors.backgroundColor,
+  },
+  rightSection: {
+    flexDirection: "row",
+    gap: 8,
   },
   buttonStyle: { maxHeight: 44, maxWidth: 80 },
   buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
@@ -133,12 +144,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   configurableStyle: {
-    paddingHorizontal: undefined,
-    paddingVertical: undefined,
     backgroundColor: undefined,
-    marginTop: 24,
-    marginLeft: 16,
-    marginBottom: 16,
+    marginRight: 0,
+    flex: undefined,
+    display: undefined,
   },
   componentContainer: {
     borderWidth: 1,
@@ -149,18 +158,25 @@ const styles = StyleSheet.create({
   },
   innerContainerStyle: {
     flex: 1,
-    marginBottom: 16,
-    marginLeft: 16,
-    marginRight: 16,
-    marginTop: 24,
     borderRadius: 16,
     width: "60%",
+  },
+  leftSectionStyle: {
+    width: "25%",
   },
   emptyCard: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.white,
+  },
+  customQuilStyle: { height: undefined, borderWidth: 0 },
+  quillContainerStyle: { borderColor: colors.lightGrey },
+  editCustomQuilStyle: { borderColor: colors.lightGrey },
+  disabled: {
+    opacity: 0.5,
+    backgroundColor: colors.white,
+    cursor: Platform.OS.toLowerCase() === "web" ? "not-allowed" : "",
   },
 });
 

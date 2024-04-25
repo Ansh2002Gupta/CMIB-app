@@ -39,8 +39,14 @@ const styles = StyleSheet.create({
     fontFamily: "General Sans",
     fontWeight: "500",
   },
-  gridLine: { stroke: colors.secondaryGrey, strokeWidth: 1 },
-  barStyles: (barColor) => ({ fill: barColor, strokeWidth: 2 }),
+  gridLine: {
+    stroke: colors.secondaryGrey,
+    strokeWidth: 1,
+  },
+  barStyles: (barColor) => ({
+    fill: barColor,
+    strokeWidth: 2,
+  }),
   strokeNone: { stroke: "none" },
   flyoutStyle: {
     fill: colors.white,
@@ -54,6 +60,10 @@ const styles = StyleSheet.create({
   },
   bottomSectionStyle: {
     marginTop: 12,
+  },
+  topLabelTextStyle: {
+    fontWeight: "bold",
+    color: colors.black,
   },
 });
 

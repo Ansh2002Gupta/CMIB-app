@@ -121,6 +121,16 @@ export const COMPANY_TYPE_OPTIONS = [
   { label: "Taxable", value: "taxable" },
 ];
 
+export const COMPANY_TYPE_OPTIONS_KEYS = {
+  exempt: "Exempt",
+  "nil rated": "Nil Rated",
+  "bill of supply": "Bill of Supply",
+  export: "Export",
+  sez: "SEZ",
+  "deemed export": "Deemed Export",
+  taxable: "Taxable",
+};
+
 export const NATURE_OF_SUPPLIER = [
   { label: "Registered", value: "Registered" },
   { label: "Unregistered", value: "Unregistered" },
@@ -217,6 +227,12 @@ export const DOCUMENT_TYPE = [
     value: "both",
   },
 ];
+
+export const DOCUMENT_TYPE_KEYS = {
+  photocopies: "Photocopies",
+  original: "Original",
+  both: "Both",
+};
 
 export const EXEPERIENCE_RANGE = [
   { label: "1-5", value: "1-5" },
@@ -323,26 +339,71 @@ export const SCREEN_NAMES = {
   ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
 };
 
-export const APPLICATION_FORM_STEPPER_OPTIONS = [
-  {
-    title: "label.company_profile",
-  },
-  {
-    title: "label.job_details",
-  },
-  {
-    title: "label.pre_interview_preferences",
-  },
-  {
-    title: "label.centre_details",
-  },
-  {
-    title: "label.billing_info",
-  },
-  {
-    title: "label.payment",
-  },
-];
+export const ADD_DOCUMENT_HEADING = {
+  doc_name: "Document Name",
+  doc_type: "Document Type",
+  no_of_copies: "Number of Copies",
+};
+
+export const ADD_DESIGNATION_HEADING = {
+  designation_details: "Designation",
+  number_of_vacancies: "No. of Vacancy",
+};
+
+export const OTHER_BENEFIT_HEADING = {
+  benefits_details: "Benefits Details",
+  benefits_amount: "Amount",
+};
+
+export const ADD_PLACE_OF_POSTING_HEADING = {
+  place_of_posting: "Place of Posting",
+  general: "General",
+  obc: "OBC",
+  sc: "SC",
+  st: "ST",
+  ph: "PH",
+  others: "Others",
+  total: "Total",
+};
+
+export const APPLICATION_FORM_STEPPER_OPTIONS = (hasRoundTwo) => {
+  const roundOneSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+    {
+      title: "label.billing_info",
+    },
+    {
+      title: "label.payment",
+    },
+  ];
+  const roundTwoSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+  ];
+
+  return hasRoundTwo ? roundTwoSteps : roundOneSteps;
+};
 
 export const ROWS_PER_PAGE_ARRAY = [
   { value: 10, label: "10" },
@@ -378,6 +439,9 @@ export const POSTED_JOB_LISTING = {
   number_of_interviews: "Scheduled Interview",
   number_of_applications: "Applicants",
   approve: "Approved/Not Approved by Admin",
+};
+export const COMPANY_NAME_LISTING = {
+  name: "Company",
 };
 export const APPLICANT_LISTING = {
   name: "Applicant Name",
@@ -442,12 +506,12 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
   const currentModules =
     currentModule === NEWLY_QUALIFIED
       ? {
-          psychometric_test_fee: "Psychometric/ Written Test Fee",
-        }
+        psychometric_test_fee: "Psychometric/ Written Test Fee",
+      }
       : {};
   return {
     centre_name: "Centre Name",
-    total_vacancies: "Vacany",
+    total_vacancies: "Vacancy",
     interview_dates: "Interview Dates",
     amount: "Amount",
     ...currentModules,
@@ -899,6 +963,36 @@ export const INACTIVE_PACKAGE_TABLE_HEADING = {
   start_date: "Start Date",
   validity_date: "Validity Date",
 };
+
+export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT = {
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  center_name: "Center Name",
+  interview_dates: "Interview Dates",
+  shortlisting_round: "Shortlisting Round",
+  written_test: "Written Test"
+};
+
+export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT_CAMPUS = {
+  center_name: "Center Name",
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  interview_dates_time: "Interview Dates & Time",
+  offer_provided: "Offer Provided",
+  offer_acceptance_deadline: "Offer Acceptance Deadline"
+};
+
+
+export const ROUND_ONE_CAMPUS_INTERVIEW_MANAGEMENT = {
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  interview_dates: "Interview dates",
+  shortlisting_round: "Shortlisting round",
+};
+
 export const JOB_STATUS_RESPONSE_CODE = {
   "Shortlist Candidate": 3,
   "Reject Candidate": 2,
@@ -1008,10 +1102,20 @@ export const SAVED_CANDIDATES_TABLE_HEADING = {
   designation_applied_for: ["Designation Applied For"],
 };
 
+const interviewMode = {
+  online: "online",
+  offline: "offline",
+};
+
 export const interviewTypeOptions = [
-  { label: "Virtual Interview", value: "online" },
-  { label: "Face to Face", value: "offline" },
+  { label: "Virtual Interview", value: interviewMode.online },
+  { label: "Face to Face", value: interviewMode.offline },
 ];
+
+export const INTERVIEW_TYPE = {
+  [interviewMode.online]: "Virtual Interview",
+  [interviewMode.offline]: "Face to Face",
+};
 
 export const benefits_key = {
   BENEFITS_DETAILS: "benefits_details",
@@ -1031,4 +1135,28 @@ export const CHART_DATA_TYPE = {
   TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED:
     "TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED",
   TOP_COMPANIES_WITH_HIGHEST_CTC: "TOP_COMPANIES_WITH_HIGHEST_CTC",
+};
+
+export const PAGINATION_PROPERTIES = {
+  CURRENT_PAGE: "current-page",
+  ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
+  FILTER: "filter",
+  MODE: "mode",
+};
+
+export const ADD_PREINTERVIEW_PREFERNCES_HEADING = {
+  designation: "Desgination",
+  name: "Name",
+  email: "Email",
+  mobile_country_code: "Mobile Country Code",
+  mobile_number: "Mobile Number",
+  std_country_code: "Area Code",
+  telephone_number: "Telephone Number",
+};
+
+export const FORM_STATES = {
+  VIEW_ONLY: "view",
+  EDITABLE: "edit",
+  EMPTY: "empty",
 };

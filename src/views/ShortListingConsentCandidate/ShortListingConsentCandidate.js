@@ -102,11 +102,7 @@ const ShortListingConsentCandidate = () => {
         customHeaderContainer={{ width: "61%" }}
         isBorderVisible={false}
       />
-      <View
-        style={{
-          backgroundColor: colors.white,
-        }}
-      >
+      <View>
         {companyLocation && (
           <FormTabs
             tabs={getCenterLabel(companyLocation) ?? []}

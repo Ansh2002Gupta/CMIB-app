@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useLocation } from "../../../routes";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import { TwoColumn } from "../../../core/layouts";
@@ -21,7 +22,10 @@ const ApplicationFormStepper = ({
   webActionButton,
 }) => {
   const intl = useIntl();
-  const steps = APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
+  const location = useLocation();
+  const hasRoundTwo = location?.pathname.includes("round-two");
+
+  const steps = APPLICATION_FORM_STEPPER_OPTIONS(hasRoundTwo).map((step) =>
     intl.formatMessage({ id: step.title })
   );
 
@@ -43,6 +47,7 @@ const ApplicationFormStepper = ({
                     {headingText}
                   </CommonText>
                 }
+                isLeftFillSpace
                 rightSection={!!webActionButton && webActionButton}
               />
             )}

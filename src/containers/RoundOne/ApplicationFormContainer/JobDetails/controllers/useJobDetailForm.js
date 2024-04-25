@@ -83,7 +83,7 @@ const initialState = {
   errors: "",
 };
 
-const useJobDetailForm = ({ tabHandler }) => {
+const useJobDetailForm = ({ isEditable, tabHandler }) => {
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
   const [documentState, setDocumentState] = useState([addDocumentField()]);
@@ -265,7 +265,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     if (!!error) {
       setIsLoading(false);
     }
-  }, [currentModule, sessionId]);
+  }, [currentModule, sessionId, isEditable]);
 
   useEffect(() => {
     setRenderJobDetails((prev) => ({
@@ -275,7 +275,7 @@ const useJobDetailForm = ({ tabHandler }) => {
       required_docs: getDocumentField(),
       posting_details: getPlaceOfPostingDetails(),
     }));
-  }, [isAddNewJob]);
+  }, [isAddNewJob, isEditable]);
 
   useEffect(() => {
     if (deleteDesginationId) {
@@ -285,7 +285,7 @@ const useJobDetailForm = ({ tabHandler }) => {
         },
       });
     }
-  }, [deleteDesginationId]);
+  }, [deleteDesginationId, isEditable]);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -299,7 +299,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     if (!!error) {
       setIsLoading(false);
     }
-  }, [currentDesginationID]);
+  }, [currentDesginationID, isEditable]);
 
   const handleInputChange = (fieldName, value, subFieldName) => {
     if (fieldName === "bond_details") {
@@ -534,7 +534,6 @@ const useJobDetailForm = ({ tabHandler }) => {
         [fieldName]: "",
       }));
   };
-  const isDisabled = !areAllValuesEmpty(validateError);
 
   const handleSaveAndNext = () => {
     const mappedPayload = mapDataToPayload(renderJobDetails, currentModule);
@@ -562,7 +561,6 @@ const useJobDetailForm = ({ tabHandler }) => {
             });
           });
           setCurrentDesginationID(newId);
-          tabHandler("next");
         },
         onErrorCallback: (errorMessage) => {
           setCurrentError(errorMessage);
@@ -570,6 +568,66 @@ const useJobDetailForm = ({ tabHandler }) => {
       });
     }
   };
+
+  function isFormComplete(data) {
+    let isComplete = true;
+
+    function checkMandatoryFields(fieldsArray) {
+      for (let field of fieldsArray) {
+        if (field.isMandatory && (field.value === "" || field.value == null)) {
+          isComplete = false;
+          return; // Exit as soon as an empty mandatory field is found
+        }
+      }
+    }
+
+    function checkSimpleField(field) {
+      if (field === "" || field == null) {
+        isComplete = false;
+      }
+    }
+
+    // Check mandatory fields in the monthly, yearly, posting_details, and required_docs arrays
+    if (data.monthly) checkMandatoryFields(data.monthly);
+    if (isComplete && data.yearly) checkMandatoryFields(data.yearly);
+    if (isComplete && data.posting_details)
+      checkMandatoryFields(data.posting_details);
+    if (isComplete && data.required_docs)
+      checkMandatoryFields(data.required_docs);
+
+    // Check other fields to ensure they are not empty
+    if (isComplete) checkSimpleField(data.designation);
+    if (isComplete) checkSimpleField(data.compensation);
+    if (isComplete) checkSimpleField(data.starting_salary);
+    if (isComplete) checkSimpleField(data.role_responsibility);
+    if (isComplete) checkSimpleField(data.ctc_details);
+    if (isComplete) checkSimpleField(data.otherInfo);
+    if (currentModule !== NEWLY_QUALIFIED) {
+      if (isComplete) checkSimpleField(data.job_type);
+      if (isComplete) checkSimpleField(data.flexi_hours);
+      if (isComplete) checkSimpleField(data.work_exp_range_id);
+    }
+
+    // Special check for bond_details if is_bond_included is truthy
+    if (
+      isComplete &&
+      data.bond_details &&
+      data.bond_details.is_bond_included === 0
+    ) {
+      if (
+        data.bond_details.bond_period_in_mm === "" ||
+        data.bond_details.bond_period_in_mm == null ||
+        data.bond_details.exit_amount === "" ||
+        data.bond_details.exit_amount == null
+      ) {
+        isComplete = false;
+      }
+    }
+
+    return isComplete;
+  }
+
+  const isDisabled = !isFormComplete(renderJobDetails);
 
   return {
     isButtonLoading,

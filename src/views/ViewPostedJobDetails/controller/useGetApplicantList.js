@@ -307,7 +307,7 @@ const useGetApplicantList = (id, onEditPress) => {
                   }}
                   source={images.iconMore}
                   imageStyle={{ height: 20, width: 20 }}
-                  isSvg={true}
+                  isSvg
                 />
                 {currentPopUpMessage === item.id && (
                   <View ref={popupRef}>

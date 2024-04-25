@@ -135,7 +135,7 @@ const CAJobsMemberDashboard = () => {
     !error && (
       <ScrollView style={{ gap: 24 }} showsVerticalScrollIndicator={false}>
         <View style={styles.pieChartContiner}>
-          <View style={isWebView && { flex: 1 }}>
+          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
             <DonutChart
               colorScale={[
                 colors.disabledGrey,
@@ -156,7 +156,7 @@ const CAJobsMemberDashboard = () => {
               labelColor={colors.white}
             />
           </View>
-          <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
             <PieChart
               colorScale={[
                 colors.greenBlue,
@@ -177,7 +177,7 @@ const CAJobsMemberDashboard = () => {
           </View>
         </View>
         <View style={styles.pieChartContiner}>
-          <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
             <PieChart
               colorScale={[colors.errorRed, colors.grassGreen]}
               data={urgentChartData}
@@ -195,7 +195,7 @@ const CAJobsMemberDashboard = () => {
               onPopupClick={() => { }}
             />
           </View>
-          <View style={isWebView ? { flex: 1 } : { width: '100%' }}>
+          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
             <PieChart
               colorScale={[
                 colors.mustardYellow,

@@ -169,6 +169,8 @@ const styles = StyleSheet.create({
       }
     }
   },
+  quilStyle: { height: "auto", borderWidth: 0, padding: 0 },
+  quillContainerStyle: { borderWidth: 0, marginBottom: 24, padding: 0 },
 });
 
 export const getRowStyle = (detail) => {
