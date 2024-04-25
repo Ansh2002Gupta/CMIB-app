@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
@@ -19,7 +20,7 @@ import {
 import { feedbackData } from "../constant";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../FeedbackView.style";
+import getStyles from "../FeedbackView.style";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -28,6 +29,9 @@ const initialFilterState = {
 
 const useFeedbackView = () => {
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(

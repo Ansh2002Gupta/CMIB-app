@@ -16,13 +16,13 @@ import {
   ROUND_ONE_DASHBOARD,
   USER_TYPE_MEMBER,
 } from "../../../services/apiServices/apiEndPoint";
-import colors from "../../../assets/colors";
 import getStyles from "./NQCACandidateDashboard.style";
 
 const NQCACandidateDashboard = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const theme = useTheme();
+  const { colors } = theme;
   const styles = getStyles(theme);
 
   const {

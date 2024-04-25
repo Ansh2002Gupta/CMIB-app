@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import {
   View,
   TouchableOpacity,
@@ -16,7 +16,7 @@ import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLa
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./Loginscreen.style";
+import getStyles from "./Loginscreen.style";
 
 const LoginScreenUI = (props) => {
   const {
@@ -43,6 +43,9 @@ const LoginScreenUI = (props) => {
   } = props;
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const isWebView = currentBreakpoint !== "xs";
   const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =

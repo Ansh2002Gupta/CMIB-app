@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
-
-import { TwoColumn } from "../../core/layouts";
 
 import CommonText from "../../components/CommonText";
 import CustomButton from "../../components/CustomButton";
@@ -24,10 +23,13 @@ import {
 } from "../../services/apiServices/apiEndPoint";
 import { getDate } from "../../utils/util";
 import images from "../../images";
-import styles from "./JobApplicantsDetails.style";
 import { STATUS_ENUM } from "../../constants/constants";
+import getStyles from "./JobApplicantsDetails.style";
 
 const RenderUserInfo = ({ label, value, isWebView }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <View
       style={isWebView ? styles.userInfoContainer : styles.userInfoContainerMob}
@@ -48,6 +50,8 @@ const JobApplicantsDetails = () => {
   const { job_id, id } = useParams();
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [profileData, setProfileData] = useState({});
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const {
     isLoading: isProfileDataLoading,
