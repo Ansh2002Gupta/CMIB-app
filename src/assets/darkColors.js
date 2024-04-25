@@ -1,5 +1,5 @@
 /* Blacks */
-const black = "pink";
+const black = "#182F53";
 const blackSecond = "#0E0E0F";
 const darkBlack = "#0F0F0F";
 const darkBlackSecond = "#18181B";
@@ -8,9 +8,9 @@ const blackWithOneForthOpacity = "rgba(0, 0, 0, 0.25)";
 const blackWithMinorOpacity = "rgba(0, 0, 0, 0.85)";
 
 /* Blues */
-const backgroundColor = "orange"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
-const darkBlue = "pink";
-const darkBlueShade = "#000833";
+const backgroundColor = "#F1F6F9"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
+const darkBlue = "#364049";
+const darkBlueShade = "#182F53";
 const lightBlue = "#269AD4";
 const skyBlueDark = "#0099CA";
 const skyBlueLight = "#E8FCFF";
@@ -19,7 +19,7 @@ const greenBlue = "#2FA5CB";
 
 /* Greens */
 const darkGreen = "#00873E";
-const green = "#04AF55";
+const green = "#D53920";
 const greenOne = "#04af55";
 const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
@@ -29,7 +29,7 @@ const grassGreen = "#2CA900";
 const yellowGreen = "#CDDC39";
 
 /* Greys */
-const backgroundGrey = "#F6F8F9";
+const backgroundGrey = "#F1F6F9";
 const backgroundSecondGrey = "#E5E7F2";
 const darkGrey = "#616C82";
 const darkGreySecond = "#71717A";
@@ -42,9 +42,9 @@ const greyThree = "rgba(20, 25, 26, 0.16)";
 const greyFour = "rgb(51, 51, 51)";
 const lightGray = "skyblue"; //TODO: Rename this color to something else so that it doesn't have the same name as "lightGrey" color.
 const lightGraySecond = "d3d3d3";
-const lightGrey = "red";
+const lightGrey = "#C4D4EE";
 const mediumGray = "#616C82";
-const secondaryGrey = "green";
+const secondaryGrey = "#F2F4FC";
 const subHeadingGray = "#616C82";
 const silver = "#EBEBEB";
 const slateGray = "#616c82";
@@ -82,6 +82,10 @@ const darkPurple = "#6F6AC4";
 
 /* Pink */
 const babyPink = "#FB5581";
+
+const menuItem = "#fff";
+const menuItemActive = "#000833";
+const menuItemActiveBg = "#fff";
 
 const colors = {
   darkBlueShade,
@@ -150,5 +154,8 @@ const colors = {
   babyPink,
   greenBlue,
   darkOrange,
+  menuItem,
+  menuItemActive,
+  menuItemActiveBg,
 };
 export default colors;

@@ -3,7 +3,6 @@ import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import classes from "../../theme/styles/CssClassProvider";
-import styles from "./TextArea.style";
 import getStyles from "./TextArea.style";
 
 const TextArea = ({
@@ -15,7 +14,7 @@ const TextArea = ({
   ...props
 }) => {
   const theme = useTheme();
-  const style = getStyles(theme);
+  const styles = getStyles(theme);
 
   return (
     <textarea

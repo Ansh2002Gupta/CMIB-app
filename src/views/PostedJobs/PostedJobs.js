@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 
 import { Base } from "../../core/layouts";
 
@@ -6,7 +7,7 @@ import QuestionaireModal from "../../components/QuestionaireModal";
 import usePostedJobs from "./controllers/usePostedJobs";
 import PostedJobsTemplate from "./PostedJobsTemplate";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-import styles from "./styles";
+import getStyles from "./styles";
 import useFetch from "../../hooks/useFetch";
 import { usePost } from "../../hooks/useApiRequest";
 import useSaveAndRemoveJob from "../../services/apiServices/hooks/useSaveAndRemoveJob";
@@ -22,6 +23,9 @@ import {
 
 const PostedJobs = () => {
   let { jobId } = useParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [applyJobModal, setApplyJobModal] = useState(false);
   const [isApplyVisible, setIsApplyVisible] = useState(null);
   const [isSaveVisible, setIsSaveVisible] = useState(null);

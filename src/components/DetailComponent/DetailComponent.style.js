@@ -7,7 +7,7 @@ const getColumnCount = (detail) => {
 };
 
 const getStyles = (theme) => {
-  const { colors } = theme;
+  const { colors = {} } = theme;
 
   return {
     titleContainer: {

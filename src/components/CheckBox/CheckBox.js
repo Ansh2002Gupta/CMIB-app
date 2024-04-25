@@ -1,5 +1,5 @@
-import React from "react";
-import { useTheme } from "@unthinkable/react-theme";
+import React, { useContext } from "react";
+import { ColorModeContext, useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
@@ -28,7 +28,18 @@ const CheckBox = ({
 }) => {
   const theme = useTheme();
   const styles = getStyles(theme);
-  const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
+  const colorMode = useContext(ColorModeContext).colorMode;
+
+  const CheckIcon = () => {
+    if (iconCheck) {
+      return iconCheck;
+    }
+    if (colorMode === "dark") {
+      return Images.checkboxRed;
+    }
+    return Images.iconCheckbox;
+  };
+
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
   const PartialIcon = Images.iconPartial;
   const DisabledCheckBoxIcon = Images.iconDisabledCheck;
@@ -41,7 +52,7 @@ const CheckBox = ({
       return PartialIcon;
     }
     if (isSelected) {
-      return CheckIcon;
+      return CheckIcon();
     }
     return UncheckIcon;
   };
@@ -90,8 +101,6 @@ CheckBox.defaultProps = {
   isEditable: true,
   isPartial: false,
   isSelected: false,
-  iconCheck: Images.iconCheckbox,
-  iconUnCheck: Images.iconUnCheckbox,
   style: {},
 };
 

@@ -84,6 +84,10 @@ const darkPurple = "#6F6AC4";
 /* Pink */
 const babyPink = "#FB5581";
 
+const menuItem = "#fff";
+const menuItemActive = "#000833";
+const menuItemActiveBg = "#fff";
+
 const colors = {
   darkBlueShade,
   disabledBtn,
@@ -150,6 +154,9 @@ const colors = {
   babyPink,
   greenBlue,
   darkOrange,
-  lightGreyThird
+  lightGreyThird,
+  menuItem,
+  menuItemActive,
+  menuItemActiveBg,
 };
 export default colors;

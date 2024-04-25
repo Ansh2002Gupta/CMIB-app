@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
@@ -21,13 +22,16 @@ import useGlobalSessionListApi from "../../services/apiServices/hooks/useGlobalS
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { setRoundsData, setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
+import {
+  setRoundsData,
+  setSelectedModule,
+} from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
 import { CA_JOBS, COMPANY } from "../../constants/constants";
 import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
-import styles from "./SideBar.style";
+import getStyles from "./SideBar.style";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
@@ -48,6 +52,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const location = useLocation();
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [sideBarContent, setSideBarSubMenu] = useState(SideBarContentEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
     getSelectedSubModuleFromRoute({
