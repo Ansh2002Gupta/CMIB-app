@@ -85,6 +85,7 @@ const useAddBenefit = ({
     setAddDocumentModal(false);
     setEditDocumentModal(false);
     setDocumentDetail(null);
+    setEditDocumentIndex(-1);
   };
 
   const handleMultiRowDocumentDetails = (propertyName, value, id) => {
