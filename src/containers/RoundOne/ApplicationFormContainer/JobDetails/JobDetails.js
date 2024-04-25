@@ -17,6 +17,7 @@ import ConfirmationModal from "../../../ConfirmationModal";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
+import colors from "../../../../assets/colors";
 import { formateErrors } from "../../../../utils/util";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
@@ -144,6 +145,7 @@ const JobDetails = ({ tabHandler, isEditable, setIsEditable }) => {
                     disableLeftStyle={styles.disabled}
                     isButtonOneDisabled={isDisabled}
                     isDisabled={isDisabled}
+                    buttonOneLoaderColor={colors.green}
                     displayLoaderLeft={isButtonLoading}
                     customStyles={{
                       ...isWebProps,
