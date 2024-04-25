@@ -968,6 +968,7 @@ const locale = {
   "label.viewDoc": "View Doc",
   "label.viewPPT": "View PPT",
   "label.view": "View",
+  "label.contact_details": "Contact details",
 };
 
 export default locale;
