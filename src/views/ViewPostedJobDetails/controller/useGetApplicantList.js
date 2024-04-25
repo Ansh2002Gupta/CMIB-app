@@ -100,6 +100,9 @@ const useGetApplicantList = (id, onEditPress) => {
       });
       if (initialData && initialData?.records?.length > 0) {
         setCurrentRecords(initialData?.records);
+        if (initialData?.meta?.currentPage === initialData?.meta?.lastPage) {
+          setAllDataLoaded(true);
+        }
       }
       setIsFirstPageReceived(false);
     };
@@ -122,6 +125,7 @@ const useGetApplicantList = (id, onEditPress) => {
   };
 
   const handleLoadMore = async () => {
+    console.log(loadingMore, allDataLoaded, "allDataLoaded");
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
     const nextPage = currentPage + 1;
