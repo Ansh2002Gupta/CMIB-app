@@ -11,6 +11,7 @@ import Stepper from "../../../components/Stepper";
 import StepperTabs from "../../../components/StepperTabs";
 import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
 import styles from "./ApplicationFormStepper.style";
+import useIsWebView from "../../../hooks/useIsWebView";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
@@ -29,18 +30,23 @@ const ApplicationFormStepper = ({
     intl.formatMessage({ id: step.title })
   );
 
+  const { isWebView } = useIsWebView();
+
   return (
     <>
       {isWeb ? (
         <View style={styles.stepperContainer}>
-          <View style={styles.headingContainerWeb}>
+          <View style={isWebView ? styles.headingContainerWeb : {}}>
             {!!headingText && (
               <TwoColumn
+                style={!isWebView ? styles.mainContainerMob : {}}
                 leftSection={
                   <CommonText
                     fontWeight={"600"}
                     customTextStyle={{
-                      ...styles.headingtextWeb,
+                      ...(isWebView
+                        ? styles.headingtextWeb
+                        : styles.headingtextWebMobView),
                       customMobHeadingText,
                     }}
                   >
@@ -64,6 +70,7 @@ const ApplicationFormStepper = ({
           {!!headingText && (
             <TwoColumn
               style={styles.headingContainer}
+              isLeftFillSpace
               leftSection={
                 <CommonText
                   fontWeight={"600"}
@@ -81,9 +88,7 @@ const ApplicationFormStepper = ({
           <Stepper
             {...{
               activeStep: activeStep,
-              steps: APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
-                intl.formatMessage({ id: step.title })
-              ),
+              steps,
             }}
           />
         </View>

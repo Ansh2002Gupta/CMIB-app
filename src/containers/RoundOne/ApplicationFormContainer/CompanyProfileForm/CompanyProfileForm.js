@@ -215,7 +215,7 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
               ) : (
                 <CustomButton
                   withGreenBackground
-                  style={styles.buttonStyle}
+                  style={isWebView ? styles.buttonStyle : {}}
                   onPress={() => {
                     tabHandler("next");
                   }}

@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16,
   },
-  customWebContainerStyle: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-    overflowX: "auto",
-  },
+  // customWebContainerStyle: {
+  //   display: "grid",
+  //   gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+  //   overflowX: "auto",
+  // },
   customViewModeStyle: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr",
