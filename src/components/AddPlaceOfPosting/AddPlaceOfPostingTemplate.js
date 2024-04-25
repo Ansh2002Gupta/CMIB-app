@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { View, ScrollView } from "@unthinkable/react-core-components";
 
 import AddIconText from "../../components/AddIconText";
 import CardComponent from "../../components/CardComponent/CardComponent";
@@ -22,6 +22,8 @@ import useIsWebView from "../../hooks/useIsWebView";
 import CustomMultiRowTextInput from "../CustomMultiRowTextinput";
 import RenderHeadingAndValue from "../RenderHeadingAndValue/RenderHeadingAndValue";
 import commonStyles from "../../theme/styles/commonStyles";
+import MultiRow from "../../core/layouts/MultiRow";
+import { TwoColumn } from "../../core/layouts";
 
 const AddPlaceOfPostingTemplate = ({
   isEditable,
@@ -29,6 +31,7 @@ const AddPlaceOfPostingTemplate = ({
   isSpecificPerformaRequired,
   handleInputChange,
   addPlaceModal,
+  nonEditableData,
   editPlaceModal,
   handlePostingPlaceChange,
   handleMultiRowDocumentDetails,
@@ -53,46 +56,6 @@ const AddPlaceOfPostingTemplate = ({
       posting_details: [...updatedDocs],
     }));
   };
-
-  function mapPosting(dataArray) {
-    const groupedData = {};
-    dataArray.forEach((item) => {
-      if (!groupedData[item.cellID]) {
-        groupedData[item.cellID] = {};
-      }
-      switch (item.key) {
-        case "place_of_posting":
-          groupedData[item.cellID].place_of_posting = item.value;
-          break;
-        case "general":
-          groupedData[item.cellID].general = item.value;
-          break;
-        case "obc":
-          groupedData[item.cellID].obc = item.value;
-          break;
-        case "sc":
-          groupedData[item.cellID].sc = item.value;
-          break;
-        case "st":
-          groupedData[item.cellID].st = item.value;
-          break;
-        case "ph":
-          groupedData[item.cellID].ph = item.value;
-          break;
-        case "others":
-          groupedData[item.cellID].others = item.value;
-          break;
-        case "total":
-          groupedData[item.cellID].total = item.value;
-          break;
-      }
-    });
-    const result = Object.keys(groupedData).map((key) => {
-      return groupedData[key];
-    });
-    return result;
-  }
-  const nonEditableData = mapPosting(requiredPostingPlaceDetail);
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
@@ -173,6 +136,98 @@ const AddPlaceOfPostingTemplate = ({
       },
     ];
   };
+
+  const dataArr = Object.values(
+    requiredPostingPlaceDetail.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+
+      if (item.key === "place_of_posting") {
+        group.place_of_posting = item.value;
+      } else if (item.key === "general") {
+        group.general = item.value;
+      } else if (item.key === "obc") {
+        group.obc = item.value;
+      } else if (item.key === "sc") {
+        group.sc = item.value;
+      } else if (item.key === "st") {
+        group.st = item.value;
+      } else if (item.key === "ph") {
+        group.ph = item.value;
+      } else if (item.key === "others") {
+        group.others = item.value;
+      } else if (item.key === "total") {
+        group.total = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
+
+  const categoriesRow = [
+    {
+      content: (
+        <View>
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.general",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("general", val)}
+          />
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.obc",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("obc", val)}
+          />
+        </View>
+      ),
+    },
+    {
+      content: (
+        <View>
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.sc",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("sc", val)}
+          />
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.st",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("st", val)}
+          />
+        </View>
+      ),
+    },
+    {
+      content: (
+        <View>
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.ph",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("ph", val)}
+          />
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.others",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("others", val)}
+          />
+        </View>
+      ),
+    },
+  ];
 
   return (
     <View>
@@ -255,7 +310,7 @@ const AddPlaceOfPostingTemplate = ({
           />
         ) : (
           <>
-            {requiredPostingPlaceDetail.map((item, index) => {
+            {dataArr.map((item, index) => {
               return (
                 <View>
                   <View
@@ -266,18 +321,16 @@ const AddPlaceOfPostingTemplate = ({
                     }
                   ></View>
                   <EditDeleteAction
-                    topText={item?.postingPlace}
+                    topText={item?.place_of_posting}
                     bottomLeftText={`Total Postings: ${item?.total || "0"}`}
                     onDeleteDocument={() => {
-                      onClickDeletePlace(index);
+                      onClickDeletePlace(item.cellID);
                     }}
                     onEditDocument={() => {
-                      onCLickEditPlace(index);
+                      onCLickEditPlace(item.cellID);
                     }}
                     isCategory
-                    requiredPostingPlaceDetail={
-                      requiredPostingPlaceDetail[index]
-                    }
+                    requiredPostingPlaceDetail={dataArr[index]}
                   />
                 </View>
               );
@@ -287,7 +340,7 @@ const AddPlaceOfPostingTemplate = ({
               label={intl.formatMessage({
                 id: "label.add_place",
               })}
-              onPress={onClickAddPlace}
+              onPress={() => onClickAddPlace(dataArr?.length + 1)}
             />
             <CommonText customTextStyle={styles.mandatoryTextStyle}>
               {intl.formatMessage({
@@ -299,7 +352,6 @@ const AddPlaceOfPostingTemplate = ({
       </CardComponent>
       {(addPlaceModal || editPlaceModal) && (
         <ModalWithTitleButton
-          isRightDisabled={!isFormValid}
           enableBottomButton
           heading={intl.formatMessage({
             id: "label.add_place_of_posting",
@@ -314,7 +366,7 @@ const AddPlaceOfPostingTemplate = ({
           onClickLeftButton={onClickAddPlaceCancelButton}
           onClickRightButton={onClickAddPlaceSaveButton}
         >
-          <View style={styles.ctcTextInputStyle}>
+          <ScrollView style={styles.ctcTextInputStyle}>
             <CustomTextInput
               label={intl.formatMessage({
                 id: "label.place_posting",
@@ -323,26 +375,15 @@ const AddPlaceOfPostingTemplate = ({
                 id: "label.enter_place_posting",
               })}
               isMandatory
-              value={postingPlaceDetail?.postingPlace}
+              value={postingPlaceDetail?.place_of_posting}
               onChangeText={(val) =>
                 handlePostingPlaceChange(PLACE_OF_POSTING.POSTING_PLACE, val)
               }
             />
             <View style={styles.postingPlaceView}>
-              {!!jobDetailData?.Posting_Place?.length &&
-                jobDetailData?.Posting_Place.map((detail, index) => {
-                  return (
-                    <View key={index} style={styles.postingPlaceMapView}>
-                      <CounterInput
-                        label={intl.formatMessage({ id: detail.label })}
-                        isMandatory
-                        onCountChange={(val) =>
-                          handlePostingPlaceChange(detail.key, val)
-                        }
-                      />
-                    </View>
-                  );
-                })}
+              <View style={styles.postingPlaceMapView}>
+                <MultiRow rows={categoriesRow} />
+              </View>
             </View>
             <CustomTextInput
               label={intl.formatMessage({
@@ -358,7 +399,7 @@ const AddPlaceOfPostingTemplate = ({
                 handlePostingPlaceChange(PLACE_OF_POSTING.TOTAL, val)
               }
             />
-          </View>
+          </ScrollView>
         </ModalWithTitleButton>
       )}
     </View>

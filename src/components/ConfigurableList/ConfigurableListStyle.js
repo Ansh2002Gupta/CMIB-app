@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     minHeight: 360,
   },
   titleStyles: {
-    fontWeight: 600,
     fontSize: 16,
   },
   header: {
@@ -105,7 +104,6 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     fontSize: 14,
-    fontWeight: 500,
     color: colors.darkGrey,
     ...Platform.select({
       web: {
@@ -127,7 +125,6 @@ const styles = StyleSheet.create({
   },
   message: {
     textAlign: "center",
-    fontWeight: 500,
     color: colors.darkGrey,
     marginTop: 20,
   },
