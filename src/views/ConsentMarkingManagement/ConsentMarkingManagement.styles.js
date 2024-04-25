@@ -127,6 +127,12 @@ const styles = {
     paddingLeft: 24,
     paddingRight: 24,
   },
+  tableHeadingText:{
+    color: colors.darkGrey,
+  },
+  tableRowText:{
+    fontSize: 14,
+  }
 };
 
 export default styles;
