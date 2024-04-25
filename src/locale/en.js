@@ -972,6 +972,9 @@ const locale = {
   "label.totalPosition": "Total Position: ",
   "label.categories": "Categories",
   "label.add_contact": "Add Contact",
+  "label.more_details": "More Details",
+  "label.vacancy": "Vacancy",
+  "label.pyscometric_written_test": "Psychometric/ Written Test Fee",
 };
 
 export default locale;

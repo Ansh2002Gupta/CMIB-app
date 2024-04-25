@@ -468,6 +468,11 @@ export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
     total_vacancies: "Vacancy",
     interview_dates: "Interview Dates",
     amount: "Amount",
+    final_amt: "Final Amount",
+    discount_rate: "Discount",
+    sgst: "SGST",
+    cgst: "CGST",
+    igst: "IGST",
     ...currentModules,
   };
 };

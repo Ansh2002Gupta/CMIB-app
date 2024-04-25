@@ -42,21 +42,22 @@ const AddDesignationTemplate = ({
   const { isWebView } = useIsWebView();
   function mapDocuments(dataArray) {
     const groupedData = {};
-    dataArray.forEach((item) => {
-      if (!groupedData[item.cellID]) {
-        groupedData[item.cellID] = {};
-      }
-      switch (item.key) {
-        case "designation_details":
-          groupedData[item.cellID].designation_details =
-            extractValueDropdown(item);
-          break;
-        case "number_of_vacancies":
-          groupedData[item.cellID].number_of_vacancies =
-            extractValueDropdown(item);
-          break;
-      }
-    });
+    Array.isArray(dataArray) &&
+      dataArray.forEach((item) => {
+        if (!groupedData[item.cellID]) {
+          groupedData[item.cellID] = {};
+        }
+        switch (item.key) {
+          case "designation_details":
+            groupedData[item.cellID].designation_details =
+              extractValueDropdown(item);
+            break;
+          case "number_of_vacancies":
+            groupedData[item.cellID].number_of_vacancies =
+              extractValueDropdown(item);
+            break;
+        }
+      });
     const result = Object.keys(groupedData).map((key) => {
       return groupedData[key];
     });
