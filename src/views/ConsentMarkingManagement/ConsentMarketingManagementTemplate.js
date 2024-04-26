@@ -62,12 +62,12 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
         </CommonText>
       </View>
       <View style={styles.row}>
-        {consentCenterData && consentCenterData?.records && !isConsentCenterDataLoading &&
+        {consentCenterData && !isConsentCenterDataLoading &&
         <CustomTabs
           containerStyle={styles.containerStyle}
           renderHeader={() => {}}
           renderFooter={() => {}}
-          tabs={ consentCenterData?.records?.map((item)=> {
+          tabs={ consentCenterData?.map((item)=> {
             return (
               {
                 label: item.name,

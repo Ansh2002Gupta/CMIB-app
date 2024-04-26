@@ -20,6 +20,7 @@ import {
   } from "../../constants/constants";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import Spinner from "../../components/Spinner";
 
 const ConsentMarkingTable = ({centerId, roundId}) => {
   const { isWebView } = useIsWebView();
@@ -166,7 +167,16 @@ const ConsentMarkingTable = ({centerId, roundId}) => {
     showCurrentPopupmessageDetails,
     errorWhileUpdatingCandidateConsent,
     setErrorWhileUpdatingCandidateConsent,
+    isConsentTitleDataLoading,
   } = useContentMarketingManagement(onViewPress, centerId, roundId);
+
+  if (isConsentTitleDataLoading) {
+    return (
+      <View style={styles.loaderStyle}>
+        <Spinner />
+      </View>
+    );
+  }
 
   return <>
     <View
