@@ -13,7 +13,9 @@ import { navigations } from "../../constants/routeNames";
 import { MEMBER_LOGIN } from "../../services/apiServices/apiEndPoint";
 import { MEMBER_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
 import { setLogoutToast } from "../../globalContext/logout/logoutActions";
+import { urlService } from "../../services/urlService";
 import { validateEmail } from "../../utils/validation";
+import { USER_TYPE, USER_TYPE_QUERY_PARAM } from "../../constants/constants";
 
 function LoginScreenComponent() {
   const [logoutState, setLogoutDispatch] = useContext(LogoutContext);
@@ -24,10 +26,25 @@ function LoginScreenComponent() {
   const icons = useTheme("icons");
   const intl = useIntl();
 
+  const getActiveTab = () => {
+    const activeTabQueryParam = urlService.getQueryStringValue(
+      USER_TYPE_QUERY_PARAM
+    );
+    if (activeTabQueryParam === USER_TYPE.MEMBER) {
+      return USER_TYPE.MEMBER;
+    }
+    if (activeTabQueryParam === USER_TYPE.COMPANY) return USER_TYPE.COMPANY;
+    urlService.removeParam(USER_TYPE_QUERY_PARAM);
+    if (activeTab) {
+      return USER_TYPE.COMPANY;
+    }
+    return USER_TYPE.MEMBER;
+  };
+
   const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
   const [srn, setSrnNumber] = useState("");
-  const [active, setActive] = useState(activeTab ? activeTab : false);
+  const [active, setActive] = useState(getActiveTab() === USER_TYPE.COMPANY);
   const [errorMessage, setErrorMessage] = useState("");
   const [errorMessageForMemberLogin, setErrorMessageForMemberLogin] =
     useState("");
@@ -75,8 +92,9 @@ function LoginScreenComponent() {
     navigate(navigations.SIGN_UP);
   };
 
-  const toggleUser = (val) => {
+  const toggleUser = (val, tabName) => {
     setActive(val);
+    urlService.setQueryStringValue(USER_TYPE_QUERY_PARAM, tabName);
   };
 
   const onLogin = () => {
@@ -103,7 +121,7 @@ function LoginScreenComponent() {
     setSrnNumber(val);
     setErrorMessageForMemberLogin("");
   };
-  
+
   //use this function to resend otp
   const onLoginForMembers = () => {
     handleSendOtpAPI({

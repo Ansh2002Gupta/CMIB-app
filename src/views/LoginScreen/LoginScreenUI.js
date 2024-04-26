@@ -15,6 +15,7 @@ import FormWrapper from "../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
+import { USER_TYPE } from "../../constants/constants";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./Loginscreen.style";
 
@@ -134,7 +135,7 @@ const LoginScreenUI = (props) => {
             >
               <TouchableOpacity
                 style={styles.topTabs}
-                onPress={() => toggleUser(false)}
+                onPress={() => toggleUser(false, USER_TYPE.MEMBER)}
                 disabled={isLoading}
               >
                 <CommonText
@@ -162,7 +163,7 @@ const LoginScreenUI = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.topTabs}
-                onPress={() => toggleUser(true)}
+                onPress={() => toggleUser(true, USER_TYPE.COMPANY)}
                 disabled={isLoading}
               >
                 <View>
