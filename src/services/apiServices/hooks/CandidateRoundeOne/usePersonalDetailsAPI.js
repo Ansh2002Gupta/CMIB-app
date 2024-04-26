@@ -8,14 +8,16 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/erro
 const usePersonalDetailsAPI = () => {
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [personalDetails, setPersonalDetails] = useState({});
+  const [filledData, setFilledData] = useState({});
   const [apiError, setApiError] = useState("");
 
   const { Http } = useHttpService();
 
-  const handlePersonalDetails = async ({ successCallback, errorCallback }) => {
+  const handlePersonalDetails = async () => {
     try {
       setApiStatus(API_STATUS.LOADING);
       apiError && setApiError("");
+      
       const res = await Http.get(MEMBER_PERSONAL_DETAILS);
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
@@ -23,10 +25,10 @@ const usePersonalDetailsAPI = () => {
       ) {
         setApiStatus(API_STATUS.SUCCESS);
         setPersonalDetails(res.data);
-        successCallback && successCallback(res.data);
+        
         return;
       }
-      errorCallback && errorCallback();
+     
       setApiStatus(API_STATUS.ERROR);
       setApiError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
@@ -34,7 +36,24 @@ const usePersonalDetailsAPI = () => {
       setApiError(
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
       );
-      errorCallback && errorCallback();
+    }
+  };
+
+  const fetchFilledData = async (roundId) => {
+    try {
+      
+      const res = await Http.get(`/member/nqca-placements/rounds/${roundId}/personal`);
+      if (
+        res.status === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_STATUS
+      ) {
+        setFilledData(res.data);
+        
+        return;
+      }
+     
+    } catch (err) {
+      
     }
   };
 
@@ -50,6 +69,8 @@ const usePersonalDetailsAPI = () => {
     isLoading,
     isSuccess,
     personalDetails,
+    fetchFilledData,
+    filledData,
   };
 };
 

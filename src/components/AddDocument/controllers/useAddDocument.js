@@ -2,57 +2,55 @@ import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { document_keys } from "../../../constants/constants";
 
-const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
-  const [addDocumentModal, setAddDocumentModal] = useState(false);
-  const [editDocumentModal, setEditDocumentModal] = useState();
-  const [editDocumentIndex, setEditDocumentIndex] = useState();
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [documentDetail, setDocumentDetail] = useState({
-    documentName: "",
-    documentType: "",
-    copiesNumber: null,
+function mapDocuments(dataArray) {
+  const groupedData = {};
+  Array.isArray(dataArray) &&
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "document_name":
+          groupedData[item.cellID].doc_name = item.value;
+          break;
+        case "document_type":
+          groupedData[item.cellID].doc_type = item.value;
+          break;
+        case "no_of_copies":
+          groupedData[item.cellID].no_of_copies = item.value;
+        case "cellID":
+          groupedData[item.cellID].cellID = item.cellID;
+          break;
+      }
+    });
+  const result = Object.keys(groupedData).map((key) => {
+    return groupedData[key];
   });
+  return result;
+}
+
+const useAddDocument = ({
+  requiredDocumentDetails,
+  setRenderJobDetails,
+  addDocumentField,
+}) => {
+  const [addDocumentModal, setAddDocumentModal] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const nonEditableData = mapDocuments(requiredDocumentDetails);
+  const [documentDetail, setDocumentDetail] = useState(null);
   const intl = useIntl();
 
-  useEffect(() => {
-    if (editDocumentModal) {
-      setDocumentDetail({
-        documentName: documentDetail.documentName,
-        documentType: documentDetail.documentType,
-        copiesNumber: documentDetail.copiesNumber,
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    validateForm();
-  }, [documentDetail]);
-
-  const onClickAddDocument = () => {
+  const onClickAddDocument = (cellID) => {
     setAddDocumentModal(true);
-  };
-
-  const validateForm = () => {
-    const isDocumentNameValid = documentDetail.documentName.trim() !== "";
-    const isDocumentTypeValid = documentDetail.documentType.trim() !== "";
-    const isCopiesNumberValid =
-      (documentDetail.documentType !== "Both" &&
-        documentDetail.documentType !== "Photocopies") ||
-      (documentDetail.copiesNumber && documentDetail.copiesNumber > 0);
-    setIsFormValid(
-      (isDocumentNameValid && isDocumentTypeValid && isCopiesNumberValid) ||
-        false
-    );
+    setDocumentDetail((prev) => ({
+      ...prev,
+      cellID: cellID,
+    }));
   };
 
   const onClickAddDocumentCancelButton = () => {
     setAddDocumentModal(false);
-    setEditDocumentModal(false);
-    setDocumentDetail({
-      documentName: "",
-      documentType: "",
-      copiesNumber: null,
-    });
+    setDocumentDetail(null);
   };
 
   const handleMultiRowDocumentDetails = ({ propertyName, value, cellID }) => {
@@ -94,49 +92,85 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   };
 
   const onClickAddDocumentSaveButton = () => {
-    // Todo: Fix Logic for mobile
-    // if (editDocumentModal && editDocumentIndex !== -1) {
-    //   setRequiredDocumentDetails((prev) => {
-    //     const updatedList = [...prev];
-    //     updatedList[editDocumentIndex] = { ...documentDetail };
-    //     return updatedList;
-    //   });
-    // } else {
-    //   setRequiredDocumentDetails((prev) => [...prev, { ...documentDetail }]);
-    // }
-    // setDocumentDetail({
-    //   documentName: "",
-    //   documentType: "",
-    //   copiesNumber: null,
-    // });
-    // setIsFormValid(false);
-    // setEditDocumentIndex(-1);
-    // setEditDocumentModal(false);
-    // setAddDocumentModal(false);
+    const { doc_name, doc_type, no_of_copies, cellID } = documentDetail;
+    let newData = addDocumentField?.map((doc) => {
+      let val;
+      if (doc?.key === "document_type") {
+        val = doc_type;
+      } else if (doc.key === "document_name") {
+        val = doc_name;
+      } else {
+        val = no_of_copies;
+      }
+      return {
+        ...doc,
+        cellID,
+        value: val,
+      };
+    });
+
+    const updatedDocumentDetails = requiredDocumentDetails.map((item) => {
+      if (item.cellID === cellID) {
+        switch (item.key) {
+          case "document_name":
+            return { ...item, value: doc_name };
+          case "document_type":
+            return { ...item, value: doc_type };
+          case "no_of_copies":
+            return { ...item, value: no_of_copies };
+          default:
+            return item;
+        }
+      }
+      return item;
+    });
+
+    setRenderJobDetails((prev) => ({
+      ...prev,
+      required_docs: [...updatedDocumentDetails, ...newData],
+    }));
+    setDocumentDetail(null);
+    setAddDocumentModal(false);
   };
 
-  const onClickDeleteDocument = (index) => {
-    // Todo: Fix Logic for mobile
-    // setRequiredDocumentDetails((prev) => prev.filter((_, i) => i !== index));
+  const onClickDeleteDocument = (cellID) => {
+    setRenderJobDetails((prevDetail) => {
+      const filteredDocs = prevDetail?.required_docs?.filter(
+        (doc) => doc.cellID !== cellID
+      );
+      return { ...prevDetail, required_docs: filteredDocs };
+    });
   };
 
-  const onCLickEditDocument = (index) => {
-    const documentToEdit = requiredDocumentDetails[index];
+  const onCLickEditDocument = (cellID) => {
+    const documentToEdit = requiredDocumentDetails.find(
+      (doc) => doc.cellID === cellID
+    );
+
     if (documentToEdit) {
       setDocumentDetail({
-        documentName: documentToEdit.documentName,
-        documentType: documentToEdit.documentType,
-        copiesNumber: documentToEdit.copiesNumber,
+        doc_name:
+          requiredDocumentDetails.find(
+            (item) => item.cellID === cellID && item.key === "document_name"
+          )?.value || "",
+        doc_type:
+          requiredDocumentDetails.find(
+            (item) => item.cellID === cellID && item.key === "document_type"
+          )?.value || "",
+        no_of_copies:
+          requiredDocumentDetails.find(
+            (item) => item.cellID === cellID && item.key === "no_of_copies"
+          )?.value || "",
+        cellID: cellID,
       });
-      setEditDocumentIndex(index);
     }
-    setEditDocumentModal(true);
   };
 
   return {
+    nonEditableData,
     addDocumentModal,
     documentDetail,
-    editDocumentModal,
+    editDocumentModal: documentDetail,
     handleMultiRowDocumentDetails,
     handleDocumentDetailChange,
     isFormValid,

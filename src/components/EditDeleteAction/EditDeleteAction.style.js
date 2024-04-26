@@ -39,12 +39,14 @@ const getStyles = (theme) => {
     leftSectionStyle: {
       paddingTop: 11,
       paddingBottom: 11,
-      paddingRight: 31,
-      width: "88%",
     },
     catrgoryTextStyle: {
       marginLeft: 8,
       color: colors.darkBlue,
+    },
+    customContainerStyle: {
+      flexWrap: undefined,
+      wordBreak: undefined,
     },
     iconDownArrowStyle: {
       color: colors.darkBlue,

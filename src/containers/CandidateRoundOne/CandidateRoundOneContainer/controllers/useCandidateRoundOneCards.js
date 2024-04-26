@@ -21,15 +21,15 @@ const useCandidateRoundOneCards = ({ hasRoundone, savedRoundId }) => {
   const onPressCard = (id) => {
     switch (id) {
       case 1:
-        navigate(`${navigations.APPLICATION_FORM}`);
+        navigate(`${navigations.CONSENT_MARKING_MANAGEMENT}`);
         break;
       case 2:
+        navigate(`${navigations.APPLICATION_FORM_SUBROUTE}${savedRoundId}`);
         break;
       case 3:
-        navigate(`${navigations.CENTRE_WISE_COMPANY}?id=${savedRoundId}`);
+        navigate(`${navigations.CENTRE_WISE_COMPANY}/${savedRoundId}`);
         break;
       case 4:
-        navigate(`${navigations.CONSENT_MARKING_MANAGEMENT}`);
         break;
       case 5:
         navigate(`${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`);

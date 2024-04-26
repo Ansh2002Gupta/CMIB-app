@@ -1,7 +1,7 @@
 import { Dimensions } from "@unthinkable/react-core-components";
 
 const screenHeight = Dimensions.get("window").height;
-const maxHeight = screenHeight * 0.8;
+const maxHeight = screenHeight * 0.5;
 
 const getStyles = (theme) => {
   const { colors } = theme;
@@ -33,7 +33,9 @@ const getStyles = (theme) => {
       flexWrap: "wrap",
     },
     postingPlaceMapView: {
-      width: "45%",
+      width: "100%",
+      flexWrap: "wrap",
+      flexDirection: "row",
       marginBottom: 24,
     },
     multiRowTextStyle: {
@@ -55,6 +57,10 @@ const getStyles = (theme) => {
         marginRight: 0,
         maxHeight: maxHeight,
       },
+    },
+    ctcTextInputStyle: {
+      maxHeight: maxHeight,
+      overflowY: "auto",
     },
     addDocumentViewStyle: {
       paddingBottom: 24,

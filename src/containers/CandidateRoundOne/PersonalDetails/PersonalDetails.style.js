@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.black,
   },
+  checkBoxTextStyle: {
+    minWidth: 400,
+  }
 });
 
 export default styles;

@@ -15,7 +15,6 @@ const getStyles = (theme) => {
     },
     customContainerStyle: {
       flexDirection: "row",
-      flexWrap: "unwrap",
     },
     customTableStyle: {
       backgroundColor: colors.white,

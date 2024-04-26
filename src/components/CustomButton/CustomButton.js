@@ -11,6 +11,7 @@ import getStyles from "./CustomButton.style";
 
 const CustomButton = ({
   children,
+  color,
   customStyle,
   customLoadingStyle,
   disabled,
@@ -48,7 +49,13 @@ const CustomButton = ({
       {isLoading ? (
         <Spinner
           thickness={3}
-          color={withGreenBackground || isLoading ? theme.colors.white : ""}
+          color={
+            color
+              ? color
+              : withGreenBackground || isLoading
+              ? theme.colors.white
+              : ""
+          }
           {...webProps}
         />
       ) : (
@@ -92,6 +99,7 @@ CustomButton.defaultProps = {
   customStyle: { customTextStyle: {}, textFontWeight: "" },
   disabled: false,
   disabledStyle: {},
+  color: "",
   iconLeft: {
     isLeftIconNotSvg: false,
     leftIconAlt: "",
@@ -112,6 +120,7 @@ CustomButton.defaultProps = {
 
 CustomButton.propTypes = {
   children: PropTypes.node,
+  color: PropTypes.string,
   customStyle: PropTypes.object,
   disabled: PropTypes.bool,
   disabledStyle: PropTypes.object,

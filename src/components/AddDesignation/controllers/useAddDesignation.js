@@ -54,19 +54,16 @@ const useAddDesignation = ({
 }) => {
   const [addDocumentModal, setAddDocumentModal] = useState(false);
   const [editDocumentModal, setEditDocumentModal] = useState();
-  const [editDocumentIndex, setEditDocumentIndex] = useState();
+  const [editDocumentIndex, setEditDocumentIndex] = useState(-1);
   const [isFormValid, setIsFormValid] = useState(false);
-  const [documentDetail, setDocumentDetail] = useState({
-    designationTitle: "",
-    numberOfVacancies: "",
-  });
+  const [documentDetail, setDocumentDetail] = useState(null);
   const [isInitialDataAdded, setIsInitialDataAdded] = useState(false);
 
   useEffect(() => {
     if (editDocumentModal) {
       setDocumentDetail({
-        designationTitle: documentDetail.designationTitle,
-        numberOfVacancies: documentDetail.numberOfVacancies,
+        designation_details: documentDetail.designation_details,
+        number_of_vacancies: documentDetail.number_of_vacancies,
       });
     }
   }, []);
@@ -91,13 +88,20 @@ const useAddDesignation = ({
     validateForm();
   }, [documentDetail]);
 
-  const onClickAddDocument = () => {
+  const onClickAddDocument = (cellID) => {
     setAddDocumentModal(true);
+    setDocumentDetail({
+      cellID,
+    });
   };
 
   const validateForm = () => {
-    const isDocumentNameValid = documentDetail.designationTitle.trim() !== "";
-    const isDocumentTypeValid = documentDetail.numberOfVacancies.trim() !== "";
+    const isDocumentNameValid =
+      documentDetail?.designation_details &&
+      documentDetail?.designation_details !== "";
+    const isDocumentTypeValid =
+      documentDetail?.number_of_vacancies &&
+      documentDetail?.number_of_vacancies !== "";
 
     setIsFormValid(
       (isDocumentNameValid && isDocumentTypeValid && true) || false
@@ -107,10 +111,8 @@ const useAddDesignation = ({
   const onClickAddDocumentCancelButton = () => {
     setAddDocumentModal(false);
     setEditDocumentModal(false);
-    setDocumentDetail({
-      designationTitle: "",
-      numberOfVacancies: "",
-    });
+    setDocumentDetail(null);
+    setEditDocumentIndex(-1);
   };
 
   const handleMultiRowDocumentDetails = (propertyName, value, id) => {
@@ -133,39 +135,77 @@ const useAddDesignation = ({
   };
 
   const onClickAddDocumentSaveButton = () => {
-    if (editDocumentModal && editDocumentIndex !== -1) {
-      setRequiredDocumentDetails((prev) => {
-        const updatedList = [...prev];
-        updatedList[editDocumentIndex] = { ...documentDetail };
-        return updatedList;
+    const { designation_details, number_of_vacancies, cellID } = documentDetail;
+
+    if (editDocumentIndex !== -1) {
+      const updatedDocumentDetails = requiredDocumentDetails.map((item) => {
+        if (item.cellID === cellID) {
+          switch (item.key) {
+            case "designation_details":
+              return { ...item, value: designation_details };
+            case "number_of_vacancies":
+              return { ...item, value: number_of_vacancies };
+            default:
+              return item;
+          }
+        }
+        return item;
       });
+
+      setRequiredDocumentDetails([...updatedDocumentDetails]);
     } else {
-      setRequiredDocumentDetails((prev) => [...prev, { ...documentDetail }]);
+      let newData = addDesignationField(options, requiredDocumentDetails)?.map(
+        (doc) => {
+          let val;
+          if (doc?.key === "designation_details") {
+            val = designation_details;
+          } else if (doc.key === "number_of_vacancies") {
+            val = number_of_vacancies;
+          }
+          return {
+            ...doc,
+            cellID,
+            value: val,
+          };
+        }
+      );
+      setRequiredDocumentDetails((prev) => [...prev, ...newData]);
     }
-    setDocumentDetail({
-      designationTitle: "",
-      numberOfVacancies: "",
-    });
+    setDocumentDetail(null);
     setIsFormValid(false);
     setEditDocumentIndex(-1);
     setEditDocumentModal(false);
     setAddDocumentModal(false);
   };
 
-  const onClickDeleteDocument = (index) => {
-    setRequiredDocumentDetails((prev) => prev.filter((_, i) => i !== index));
+  const onClickDeleteDocument = (cellID) => {
+    setRequiredDocumentDetails((prev) =>
+      prev.filter((doc) => doc.cellID !== cellID)
+    );
   };
 
-  const onCLickEditDocument = (index) => {
-    const documentToEdit = requiredDocumentDetails[index];
+  const onCLickEditDocument = (cellID) => {
+    const documentToEdit = requiredDocumentDetails.find(
+      (doc) => doc.cellID === cellID
+    );
     if (documentToEdit) {
+      const designationDetailItem = requiredDocumentDetails.find(
+        (item) => item.cellID === cellID && item.key === "designation_details"
+      );
       setDocumentDetail({
-        designationTitle: documentToEdit.designationTitle,
-        numberOfVacancies: documentToEdit.numberOfVacancies,
+        designation_details:
+          designationDetailItem?.options?.find(
+            (data) => String(data?.id) === String(designationDetailItem.value)
+          )?.id || "",
+        number_of_vacancies:
+          requiredDocumentDetails.find(
+            (item) =>
+              item.cellID === cellID && item.key === "number_of_vacancies"
+          )?.value || "",
+        cellID: cellID,
       });
-      setEditDocumentIndex(index);
+      setEditDocumentIndex(cellID);
     }
-    setEditDocumentModal(true);
   };
 
   return {
@@ -174,7 +214,7 @@ const useAddDesignation = ({
     multiDocumentDetail,
     setMultiDocumentDetail,
     documentDetail,
-    editDocumentModal,
+    editDocumentModal: editDocumentIndex > -1,
     handleMultiRowDocumentDetails,
     handleDocumentDetailChange,
     isFormValid,

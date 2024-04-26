@@ -24,7 +24,6 @@ const getStyles = (theme) => {
       minHeight: 360,
     },
     titleStyles: {
-      fontWeight: 600,
       fontSize: 16,
     },
     header: {
@@ -107,7 +106,6 @@ const getStyles = (theme) => {
       paddingLeft: 12,
       paddingRight: 12,
       fontSize: 14,
-      fontWeight: 500,
       color: colors.darkGrey,
       ...Platform.select({
         web: {
@@ -129,7 +127,6 @@ const getStyles = (theme) => {
     },
     message: {
       textAlign: "center",
-      fontWeight: 500,
       color: colors.darkGrey,
       marginTop: 20,
     },

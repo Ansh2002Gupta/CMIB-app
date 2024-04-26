@@ -12,11 +12,17 @@ const getStyles = (theme) => {
       fontSize: 20,
       fontWeight: "600",
     },
-    twoMainSTyle: { backgroundColor: colors.backgroundColor },
+    twoMainSTyle: {
+      flex: 1,
+    },
     mainContainer: {
       flexDirection: "row",
       padding: 24,
       gap: 16,
+    },
+    mainContainerMob: {
+      flexDirection: "column",
+      padding: 16,
     },
     customCardComponentStyle: {
       marginTop: 16,
@@ -69,7 +75,7 @@ const getStyles = (theme) => {
       marginTop: 16,
     },
     ctcTextInputStyle: {
-      marginTop: 24,
+      marginTop: 44,
     },
     containerGridStyle: (columnCount) => ({
       display: "grid",
@@ -79,9 +85,6 @@ const getStyles = (theme) => {
       marginLeft: 0,
       marginRight: 0,
       marginTop: 0,
-      justifyContent: "space-between",
-      flexWrap: "wrap",
-      overflowX: "auto",
     },
     yearlyCustomCardStyle: {
       marginLeft: 0,
@@ -126,6 +129,7 @@ const getStyles = (theme) => {
     scrollViewStyle: {
       backgroundColor: colors.backgroundColor,
       paddingTop: 16,
+      flex: 1,
     },
     actionBtnContainer: {
       display: "flex",
@@ -147,6 +151,7 @@ const getStyles = (theme) => {
     configurableStyle: {
       backgroundColor: undefined,
       marginRight: 0,
+      marginBottom: 16,
       flex: undefined,
       display: undefined,
     },

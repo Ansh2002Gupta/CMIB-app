@@ -188,6 +188,57 @@ const useExam = () => {
     return year;
   }
 
+  function getAllState() {
+    return {
+      "CA Foundation": {
+        attempt: foundationAttempt,
+        attempt_count: foundationAttemptCount,
+        exam_board: null,
+        exam_name: null,
+        passing_percentage: foundationMark,
+        passing_rank: foundationRank,
+        passing_year: foundationYear,
+        passing_month: foundationMonth,
+      },
+      "CA Intermediate": {
+        passing_month: interMonth,
+        passing_year: interYear,
+        passing_percentage: interMark,
+        passing_rank: interRank,
+        group_1: {
+          passing_month: interGroup1Month,
+          passing_year: interGroup1Year,
+          attempt: interGroup1Attempt,
+          attempt_count: interGroup1Count
+        },
+        group_2: {
+          passing_month: interGroup2Month,
+          passing_year: interGroup2Year,
+          attempt: interGroup2Attempt,
+          attempt_count: interGroup2Count
+        }
+      },
+      "CA Final":{
+        passing_month: finalMonth,
+        passing_year: finalYear,
+        passing_percentage: finalMark,
+        passing_rank: finalRank,
+        group_1: {
+          passing_month: finalGroup1Month,
+          passing_year: finalGroup1Year,
+          attempt: finalGroup1Attempt,
+          attempt_count: finalGroup1Count
+        },
+        group_2: {
+          passing_month: finalGroup2Month,
+          passing_year: finalGroup2Year,
+          attempt: finalGroup2Attempt,
+          attempt_count: finalGroup2Count
+        }
+      },
+    }
+  }
+
   return {
     finalGroup1Attempt,
     finalGroup1Count,
@@ -250,6 +301,7 @@ const useExam = () => {
     onChangeInterRank,
     onChangeInterYear,
     updateExamDetails,
+    getAllState
   };
 };
 

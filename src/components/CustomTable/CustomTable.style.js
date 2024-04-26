@@ -155,6 +155,10 @@ const getStyles = (theme) => {
       top: 10,
       right: -10,
     },
+    tableSectionForweb: {
+      width: "100%",
+      overflow: "auto",
+    },
     dot: {
       width: 4,
       height: 4,

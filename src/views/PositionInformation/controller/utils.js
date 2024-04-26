@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import {
   DOCUMENT_TYPE_KEYS,
   INTERVIEW_TYPE,
@@ -296,8 +297,10 @@ export const formatBondDetail = (data) => {
 
 export const formatInterviewDetails = (data) => {
   return {
-    [keys.interviewDates]: data?.interview_dates?.map(
-      (item) => item?.schedule_date
+    [keys.interviewDates]: data?.interview_dates?.map((item) =>
+      item?.schedule_date
+        ? dayjs(item?.schedule_date).format("DD/MM/YYYY")
+        : "-"
     ),
     [keys.companyAvailablity]: INTERVIEW_TYPE[data?.interview_type] ?? "",
   };

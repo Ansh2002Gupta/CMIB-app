@@ -86,7 +86,7 @@ const MobileCard = ({
           onViewPress && onViewPress(item);
         }}
         source={images.iconEye}
-        isSvg={false}
+        isSvg
         style={{ ...styles.tableStyle, ...styles.marginRight16 }}
       />
       <TouchableImage
