@@ -1,5 +1,4 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
+import { Platform } from "@unthinkable/react-core-components";
 
 const getMaxWidth = (currentBreakpoint) => {
   switch (currentBreakpoint) {
@@ -18,32 +17,36 @@ const getMaxWidth = (currentBreakpoint) => {
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    margin: 10,
-  },
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-  subContainer: {
-    flexDirection: "row",
-    padding: 16,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.backgroundColor,
-    justifyContent: "center",
-  },
-  textSize: (currentBreakpoint) => ({
-    fontSize: 14,
-    ...Platform.select({
-      web: {
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        maxWidth: getMaxWidth(currentBreakpoint),
-      },
+  return {
+    container: {
+      alignItems: "center",
+      margin: 10,
+    },
+
+    subContainer: {
+      flexDirection: "row",
+      padding: 16,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: colors.lightGrey,
+      backgroundColor: colors.backgroundColor,
+      justifyContent: "center",
+    },
+    textSize: (currentBreakpoint) => ({
+      fontSize: 14,
+      ...Platform.select({
+        web: {
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          maxWidth: getMaxWidth(currentBreakpoint),
+        },
+      }),
     }),
-  }),
-});
+  };
+};
 
-export default styles;
+export default getStyles;

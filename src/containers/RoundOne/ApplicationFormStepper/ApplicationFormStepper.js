@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { useLocation } from "../../../routes";
 import { View, Platform } from "@unthinkable/react-core-components";
 
@@ -9,9 +10,9 @@ import { TwoColumn } from "../../../core/layouts";
 import CommonText from "../../../components/CommonText";
 import Stepper from "../../../components/Stepper";
 import StepperTabs from "../../../components/StepperTabs";
-import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
-import styles from "./ApplicationFormStepper.style";
 import useIsWebView from "../../../hooks/useIsWebView";
+import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
+import getStyles from "./ApplicationFormStepper.style";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
@@ -23,6 +24,8 @@ const ApplicationFormStepper = ({
   webActionButton,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const location = useLocation();
   const hasRoundTwo = location?.pathname.includes("round-two");
 

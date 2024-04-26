@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, ScrollView } from "@unthinkable/react-core-components";
 import CardComponent from "../../../components/CardComponent";
 import HeaderComponent from "../HeaderComponent";
@@ -15,7 +16,7 @@ import AddNewQuestionModal from "../AddModifyNewQuestionModal";
 import { getQuestionInitalValue } from "../../../utils/util";
 import { questionaireType } from "../../../constants/constants";
 import { useIntl } from "react-intl";
-import styles from "./AddModifyQuestionaireComponent.styles";
+import getStyles from "./AddModifyQuestionaireComponent.styles";
 
 const AddModifyQuestionaireComponent = forwardRef(
   (
@@ -32,6 +33,8 @@ const AddModifyQuestionaireComponent = forwardRef(
     ref
   ) => {
     const intl = useIntl();
+    const theme = useTheme();
+    const styles = getStyles(theme);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [optionData, setoptionData] = useState(null);
     const [questionnairelist, setIsQuestionaireList] = useState(

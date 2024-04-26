@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "../../routes";
 import dayjs from "dayjs";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CustomTextEditor from "../../components/CustomTextEditor";
@@ -21,11 +22,13 @@ import { jobType } from "../../constants/constants";
 import { useIntl } from "react-intl";
 import { getDecryptApiData } from "../../utils/util";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import colors from "../../assets/colors";
-import styles from "./ViewPostedJobDetails.styles";
+import getStyles from "./ViewPostedJobDetails.styles";
 
 const ViewPostedJobDetails = () => {
   const { id } = useParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const {
     isLoading: isConstantLoading,
     stateResult: apiData,
@@ -323,7 +326,7 @@ const ViewPostedJobDetails = () => {
               />
               <View style={styles.container}>
                 <CustomTabs
-                  containerStyle={{ backgroundColor: colors.white }}
+                  containerStyle={{ backgroundColor: theme.colors.white }}
                   setSelectedTab={(item) => {
                     urlService.setQueryStringValue("activeTab", `${item}`);
                   }}

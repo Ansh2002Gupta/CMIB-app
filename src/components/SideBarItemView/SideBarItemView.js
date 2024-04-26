@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
 
@@ -7,7 +8,7 @@ import { TwoColumn } from "../../core/layouts";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import styles from "./SideBarItemView.style";
+import getStyles from "./SideBarItemView.style";
 
 const SideBarItemView = ({
   content,
@@ -16,6 +17,8 @@ const SideBarItemView = ({
   title,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const platformSpecificProps = Platform.select({
     web: {},

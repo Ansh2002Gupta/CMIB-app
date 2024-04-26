@@ -1,13 +1,16 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import images from "../../images";
 import { STEPPER_STATE } from "../../constants/constants";
-import styles from "./StepperTabs.style";
+import getStyles from "./StepperTabs.style";
 
 const StepperTabs = ({ activeStep, customStyle, steps }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const getStepStatus = (step) => {
     if (activeStep === step) return STEPPER_STATE.ACTIVE;
     if (activeStep > step) return STEPPER_STATE.DONE;

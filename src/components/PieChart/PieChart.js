@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { VictoryPie } from "victory";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -6,8 +7,7 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import CommonText from "../CommonText";
 import PopupMessage from "../PopupMessage/PopupMessage";
 import { convertGraphData } from "../../utils/util";
-import styles from "./PieChart.style";
-import colors from "../../assets/colors";
+import getStyles from "./PieChart.style";
 
 const PieChart = ({
   baseRadius = 80,
@@ -24,6 +24,8 @@ const PieChart = ({
   popupMessage,
   width,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const renderLabel = ({ datum }) => {
     if (datum && datum.hasOwnProperty("x") && datum.hasOwnProperty("y")) {
       return `${datum.x}: ${datum.y}`;
@@ -71,7 +73,7 @@ const PieChart = ({
           labels={renderLabel}
           style={{
             data: {
-              stroke: colors.white,
+              stroke: theme.colors.white,
               strokeWidth: 0.25,
             },
 

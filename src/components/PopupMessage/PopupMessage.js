@@ -9,6 +9,8 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./PopupMessage.style";
 import Spinner from "../Spinner";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./PopupMessage.style";
 
 const PopupMessage = ({
   customStyle,
@@ -22,6 +24,8 @@ const PopupMessage = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const renderPopupContent = () => {
     if (Array.isArray(message)) {

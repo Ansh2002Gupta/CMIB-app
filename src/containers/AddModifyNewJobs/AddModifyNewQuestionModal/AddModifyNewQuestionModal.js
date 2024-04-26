@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import CustomModal from "../../../components/CustomModal";
 import CommonText from "../../../components/CommonText";
@@ -8,7 +9,7 @@ import Switch from "../../../components/Switch/Switch";
 import CustomButton from "../../../components/CustomButton";
 import { useIntl } from "react-intl";
 import { getQuestionInitalValue } from "../../../utils/util";
-import styles from "./AddModifyNewQuestionModal.styles";
+import getStyles from "./AddModifyNewQuestionModal.styles";
 
 const AddModifyNewQuestionModal = ({
   addNewQuestion,
@@ -26,6 +27,8 @@ const AddModifyNewQuestionModal = ({
   setoptionData,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [error, setErrors] = useState({});
 
   function validate() {

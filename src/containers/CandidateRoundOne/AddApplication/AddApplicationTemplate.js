@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 import { useParams } from "react-router";
 
@@ -12,7 +13,6 @@ import PersonalDetails from "../PersonalDetails";
 import Stepper from "../../../components/Stepper";
 import { ADD_APPLICATION_STEPPER } from "../../../constants/constants";
 import images from "../../../images";
-import styles from "./AddApplication.style";
 import TrainingDetails from "../TrainingDetails";
 import WorkExperienceDetails from "../WorkExperience";
 import HobbiesDetails from "../Hobbies";
@@ -33,6 +33,7 @@ import {
 import { usePut } from "../../../hooks/useApiRequest";
 import { usePatch } from "../../../hooks/useApiRequest";
 import useFetch from "../../../hooks/useFetch";
+import getStyles from "./AddApplication.style";
 
 const AddApplicationTemplate = ({
   countryCodeData,
@@ -44,6 +45,8 @@ const AddApplicationTemplate = ({
   selectedStepper,
   stepperData,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [isSaveEnabled, setIsSaveEnaabled] = useState(false);
   const { id } = useParams();
 

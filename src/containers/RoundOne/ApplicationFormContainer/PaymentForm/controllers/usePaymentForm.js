@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import commonStyles from "../../../../../theme/styles/commonStyles";
@@ -9,7 +10,6 @@ import { formatDate, formatTime } from "../../../../../utils/util";
 import useGetCurrentUser from "../../../../../hooks/useGetCurrentUser";
 import useNavigateScreen from "../../../../../services/hooks/useNavigateScreen";
 import useIsWebView from "../../../../../hooks/useIsWebView";
-import styles from "../PaymentForm.style";
 import {
   APPLICATION,
   PAY,
@@ -37,8 +37,11 @@ import {
   UPDATED_API_VERSION,
 } from "../../../../../constants/constants";
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
+import getStyles from "../PaymentForm.style";
 
 const usePaymentForm = ({ isEditable }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [paymentDetails, setPaymentDetails] = useState([]);
   const [paymentList, setPaymentList] = useState();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);

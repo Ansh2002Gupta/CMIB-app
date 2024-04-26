@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
@@ -16,7 +16,7 @@ import {
   OTP_TIMER_MAX_MINUTES,
 } from "../../constants/constants";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./OtpView.style";
+import getStyles from "./OtpView.style";
 
 const OtpViewUI = ({
   description,
@@ -43,6 +43,9 @@ const OtpViewUI = ({
   submitDisabled,
   validationError,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [afterAttempt, setAfterAttempt] = useState(false);
   const formattedTimerValue = `${intl.formatMessage({

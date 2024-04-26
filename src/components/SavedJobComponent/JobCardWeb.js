@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import CommonText from "../CommonText";
 import {
   Image,
@@ -17,9 +18,7 @@ import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo, formatSalaryRange } from "../../utils/util";
 import images from "../../images";
-import style from "./SavedJobComponent.style";
-
-import colors from "../../assets/colors";
+import getStyles from "./SavedJobComponent.style";
 
 const JobCardWeb = ({
   cardDetails,
@@ -31,6 +30,8 @@ const JobCardWeb = ({
   isApplyLoading,
   onPress,
 }) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
   const intl = useIntl();
   const {
     companyName,
@@ -53,8 +54,8 @@ const JobCardWeb = ({
         content: (
           <Chip
             label={item?.name || item}
-            textColor={colors.black}
-            bgColor={colors.white}
+            textColor={theme.colors.black}
+            bgColor={theme.colors.white}
             customContainerStyle={style.customContainerStyle}
           />
         ),
@@ -69,8 +70,8 @@ const JobCardWeb = ({
           label={`${vaccancies} ${intl.formatMessage({
             id: "label.vacancies",
           })}`}
-          bgColor={colors.lightGray}
-          textColor={colors.black}
+          bgColor={theme.colors.lightGray}
+          textColor={theme.colors.black}
         />
       ),
       style: style.chipStyle,

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { Platform, View } from "@unthinkable/react-core-components";
 
@@ -8,7 +9,7 @@ import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import TimeSlotLabel from "../../components/TimeSlotLabel/TimeSlotLabel";
 import Spinner from "../../components/Spinner";
-import styles from "./InterviewTimeModal.styles";
+import getStyles from "./InterviewTimeModal.styles";
 
 const isIos = Platform.OS.toLowerCase() === "ios";
 
@@ -20,8 +21,10 @@ const InterviewTimeModal = ({
   isError,
   isPatching,
 }) => {
-  data = !!data ? data : [];
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+  data = !!data ? data : [];
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
   const [selectedDateLabel, setSelectedDateLabel] = useState(
     data[0]?.primary?.is_accepted

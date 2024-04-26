@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { Platform, View } from "@unthinkable/react-core-components";
 
@@ -6,7 +7,7 @@ import CommonText from "../CommonText";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import { numericValidator } from "../../../src/utils/validation";
-import styles from "./OtpInput.style";
+import getStyles from "./OtpInput.style";
 
 const OtpInput = ({
   customLabelStyle,
@@ -16,6 +17,8 @@ const OtpInput = ({
   label,
   onOtpChange,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const [activeInputIndex, setActiveInputIndex] = useState(null);
   const [otp, setOtp] = useState(new Array(4).fill(""));

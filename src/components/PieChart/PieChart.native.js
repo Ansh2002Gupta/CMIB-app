@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { Dimensions, View, Text } from "@unthinkable/react-core-components";
 import { PieChart as PieChartComponent } from "react-native-chart-kit";
 
@@ -6,12 +7,14 @@ import { TwoRow } from "../../core/layouts";
 
 import CommonText from "../CommonText";
 import { convertMobileGraphData } from "../../utils/util";
-import colors from "../../assets/colors";
-import styles from "./PieChart.style";
 import Pie from "react-native-pie";
+import getStyles from "./PieChart.style";
+import colors from "../../assets/colors";
 
 const PieChart = ({ colorScale, data, height, label }) => {
   const screenWidth = Dimensions.get("window").width;
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const sections = data?.map((value, index) => ({
     percentage: data[index].value,

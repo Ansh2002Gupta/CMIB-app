@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../../components/CardComponent";
@@ -6,7 +7,7 @@ import CommonText from "../../../../components/CommonText";
 import CustomTextInput from "../../../../components/CustomTextInput";
 import MultiRow from "../../../../core/layouts/MultiRow";
 import { ATTEMPTS, MONTHS, YEARS } from "../../../../constants/constants";
-import styles from "./Exams.style";
+import getStyles from "./Exams.style";
 
 const ExamsTemplate = ({
   finalGroup1Attempt,
@@ -72,6 +73,8 @@ const ExamsTemplate = ({
   onChangeInterRank,
   onChangeInterYear,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const examDetailsConfig = [
     {
       content: (

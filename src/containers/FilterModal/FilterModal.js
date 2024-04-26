@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, ScrollView, Platform } from "@unthinkable/react-core-components";
 
 import { ThreeRow, TwoColumn } from "../../core/layouts";
@@ -19,7 +20,7 @@ import classes from "../../theme/styles/CssClassProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import commonStyles from "../../theme/styles/commonStyles";
 import images from "../../images";
-import styles from "./FilterModal.style";
+import getStyles from "./FilterModal.style";
 
 const FilterModal = ({
   defaultCategory,
@@ -33,6 +34,8 @@ const FilterModal = ({
   setShowFilterOptions,
   unit,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const {
     currentCategory,
     handleCategoryChange,

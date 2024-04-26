@@ -1,10 +1,11 @@
 import React from "react";
-import { useIntl } from "react-intl";
-import { View, ScrollView } from "@unthinkable/react-core-components";
-import useIsWebView from "../../hooks/useIsWebView";
 import { useNavigate } from "react-router";
+import { useIntl } from "react-intl";
+import useIsWebView from "../../hooks/useIsWebView";
+import { useTheme } from "@unthinkable/react-theme";
+import { View, ScrollView } from "@unthinkable/react-core-components";
 
-import styles from "./ManageSubscription.style";
+import getStyles from "./ManageSubscription.style";
 import useFetch from "../../hooks/useFetch";
 import {
   COMPANY_SUBSCRIPTION_LISTING,
@@ -26,6 +27,9 @@ function ManageSubscription() {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const {
     data: subscriptionListingData,

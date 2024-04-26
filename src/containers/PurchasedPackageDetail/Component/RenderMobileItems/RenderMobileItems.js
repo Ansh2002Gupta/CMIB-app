@@ -1,11 +1,18 @@
 import { View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import React from "react";
 import CommonText from "../../../../components/CommonText";
 import TouchableImage from "../../../../components/TouchableImage";
 import images from "../../../../images";
-import styles from "./RenderMobileItems.styles";
+import { useIntl } from "react-intl";
 import { formatDate } from "../../../../utils/util";
+import getStyles from "./RenderMobileItems.styles";
+
 const RenderMobileItem = ({ item, lastElement, onPress }) => {
+  const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const onIconPress = (item) => {
     onPress(item);
   };

@@ -1,6 +1,4 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
-
-import colors from "../../assets/colors";
+import { Platform } from "@unthinkable/react-core-components";
 
 const getMaxWidth = (currentBreakpoint) => {
   switch (currentBreakpoint) {
@@ -17,39 +15,43 @@ const getMaxWidth = (currentBreakpoint) => {
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingLeft: 16,
-    paddingRight: 16,
-    borderWidth: 1,
-    borderRadius: 24,
-    borderColor: colors.lightGrey,
-    flexDirection: "row",
-    alignItems: "center",
-    position: "relative",
-  },
-  sessionText: (currentBreakpoint) => ({
-    fontSize: 14,
-    marginLeft: 2,
-    ...Platform.select({
-      web: {
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        maxWidth: getMaxWidth(currentBreakpoint),
-      },
-    }),
-  }),
-  iconDown: {
-    height: 15,
-    width: 15,
-    marginLeft: 5,
-  },
-  sessionBarText: {
-    fontSize: 14,
-  },
-});
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-export default styles;
+  return {
+    container: {
+      paddingTop: 8,
+      paddingBottom: 8,
+      paddingLeft: 16,
+      paddingRight: 16,
+      borderWidth: 1,
+      borderRadius: 24,
+      borderColor: colors.lightGrey,
+      flexDirection: "row",
+      alignItems: "center",
+      position: "relative",
+    },
+    sessionText: (currentBreakpoint) => ({
+      fontSize: 14,
+      marginLeft: 2,
+      ...Platform.select({
+        web: {
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          maxWidth: getMaxWidth(currentBreakpoint),
+        },
+      }),
+    }),
+    iconDown: {
+      height: 15,
+      width: 15,
+      marginLeft: 5,
+    },
+    sessionBarText: {
+      fontSize: 14,
+    },
+  };
+};
+
+export default getStyles;

@@ -1,11 +1,12 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CustomButton from "../CustomButton";
 import ImagePicker from "../ImagePickerComponent/ImagePickerComponent";
 import { extractFilename } from "../../utils/util";
 import images from "../../images";
-import styles from "./TriggerFileUpload.style";
+import getStyles from "./TriggerFileUpload.style";
 
 const TriggerFileUpload = ({
   buttonTitle,
@@ -15,6 +16,8 @@ const TriggerFileUpload = ({
   customButtonStyle,
   iconLeft,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isLeftIconNotSvg, leftIconSource } = iconLeft;
   const openImagePicker = async () => {
     try {

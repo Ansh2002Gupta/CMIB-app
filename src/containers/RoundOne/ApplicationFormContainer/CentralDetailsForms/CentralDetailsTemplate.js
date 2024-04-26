@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { useNavigate } from "../../../../routes";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
@@ -27,10 +28,9 @@ import UploadImage from "../../../../components/UploadImage";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { keys } from "./controllers/utils";
 import images from "../../../../images";
-import colors from "../../../../assets/colors";
 import commonStyles from "../../../../theme/styles/commonStyles";
-import styles from "./CentralDetailsForms.styles";
 import useIsWebView from "../../../../hooks/useIsWebView";
+import getStyles from "./CentralDetailsForms.styles";
 
 const CentralDetailsTemplate = ({
   handleContactDetailsChange,
@@ -100,6 +100,9 @@ const CentralDetailsTemplate = ({
     uploadPercentage,
   } = uploadImageToServerUtils;
 
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const hasCompanyLogo = false;
   const defaultUploadResult = hasCompanyLogo ? { data: { url: false } } : null;
 
@@ -142,8 +145,8 @@ const CentralDetailsTemplate = ({
           ) : (
             <Chip
               label={item.key}
-              bgColor={colors.secondaryGrey}
-              textColor={colors.black}
+              bgColor={theme.colors.secondaryGrey}
+              textColor={theme.colors.black}
             />
           )
         )}
@@ -452,7 +455,7 @@ const CentralDetailsTemplate = ({
                     isButtonOneDisabled={buttonDisabled}
                     isDisabled={buttonDisabled}
                     displayLoaderLeft={saveRoundDetailLoading}
-                    buttonOneLoaderColor={colors.green}
+                    buttonOneLoaderColor={theme.colors.green}
                     customStyles={{
                       ...isWebProps,
                       customContainerStyle: commonStyles.customContainerStyle,

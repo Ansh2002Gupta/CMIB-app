@@ -1,12 +1,15 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { Text, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
 import CommonText from "../CommonText";
-import styles from "./RenderHeadingAndValue.style";
+import getStyles from "./RenderHeadingAndValue.style";
 
 const RenderHeadingAndValue = ({ label, value, isMandatory }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <TwoRow
       style={styles.headingValueContainer}

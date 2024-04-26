@@ -1,10 +1,11 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../ActionPairButton";
 import useIsWebView from "../../hooks/useIsWebView";
-import style from "./SaveCancelButton.style";
+import getStyles from "./SaveCancelButton.style";
 
 const SaveCancelButton = ({
   isEditable,
@@ -14,6 +15,8 @@ const SaveCancelButton = ({
   isValidAllFields,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
   const { isWebView } = useIsWebView();
 
   if (isEditable) {

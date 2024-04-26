@@ -1,12 +1,13 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
-import style from "./UploadCVPhotoTemplate.style";
 import CommonText from "../../components/CommonText";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { useEffect, useMemo } from "react";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import getStyles from "./UploadCVPhotoTemplate.style";
 
 const UploadCVPhotoTemplate = ({
   isEditable,
@@ -19,6 +20,8 @@ const UploadCVPhotoTemplate = ({
   isVideoUpload,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
   const {
     errorWhileUpload,
     fileUploadResult,

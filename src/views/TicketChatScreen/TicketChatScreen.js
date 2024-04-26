@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "../../routes";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { Platform } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -15,10 +15,12 @@ import LoadingScreen from "../../components/LoadingScreen";
 import useIsWebView from "../../hooks/useIsWebView";
 import useTicketDetails from "./controllers/useTicketDetails";
 import images from "../../images";
-import styles from "./TicketChatScreen.style";
+import getStyles from "./TicketChatScreen.style";
 
 const TicketChatScreen = () => {
   const location = useLocation();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const {
     allDataLoaded,

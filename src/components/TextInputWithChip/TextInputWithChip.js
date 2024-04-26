@@ -1,12 +1,12 @@
+import { useTheme } from "@unthinkable/react-theme";
 import {
   ScrollView,
   TextInput,
   View,
 } from "@unthinkable/react-core-components";
 import React, { useEffect, useState } from "react";
-import styles from "./TextInputWithChip.style";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
-import colors from "../../assets/colors";
+import getStyles from "./TextInputWithChip.style";
 
 const TextInputWithChip = ({
   placeholderText,
@@ -14,6 +14,8 @@ const TextInputWithChip = ({
   value,
   isEditable,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [inputValue, setInputValue] = useState("");
   const [chips, setChips] = useState(Array.isArray(value) ? [...value] : []);
   useEffect(() => {
@@ -40,7 +42,7 @@ const TextInputWithChip = ({
         value={inputValue}
         onChangeText={setInputValue}
         placeholder={placeholderText}
-        placeholderTextColor={colors.darkGrey}
+        placeholderTextColor={theme.colors.darkGrey}
         onSubmitEditing={handleAddChip}
         returnKeyType="done"
         style={styles.input}

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import {
   Image,
@@ -9,7 +10,7 @@ import {
 import PdfCard from "../PdfCard/PdfCard";
 import VideoCard from "../VideoCard/VideoCard";
 import images from "../../images";
-import styles from "./PreviewImage.style";
+import getStyles from "./PreviewImage.style";
 
 const PreviewImage = ({
   hideIconDelete,
@@ -20,6 +21,8 @@ const PreviewImage = ({
   onRemoveImage,
   source,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <View
       style={{

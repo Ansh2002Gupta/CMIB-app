@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import { ScrollView, View, Linking } from "@unthinkable/react-core-components";
 
@@ -33,12 +34,13 @@ import {
   APPLICANT,
 } from "../../services/apiServices/apiEndPoint";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles, {
-  getModalInnerContainerHeight,
-} from "./ViewInterviewDetails.style";
+import { getModalInnerContainerHeight } from "./ViewInterviewDetails.style";
+import getStyles from "./ViewInterviewDetails.style";
 
 const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [interviewData, setInterviewData] = useState();
 
   const { data, setData, isLoading, fetchData, isError, error } = useFetch({

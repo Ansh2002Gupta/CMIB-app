@@ -1,9 +1,11 @@
 import React from "react";
 import { ScrollView, View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
+
 import { CustomTabs } from "../../components/Tab";
 import PositionInformation from "../PositionInformation";
 import CompanyProfileDetail from "../CompanyProfileDetail";
-import styles from "./styles";
+import getStyles from "./styles";
 import Header from "../../containers/CompanyDetail/Header";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router";
@@ -17,6 +19,9 @@ const CompanyDetail = () => {
   const intl = useIntl();
   const { centerId, companyId } = useParams();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const { profileInformation, isProfileLoading, profileError } =
     useCompanyDetail({
       centerId,

@@ -19,7 +19,6 @@ const getStyles = (theme) => {
       borderWidth: 1,
       borderColor: colors.lightGrey,
     },
-
     headerText: {
       fontFamily: "General Sans",
       fontSize: 16,

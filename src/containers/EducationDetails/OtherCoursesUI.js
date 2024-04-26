@@ -1,9 +1,10 @@
 import React from "react";
 import { View, ScrollView } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
-import style from "./OtherCourses.style";
+import { useTheme } from "@unthinkable/react-theme";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
+import getStyles from "./OtherCourses.style";
 const OtherCoursesUI = ({
   isEditable,
   other_courses,
@@ -15,6 +16,8 @@ const OtherCoursesUI = ({
   isValidAllFields,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   return (
     <View style={style.contentContainerStyle}>

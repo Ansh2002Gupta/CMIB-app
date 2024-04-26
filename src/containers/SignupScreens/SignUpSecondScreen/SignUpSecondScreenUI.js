@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
@@ -28,7 +28,7 @@ import {
   numericValidator,
 } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
-import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
+import { getResponsiveStyles, getStyles } from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = ({
   addressRef,
@@ -72,6 +72,9 @@ const SignUpSecondScreenUI = ({
   } = formData;
   const isWeb = Platform.OS.toLowerCase() === "web";
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const showContentHeader =
     currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
@@ -315,6 +318,7 @@ const SignUpSecondScreenUI = ({
                   ? getResponsiveStyles({
                       str: "signupContainer",
                       currentBreakpoint,
+                      theme,
                     })
                   : style.innerContainer
               }

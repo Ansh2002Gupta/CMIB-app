@@ -1,11 +1,11 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-import colors from "../../assets/colors";
+  return {
+    containerViewStyle: {
+      backgroundColor: colors.backgroundColor,
+    },
+  };
+};
 
-const styles = StyleSheet.create({
-  containerViewStyle: {
-    backgroundColor: colors.backgroundColor,
-  },
-});
-
-export default styles;
+export default getStyles;

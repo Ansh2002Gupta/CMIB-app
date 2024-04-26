@@ -5,11 +5,11 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
 import SideBar from "../SideBar/index";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./SideNavBar.style";
+import getStyles from "./SideNavBar.style";
 
 const SideNavBar = ({
   onClose,
@@ -17,6 +17,8 @@ const SideNavBar = ({
   showCloseIcon,
 }) => {
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const windowDimensions = useWindowDimensions();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 

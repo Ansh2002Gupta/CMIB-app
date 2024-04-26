@@ -1,7 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import useNavigateScreen from "../../../services/hooks/useNavigateScreen";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../../core/layouts";
 
@@ -21,12 +22,14 @@ import {
 } from "../../../services/apiServices/apiEndPoint";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
-import colors from "../../../assets/colors";
-import styles from "./CAJobsDashboard.style";
+import getStyles from "./CAJobsDashboard.style";
 
 const CAJobsDashboard = () => {
   const intl = useIntl();
   const { navigateScreen } = useNavigateScreen();
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = getStyles(theme);
 
   const handleOnPress = () => {
     navigateScreen(`${navigations.MANAGE_SUBSCRIPTION}`);
@@ -378,7 +381,7 @@ const CAJobsDashboard = () => {
                 baseRadius={80}
                 colorScale={[
                   colors.errorRed,
-                  colors.green,
+                  colors.greenAccepted,
                   colors.mustardYellow,
                   colors.graphiteGray,
                   colors.yellowGreen,
@@ -412,7 +415,7 @@ const CAJobsDashboard = () => {
                   colors.purple,
                   colors.originalPurple,
                   colors.babyPink,
-                  colors.green,
+                  colors.greenAccepted,
                   colors.greenBlue,
                   colors.darkOrange,
                 ]}

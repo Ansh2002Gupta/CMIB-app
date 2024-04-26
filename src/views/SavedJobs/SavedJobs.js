@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
@@ -13,7 +14,7 @@ import QuestionaireModal from "../../components/QuestionaireModal";
 import useFetch from "../../hooks/useFetch";
 import useIsWebView from "../../hooks/useIsWebView";
 import { MEMBER_SAVED_JOBS } from "../../services/apiServices/apiEndPoint";
-import style from "./SavedJobs.style";
+import getStyles from "./SavedJobs.style";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import CommonText from "../../components/CommonText";
 import { useNavigate } from "react-router";
@@ -25,6 +26,9 @@ const SavedJobs = () => {
   const [jobId, setJobId] = useState(null);
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   const {
     data: savedJobsList,

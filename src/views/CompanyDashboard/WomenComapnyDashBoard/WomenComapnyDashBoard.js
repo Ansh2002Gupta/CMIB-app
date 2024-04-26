@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import BarChart from "../../../components/BarChart";
@@ -15,12 +16,15 @@ import {
   ROUND_ONE_DASHBOARD,
   USER_TYPE_MEMBER,
 } from "../../../services/apiServices/apiEndPoint";
-import colors from "../../../assets/colors";
-import styles from "./WomenComapnyDashBoard.style";
+import getStyles from "./WomenComapnyDashBoard.style";
 
 const WomenComapnyDashBoard = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = getStyles(theme);
+
   const {
     data: interviewChartData,
     isLoading: isGettingInterview,
@@ -387,7 +391,7 @@ const WomenComapnyDashBoard = () => {
                 colors.purple,
                 colors.originalPurple,
                 colors.babyPink,
-                colors.green,
+                colors.greenAccepted,
                 colors.errorRed,
                 colors.greenBlue,
                 colors.darkOrange,

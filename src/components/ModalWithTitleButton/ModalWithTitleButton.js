@@ -1,9 +1,10 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CustomModal from "../../components/CustomModal";
 import TwoRowButton from "../../components/TwoRowButton";
-import styles from "./ModalWithTitleButton.style";
+import getStyles from "./ModalWithTitleButton.style";
 
 const ModalWithTitleButton = ({
   children,
@@ -21,6 +22,8 @@ const ModalWithTitleButton = ({
   rightLabelTxt,
   headerTextStyle,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const {
     containerStyle = {},
     leftButtonStyle = {},

@@ -11,11 +11,13 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import Breadcrumbs from "../../components/BreadCrumbs/Breadcrumbs";
 import CommonText from "../../components/CommonText";
+import ThemeSwitcher from "../../components/ThemeSwitcher";
 import UserAccountInfo from "../../components/UserAccountInfo";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { navigations } from "../../constants/routeNames";
 import styles from "./PrivateHeader.style";
-import ThemeSwitcher from "../../components/ThemeSwitcher";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./PrivateHeader.style";
 
 const PrivateHeader = ({
   onPressLeftIcon = () => {},
@@ -24,6 +26,8 @@ const PrivateHeader = ({
   rightIcon,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const location = useLocation();
   const windowDimensions = useWindowDimensions();
   const [userProfileState] = useContext(UserProfileContext);
@@ -57,12 +61,14 @@ const PrivateHeader = ({
         )}
         <Breadcrumbs />
       </View>
-      <ThemeSwitcher />
-      <UserAccountInfo
-        onPressRightIcon={onPressRightIcon}
-        rightIcon={rightIcon}
-        isMdOrGreater={isMdOrGreater}
-      />
+      <View style={styles.themeAndAccountBox}>
+        <ThemeSwitcher />
+        <UserAccountInfo
+          onPressRightIcon={onPressRightIcon}
+          rightIcon={rightIcon}
+          isMdOrGreater={isMdOrGreater}
+        />
+      </View>
     </View>
   );
 };

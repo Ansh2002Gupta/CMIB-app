@@ -8,8 +8,12 @@ import Image from "../ImagePreview";
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
 import styles from "./MessageComponent.style";
 import { getMessageInfo, getTime } from "../../utils/util";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./MessageComponent.style";
 
 const MessageComponent = ({ data, index, shouldShowAvatar, userDetails }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const isSender = getMessageInfo(data, userDetails);
 
   const renderAvatarComponent = ({ profile_photo, name }) => (

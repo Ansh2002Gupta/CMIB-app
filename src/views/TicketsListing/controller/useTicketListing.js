@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "../../../routes";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
@@ -30,7 +31,7 @@ import { urlService } from "../../../services/urlService";
 import { navigations } from "../../../constants/routeNames";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../TicketsListing.style";
+import getStyles from "../TicketsListing.style";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -40,6 +41,9 @@ const initialFilterState = {
 };
 
 const useTicketListing = () => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const { isWebView } = useIsWebView();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);

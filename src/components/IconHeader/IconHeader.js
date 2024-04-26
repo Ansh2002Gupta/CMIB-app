@@ -1,4 +1,6 @@
 import React from "react";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router";
 import { Image, View } from "@unthinkable/react-core-components";
@@ -10,10 +12,8 @@ import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import Switch from "../Switch";
 import useIsWebView from "../../hooks/useIsWebView";
-import colors from "../../assets/colors";
 import images from "../../images";
-import styles from "./IconHeader.style";
-import { useIntl } from "react-intl";
+import getStyles from "./IconHeader.style";
 
 const IconHeader = ({
   actionButtonIcon,
@@ -41,6 +41,8 @@ const IconHeader = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const navigate = useNavigate();
 
   const onGoBack = () => {
@@ -66,8 +68,8 @@ const IconHeader = ({
     const subHeading = subHeadingText.toLowerCase();
     const statusColors = colorConfig[subHeading] || colorConfig.default;
     return {
-      bgColor: colors[statusColors.bg],
-      textColor: colors[statusColors.text],
+      bgColor: theme.colors[statusColors.bg],
+      textColor: theme.colors[statusColors.text],
     };
   };
 

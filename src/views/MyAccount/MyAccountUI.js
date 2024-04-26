@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
@@ -11,7 +12,7 @@ import images from "../../images";
 import { Candidate, Company } from "../../constants/constants";
 import { moduleKeys } from "../../constants/sideBarHelpers";
 import classes from "../../theme/styles/CssClassProvider";
-import style from "./MyAccount.style";
+import getStyles from "./MyAccount.style";
 
 const MyAccountUI = ({
   accessibleModules,
@@ -21,6 +22,9 @@ const MyAccountUI = ({
   omitArrowIcon,
   userProfileDetails,
 }) => {
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
   const profileImage = userProfileDetails?.profile_photo;

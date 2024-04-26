@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
@@ -12,13 +13,15 @@ import {
   isStringLengthValid,
 } from "../../utils/validation";
 import { VALIDATION_TYPE } from "../../constants/constants";
-import styles from "./NewPasswordValidation.style";
+import getStyles from "./NewPasswordValidation.style";
 
 const NewPasswordValidation = ({
   confirmNewPassword,
   customContainerStyles,
   newPassword,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const intl = useIntl();
   const bulletStyle = (isValid) => [
     styles.bulletIconStyle,

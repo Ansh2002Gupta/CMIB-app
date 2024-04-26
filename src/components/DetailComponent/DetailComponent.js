@@ -65,6 +65,7 @@ const DetailComponent = ({
     columnCount,
     isColumnVariableWidth,
     isWebView,
+    theme,
   });
 
   const renderSwitch = () => (
@@ -406,7 +407,7 @@ const DetailComponent = ({
                           ...(columns.width === 3 ? styles.oneThirdWidth : {}),
                           ...(isWebView
                             ? styles.webContainer
-                            : getRowStyle(detail)),
+                            : getRowStyle(detail, theme)),
                         }}
                       >
                         {renderEditableContent(columns, idx)}
@@ -416,7 +417,7 @@ const DetailComponent = ({
                         style={{
                           ...(isWebView
                             ? styles.webContainer
-                            : getRowStyle(detail)),
+                            : getRowStyle(detail, theme)),
                         }}
                       >
                         <View style={styles.titleContainer}>
@@ -444,7 +445,9 @@ const DetailComponent = ({
           return (
             <View
               key={idx}
-              style={isWebView ? styles.webContainer : getRowStyle(detail)}
+              style={
+                isWebView ? styles.webContainer : getRowStyle(detail, theme)
+              }
             >
               {isEditable ? (
                 renderEditableContent(detail, idx)

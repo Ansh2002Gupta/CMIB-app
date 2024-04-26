@@ -1,9 +1,13 @@
-import { ScrollView, View } from "@unthinkable/react-core-components";
 import React from "react";
+import { ScrollView, View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import CardComponent from "../../../components/CardComponent";
 import DetailComponent from "../../../components/DetailComponent";
-import styles from "./ViewJobs.styles";
+import getStyles from "./ViewJobs.styles";
+
 const ViewJobs = ({ details }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <View style={styles.container}>
       <ScrollView

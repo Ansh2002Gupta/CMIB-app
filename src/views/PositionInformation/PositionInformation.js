@@ -7,13 +7,16 @@ import Spinner from "../../components/Spinner";
 import { STATUS_CODES } from "../../constants/constants";
 import CommonText from "../../components/CommonText";
 import { useIntl } from "react-intl";
-import styles from "./styles";
+import getStyles from "./styles";
 import { View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 
 const PositionInformation = ({ centerId, companyId }) => {
   const positionInformation = usePositionInformation({ centerId, companyId });
   const { positionTabs, isLoading, error } = positionInformation;
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   if (isLoading) {
     return (

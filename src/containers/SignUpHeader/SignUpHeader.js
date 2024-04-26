@@ -1,19 +1,22 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import Stepper from "../../components/Stepper";
 import { SIGN_UP_STEPPER_OPTION } from "../../constants/constants";
-import { getResponsiveStyles, styles } from "./SignUpHeader.style";
+import { getResponsiveStyles, getStyles } from "./SignUpHeader.style";
 
 const SignUpHeader = (props) => {
   const { intl, onClickGoToLogin, activeTab } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
   const isWeb = Platform.OS === "web";
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "../../../routes";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   TouchableOpacity,
@@ -29,7 +30,7 @@ import {
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
-import styles from "../JobSeekers.style";
+import getStyles from "../JobSeekers.style";
 import TouchableImage from "../../../components/TouchableImage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 
@@ -41,6 +42,9 @@ const initialFilterState = {
 };
 
 const useJobSeekers = () => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const isMob = Platform.OS.toLowerCase() !== "web";
   const defaultCategory = "Experience";
   const [loadingMore, setLoadingMore] = useState(false);

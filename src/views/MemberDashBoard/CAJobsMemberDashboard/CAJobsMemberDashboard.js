@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import BarChart from "../../../components/BarChart";
@@ -15,12 +16,16 @@ import {
   ROUND_ONE_DASHBOARD,
   USER_TYPE_MEMBER,
 } from "../../../services/apiServices/apiEndPoint";
-import colors from "../../../assets/colors";
-import styles from "./CAJobsMemberDashboard.style";
+import getStyles from "./CAJobsMemberDashboard.style";
 
 const CAJobsMemberDashboard = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = getStyles(theme);
+
   const {
     data: interviewChartData,
     isLoading: isGettingInterview,
@@ -168,7 +173,7 @@ const CAJobsMemberDashboard = () => {
             <PieChart
               colorScale={[
                 colors.greenBlue,
-                colors.green,
+                colors.greenAccepted,
                 colors.babyPink,
                 colors.purple,
               ]}
@@ -220,7 +225,7 @@ const CAJobsMemberDashboard = () => {
                 colors.purple,
                 colors.originalPurple,
                 colors.babyPink,
-                colors.green,
+                colors.greenAccepted,
                 colors.errorRed,
                 colors.greenBlue,
                 colors.darkOrange,

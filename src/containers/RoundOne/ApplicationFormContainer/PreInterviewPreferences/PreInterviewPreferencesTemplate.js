@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   ScrollView,
@@ -40,14 +41,13 @@ import {
 import LoadingScreen from "../../../../components/LoadingScreen";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
-import styles from "./PreInterviewPreferences.style";
 import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
-import CardComponent from "../../../../components/CardComponent";
 import useIsWebView from "../../../../hooks/useIsWebView";
+import CardComponent from "../../../../components/CardComponent";
+import getStyles from "./PreInterviewPreferences.style";
 import EditDeleteAction from "../../../../components/EditDeleteAction/EditDeleteAction";
 import AddIconText from "../../../../components/AddIconText";
 import ModalWithTitleButton from "../../../../components/ModalWithTitleButton";
-import CustomTextInput from "../../../../components/CustomTextInput";
 
 const PreInterviewPreferencesTemplate = ({
   isEditable,
@@ -58,6 +58,8 @@ const PreInterviewPreferencesTemplate = ({
 }) => {
   let options_object = [];
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles();
   const params = useParams();
   const navigate = useNavigate();
   const { currentModule } = useGetCurrentUser();

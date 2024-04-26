@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import useIsWebView from "../../hooks/useIsWebView";
@@ -15,7 +16,7 @@ import Http from "../../services/http-service";
 import { useIntl } from "react-intl";
 
 import { UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
-import styles from "./EditJobDetails.styles";
+import getStyles from "./EditJobDetails.styles";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
@@ -23,6 +24,7 @@ import { useParams } from "react-router";
 import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
 import CustomModal from "../../components/CustomModal";
+
 const EditJobDetails = ({
   jobData: intialJobData,
   questionData: intialQuestionData,
@@ -33,6 +35,10 @@ const EditJobDetails = ({
   const [addJobs] = useContext(AddJobContext);
   const { isWebView } = useIsWebView();
   const { id } = useParams();
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [jobDetails, setJobDetails] = useState(intialJobData);
   const initialJob = useRef(intialJobData);
   const initialQuestion = useRef(intialQuestionData);

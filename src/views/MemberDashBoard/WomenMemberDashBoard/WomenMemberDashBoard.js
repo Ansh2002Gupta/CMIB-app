@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import BarChart from "../../../components/BarChart";
@@ -16,10 +17,13 @@ import {
   USER_TYPE_MEMBER,
 } from "../../../services/apiServices/apiEndPoint";
 import colors from "../../../assets/colors";
-import styles from "./WomenMemberDashBoard.style";
+import getStyles from "./WomenMemberDashBoard.style";
 
 const WomenMemberDashBoard = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const { isWebView } = useIsWebView();
   const {
     data: interviewChartData,
@@ -149,12 +153,12 @@ const WomenMemberDashBoard = () => {
           <View style={isWebView && { flex: 1 }}>
             <DonutChart
               colorScale={[
-                colors.disabledGrey,
-                colors.purple,
-                colors.greenBlue,
-                colors.green,
-                colors.errorRed,
-                colors.darkOrange,
+                theme.colors.disabledGrey,
+                theme.colors.purple,
+                theme.colors.greenBlue,
+                theme.colors.green,
+                theme.colors.errorRed,
+                theme.colors.darkOrange,
               ]}
               data={interviewChartData}
               width={250}
@@ -164,22 +168,22 @@ const WomenMemberDashBoard = () => {
                 id: "label.interviewsScheduled",
               })}
               labelRadius={100}
-              labelColor={colors.white}
+              labelColor={theme.colors.white}
             />
           </View>
           <View style={isWebView && { flex: 1 }}>
             <PieChart
               colorScale={[
-                colors.mustardYellow,
-                colors.graphiteGray,
-                colors.yellowGreen,
-                colors.purple,
-                colors.originalPurple,
-                colors.babyPink,
-                colors.green,
-                colors.errorRed,
-                colors.greenBlue,
-                colors.darkOrange,
+                theme.colors.mustardYellow,
+                theme.colors.graphiteGray,
+                theme.colors.yellowGreen,
+                theme.colors.purple,
+                theme.colors.originalPurple,
+                theme.colors.babyPink,
+                theme.colors.greenAccepted,
+                theme.colors.errorRed,
+                theme.colors.greenBlue,
+                theme.colors.darkOrange,
               ]}
               data={functionalAreaChartData}
               width={250}
@@ -189,7 +193,7 @@ const WomenMemberDashBoard = () => {
               })}
               labelFontSize={8}
               labelRadius={100}
-              labelColor={colors.darkGrey}
+              labelColor={theme.colors.darkGrey}
             />
           </View>
         </View>

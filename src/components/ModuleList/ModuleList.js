@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   FlatList,
   Platform,
@@ -19,7 +20,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getAccessibleModulesList } from "../../constants/sideBarHelpers";
 import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
-import styles from "./ModuleList.style";
+import getStyles from "./ModuleList.style";
 
 const ModuleList = ({
   modules,
@@ -27,6 +28,8 @@ const ModuleList = ({
   selectedModule,
   isLoadingSession,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const windowDimensions = useWindowDimensions();

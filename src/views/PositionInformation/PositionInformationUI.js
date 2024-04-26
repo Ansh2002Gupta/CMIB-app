@@ -1,19 +1,22 @@
-import { Row, View } from "@unthinkable/react-core-components";
 import React, { useState } from "react";
-import DetailCard from "../../components/DetailCard";
+import { Row, View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
-import CustomTable from "../../components/CustomTable";
-import styles from "./styles";
+
+import { TwoRow } from "../../core/layouts";
+
+import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
-import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
-import useIsWebView from "../../hooks/useIsWebView";
-import { TwoRow } from "../../core/layouts";
+import CustomTable from "../../components/CustomTable";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomImage from "../../components/CustomImage";
+import DetailCard from "../../components/DetailCard";
+import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
+import getStyles from "./styles";
 
-const renderCatgories = ({ category, value }) => {
+const renderCatgories = ({ category, value, styles }) => {
   return (
     <CommonText customTextStyle={styles.categoriesOptionsStyle}>
       {category}: {value}
@@ -21,7 +24,13 @@ const renderCatgories = ({ category, value }) => {
   );
 };
 
-const RenderPlaceOfPosting = ({ intl, place, totalPosition, categories }) => {
+const RenderPlaceOfPosting = ({
+  intl,
+  place,
+  totalPosition,
+  categories,
+  styles,
+}) => {
   const [showCategories, setShowCategories] = useState(false);
   const handleShow = () => {
     setShowCategories((pre) => !pre);
@@ -61,26 +70,32 @@ const RenderPlaceOfPosting = ({ intl, place, totalPosition, categories }) => {
               {renderCatgories({
                 category: intl.formatMessage({ id: "label.general" }),
                 value: categories?.gen,
+                styles: styles,
               })}
               {renderCatgories({
                 category: intl.formatMessage({ id: "label.obc" }),
                 value: categories?.obc,
+                styles: styles,
               })}
               {renderCatgories({
                 category: intl.formatMessage({ id: "label.sc" }),
                 value: categories?.sc,
+                styles: styles,
               })}
               {renderCatgories({
                 category: intl.formatMessage({ id: "label.st" }),
                 value: categories?.st,
+                styles: styles,
               })}
               {renderCatgories({
                 category: intl.formatMessage({ id: "label.ph" }),
                 value: categories?.ph,
+                styles: styles,
               })}
               {renderCatgories({
                 category: intl.formatMessage({ id: "label.others" }),
                 value: categories?.others,
+                styles: styles,
               })}
             </View>
           )}
@@ -97,6 +112,8 @@ const CommonTable = ({
   style = {},
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   if (!isWebView) {
     return (
@@ -163,6 +180,9 @@ const RequriedDocuments = ({
   style = {},
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const { isWebView } = useIsWebView();
   if (!isWebView) {
     return (
@@ -240,8 +260,9 @@ const PostingAndCategories = ({
   getPostingAndCategoriesColumnConfigs,
   style,
 }) => {
-  console.log(data, "PostingAndCategories");
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   if (!isWebView) {
     return (
@@ -273,6 +294,7 @@ const PostingAndCategories = ({
                 ph: item?.ph,
                 others: item?.others,
               }}
+              styles={styles}
             />
           );
         })}
@@ -315,6 +337,9 @@ const PostingAndCategories = ({
 
 const SelectionProcess = ({ data }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <CardComponent customStyle={styles.requriedDocuments}>
       <CommonText fontWeight="600" customTextStyle={styles.tableTitleText}>
@@ -335,6 +360,9 @@ const PositionInformationUI = ({
   data,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const { isWebView } = useIsWebView();
   const {
     monthlyData,

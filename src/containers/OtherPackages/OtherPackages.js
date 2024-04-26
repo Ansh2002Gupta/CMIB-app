@@ -1,11 +1,11 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { TwoRow } from "../../core/layouts";
 import { useNavigate } from "react-router";
 
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./OtherPackages.style";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 import {
   COMPANY_SUBSCRIPTION_LISTING,
@@ -17,9 +17,12 @@ import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import CaJobsPackagesListing from "../CAJobsPackgesListing/CaJobsPackagesListing";
 import images from "../../images";
 import { navigations } from "../../constants/routeNames";
+import getStyles from "./OtherPackages.style";
 
 const OtherPackages = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
 

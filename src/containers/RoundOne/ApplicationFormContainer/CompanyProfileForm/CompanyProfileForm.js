@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../../components/ActionPairButton";
@@ -19,8 +20,8 @@ import commonStyles from "../../../../theme/styles/commonStyles";
 import { useNavigate } from "../../../../routes";
 import CustomButton from "../../../../components/CustomButton";
 import CustomImage from "../../../../components/CustomImage";
-import styles from "./CompanyProfileForm.style";
 import images from "../../../../images";
+import getStyles from "./CompanyProfileForm.style";
 
 const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
   const {
@@ -45,6 +46,8 @@ const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
     uploadImageToServerUtils,
   } = useCompanyProfile({ isEditable, tabHandler });
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
   const {

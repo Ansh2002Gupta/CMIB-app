@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Row,
   ScrollView,
@@ -10,11 +11,11 @@ import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
-import styles from "./FormTabs.style.js";
-import images from "../../images";
 import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity.js";
-import CustomImage from "../CustomImage/CustomImage.js";
 import useIsWebView from "../../hooks/useIsWebView.js";
+import images from "../../images";
+import CustomImage from "../CustomImage/CustomImage.js";
+import getStyles from "./FormTabs.style.js";
 
 export const FormTabs = ({
   isEditButtonVisible,
@@ -24,6 +25,8 @@ export const FormTabs = ({
   cleanupFuntion,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [alertOnTabSwitch, setAlertOnTabSwitch] = useState({

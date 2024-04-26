@@ -1,19 +1,21 @@
-import colors from "../../assets/colors";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const style = {
-  contentContainerStyle: {},
+  return {
+    contentContainerStyle: {},
 
-  innerContainerStyle: {
-    marginBottom: 16,
-  },
+    innerContainerStyle: {
+      marginBottom: 16,
+    },
 
-  loaderStyle: {
-    flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.backgroundColor,
-  },
+    loaderStyle: {
+      flex: 1,
+      justifyContent: "center",
+      alignContent: "center",
+      alignItems: "center",
+      backgroundColor: colors.backgroundColor,
+    },
+  };
 };
 
-export default style;
+export default getStyles;

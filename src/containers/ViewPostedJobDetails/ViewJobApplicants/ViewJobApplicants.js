@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import styles from "./ViewJobApplicants.styles";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import CustomTable from "../../../components/CustomTable";
 import DownloadMoreComponent from "../../PostedJobs/DownloadMoreComponent";
@@ -19,7 +19,11 @@ import ViewInterviewDetails from "../../ViewInterviewDetails";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import { View } from "@unthinkable/react-core-components";
+import getStyles from "./ViewJobApplicants.styles";
+
 const ViewJobApplicants = ({ id }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {
     handleUseApplicantStatus,

@@ -21,6 +21,7 @@ const greenBlue = "#2FA5CB";
 /* Greens */
 const darkGreen = "#00873E";
 const green = "#04AF55";
+const greenAccepted = "#04AF55";
 const greenOne = "#04af55";
 const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
@@ -93,7 +94,12 @@ const hotPink = "#FB5581";
 /* Pink */
 const babyPink = "#FB5581";
 
+const menuItem = "#fff";
+const menuItemActive = "#000833";
+const menuItemActiveBg = "#fff";
+
 const colors = {
+  greenAccepted,
   darkBlueShade,
   disabledBtn,
   backgroundColor,
@@ -165,6 +171,9 @@ const colors = {
   babyPink,
   greenBlue,
   darkOrange,
-  lightGreyThird
+  lightGreyThird,
+  menuItem,
+  menuItemActive,
+  menuItemActiveBg,
 };
 export default colors;

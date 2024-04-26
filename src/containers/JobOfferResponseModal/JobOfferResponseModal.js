@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
 
@@ -7,10 +8,9 @@ import ActionPairButton from "../../components/ActionPairButton";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import FinalConfirmation from "../FinalConfirmation/FinalConfirmation";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { KEYS } from "../../constants/constants";
 import images from "../../images";
-import styles from "./JobOfferResponseModal.style";
+import getStyles from "./JobOfferResponseModal.style";
 
 const isIos = Platform.OS.toLowerCase() === "ios";
 
@@ -28,6 +28,8 @@ const JobOfferResponseModal = ({
   isPatchingError,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const renderModal = () => {
     if (showConfirmModal) {

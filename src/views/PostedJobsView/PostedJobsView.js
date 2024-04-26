@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
+import { useTheme } from "@unthinkable/react-theme";
 
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -11,7 +12,7 @@ import {
   POSTED_JOB_LISTING as tableHeading,
 } from "../../constants/constants";
 import images from "../../images";
-import styles from "./PostedJobsView.styles";
+import getStyles from "./PostedJobsView.styles";
 import usePostedJobListing from "./controller/usePostedJobListing";
 import MobileCard from "../../containers/PostedJobs/MobileCard";
 import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
@@ -20,6 +21,9 @@ import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 
 const PostedJobsView = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const onViewPress = (item) => {

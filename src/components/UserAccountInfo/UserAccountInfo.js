@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
 import { useLocation, useNavigate } from "react-router";
@@ -27,10 +28,12 @@ import {
 import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./UserAccountInfo.style";
+import getStyles from "./UserAccountInfo.style";
 
 const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const navigate = useNavigate();
   const { pathname: currentRoute } = useLocation();
   const [sideBarState] = useContext(SideBarContext);

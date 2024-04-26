@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import {
   Keyboard,
@@ -17,6 +18,7 @@ import PaymentInitiateModal from "../PaymentInitiateModal";
 import commonStyles from "../../theme/styles/commonStyles";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { useIntl } from "react-intl";
+import getStyles from "./PackageDetailModal.style";
 
 const PackageDetailModal = ({
   packageDetailData,
@@ -24,6 +26,8 @@ const PackageDetailModal = ({
   handleSubscribeFromDetailmodal,
 }) => {
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const intl = useIntl();
   const [showPaymentInitiateModal, setShowPaymentInitiateModal] = useState();
   const [modalData, setModalData] = useState({ amount: 0, subscriptionId: "" });

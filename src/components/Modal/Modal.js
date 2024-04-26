@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import Backdrop from "../Backdrop/Backdrop";
-import { setMaxWidth, styles } from "./Modal.style";
+import { setMaxWidth, getStyles } from "./Modal.style";
 
 const portalElement = document.getElementById("overlays");
 
@@ -16,6 +17,9 @@ const Modal = ({
   preventCloseOnBackdropClick,
   style,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <React.Fragment>
       {ReactDOM.createPortal(
@@ -27,7 +31,7 @@ const Modal = ({
           <View
             style={{
               ...styles.contentBox,
-              ...setMaxWidth({ maxWidth }),
+              ...setMaxWidth({ maxWidth, theme }),
               ...containerStyle,
             }}
           >

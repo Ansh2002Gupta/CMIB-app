@@ -1,6 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
+import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
@@ -8,7 +9,7 @@ import CustomDropdown from "../CustomDropdown";
 import Pagination from "../Pagination/Pagination";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
-import styles from "./PaginationFooter.style";
+import getStyles from "./PaginationFooter.style";
 
 const PaginationFooter = ({
   currentPage,
@@ -21,6 +22,8 @@ const PaginationFooter = ({
   siblingCount,
   totalcards,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   return (

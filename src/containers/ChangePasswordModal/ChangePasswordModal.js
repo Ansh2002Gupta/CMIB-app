@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import FiveColumn from "../../core/layouts/FiveColumn";
@@ -18,11 +18,13 @@ import {
   onConfirmPasswordBlur,
   strongPasswordValidator,
 } from "../../utils/validation";
-import styles from "./ChangePasswordModal.style";
+import getStyles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [error, setError] = useState("");
