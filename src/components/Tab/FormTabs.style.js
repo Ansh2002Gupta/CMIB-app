@@ -16,13 +16,13 @@ const getStyles = (theme) => {
     innerContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      paddingRight: 16,
       alignItems: "flex-end",
     },
     tabContainer: {
       paddingTop: 16,
       paddingRight: 16,
       paddingLeft: 16,
+      backgroundColor: colors.white,
       flex: 1,
     },
     marginLeft8: {
@@ -34,9 +34,10 @@ const getStyles = (theme) => {
       paddingRight: 16,
       alignItems: "center",
       justifyContent: "center",
-      borderRadius: 18,
-      borderWidth: 1,
-      borderColor: colors.lightGrey,
+      borderTopLeftRadius: 8,
+      borderTopRightRadius: 8,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
       cursor: "pointer",
     },
     editButtonViewStyle: {
@@ -70,6 +71,11 @@ const getStyles = (theme) => {
     },
     flex1: {
       flex: 1,
+    },
+    scrollViewContainer: { 
+      flex: 1,
+      borderBottomColor: colors.green,
+      borderBottomWidth:1,
     },
   };
 };

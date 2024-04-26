@@ -62,7 +62,7 @@ export const FormTabs = ({
   return (
     <>
       <View style={styles.innerContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollViewContainer}>
           <Row gap={12} style={styles.tabContainer}>
             {tabs.map((tab, index) => {
               const { label } = tab;

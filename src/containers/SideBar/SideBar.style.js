@@ -74,7 +74,7 @@ const getStyles = (theme) => {
     },
     changeText: {
       color: colors.menuItem,
-      fontSize: 14,
+      fontSize: 16,
     },
     menuItemsText: {
       color: colors.menuItemActive,
@@ -103,7 +103,7 @@ const getStyles = (theme) => {
     visitWebsiteText: {
       color: colors.lightGrey,
       paddingLeft: 12,
-      fontSize: 14,
+      fontSize: 16,
     },
     logoStyle: {
       margin: 20,

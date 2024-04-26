@@ -33,7 +33,7 @@ const getStyles = (theme) => {
     },
     itemText: {
       color: colors.mediumGray,
-      fontSize: 14,
+      fontSize: 16,
       lineHeight: 24,
     },
     activeItemText: {
