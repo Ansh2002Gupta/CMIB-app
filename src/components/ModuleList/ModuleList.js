@@ -102,6 +102,7 @@ const ModuleList = ({
           onClose={() =>
             !module.sectionHeading ? onSelectItem(selectedModule) : () => {}
           }
+          modalContentStyles={styles.modalContentStyles}
         >
           {isLoadingSession && <LoadingScreen />}
           {!isLoadingSession && (

@@ -74,6 +74,12 @@ const getStyles = (theme) => {
       maxWidth: "70%",
       flex: 1,
     },
+    modalContentStyles: {
+      flex: 1,
+      backgroundColor: colors.secondaryGrey,
+      borderBottomRightRadius: 12,
+      borderBottomLeftRadius: 12,
+    },
     mainViewStyle: {
       backgroundColor: colors.secondaryGrey,
       padding: 24,
