@@ -285,6 +285,9 @@ const partialSelectIcon = appendAppBaseURl("/images/svg/partialSelectIcon.svg");
 const iconCheckBoxRoundRed = appendAppBaseURl(
   "/images/svg/iconCheckBoxRoundRed.svg"
 );
+const iconStepperDoneDarkTheme = appendAppBaseURl(
+  "/images/svg/iconStepperDoneDarkTheme.svg"
+);
 
 const images = {
   iconArrowUp,
@@ -369,6 +372,7 @@ const images = {
   iconFooter,
   iconAdd,
   iconStepperDone,
+  iconStepperDoneDarkTheme,
   iconPostedJobs,
   iconActivePostedJobs,
   iconJobApplicants,

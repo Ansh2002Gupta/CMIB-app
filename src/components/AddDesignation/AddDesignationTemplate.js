@@ -41,7 +41,7 @@ const AddDesignationTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-  const theme = useTheme;
+  const theme = useTheme();
   const styles = getStyles(theme);
   function mapDocuments(dataArray) {
     const groupedData = {};

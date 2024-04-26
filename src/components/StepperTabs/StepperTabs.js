@@ -1,5 +1,5 @@
-import React from "react";
-import { useTheme } from "@unthinkable/react-theme";
+import React, { useContext } from "react";
+import { ColorModeContext, useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
@@ -11,6 +11,8 @@ import getStyles from "./StepperTabs.style";
 const StepperTabs = ({ activeStep, customStyle, steps }) => {
   const theme = useTheme();
   const styles = getStyles(theme);
+  const colorMode = useContext(ColorModeContext).colorMode;
+  const isThemeDark = colorMode === "dark";
   const getStepStatus = (step) => {
     if (activeStep === step) return STEPPER_STATE.ACTIVE;
     if (activeStep > step) return STEPPER_STATE.DONE;
@@ -43,7 +45,11 @@ const StepperTabs = ({ activeStep, customStyle, steps }) => {
           >
             {getStepStatus(index) === STEPPER_STATE.DONE ? (
               <CustomImage
-                source={images.iconStepperDone}
+                source={
+                  isThemeDark
+                    ? images.iconStepperDoneDarkTheme
+                    : images.iconStepperDone
+                }
                 alt="Done"
                 style={styles.stepperDoneIcon}
               />
