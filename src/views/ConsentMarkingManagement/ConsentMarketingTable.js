@@ -19,7 +19,7 @@ import {
     ROUND_ONE_CONSENT_MARKETING_MANAGEMENT as tableHeading,
   } from "../../constants/constants";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import useFetch from "../../hooks/useFetch";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const ConsentMarkingTable = ({centerId, roundId}) => {
   const { isWebView } = useIsWebView();
@@ -223,6 +223,14 @@ const ConsentMarkingTable = ({centerId, roundId}) => {
             mobileComponentToRender: getMobileView,
           }}
         />
+        {(!!errorWhileUpdatingCandidateConsent) && (
+        <ToastComponent
+          toastMessage={errorWhileUpdatingCandidateConsent}
+          onDismiss={() => {
+            setErrorWhileUpdatingCandidateConsent("")
+          }}
+        />
+      )}
       </View>
   </>;
 };

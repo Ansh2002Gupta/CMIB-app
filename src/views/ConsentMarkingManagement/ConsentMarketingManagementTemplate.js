@@ -78,14 +78,6 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
           )}
         />}
       </View>
-      {/* {(!!errorWhileUpdatingCandidateConsent) && (
-        <ToastComponent
-          toastMessage={errorWhileUpdatingCandidateConsent}
-          onDismiss={() => {
-            setErrorWhileUpdatingCandidateConsent("")
-          }}
-        />
-      )} */}
     </View>
   );
 };

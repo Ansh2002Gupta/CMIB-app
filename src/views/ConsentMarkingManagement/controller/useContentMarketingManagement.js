@@ -352,7 +352,7 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
               <TouchableImage
                 onPress={() => {
                   onConsentPress(item);
-                  setCompanyId(item.id);
+                  setCompanyId(item?.id);
                 }}
                 source={images.iconShieldTickDisable}
                 imageStyle={styles.iconTicket}
@@ -363,7 +363,7 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
                 onPress={() => {
                   // onConsentPress(item);
                 }}
-                source={images.iconShieldTick}
+                source={images.iconSheildTick}
                 imageStyle={styles.iconTicket}
                 isSvg={true}
               />
@@ -436,7 +436,11 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
               handleButtonTwoPress={() => {
                 updateCandidateConsent({body: {
                   application_status: "consent-given"
-                }});
+                },
+                onSuccessCallback: () => {
+                  fetchConsentListing({})
+                },
+              })
                 setShowConsentModal(-1);
               }}
             />
