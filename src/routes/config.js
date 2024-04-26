@@ -246,7 +246,7 @@ const config = [
         element: <CompanyDetail />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}/:id`,
         element: <ConsentMarkingManagement />,
       },
       {
@@ -266,7 +266,7 @@ const config = [
         element: <CompanyDetail />,
       },
       {
-        viewPath: `${navigations.ROUND_TWO}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        viewPath: `${navigations.ROUND_TWO}/${navigations.CONSENT_MARKING_MANAGEMENT}/:id`,
         element: <ConsentMarkingManagement />,
       },
       {
@@ -398,7 +398,7 @@ const config = [
         element: <CompanyDetail />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}/:id`,
         element: <ConsentMarkingManagement />,
       },
       {
@@ -433,7 +433,7 @@ const config = [
         element: <CompanyDetail />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}/:id`,
         element: <ConsentMarkingManagement />,
       },
       {
@@ -467,7 +467,7 @@ const config = [
         element: <CompanyDetail />,
       },
       {
-        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`,
+        viewPath: `${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}/:id`,
         element: <ConsentMarkingManagement />,
       },
       {
