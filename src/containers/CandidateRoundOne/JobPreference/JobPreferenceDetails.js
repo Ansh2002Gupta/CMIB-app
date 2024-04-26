@@ -1,6 +1,7 @@
 //Libraries
 import React, { useImperativeHandle, useRef, useState, useEffect } from "react";
 import { useParams } from "react-router";
+import { useLocation } from "../../../routes";
 //UI & Styling
 import MultiRow from "../../../core/layouts/MultiRow";
 import styles from "./JobPreferenceDetails.style";
@@ -28,13 +29,17 @@ const JobPreferenceDetails = (
   const cvUploadRef = useRef();
   const { currentModule } = useGetCurrentUser();
   const { id } = useParams();
+  const location = useLocation();
+  const hasRoundTwo = location?.pathname.includes("round-two");
+  const hasRoundOne = location?.pathname.includes("round-one");
 
   const [isPreferenceRegardingCompleted, setIsPreferenceRegardingCompleted] =
     useState(false);
   const [isCitySelectionCompleted, setIsCitySelectionCompleted] =
     useState(false);
-  const [isMockInterviewCompleted, setIsMockInterviewCompleted] =
-    useState(false);
+  const [isMockInterviewCompleted, setIsMockInterviewCompleted] = useState(
+    hasRoundOne ? false : true
+  );
   const [isCVUploadCompleted, setIsCVUploadCompleted] = useState(false);
 
   const {
@@ -46,31 +51,19 @@ const JobPreferenceDetails = (
     url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${JOB_PREFERENCES}`,
   });
 
-  const {
-    fetchData: fetchCentres,
-    data: interviewCentreData,
-  } = useFetch({
+  const { fetchData: fetchCentres, data: interviewCentreData } = useFetch({
     url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}/centres`,
   });
 
-  const {
-    fetchData: fetchProgram,
-    data: programeData,
-  } = useFetch({
+  const { fetchData: fetchProgram, data: programeData } = useFetch({
     url: `core/${currentModule}${ROUNDS}/${id}/orientation-centres`,
   });
 
-  const {
-    fetchData: fetchMockCentres,
-    data: mockCenters,
-  } = useFetch({
+  const { fetchData: fetchMockCentres, data: mockCenters } = useFetch({
     url: `core/${currentModule}${ROUNDS}/${id}/mock-interviews`,
   });
 
-  const {
-    fetchData: fetchSlots,
-    data: slotsData,
-  } = useFetch({
+  const { fetchData: fetchSlots, data: slotsData } = useFetch({
     url: `core/${currentModule}/mock-interviews`,
   });
 
@@ -78,8 +71,7 @@ const JobPreferenceDetails = (
     fetchCentres();
     fetchProgram();
     fetchMockCentres();
-  }, [])
-
+  }, []);
 
   useImperativeHandle(ref, () => ({
     getAllData: () => {
@@ -92,7 +84,7 @@ const JobPreferenceDetails = (
         ...preferenceRegardingData,
         ...cvUploadRefData,
         ...mockInterviewRefData,
-        ...citySelectionData
+        ...citySelectionData,
       };
     },
   }));
@@ -143,7 +135,9 @@ const JobPreferenceDetails = (
   };
 
   const handleMockCentreSelection = (id) => {
-    fetchSlots({overrideUrl: `core/${currentModule}/mock-interviews/${id}/interview-dates`})
+    fetchSlots({
+      overrideUrl: `core/${currentModule}/mock-interviews/${id}/interview-dates`,
+    });
   };
 
   const edDetailsConfig = [
@@ -168,6 +162,7 @@ const JobPreferenceDetails = (
           onValidationChange={handleCitySelectionFields}
           interviewCentreData={interviewCentreData}
           programeData={programeData}
+          hasRoundOne={hasRoundOne}
         />
       ),
     },
@@ -182,6 +177,7 @@ const JobPreferenceDetails = (
           mockCenters={mockCenters}
           slotsData={slotsData}
           handleMockCentreSelection={handleMockCentreSelection}
+          hasRoundOne={hasRoundOne}
         />
       ),
     },
