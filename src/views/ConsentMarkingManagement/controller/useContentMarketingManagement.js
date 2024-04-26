@@ -70,7 +70,7 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
     setData: setConsentData,
     isSuccess,
   } = useFetch({
-    url: `/member/${currentModule}/rounds/${roundId}/centres/${32}/companies/shotrlisted`,
+    url: `/member/${currentModule}/rounds/${roundId}/centres/${centerId}/companies/shotrlisted`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
