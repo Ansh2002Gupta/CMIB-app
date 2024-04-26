@@ -152,4 +152,6 @@ export const PRE_INTERVIEW = `/pre-interview`;
 export const SHORTLISTS = `/shortlists`;
 export const CONSENT = `/consent`;
 export const COMPANIES = `/companies`;
+export const CONSENT_CENTRES = `/centres`;
+//API endpoint for NQCA Shortlisting, Consent and Interview module.
 export const OVERVIEW_DATA = "overview-data";
