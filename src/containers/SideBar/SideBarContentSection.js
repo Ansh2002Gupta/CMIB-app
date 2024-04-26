@@ -21,7 +21,10 @@ import useGlobalSessionListApi from "../../services/apiServices/hooks/useGlobalS
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { setRoundsData, setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
+import {
+  setRoundsData,
+  setSelectedModule,
+} from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
 import { CA_JOBS, COMPANY } from "../../constants/constants";
@@ -161,7 +164,8 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                   />
                 </View>
               ) : (
-                !!selectedModule?.label && (
+                !!selectedModule?.label &&
+                selectedModule.key !== CA_JOBS && (
                   <SideBarItemView
                     title={intl.formatMessage({ id: "label.session" })}
                     content={selectedSession?.label || ""}
