@@ -22,7 +22,11 @@ import { TwoRow } from "../../../../core/layouts";
 import ActionPairButton from "../../../../components/ActionPairButton";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
-import { formateErrors } from "../../../../utils/util";
+import { formatDate, formatTime, formateErrors } from "../../../../utils/util";
+import useIsWebView from "../../../../hooks/useIsWebView";
+import TouchableImage from "../../../../components/TouchableImage";
+import { Row } from "../../../../core/components";
+import Chip from "../../../../components/Chip";
 
 const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
   const {
@@ -50,6 +54,7 @@ const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
 
   const intl = useIntl();
   const navigate = useNavigate();
+  const { isWebView } = useIsWebView();
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -60,6 +65,41 @@ const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
         }
       : {};
 
+  const renderMobSection = (item, index) => {
+    return (
+      <View style={styles.mobileContainer}>
+        <View style={styles.mobileDetailRow}>
+          <CommonText
+            fontWeight={"600"}
+            customTextStyle={commonStyles.cellTextStyle()}
+          >
+            {item?.txn_id || "-"}
+          </CommonText>
+          <Row style={styles.rowStyling}>
+            <CommonText customTextStyle={styles.tableQueryText}>
+              {formatDate(item.created_at)}, {formatTime(item.created_at)}
+            </CommonText>
+          </Row>
+        </View>
+        <View style={styles.rowsPerPageWeb}>
+          {!!item.payment_status && (
+            <Chip
+              label={item.payment_status}
+              style={getStatusStyle(item.payment_status)}
+            />
+          )}
+          <TouchableImage
+            onPress={() => {
+              // onIconPress(item);
+            }}
+            source={images.iconMore}
+            style={styles.iconTicket}
+          />
+        </View>
+      </View>
+    );
+  };
+
   return (
     <CustomScrollView style={styles.mainContainer}>
       {isLoading && <LoadingScreen />}
@@ -68,7 +108,13 @@ const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
           topSection={
             <>
               <CardComponent>
-                <View style={styles.headerContainer}>
+                <View
+                  style={
+                    isWebView
+                      ? styles.headerContainer
+                      : styles.headerContainerMob
+                  }
+                >
                   <CommonText
                     customTextStyle={styles.headerText}
                     fontWeight={"600"}
@@ -132,6 +178,9 @@ const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
                 <CustomTable
                   {...{
                     customTableStyle: styles.customTableStyle,
+                    containerStyle: isWebView
+                      ? styles.customTableStyleWeb
+                      : styles.customTableStyleMob,
                     showSearchBar: false,
                     currentRecords: paymentList,
                     data: paymentList,
@@ -140,6 +189,7 @@ const PaymentForm = ({ isEditable, tabHandler, setIsEditable }) => {
                     isShowPagination: false,
                     isHeading: true,
                     tableHeading: TRANSACTION_LIST_HEADING_FOR_NQCA(),
+                    mobileComponentToRender: renderMobSection,
                   }}
                 />
               </CardComponent>

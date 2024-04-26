@@ -1,10 +1,17 @@
 //Libraries
-import React, { useImperativeHandle, useRef, useState } from "react";
+import React, { useImperativeHandle, useRef, useState, useEffect } from "react";
+import { useParams } from "react-router";
 //UI & Styling
 import MultiRow from "../../../core/layouts/MultiRow";
 import styles from "./JobPreferenceDetails.style";
 import { View } from "@unthinkable/react-core-components";
 import useFetch from "../../../hooks/useFetch";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import {
+  ROUNDS,
+  JOB_PREFERENCES,
+  USER_TYPE_MEMBER,
+} from "../../../services/apiServices/apiEndPoint";
 import PreferenceRegarding from "./PreferenceRegarding";
 import CitySelection from "./CitySelection";
 import MockInterview from "./MockInterview";
@@ -19,6 +26,8 @@ const JobPreferenceDetails = (
   const citySelectionRef = useRef();
   const mockInterviewRef = useRef();
   const cvUploadRef = useRef();
+  const { currentModule } = useGetCurrentUser();
+  const { id } = useParams();
 
   const [isPreferenceRegardingCompleted, setIsPreferenceRegardingCompleted] =
     useState(false);
@@ -34,18 +43,43 @@ const JobPreferenceDetails = (
     isLoading: isGettingJobPreference,
     error: errorWhileGettingJobPreference,
   } = useFetch({
-    url: `/member/nqca-placements/rounds/264/job-preferences`,
+    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${JOB_PREFERENCES}`,
   });
-  // const { handleExamDetails} = useExamDetailsAPI();
 
-  // useEffect(() => {
-  //     handleExamDetails ({
-  //       successCallback: (examDetails) => {
-  //         updateExamDetails(examDetails);
-  //       },
-  //       errorCallback: () => {},
-  //     });
-  //   }, []);
+  const {
+    fetchData: fetchCentres,
+    data: interviewCentreData,
+  } = useFetch({
+    url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}/centres`,
+  });
+
+  const {
+    fetchData: fetchProgram,
+    data: programeData,
+  } = useFetch({
+    url: `core/${currentModule}${ROUNDS}/${id}/orientation-centres`,
+  });
+
+  const {
+    fetchData: fetchMockCentres,
+    data: mockCenters,
+  } = useFetch({
+    url: `core/${currentModule}${ROUNDS}/${id}/mock-interviews`,
+  });
+
+  const {
+    fetchData: fetchSlots,
+    data: slotsData,
+  } = useFetch({
+    url: `core/${currentModule}/mock-interviews`,
+  });
+
+  useEffect(() => {
+    fetchCentres();
+    fetchProgram();
+    fetchMockCentres();
+  }, [])
+
 
   useImperativeHandle(ref, () => ({
     getAllData: () => {
@@ -57,15 +91,8 @@ const JobPreferenceDetails = (
       return {
         ...preferenceRegardingData,
         ...cvUploadRefData,
-        mock_interview_date: {
-          mock_interview_id: 1,
-          name: "Centre XX",
-          schedule_date: "2024-11-12",
-          start_time: "09:30:00",
-          end_time: "10:00:00",
-        },
-        campus_interview: citySelectionData,
-        orientation_centre: citySelectionData,
+        ...mockInterviewRefData,
+        ...citySelectionData
       };
     },
   }));
@@ -115,6 +142,10 @@ const JobPreferenceDetails = (
     }
   };
 
+  const handleMockCentreSelection = (id) => {
+    fetchSlots({overrideUrl: `core/${currentModule}/mock-interviews/${id}/interview-dates`})
+  };
+
   const edDetailsConfig = [
     {
       content: (
@@ -135,6 +166,8 @@ const JobPreferenceDetails = (
           isWebView={isWebView}
           isViewMode={isViewMode}
           onValidationChange={handleCitySelectionFields}
+          interviewCentreData={interviewCentreData}
+          programeData={programeData}
         />
       ),
     },
@@ -146,6 +179,9 @@ const JobPreferenceDetails = (
           isWebView={isWebView}
           isViewMode={isViewMode}
           onValidationChange={handleMockInterviewFields}
+          mockCenters={mockCenters}
+          slotsData={slotsData}
+          handleMockCentreSelection={handleMockCentreSelection}
         />
       ),
     },

@@ -10,7 +10,7 @@ import CustomLabelView from "../../../../components/CustomLabelView";
 import CustomToggleComponent from "../../../../components/CustomToggleComponent";
 import { capitalizeFirstLetter } from "../../../../utils/util";
 
-const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
+const EdDetailTemplate = ({intl, isWebView, isViewMode, educationFilledDetails}, ref) => {
   //metric states
   const [metricExaminationName, setMetricExaminationName] = useState('');
   const [metricStatus, setMetricStatus] = useState('');
@@ -86,6 +86,10 @@ const EdDetailTemplate = ({intl, isWebView, isViewMode}, ref) => {
       };
     },
   }));
+
+  useEffect(() => {
+    educationFilledDetails && console.log("educationFilledDetails", JSON.stringify(educationFilledDetails))
+  }, [educationFilledDetails]);
 
   return (
     <CardComponent customStyle={styles.cardContainer}>
