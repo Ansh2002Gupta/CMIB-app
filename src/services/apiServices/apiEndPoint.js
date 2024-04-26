@@ -64,6 +64,7 @@ export const PERSONAL = "/personal";
 export const PAYMENT_INFO = "/payment-info";
 export const PROFILE = "/profile";
 export const ROUNDS = "/rounds";
+export const ROUND = "/round";
 export const STATUS = "/status";
 export const SUBMIT = "/submit";
 export const TRAINING_DETAILS = "/training-details";
@@ -148,5 +149,9 @@ export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;
 //api endpoint: Round-1>NQCA Placements>Pre-Interview Placements
 export const PRE_INTERVIEW = `/pre-interview`;
 
+export const SHORTLISTS = `/shortlists`;
+export const CONSENT_CENTRES = `/centres`;
+export const CONSENT = `/consent`;
+export const COMPANIES = `/companies`;
 //API endpoint for NQCA Shortlisting, Consent and Interview module.
 export const OVERVIEW_DATA = "overview-data";

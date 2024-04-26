@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
 import { useNavigate } from "../../../routes";
@@ -13,7 +13,7 @@ import CustomImage from "../../../components/CustomImage";
 import styles from "../ConsentMarkingManagement.styles";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
-import { COMPANY_INACTIVE_SUBSCRIPTION_LISTING } from "../../../services/apiServices/apiEndPoint";
+import { APPLICATION, CONSENT_CENTRES, COMPANIES, COMPANY_INACTIVE_SUBSCRIPTION_LISTING, CONSENT, ROUND, SHORTLISTS, USER_TYPE_MEMBER } from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
 import { urlService } from "../../../services/urlService";
@@ -22,8 +22,11 @@ import usePagination from "../../../hooks/usePagination";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import CustomModal from "../../../components/CustomModal";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import { usePatch } from "../../../hooks/useApiRequest";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
-const useContentMarketingManagement = (onViewPress) => {
+const useContentMarketingManagement = (onViewPress, centerId) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
   const defaultCategory = "Experience";
   const [loadingMore, setLoadingMore] = useState(false);
@@ -32,7 +35,12 @@ const useContentMarketingManagement = (onViewPress) => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const navigate = useNavigate();
+  // const { currentModule } = useGetCurrentUser();
   const intl = useIntl();
+  const [sideBarState] = useContext(SideBarContext);
+  const currentModule = sideBarState?.selectedModule?.key;
+  console.log(currentModule, "currentModule")
+
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -44,18 +52,57 @@ const useContentMarketingManagement = (onViewPress) => {
   const [showCurrentPopupmessageDetails, setCurrentPopupMessageDetails] =
     useState(0);
   const [showConsentModal, setShowConsentModal] = useState(0);
+
   const {
-    data: inactiveSubscriptionListData,
-    isLoading: isInactiveSubscriptionListLoading,
-    isError: isInactiveSubscriptionListError,
-    error: errorInactiveSubscriptionListData,
-    fetchData: fetchInactivePackage,
+    data: consentTitleData,
+    isLoading: isConsentTitleDataLoading,
+    isError: isConsentListError,
+    error: errorConsentTitleData,
+    fetchData: fetchConsentListing,
   } = useFetch({
-    url: `${COMPANY_INACTIVE_SUBSCRIPTION_LISTING}`,
+    url: `/member/${currentModule}/rounds/264/centres/${centerId}/companies/shotrlisted`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
+
+  const {
+    makeRequest: updateCandidateConsent,
+    error: errorWhileUpdatingCandidateConsent,
+    setError: setErrorWhileUpdatingCandidateConsent,
+    isLoading: isUpdatingCandidateConsent,
+    isError: isErrorWhileUpdating,
+  } = usePatch({
+    url:
+    USER_TYPE_MEMBER +
+      `/${currentModule}` +
+      CONSENT_CENTRES +
+       `/${43}` + COMPANIES + `/${55}` + CONSENT + "?consent=false",
+  });
+
+  useEffect(() => {
+    if (centerId) {
+      const fetchData = async () => {
+        const requestedParams = {
+          perPage: rowsPerPage,
+          page: currentPage,
+        };
+        const initialData = await fetchConsentListing({
+          queryParamsObject: requestedParams,
+        });
+        if (initialData && initialData?.records?.length > 0) {
+          setCurrentRecords(initialData?.records);
+          if (initialData?.records?.length < rowsPerPage && isMob) {
+            setAllDataLoaded(true);
+          }
+        }
+        setIsFirstPageReceived(false);
+      };
+      fetchData();
+    }
+  }, [centerId])
+
+  
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -75,7 +122,7 @@ const useContentMarketingManagement = (onViewPress) => {
         perPage: rowsPerPage,
         page: currentPage,
       };
-      const initialData = await fetchInactivePackage({
+      const initialData = await fetchConsentListing({
         queryParamsObject: requestedParams,
       });
       if (initialData && initialData?.records?.length > 0) {
@@ -93,7 +140,7 @@ const useContentMarketingManagement = (onViewPress) => {
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
   const updateCurrentRecords = async (params) => {
-    const newData = await fetchInactivePackage({
+    const newData = await fetchConsentListing({
       queryParamsObject: params,
     });
     setCurrentRecords(newData?.records);
@@ -103,7 +150,7 @@ const useContentMarketingManagement = (onViewPress) => {
     setLoadingMore(true);
     const nextPage = currentPage + 1;
     try {
-      const newData = await fetchInactivePackage({
+      const newData = await fetchConsentListing({
         queryParamsObject: {
           perPage: rowsPerPage,
           page: nextPage,
@@ -120,10 +167,7 @@ const useContentMarketingManagement = (onViewPress) => {
         setAllDataLoaded(true);
       }
     } catch (error) {
-      console.error(
-        "Error fetching Package Subscription History on load more:",
-        error
-      );
+      console.error("Error fetching data on load more:", error);
     } finally {
       setLoadingMore(false);
     }
@@ -150,7 +194,7 @@ const useContentMarketingManagement = (onViewPress) => {
     // setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
     if (isMob) {
       setCurrentPage(1);
-      const newData = await fetchInactivePackage({
+      const newData = await fetchConsentListing({
         queryParamsObject: {
           q: searchedData,
         },
@@ -205,7 +249,9 @@ const useContentMarketingManagement = (onViewPress) => {
   };
 
   const getColoumConfigs = (item, isHeading) => {
-    const tableStyle = isHeading ? styles.tableHeadingText : styles.tableRowText;
+    const tableStyle = isHeading
+      ? styles.tableHeadingText
+      : styles.tableRowText;
     return [
       {
         content: isHeading ? (
@@ -224,7 +270,7 @@ const useContentMarketingManagement = (onViewPress) => {
           </CustomTouchableOpacity>
         ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {!!item.employer_name ? item.employer_name : "!!-"}
+            {!!item.name ? item.name : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -366,6 +412,10 @@ const useContentMarketingManagement = (onViewPress) => {
               handleButtonOnePress={() => {
                 setShowConsentModal(-1);
               }}
+              handleButtonTwoPress={() => {
+                updateCandidateConsent({})
+                setShowConsentModal(-1);
+              }}
             />
           </>
         ),
@@ -395,22 +445,24 @@ const useContentMarketingManagement = (onViewPress) => {
     indexOfFirstRecord,
     indexOfLastRecord,
     isFirstPageReceived,
-    isInactiveSubscriptionListLoading,
+    isConsentTitleDataLoading,
     isHeading,
-    inactiveSubscriptionListData: currentRecords,
+    consentTitleData: currentRecords,
     loadingMore,
     rowsPerPage,
     subHeadingText,
     extraDetailsText,
     extraDetailsKey,
     tableIcon,
-    totalcards: inactiveSubscriptionListData?.meta?.total,
+    totalcards: consentTitleData?.meta?.total,
     onIconPress,
     showCurrentPopupmessage,
     setCurrentPopupMessage,
     handleActions,
     setCurrentPopupMessageDetails,
     showCurrentPopupmessageDetails,
+    errorWhileUpdatingCandidateConsent,
+    setErrorWhileUpdatingCandidateConsent,
   };
 };
 
