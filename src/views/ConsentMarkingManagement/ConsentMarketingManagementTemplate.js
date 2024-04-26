@@ -1,5 +1,6 @@
 import { View } from "@unthinkable/react-core-components";
 import React, { useContext } from "react";
+import {useParams} from 'react-router';
 
 import CommonText from "../../components/CommonText";
 
@@ -21,10 +22,13 @@ import styles from "./ConsentMarkingManagement.styles";
 import useFetch from "../../hooks/useFetch";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import CommonTableComponent from './ConsentMarketingTable';
+import Spinner from "../../components/Spinner";
 
 const ConsentMarketingManagementTemplate = ({ intl }) => {
   const { isWebView } = useIsWebView();
   const [sideBarState] = useContext(SideBarContext);
+  const { id } = useParams();
+
   const currentModule = sideBarState?.selectedModule?.key;
   const onViewPress = (item) => {};
   const {
@@ -34,9 +38,16 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
     error: errorConsentCenterData,
     fetchData: fetchConsentCenterDataListing,
   } = useFetch({
-    url: `/member/${currentModule}/rounds/264/candidate-centers`,
+    url: `/member/${currentModule}/rounds/${id}/candidate-centers`,
   });
-  console.log(consentCenterData, "consentCenterData")
+
+  if (isConsentCenterDataLoading) {
+    return (
+      <View style={styles.loaderStyle}>
+        <Spinner />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -51,30 +62,22 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
         </CommonText>
       </View>
       <View style={styles.row}>
-        {consentCenterData && consentCenterData?.records && !isConsentCenterDataLoading &&
+        {consentCenterData && !isConsentCenterDataLoading &&
         <CustomTabs
           containerStyle={styles.containerStyle}
           renderHeader={() => {}}
           renderFooter={() => {}}
-          tabs={ consentCenterData?.records?.map((item)=> {
+          tabs={ consentCenterData?.map((item)=> {
             return (
               {
                 label: item.name,
-                component: <CommonTableComponent centerId={item.id}  />,
+                component: <CommonTableComponent centerId={item.id} roundId={id}  />,
               }
             )
           }
           )}
         />}
       </View>
-      {/* {(!!errorWhileUpdatingCandidateConsent) && (
-        <ToastComponent
-          toastMessage={errorWhileUpdatingCandidateConsent}
-          onDismiss={() => {
-            setErrorWhileUpdatingCandidateConsent("")
-          }}
-        />
-      )} */}
     </View>
   );
 };

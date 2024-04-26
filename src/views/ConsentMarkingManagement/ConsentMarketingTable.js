@@ -19,27 +19,16 @@ import {
     ROUND_ONE_CONSENT_MARKETING_MANAGEMENT as tableHeading,
   } from "../../constants/constants";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import useFetch from "../../hooks/useFetch";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import Spinner from "../../components/Spinner";
 
-const ConsentMarkingTable = ({centerId}) => {
+const ConsentMarkingTable = ({centerId, roundId}) => {
   const { isWebView } = useIsWebView();
   const onViewPress = (item) => {};
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
   const currentModule = sideBarState?.selectedModule?.key;
 
-//   const {
-//     data,
-//     isLoading,
-//     isError: isConsentListError,
-//     error,
-//     fetchData,
-//   } = useFetch({
-//     url: `/member/${currentModule}/rounds/264/centres/43/companies/shotrlisted`,
-//     otherOptions: {
-//       skipApiCallOnMount: true,
-//     },
-//   });
 
   const messageData = [
     { id: 1, name: "View interview details" },
@@ -178,7 +167,16 @@ const ConsentMarkingTable = ({centerId}) => {
     showCurrentPopupmessageDetails,
     errorWhileUpdatingCandidateConsent,
     setErrorWhileUpdatingCandidateConsent,
-  } = useContentMarketingManagement(onViewPress, centerId);
+    isConsentTitleDataLoading,
+  } = useContentMarketingManagement(onViewPress, centerId, roundId);
+
+  if (isConsentTitleDataLoading) {
+    return (
+      <View style={styles.loaderStyle}>
+        <Spinner />
+      </View>
+    );
+  }
 
   return <>
     <View
@@ -235,6 +233,14 @@ const ConsentMarkingTable = ({centerId}) => {
             mobileComponentToRender: getMobileView,
           }}
         />
+        {(!!errorWhileUpdatingCandidateConsent) && (
+        <ToastComponent
+          toastMessage={errorWhileUpdatingCandidateConsent}
+          onDismiss={() => {
+            setErrorWhileUpdatingCandidateConsent("")
+          }}
+        />
+      )}
       </View>
   </>;
 };
