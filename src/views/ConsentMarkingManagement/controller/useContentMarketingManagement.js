@@ -13,7 +13,7 @@ import CustomImage from "../../../components/CustomImage";
 import styles from "../ConsentMarkingManagement.styles";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
-import { APPLICATION, CENTRES, COMPANIES, COMPANY_INACTIVE_SUBSCRIPTION_LISTING, CONSENT, ROUND, SHORTLISTS, USER_TYPE_MEMBER } from "../../../services/apiServices/apiEndPoint";
+import { APPLICATION, CONSENT_CENTRES, COMPANIES, COMPANY_INACTIVE_SUBSCRIPTION_LISTING, CONSENT, ROUND, SHORTLISTS, USER_TYPE_MEMBER } from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
 import { urlService } from "../../../services/urlService";
@@ -76,7 +76,7 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
     url:
     USER_TYPE_MEMBER +
       `/${currentModule}` +
-      CENTRES +
+      CONSENT_CENTRES +
        `/${43}` + COMPANIES + `/${55}` + CONSENT + "?consent=false",
   });
 
