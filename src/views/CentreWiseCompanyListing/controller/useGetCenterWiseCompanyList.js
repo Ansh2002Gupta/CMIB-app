@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "../../../routes";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
@@ -14,7 +15,6 @@ import usePagination from "../../../hooks/usePagination";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../../ViewPostedJobDetails/ViewPostedJobDetails.styles";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import { urlService } from "../../../services/urlService";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
@@ -24,6 +24,7 @@ import TouchableImage from "../../../components/TouchableImage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { useIntl } from "react-intl";
+import getStyles from "../../ViewPostedJobDetails/ViewPostedJobDetails.styles";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -38,6 +39,8 @@ const useGetCenterWiseCompanyList = (id) => {
   const selectedId = useRef();
   const popupRef = useRef(null);
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
   const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const [rowsPerPage, setRowPerPage] = useState(
