@@ -13,7 +13,16 @@ import CustomImage from "../../../components/CustomImage";
 import styles from "../ConsentMarkingManagement.styles";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
-import { APPLICATION, CENTRES, COMPANIES, COMPANY_INACTIVE_SUBSCRIPTION_LISTING, CONSENT, ROUND, SHORTLISTS, USER_TYPE_MEMBER } from "../../../services/apiServices/apiEndPoint";
+import {
+  APPLICATION,
+  CENTRES,
+  COMPANIES,
+  COMPANY_INACTIVE_SUBSCRIPTION_LISTING,
+  CONSENT,
+  ROUND,
+  SHORTLISTS,
+  USER_TYPE_MEMBER,
+} from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
 import { urlService } from "../../../services/urlService";
@@ -26,7 +35,7 @@ import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import { usePatch } from "../../../hooks/useApiRequest";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
-const useContentMarketingManagement = (onViewPress, centerId) => {
+const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
   const defaultCategory = "Experience";
   const [loadingMore, setLoadingMore] = useState(false);
@@ -35,11 +44,10 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const navigate = useNavigate();
-  // const { currentModule } = useGetCurrentUser();
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
+  const [companyId, setCompanyId] = useState("");
   const currentModule = sideBarState?.selectedModule?.key;
-  console.log(currentModule, "currentModule")
 
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
@@ -59,12 +67,15 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
     isError: isConsentListError,
     error: errorConsentTitleData,
     fetchData: fetchConsentListing,
+    setData: setConsentData,
+    isSuccess,
   } = useFetch({
-    url: `/member/${currentModule}/rounds/264/centres/${centerId}/companies/shotrlisted`,
+    url: `/member/${currentModule}/rounds/${roundId}/centres/${32}/companies/shotrlisted`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
+
 
   const {
     makeRequest: updateCandidateConsent,
@@ -72,12 +83,12 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
     setError: setErrorWhileUpdatingCandidateConsent,
     isLoading: isUpdatingCandidateConsent,
     isError: isErrorWhileUpdating,
+    isSuccess: isConsentDataUpdateSuccess,
   } = usePatch({
     url:
-    USER_TYPE_MEMBER +
+      USER_TYPE_MEMBER +
       `/${currentModule}` +
-      CENTRES +
-       `/${43}` + COMPANIES + `/${55}` + CONSENT + "?consent=false",
+      '/application' + '/shortlist' + `/${companyId}`
   });
 
   useEffect(() => {
@@ -100,9 +111,7 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
       };
       fetchData();
     }
-  }, [centerId])
-
-  
+  }, [centerId]);
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -116,25 +125,25 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
   const getErrorDetails = () => {
     //TODO: Api error handling
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      const requestedParams = {
-        perPage: rowsPerPage,
-        page: currentPage,
-      };
-      const initialData = await fetchConsentListing({
-        queryParamsObject: requestedParams,
-      });
-      if (initialData && initialData?.records?.length > 0) {
-        setCurrentRecords(initialData?.records);
-        if (initialData?.records?.length < rowsPerPage && isMob) {
-          setAllDataLoaded(true);
-        }
-      }
-      setIsFirstPageReceived(false);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const requestedParams = {
+  //       perPage: rowsPerPage,
+  //       page: currentPage,
+  //     };
+  //     const initialData = await fetchConsentListing({
+  //       queryParamsObject: requestedParams,
+  //     });
+  //     if (initialData && initialData?.records?.length > 0) {
+  //       setCurrentRecords(initialData?.records);
+  //       if (initialData?.records?.length < rowsPerPage && isMob) {
+  //         setAllDataLoaded(true);
+  //       }
+  //     }
+  //     setIsFirstPageReceived(false);
+  //   };
+  //   fetchData();
+  // }, []);
 
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
@@ -300,7 +309,7 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
           </CustomTouchableOpacity>
         ) : (
           <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
-            {!!item.mode ? item.mode : "0"}
+            {!!item.selection_process ? JSON.parse(item.selection_process).join(', ') : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("10%"),
@@ -339,14 +348,26 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
       {
         content: !isHeading && (
           <>
-            <TouchableImage
-              onPress={() => {
-                onConsentPress(item);
-              }}
-              source={images.iconShieldTickDisable}
-              imageStyle={styles.iconTicket}
-              isSvg={true}
-            />
+            {item.application_status === "shortlisted" ? (
+              <TouchableImage
+                onPress={() => {
+                  onConsentPress(item);
+                  setCompanyId(item.id);
+                }}
+                source={images.iconShieldTickDisable}
+                imageStyle={styles.iconTicket}
+                isSvg={true}
+              />
+            ) : (
+              <TouchableImage
+                onPress={() => {
+                  // onConsentPress(item);
+                }}
+                source={images.iconShieldTick}
+                imageStyle={styles.iconTicket}
+                isSvg={true}
+              />
+            )}
           </>
         ),
         style: {
@@ -413,7 +434,9 @@ const useContentMarketingManagement = (onViewPress, centerId) => {
                 setShowConsentModal(-1);
               }}
               handleButtonTwoPress={() => {
-                updateCandidateConsent({})
+                updateCandidateConsent({body: {
+                  application_status: "consent-given"
+                }});
                 setShowConsentModal(-1);
               }}
             />

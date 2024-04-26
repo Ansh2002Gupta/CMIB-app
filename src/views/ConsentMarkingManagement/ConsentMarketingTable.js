@@ -21,25 +21,13 @@ import {
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
 
-const ConsentMarkingTable = ({centerId}) => {
+const ConsentMarkingTable = ({centerId, roundId}) => {
   const { isWebView } = useIsWebView();
   const onViewPress = (item) => {};
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
   const currentModule = sideBarState?.selectedModule?.key;
 
-//   const {
-//     data,
-//     isLoading,
-//     isError: isConsentListError,
-//     error,
-//     fetchData,
-//   } = useFetch({
-//     url: `/member/${currentModule}/rounds/264/centres/43/companies/shotrlisted`,
-//     otherOptions: {
-//       skipApiCallOnMount: true,
-//     },
-//   });
 
   const messageData = [
     { id: 1, name: "View interview details" },
@@ -178,7 +166,7 @@ const ConsentMarkingTable = ({centerId}) => {
     showCurrentPopupmessageDetails,
     errorWhileUpdatingCandidateConsent,
     setErrorWhileUpdatingCandidateConsent,
-  } = useContentMarketingManagement(onViewPress, centerId);
+  } = useContentMarketingManagement(onViewPress, centerId, roundId);
 
   return <>
     <View
