@@ -10,6 +10,7 @@ import NumberAndTextStepper from "../../NumberAndTextStepper";
 import PaymentDetails from "../PaymentDetails/PaymentDetails";
 import PersonalDetails from "../PersonalDetails";
 import Stepper from "../../../components/Stepper";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import { ADD_APPLICATION_STEPPER } from "../../../constants/constants";
 import images from "../../../images";
 import styles from "./AddApplication.style";
@@ -55,11 +56,16 @@ const AddApplicationTemplate = ({
   const hobbiesRef = useRef();
   const { currentModule } = useGetCurrentUser();
 
-  const { isLoading, makeRequest, error } = usePut({
+  const { isLoading, makeRequest, error, setError } = usePut({
     url: `/${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${TRAINING_DETAILS}`,
   });
 
-  const { makeRequest: submit } = usePatch({
+  const {
+    isLoading: isSubmitting,
+    makeRequest: submit,
+    error: submitError,
+    setError: setSubmitError,
+  } = usePatch({
     url: `${USER_TYPE_MEMBER}/${currentModule}${APPLICATION}/${id}${SUBMIT}`,
   });
 
@@ -67,6 +73,7 @@ const AddApplicationTemplate = ({
     isLoading: isLoadingHobbies,
     makeRequest: makeRequestHobbies,
     error: errorHobbies,
+    setError: setErrorHobbies,
   } = usePut({
     url: `/${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${ACTIVITIES}`,
   });
@@ -292,6 +299,12 @@ const AddApplicationTemplate = ({
     });
   };
 
+  const handleResetError = () => {
+    setError("");
+    setErrorHobbies("");
+    setSubmitError("");
+  };
+
   const handleSavePress = () => {
     switch (selectedStepper.id) {
       case 1:
@@ -321,6 +334,13 @@ const AddApplicationTemplate = ({
   };
   return (
     <View style={styles.mainContainer}>
+      {(error || errorHobbies || submitError) && (
+        <ToastComponent
+          customToastStyle={styles.customToastStyle}
+          toastMessage={error || errorHobbies || submitError}
+          onDismiss={handleResetError}
+        />
+      )}
       <View
         style={isWebView ? styles.webHeaderContainer : styles.headerContainer}
       >
