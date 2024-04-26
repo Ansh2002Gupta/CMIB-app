@@ -1,243 +1,56 @@
-import React from "react";
-import { useTheme } from "@unthinkable/react-theme";
-import {
-  Text,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
+import React, { useContext } from "react";
+import {useParams} from 'react-router';
 
 import CommonText from "../../components/CommonText";
 
-import getStyles from "./ConsentMarkingManagement.styles";
-import useIsWebView from "../../hooks/useIsWebView";
-import { CustomTabs } from "../../components/Tab";
+import colors from "../../assets/colors";
+import CustomModal from "../../components/CustomModal";
 import CustomTable from "../../components/CustomTable";
-import { TwoColumn, TwoRow } from "../../core/layouts";
+import DetailCard from "../../components/DetailCard";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
-import useContentMarketingManagement from "./controller/useContentMarketingManagement";
+import { CustomTabs } from "../../components/Tab";
+import TouchableImage from "../../components/TouchableImage";
 import {
-  ROUND_ONE_CONSENT_MARKETING_MANAGEMENT,
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   ROUND_ONE_CONSENT_MARKETING_MANAGEMENT as tableHeading,
 } from "../../constants/constants";
-import AddTicketModal from "../../components/AddTicketModal/AddTicketModal";
-import PopupMessage from "../../components/PopupMessage/PopupMessage";
-import Chip from "../../components/Chip";
-import TouchableImage from "../../components/TouchableImage";
-import Modal from "../../components/Modal";
-import images from "../../images";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
-import CustomModal from "../../components/CustomModal";
-import DetailCard from "../../components/DetailCard";
-import {
-  recordDataAkola,
-  recordDataAhemdabad,
-  recordDataAurangabad,
-  recordDataGurgaon,
-} from "./dummyData";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import useIsWebView from "../../hooks/useIsWebView";
+import getStyles from "./ConsentMarkingManagement.styles";
+import useFetch from "../../hooks/useFetch";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import CommonTableComponent from './ConsentMarketingTable';
+import Spinner from "../../components/Spinner";
+import { useTheme } from "@unthinkable/react-theme";
 
 const ConsentMarketingManagementTemplate = ({ intl }) => {
   const { isWebView } = useIsWebView();
+  const [sideBarState] = useContext(SideBarContext);
+  const { id } = useParams();
+  const theme = useTheme()
+  const styles = getStyles(theme)
+
+  const currentModule = sideBarState?.selectedModule?.key;
   const onViewPress = (item) => {};
-  const theme = useTheme();
-  const styles = getStyles(theme);
-
-  const { colors } = theme;
-
   const {
-    allDataLoaded,
-    currentPage,
-    currentRecords,
-    setCurrentRecords,
-    defaultCategory,
-    getColoumConfigs,
-    handleLoadMore,
-    handlePageChange,
-    handleRowPerPageChange,
-    handleSearchResults,
-    getErrorDetails,
-    indexOfFirstRecord,
-    indexOfLastRecord,
-    isError,
-    isFirstPageReceived,
-    isGeetingJobbSeekers,
-    subHeadingText,
-    extraDetailsText,
-    extraDetailsKey,
-    loadingMore,
-    rowsPerPage,
-    inactiveSubscriptionListData,
-    totalcards,
-    headingTexts,
-    tableIcon,
-    isHeading,
-    onIconPress,
-    showCurrentPopupmessage,
-    setCurrentPopupMessage,
-    handleActions,
-    setCurrentPopupMessageDetails,
-    showCurrentPopupmessageDetails,
-  } = useContentMarketingManagement(onViewPress);
+    data: consentCenterData,
+    isLoading: isConsentCenterDataLoading,
+    isError: isConsentListError,
+    error: errorConsentCenterData,
+    fetchData: fetchConsentCenterDataListing,
+  } = useFetch({
+    url: `/member/${currentModule}/rounds/${id}/candidate-centers`,
+  });
 
-  const messageData = [
-    { id: 1, name: "View interview details" },
-    { id: 2, name: "Download CTC info" },
-    { id: 3, name: "Download PDF" },
-  ];
-
-  const getMobileView = (item, index) => {
+  if (isConsentCenterDataLoading) {
     return (
-      <View style={styles.mobileContainer} key={index}>
-        <View>
-          <CommonText
-            fontWeight={"600"}
-            customTextStyle={styles.cellTextStyle()}
-          >
-            {item.employer_name || "-"}
-          </CommonText>
-          <CommonText customTextStyle={styles.tableQueryText}>
-            {item?.interview_dates || "-"}
-          </CommonText>
-        </View>
-        <View style={styles.rowsPerPageWeb}>
-          <TouchableImage
-            onPress={() => {
-              onIconPress(item);
-            }}
-            source={tableIcon}
-            style={styles.iconTicket}
-            isSvg={true}
-          />
-          {showCurrentPopupmessage == item?.employer_id && (
-            <PopupMessage
-              popUpHeaderText={intl.formatMessage({
-                id: "label.actions",
-              })}
-              message={messageData}
-              customStyle={styles.popupMessageStyle}
-              onPopupClick={(action) => {
-                handleActions(action, item);
-              }}
-              isPopupModal={true}
-              onPopUpClose={() => setCurrentPopupMessage(-1)}
-            />
-          )}
-          {showCurrentPopupmessageDetails === item?.employer_id && (
-            <CustomModal
-              headerText={intl.formatMessage({
-                id: "label.interview_details",
-              })}
-              isIconCross
-              onPressIconCross={() => setCurrentPopupMessageDetails(-1)}
-              onBackdropPress={() => setCurrentPopupMessageDetails(-1)}
-            >
-              <DetailCard
-                customCardStyle={styles.customCardStyle}
-                details={[
-                  [
-                    {
-                      label: intl.formatMessage({
-                        id: "label.interview_type",
-                      }),
-                      isMandator: true,
-                      value: item.employer_name,
-                    },
-                  ],
-                  [
-                    {
-                      label: intl.formatMessage({
-                        id: "label.interview_type",
-                      }),
-                      isMandator: true,
-                      value: item?.interview_type,
-                    },
-                    { label: "Mode", isMandator: true, value: item?.mode },
-                  ],
-                  [
-                    {
-                      label: intl.formatMessage({
-                        id: "label.interview_dates",
-                      }),
-                      isMandator: true,
-                      value: item?.interview_dates,
-                    },
-                  ],
-                  [
-                    {
-                      label: intl.formatMessage({
-                        id: "label.shortlisting_round",
-                      }),
-                      isMandator: true,
-                      value: item?.shortlisting_round,
-                    },
-                  ],
-                ]}
-                isColumnVariableWidth
-              />
-            </CustomModal>
-          )}
-        </View>
+      <View style={styles.loaderStyle}>
+        <Spinner />
       </View>
     );
-  };
-
-  const CommonTableComponent = ({ data }) => {
-    return (
-      <View
-        style={{
-          backgroundColor: colors.backgroundGrey,
-          height: !isWebView && "100%",
-          flex: 1,
-          display: 'block',
-        }}
-      >
-        <SearchView
-          customParentStyle={{ width: isWebView ? "30%" : "60%", marginTop: 16, marginLeft: 16 }}
-          customSearchCriteria={() => {}}
-          placeholder={"Search by company name"}
-        />
-        <CustomTable
-          {...{
-            customTableStyle: { padding: 16 },
-            allDataLoaded,
-            currentPage,
-            currentRecords: data,
-            data: data,
-            setCurrentRecords,
-            defaultCategory,
-            getColoumConfigs,
-            handleLoadMore,
-            handlePageChange,
-            handleRowPerPageChange,
-            handleSearchResults,
-            headingTexts,
-            isTotalCardVisible: false,
-            hideTotalCount: false,
-            indexOfFirstRecord,
-            indexOfLastRecord,
-            isFirstPageReceived,
-            isGeetingJobbSeekers,
-            isHeading,
-            loadingMore,
-            placeholder: intl.formatMessage({
-              id: "label.serach_by_applicant_name_id",
-            }),
-            rowsLimit,
-            rowsPerPage,
-            subHeadingText,
-            tableHeading,
-            tableIcon,
-            extraDetailsText,
-            extraDetailsKey,
-            showSearchBar: false,
-            totalcards,
-            onIconPress,
-            mobileComponentToRender: getMobileView,
-          }}
-        />
-      </View>
-    );
-  };
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -252,29 +65,21 @@ const ConsentMarketingManagementTemplate = ({ intl }) => {
         </CommonText>
       </View>
       <View style={styles.row}>
+        {consentCenterData && !isConsentCenterDataLoading &&
         <CustomTabs
           containerStyle={styles.containerStyle}
           renderHeader={() => {}}
           renderFooter={() => {}}
-          tabs={[
-            {
-              label: intl.formatMessage({ id: "label.ahemdabad" }),
-              component: <CommonTableComponent data={recordDataAhemdabad} />,
-            },
-            {
-              label: intl.formatMessage({ id: "label.akola" }),
-              component: <CommonTableComponent data={recordDataAkola} />,
-            },
-            {
-              label: intl.formatMessage({ id: "label.aurangabad" }),
-              component: <CommonTableComponent data={recordDataAurangabad} />,
-            },
-            {
-              label: intl.formatMessage({ id: "label.gurgaon" }),
-              component: <CommonTableComponent data={recordDataGurgaon} />,
-            },
-          ]}
-        />
+          tabs={ consentCenterData?.map((item)=> {
+            return (
+              {
+                label: item.name,
+                component: <CommonTableComponent centerId={item.id} roundId={id}  />,
+              }
+            )
+          }
+          )}
+        />}
       </View>
     </View>
   );

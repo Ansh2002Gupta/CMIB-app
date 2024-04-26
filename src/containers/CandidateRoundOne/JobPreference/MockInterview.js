@@ -9,10 +9,10 @@ import { formatDate } from "../../../utils/util";
 
 function convertTo12HourFormat(data) {
   const convertTime = (time) => {
-      let [hours, minutes] = time.split(':');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12 || 12; // Convert 00 hours to 12 for 12 AM
-      return `${parseInt(hours)}:${minutes} ${ampm}`;
+    let [hours, minutes] = time.split(":");
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12; // Convert 00 hours to 12 for 12 AM
+    return `${parseInt(hours)}:${minutes} ${ampm}`;
   };
 
   const startTime12Hour = convertTime(data.start_time);
@@ -22,7 +22,16 @@ function convertTo12HourFormat(data) {
 }
 
 const MockInterview = (
-  { intl, isWebView, isViewMode = false, onValidationChange = () => {}, mockCenters, slotsData = [], handleMockCentreSelection },
+  {
+    intl,
+    isWebView,
+    isViewMode = false,
+    onValidationChange = () => {},
+    mockCenters,
+    slotsData = [],
+    handleMockCentreSelection,
+    hasRoundOne,
+  },
   ref
 ) => {
   //states
@@ -41,14 +50,16 @@ const MockInterview = (
           schedule_date: selectedSlot?.current?.schedule_date,
           start_time: selectedSlot?.current?.start_time,
           end_time: selectedSlot?.current?.end_time,
-        }
+        },
       };
     },
   }));
 
   //Lifecycle
   useEffect(() => {
-    onValidationChange(center.length > 0 && slot.length > 0);
+    onValidationChange(
+      hasRoundOne ? center.length > 0 && slot.length > 0 : true
+    );
   }, [center, slot, onValidationChange]);
 
   useEffect(() => {
@@ -56,12 +67,12 @@ const MockInterview = (
       let mocks = mockCenters?.map((item, index) => {
         return {
           label: item?.centre_name,
-          value: item?.id
-        }
-      })
+          value: item?.id,
+        };
+      });
       setMockCentreList(mocks);
     }
-  }, [mockCenters])
+  }, [mockCenters]);
 
   useEffect(() => {
     if (slotsData) {
@@ -69,62 +80,65 @@ const MockInterview = (
         return {
           label: convertTo12HourFormat(item),
           value: item?.id,
-        }
-      })
+        };
+      });
       setSlotDropDownData(data);
     }
-  }, [slotsData])
+  }, [slotsData]);
 
   const handleMockCentre = (mockId) => {
     setCenter(mockId);
     handleMockCentreSelection(mockId);
-    setSlot('');
-  }
+    setSlot("");
+  };
 
   const handleSlotSelection = (sId) => {
     setSlot(sId);
     let data = slotsData.filter((item, index) => item.id == sId);
     if (data?.length > 0) {
-      selectedSlot.current  = data[0];
+      selectedSlot.current = data[0];
     }
-  }
+  };
 
-  console.log("setSlotsData", slotsData)
   return (
-    <CardComponent customStyle={styles.cardContainer}>
-      <CommonText customTextStyle={styles.titleText} fontWeight={"600"}>
-        {intl.formatMessage({ id: "label.mockInterviewSlots" })}
-      </CommonText>
-      <View style={isWebView ? styles.gridView : styles.gap}>
-        <CustomTextInput
-          isViewMode={isViewMode}
-          viewText={center}
-          isMandatory={!isViewMode}
-          customStyle={styles.textInputContainer(isWebView)}
-          isPaddingNotRequired
-          placeholder={intl.formatMessage({ id: "label.center" })}
-          isDropdown
-          options={mockCentreList}
-          label={intl.formatMessage({ id: "label.center" })}
-          onChangeValue={handleMockCentre}
-          value={center}
-        />
-        <CustomTextInput
-          isViewMode={isViewMode}
-          viewText={slot}
-          isMandatory={!isViewMode}
-          customStyle={styles.textInputContainer(isWebView)}
-          isPaddingNotRequired
-          placeholder={intl.formatMessage({ id: "label.selectSlot" })}
-          label={intl.formatMessage({ id: "label.slot" })}
-          isDropdown
-          options={slotDropDownData}
-          onChangeValue={handleSlotSelection}
-          value={slot}
-        />
-      </View>
-      <View></View>
-    </CardComponent>
+    <>
+      {hasRoundOne && (
+        <CardComponent customStyle={styles.cardContainer}>
+          <CommonText customTextStyle={styles.titleText} fontWeight={"600"}>
+            {intl.formatMessage({ id: "label.mockInterviewSlots" })}
+          </CommonText>
+          <View style={isWebView ? styles.gridView : styles.gap}>
+            <CustomTextInput
+              isViewMode={isViewMode}
+              viewText={center}
+              isMandatory={!isViewMode}
+              customStyle={styles.textInputContainer(isWebView)}
+              isPaddingNotRequired
+              placeholder={intl.formatMessage({ id: "label.center" })}
+              isDropdown
+              options={mockCentreList}
+              label={intl.formatMessage({ id: "label.center" })}
+              onChangeValue={handleMockCentre}
+              value={center}
+            />
+            <CustomTextInput
+              isViewMode={isViewMode}
+              viewText={slot}
+              isMandatory={!isViewMode}
+              customStyle={styles.textInputContainer(isWebView)}
+              isPaddingNotRequired
+              placeholder={intl.formatMessage({ id: "label.selectSlot" })}
+              label={intl.formatMessage({ id: "label.slot" })}
+              isDropdown
+              options={slotDropDownData}
+              onChangeValue={handleSlotSelection}
+              value={slot}
+            />
+          </View>
+          <View></View>
+        </CardComponent>
+      )}
+    </>
   );
 };
 

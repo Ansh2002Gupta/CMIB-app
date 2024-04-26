@@ -2,6 +2,7 @@
 import React, { useImperativeHandle, useRef, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useTheme } from "@unthinkable/react-theme";
+import { useLocation } from "../../../routes";
 //UI & Styling
 import MultiRow from "../../../core/layouts/MultiRow";
 import getStyles from "./JobPreferenceDetails.style";
@@ -29,6 +30,9 @@ const JobPreferenceDetails = (
   const cvUploadRef = useRef();
   const { currentModule } = useGetCurrentUser();
   const { id } = useParams();
+  const location = useLocation();
+  const hasRoundTwo = location?.pathname.includes("round-two");
+  const hasRoundOne = location?.pathname.includes("round-one");
 
   const theme = useTheme();
   const styles = getStyles(theme);
@@ -37,8 +41,9 @@ const JobPreferenceDetails = (
     useState(false);
   const [isCitySelectionCompleted, setIsCitySelectionCompleted] =
     useState(false);
-  const [isMockInterviewCompleted, setIsMockInterviewCompleted] =
-    useState(false);
+  const [isMockInterviewCompleted, setIsMockInterviewCompleted] = useState(
+    hasRoundOne ? false : true
+  );
   const [isCVUploadCompleted, setIsCVUploadCompleted] = useState(false);
 
   const {
@@ -161,6 +166,7 @@ const JobPreferenceDetails = (
           onValidationChange={handleCitySelectionFields}
           interviewCentreData={interviewCentreData}
           programeData={programeData}
+          hasRoundOne={hasRoundOne}
         />
       ),
     },
@@ -175,6 +181,7 @@ const JobPreferenceDetails = (
           mockCenters={mockCenters}
           slotsData={slotsData}
           handleMockCentreSelection={handleMockCentreSelection}
+          hasRoundOne={hasRoundOne}
         />
       ),
     },

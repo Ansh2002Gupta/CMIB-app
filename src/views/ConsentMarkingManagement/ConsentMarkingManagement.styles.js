@@ -135,6 +135,13 @@ const getStyles = (theme) => {
     tableRowText: {
       fontSize: 14,
     },
+    loaderStyle: {
+      flex: 1,
+      justifyContent: "center",
+      alignContent: "center",
+      alignItems: "center",
+      backgroundColor: colors.backgroundColor,
+    },
   };
 };
 
