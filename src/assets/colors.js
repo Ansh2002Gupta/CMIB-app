@@ -10,7 +10,7 @@ const blackWithMinorOpacity = "rgba(0, 0, 0, 0.85)";
 /* Blues */
 const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
 const darkBlue = "#00137E";
-const blue = "#4275BD";
+const blue = "#04AF55";
 const darkBlueShade = "#000833";
 const lightBlue = "#269AD4";
 const skyBlueDark = "#0099CA";

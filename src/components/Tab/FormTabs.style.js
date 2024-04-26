@@ -58,7 +58,7 @@ const getStyles = (theme) => {
       width: 30,
     },
     activeItemContainer: {
-      backgroundColor: colors.green,
+      backgroundColor: colors.blue,
       borderColor: "transparent",
     },
     itemText: {
@@ -74,7 +74,7 @@ const getStyles = (theme) => {
     },
     scrollViewContainer: { 
       flex: 1,
-      borderBottomColor: colors.green,
+      borderBottomColor: colors.blue,
       borderBottomWidth:1,
     },
   };
