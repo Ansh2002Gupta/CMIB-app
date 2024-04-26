@@ -16,6 +16,7 @@ const skyBlueDark = "#0099CA";
 const skyBlueLight = "#E8FCFF";
 const skyBlueLightSecond = "#E7EAFC";
 const greenBlue = "#2FA5CB";
+const blue = "#4275BD";
 
 /* Greens */
 const darkGreen = "#00873E";
@@ -159,5 +160,6 @@ const colors = {
   menuItemActive,
   menuItemActiveBg,
   greenAccepted,
+  blue,
 };
 export default colors;
