@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
 import { useNavigate } from "../../../routes";
@@ -13,6 +13,7 @@ import CustomImage from "../../../components/CustomImage";
 import styles from "../ConsentMarkingManagement.styles";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
+import { APPLICATION, CENTRES, COMPANIES, COMPANY_INACTIVE_SUBSCRIPTION_LISTING, CONSENT, ROUND, SHORTLISTS, USER_TYPE_MEMBER } from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
 import { urlService } from "../../../services/urlService";
@@ -22,8 +23,10 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import CustomModal from "../../../components/CustomModal";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import { usePatch } from "../../../hooks/useApiRequest";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
-const useContentMarketingManagement = (onViewPress) => {
+const useContentMarketingManagement = (onViewPress, centerId) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
   const defaultCategory = "Experience";
   const [loadingMore, setLoadingMore] = useState(false);
@@ -32,8 +35,12 @@ const useContentMarketingManagement = (onViewPress) => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const navigate = useNavigate();
-  const { currentModule } = useGetCurrentUser();
+  // const { currentModule } = useGetCurrentUser();
   const intl = useIntl();
+  const [sideBarState] = useContext(SideBarContext);
+  const currentModule = sideBarState?.selectedModule?.key;
+  console.log(currentModule, "currentModule")
+
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -53,11 +60,50 @@ const useContentMarketingManagement = (onViewPress) => {
     error: errorConsentTitleData,
     fetchData: fetchConsentListing,
   } = useFetch({
-    url: `/member/${currentModule}/rounds/264/centres/42/companies/shotrlisted`,
+    url: `/member/${currentModule}/rounds/264/centres/${centerId}/companies/shotrlisted`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
+
+  const {
+    makeRequest: updateCandidateConsent,
+    error: errorWhileUpdatingCandidateConsent,
+    setError: setErrorWhileUpdatingCandidateConsent,
+    isLoading: isUpdatingCandidateConsent,
+    isError: isErrorWhileUpdating,
+  } = usePatch({
+    url:
+    USER_TYPE_MEMBER +
+      `/${currentModule}` +
+      CENTRES +
+       `/${43}` + COMPANIES + `/${55}` + CONSENT + "?consent=false",
+  });
+
+  useEffect(() => {
+    if (centerId) {
+      const fetchData = async () => {
+        const requestedParams = {
+          perPage: rowsPerPage,
+          page: currentPage,
+        };
+        const initialData = await fetchConsentListing({
+          queryParamsObject: requestedParams,
+        });
+        if (initialData && initialData?.records?.length > 0) {
+          setCurrentRecords(initialData?.records);
+          if (initialData?.records?.length < rowsPerPage && isMob) {
+            setAllDataLoaded(true);
+          }
+        }
+        setIsFirstPageReceived(false);
+      };
+      fetchData();
+    }
+  }, [centerId])
+
+  
+
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
     setCurrentPage,
@@ -224,7 +270,7 @@ const useContentMarketingManagement = (onViewPress) => {
           </CustomTouchableOpacity>
         ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {!!item.employer_name ? item.employer_name : "!!-"}
+            {!!item.name ? item.name : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -366,6 +412,10 @@ const useContentMarketingManagement = (onViewPress) => {
               handleButtonOnePress={() => {
                 setShowConsentModal(-1);
               }}
+              handleButtonTwoPress={() => {
+                updateCandidateConsent({})
+                setShowConsentModal(-1);
+              }}
             />
           </>
         ),
@@ -411,6 +461,8 @@ const useContentMarketingManagement = (onViewPress) => {
     handleActions,
     setCurrentPopupMessageDetails,
     showCurrentPopupmessageDetails,
+    errorWhileUpdatingCandidateConsent,
+    setErrorWhileUpdatingCandidateConsent,
   };
 };
 
