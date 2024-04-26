@@ -1,26 +1,28 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+export const getStyles = (theme) => {
+  const { colors } = theme;
 
-export const styles = StyleSheet.create({
-  inputContainer: {
-    flexDirection: "row",
-  },
-  codeInputStyle: {
-    flex: 1,
-  },
-  numberInputStyle: {
-    marginLeft: 24,
-    flex: 2,
-  },
-  selectedView: {
-    flexDirection: "row",
-    gap: 5,
-    alignItems: "center",
-  },
-  labelField: {
-    fontSize: 14,
-  },
-  iconStyles: {
-    height: 20,
-    width: 20,
-  },
-});
+  return {
+    inputContainer: {
+      flexDirection: "row",
+    },
+    codeInputStyle: {
+      flex: 1,
+    },
+    numberInputStyle: {
+      marginLeft: 24,
+      flex: 2,
+    },
+    selectedView: {
+      flexDirection: "row",
+      gap: 5,
+      alignItems: "center",
+    },
+    labelField: {
+      fontSize: 14,
+    },
+    iconStyles: {
+      height: 20,
+      width: 20,
+    },
+  };
+};

@@ -1,9 +1,10 @@
 //Libraries
 import React, { useImperativeHandle, useRef, useState, useEffect } from "react";
 import { useParams } from "react-router";
+import { useTheme } from "@unthinkable/react-theme";
 //UI & Styling
 import MultiRow from "../../../core/layouts/MultiRow";
-import styles from "./JobPreferenceDetails.style";
+import getStyles from "./JobPreferenceDetails.style";
 import { View } from "@unthinkable/react-core-components";
 import useFetch from "../../../hooks/useFetch";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
@@ -29,6 +30,9 @@ const JobPreferenceDetails = (
   const { currentModule } = useGetCurrentUser();
   const { id } = useParams();
 
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [isPreferenceRegardingCompleted, setIsPreferenceRegardingCompleted] =
     useState(false);
   const [isCitySelectionCompleted, setIsCitySelectionCompleted] =
@@ -46,31 +50,19 @@ const JobPreferenceDetails = (
     url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${JOB_PREFERENCES}`,
   });
 
-  const {
-    fetchData: fetchCentres,
-    data: interviewCentreData,
-  } = useFetch({
+  const { fetchData: fetchCentres, data: interviewCentreData } = useFetch({
     url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}/centres`,
   });
 
-  const {
-    fetchData: fetchProgram,
-    data: programeData,
-  } = useFetch({
+  const { fetchData: fetchProgram, data: programeData } = useFetch({
     url: `core/${currentModule}${ROUNDS}/${id}/orientation-centres`,
   });
 
-  const {
-    fetchData: fetchMockCentres,
-    data: mockCenters,
-  } = useFetch({
+  const { fetchData: fetchMockCentres, data: mockCenters } = useFetch({
     url: `core/${currentModule}${ROUNDS}/${id}/mock-interviews`,
   });
 
-  const {
-    fetchData: fetchSlots,
-    data: slotsData,
-  } = useFetch({
+  const { fetchData: fetchSlots, data: slotsData } = useFetch({
     url: `core/${currentModule}/mock-interviews`,
   });
 
@@ -78,8 +70,7 @@ const JobPreferenceDetails = (
     fetchCentres();
     fetchProgram();
     fetchMockCentres();
-  }, [])
-
+  }, []);
 
   useImperativeHandle(ref, () => ({
     getAllData: () => {
@@ -92,7 +83,7 @@ const JobPreferenceDetails = (
         ...preferenceRegardingData,
         ...cvUploadRefData,
         ...mockInterviewRefData,
-        ...citySelectionData
+        ...citySelectionData,
       };
     },
   }));
@@ -143,7 +134,9 @@ const JobPreferenceDetails = (
   };
 
   const handleMockCentreSelection = (id) => {
-    fetchSlots({overrideUrl: `core/${currentModule}/mock-interviews/${id}/interview-dates`})
+    fetchSlots({
+      overrideUrl: `core/${currentModule}/mock-interviews/${id}/interview-dates`,
+    });
   };
 
   const edDetailsConfig = [

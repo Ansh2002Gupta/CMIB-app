@@ -4,12 +4,13 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
-import styles from "./WorkExperienceDetails.style";
+import getStyles from "./WorkExperienceDetails.style";
 import images from "../../../images";
 import CustomButton from "../../../components/CustomButton";
 import { YEARS } from "../../../constants/constants";
@@ -32,6 +33,9 @@ const WorkExperienceDetailsTemplate = (
   { intl, isWebView, isViewMode, onValidationChange = () => {} },
   ref
 ) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   //states
   const [workExperiences, setWorkExperiences] = useState([workDetailKeys]);
 

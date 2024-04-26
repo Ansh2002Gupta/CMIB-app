@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
-import styles from "./TrainingDetails.style";
 
 import images from "../../../images";
 import CustomModal from "../../../components/CustomModal";
@@ -19,6 +19,7 @@ import {
   USER_TYPE_MEMBER,
 } from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
+import getStyles from "./TrainingDetails.style";
 
 const DeclarationForm = (
   {
@@ -39,6 +40,9 @@ const DeclarationForm = (
   const [isConcent, setIsConcent] = useState(false);
   const id = useParams();
   const { currentModule } = useGetCurrentUser();
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const { makeRequest, isLoading } = usePost({
     url: `${USER_TYPE_MEMBER}/${currentModule}${APPLICATION}/${id}${DECLARATION_FORM}`,

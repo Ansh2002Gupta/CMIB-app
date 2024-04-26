@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { TouchableOpacity } from "@unthinkable/react-core-components";
 
-import styles from "./CustomTouchableOpacity.style";
+import getStyles from "./CustomTouchableOpacity.style";
 
 const CustomTouchableOpacity = ({
   children,
@@ -11,6 +12,9 @@ const CustomTouchableOpacity = ({
   style,
   ...props
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const styleArray = Array.isArray(style) ? style : [style];
   return (
     <TouchableOpacity

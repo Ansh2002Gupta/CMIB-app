@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   TouchableOpacity,
@@ -46,7 +47,7 @@ import { urlService } from "../../../services/urlService";
 import { navigations } from "../../../constants/routeNames";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../AppliedJobsView.style";
+import getStyles from "../AppliedJobsView.style";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -60,6 +61,9 @@ const initialFilterState = {
 const useAppliedJobsListing = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [userProfileDetails] = useContext(UserProfileContext);
   const applicantID = userProfileDetails?.userDetails?.id;
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.AppliedJobs;

@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView } from "@unthinkable/react-core-components";
 
 import MultiRow from "../../../core/layouts/MultiRow";
 
 import Pay from "./Pay";
 import PaymentHistory from "./PaymentHistory";
-import styles from "./PaymentDetails.style";
+import getStyles from "./PaymentDetails.style";
 
 const PaymentDetails = ({ intl, isWebView, handleSave = () => {} }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const paymentDetailsConfig = [
     {
       content: <Pay intl={intl} isWebView={isWebView} />,

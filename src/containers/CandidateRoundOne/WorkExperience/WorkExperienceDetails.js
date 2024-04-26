@@ -1,13 +1,14 @@
 //Libraries
 import React, { useImperativeHandle, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
+import { useTheme } from "@unthinkable/react-theme";
 //UI & Styling
 import WorkExperienceDetailsTemplate from "./WorkExperienceDetailsTemplate";
 import useExamDetailsAPI from "../../../services/apiServices/hooks/CandidateRoundeOne/useExamDetailsAPI";
 import useFetch from "../../../hooks/useFetch";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import MultiRow from "../../../core/layouts/MultiRow";
-import styles from "./WorkExperienceDetails.style";
+import getStyles from "./WorkExperienceDetails.style";
 import { View } from "@unthinkable/react-core-components";
 import {
   ROUNDS,
@@ -22,6 +23,9 @@ const WorkExperienceDetails = (
 ) => {
   const { currentModule } = useGetCurrentUser();
   const { id } = useParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const {
     fetchData: getWorkExperience,
     data: workExperienceData,

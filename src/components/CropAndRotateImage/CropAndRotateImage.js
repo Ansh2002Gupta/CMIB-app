@@ -12,7 +12,6 @@ import ZoomSliderWithInfo from "../ZoomSliderWithInfo";
 import getCroppedImg from "../../utils/cropImage";
 import { getImageSource } from "../../utils/util";
 import { ZOOM_CONSTANT } from "../../constants/constants";
-import styles from "./CropAndRotateImage.style";
 import getStyles from "./CropAndRotateImage.style";
 
 const CropAndRotateImage = ({

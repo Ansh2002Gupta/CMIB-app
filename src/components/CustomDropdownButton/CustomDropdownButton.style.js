@@ -1,14 +1,15 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = StyleSheet.create({
-  textStyle: {
-    color: colors.darkBlue,
-  },
-  iconStyle: {
-    height: 16,
-    width: 16,
-  },
-});
+  return {
+    textStyle: {
+      color: colors.darkBlue,
+    },
+    iconStyle: {
+      height: 16,
+      width: 16,
+    },
+  };
+};
 
-export default styles;
+export default getStyles;

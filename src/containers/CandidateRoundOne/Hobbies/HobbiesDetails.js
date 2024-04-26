@@ -1,8 +1,9 @@
 //Libraries
 import React, { useRef, useImperativeHandle } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 //UI & Styling
 import MultiRow from "../../../core/layouts/MultiRow";
-import styles from "./HobbiesDetails.style";
+import getStyles from "./HobbiesDetails.style";
 import { View } from "@unthinkable/react-core-components";
 import Achievements from "./Achievements";
 import Hobbies from "./Hobbies";
@@ -14,6 +15,9 @@ const HobbiesDetails = (
   //refs
   const achievementsRef = useRef();
   const hobbiesRef = useRef();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   // const { handleExamDetails} = useExamDetailsAPI();
 
   // useEffect(() => {

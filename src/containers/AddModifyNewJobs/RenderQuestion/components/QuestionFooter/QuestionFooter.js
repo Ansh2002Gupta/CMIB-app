@@ -1,4 +1,6 @@
 import React from "react";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import TouchableImage from "../../../../../components/TouchableImage";
@@ -6,8 +8,7 @@ import Switch from "../../../../../components/Switch/Switch";
 import CommonText from "../../../../../components/CommonText";
 
 import images from "../../../../../images";
-import { useIntl } from "react-intl";
-import styles from "../../RenderQuestion.styles";
+import getStyles from "../../RenderQuestion.styles";
 
 const QuestionFooter = ({
   copyItem,
@@ -20,6 +21,9 @@ const QuestionFooter = ({
   setNewQuestionnaireData,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <View style={styles.thirdContainerStyle}>
       <TouchableImage

@@ -1,16 +1,19 @@
-import { View } from "@unthinkable/react-core-components";
 import React, { useState } from "react";
-import styles from "./MobileViewComponent.styles";
-import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
+import { View } from "@unthinkable/react-core-components";
+
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import images from "../../../images";
-import colors from "../../../assets/colors";
 import { getPassRejected } from "../../../constants/constants";
 import { getMobileValue } from "../../../views/ShortListingConsentCandidate/mappedData";
+import getStyles from "./MobileViewComponent.styles";
+
 const RenderMobileItem = ({ item, lastElement, onPress, selectedTabs }) => {
-  const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const onIconPress = (item) => {
     setCurrentPopupMessage(item.application_id);

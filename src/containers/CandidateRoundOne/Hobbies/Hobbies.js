@@ -1,17 +1,20 @@
 import React, { useState, useImperativeHandle, useEffect } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
-import styles from "./HobbiesDetails.style";
-import CustomChipCard from "../../../components/CustomChipCard/CustomChipCard";
+import getStyles from "./HobbiesDetails.style";
 
 const Hobbies = (
   { intl, isWebView, isViewMode = false, hobbies: hobbiesData },
   ref
 ) => {
   //states
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [hobbies, setHobbies] = useState([]);
 
   useEffect(() => {

@@ -1,13 +1,15 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = StyleSheet.create({
-  mainViewStyle: {
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
-    position: "fixed",
-  },
-});
+  return {
+    mainViewStyle: {
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: 0,
+      position: "fixed",
+    },
+  };
+};
 
-export default styles;
+export default getStyles;

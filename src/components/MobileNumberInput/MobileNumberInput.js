@@ -1,13 +1,14 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import SvgUri from "../SvgUri";
 import { MOBILE_NUMBER_MAX_LENGTH } from "../../constants/constants";
-import { styles } from "./MobileNumberInput.style";
+import { getStyles } from "./MobileNumberInput.style";
 
 const MobileNumberInput = ({
   codeError,
@@ -29,6 +30,8 @@ const MobileNumberInput = ({
 }) => {
   const isWeb = Platform.OS === "web";
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const getLabel = (option) => {
     if (isWeb) {

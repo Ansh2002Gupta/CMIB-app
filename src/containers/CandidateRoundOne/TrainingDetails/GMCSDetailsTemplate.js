@@ -1,15 +1,19 @@
 import React, {useState, useImperativeHandle, useEffect} from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
-import styles from "./TrainingDetails.style";
 import CustomLabelView from "../../../components/CustomLabelView";
 import CustomToggleComponent from "../../../components/CustomToggleComponent";
 import { formatDate } from "../../../utils/util";
+import getStyles from "./TrainingDetails.style";
 
 const GMCSDetailsTemplate = ({intl, isWebView, isViewMode, onValidationChange = () => {}}, ref) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   //states
   const [isGcmsNumber, setIsGcmsNumber] = useState(1);
   const [gcmsCertifiedNumber, setGcmsCertifiedNumber] = useState('');

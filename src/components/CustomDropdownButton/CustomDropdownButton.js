@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 
+import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CommonText from "../CommonText";
-
-import styles from "./CustomDropdownButton.style";
 import images from "../../images";
-import CustomImage from "../CustomImage";
+import getStyles from "./CustomDropdownButton.style";
 
 const CustomDropdownButton = ({
   text,
@@ -14,6 +14,9 @@ const CustomDropdownButton = ({
   customIconStyle,
   fontWeight,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [buttonPressed, setButtonPressed] = useState(false);
 
   const handlePress = () => {

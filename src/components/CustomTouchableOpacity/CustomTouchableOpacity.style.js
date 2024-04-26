@@ -1,13 +1,17 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+import { Platform } from "@unthinkable/react-core-components";
 
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
-  },
-  disabledButton: {
-    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "not-allowed" } : {}),
-  },
-});
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-export default styles;
+  return {
+    button: {
+      flexDirection: "row",
+      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
+    },
+    disabledButton: {
+      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "not-allowed" } : {}),
+    },
+  };
+};
+
+export default getStyles;

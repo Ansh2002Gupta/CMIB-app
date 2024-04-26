@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../components/CardComponent";
@@ -16,11 +17,14 @@ import {
 } from "../../../services/apiServices/apiEndPoint";
 import Chip from "../../../components/Chip";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "./PaymentDetails.style";
+import getStyles from "./PaymentDetails.style";
 
 const PaymentHistory = ({ intl, isWebView }) => {
   const { currentModule } = useGetCurrentUser();
   const { id } = useParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const { data: paymentList } = useFetch({
     url: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${TRANSACTIONS}`,
   });

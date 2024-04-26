@@ -1,6 +1,6 @@
 import React from "react";
 import { BarChart as BarChartComponent } from "react-native-gifted-charts";
-import useTheme from "@unthinkable/react-theme";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
