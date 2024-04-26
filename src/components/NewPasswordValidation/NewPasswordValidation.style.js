@@ -26,7 +26,7 @@ const getStyles = (theme) => {
       ...bulletIconStyle,
     },
     activityBulletStyle: (isValid) => ({
-      backgroundColor: isValid ? colors.green : colors.red,
+      backgroundColor: isValid ? colors.greenAccepted : colors.red,
     }),
     customCommonTextStyle: {
       width: "100%",

@@ -46,7 +46,7 @@ export const getStyles = (theme) => {
       justifyContent: "center",
     },
     activeCircle: {
-      backgroundColor: colors.greenOne,
+      backgroundColor: colors.green,
       borderWidth: 2,
       borderStyle: "solid",
       boxShadow: isWeb ? `0px 2px 5px 0px ${colors.greyThree}` : "",
@@ -63,8 +63,8 @@ export const getStyles = (theme) => {
       }),
     },
     doneCircle: {
-      background: colors.greenOne,
-      borderColor: colors.greenOne,
+      background: colors.green,
+      borderColor: colors.green,
     },
     inActiveCircle: {
       color: colors.black,
@@ -126,7 +126,7 @@ export const getStyles = (theme) => {
       borderRadius: 0,
     },
     doneLine: {
-      borderColor: colors.greenOne,
+      borderColor: colors.green,
     },
     onlyActiveLabelBox: {
       display: "flex",

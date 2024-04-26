@@ -387,6 +387,7 @@ const DetailComponent = ({
           ))}
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
         {details?.map((detail, idx) => {
+          console.log("detail, idx:", detail, idx);
           if (isEditable && detail?.viewOnlyField) {
             return null;
           }

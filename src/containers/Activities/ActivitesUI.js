@@ -43,6 +43,8 @@ const ActivitiesUI = ({
     return <ErrorComponent errorMsg={fetchDataError.message} />;
   }
 
+  console.log("achievements:", achievements);
+
   return (
     <>
       <KeyboardAwareScrollView

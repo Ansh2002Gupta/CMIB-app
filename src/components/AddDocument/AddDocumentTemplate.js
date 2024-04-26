@@ -42,7 +42,7 @@ const AddDocumentTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-  const { theme } = useTheme();
+  const theme = useTheme();
   const styles = getStyles(theme);
 
   const setObjectGridTemplate = (updatedDocs) => {
@@ -104,7 +104,7 @@ const AddDocumentTemplate = ({
       return acc;
     }, {})
   );
-  
+
   return (
     <View>
       <CardComponent customStyle={styles.notBorderStyle}>

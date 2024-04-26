@@ -15,7 +15,6 @@ const getStyles = (theme) => {
     },
     customContainerStyle: (windowWidth) => ({
       display: "flex",
-      overflow: "auto",
       flexDirection: "column",
       justifyContent: "flex-start",
       paddingRight: windowWidth > 1200 ? 0 : 24,

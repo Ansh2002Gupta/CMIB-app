@@ -15,6 +15,7 @@ import {
   lineSegmentStylesForRectangle,
   returnColorArray,
 } from "../../constants/constants";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import styles, {
   getStylesAsPerWidth,
 } from "./ShortlistingConsentInterviewDiagram.styles";
@@ -182,7 +183,10 @@ const ShortlistingConsentInterviewDiagram = ({ round_id, centre_id }) => {
       {isDiagramDataLoading && !isErrorDiagramData && <LoadingScreen />}
       {isErrorDiagramData && (
         <ErrorComponent
-          errorMsg={errorDiagramData}
+          errorMsg={
+            errorDiagramData?.data?.message ||
+            GENERIC_GET_API_FAILED_ERROR_MESSAGE
+          }
           onRetry={fetchDiagramData}
           disableRetryBtn={isDiagramDataLoading}
         />
