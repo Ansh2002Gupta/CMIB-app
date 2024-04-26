@@ -387,7 +387,7 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
               imageStyle={styles.iconTicket}
               isSvg={true}
             />
-            {showCurrentPopupmessage === item?.employer_id && (
+            {showCurrentPopupmessage === item?.id && (
               <View ref={popMessageRef}>
                 <PopupMessage
                   ref={popMessageRef}
@@ -438,7 +438,8 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
                   application_status: "consent-given"
                 },
                 onSuccessCallback: () => {
-                  fetchConsentListing({})
+                  setConsentData((prevData)=>prevData?.records?.map((e)=>e.id===item.id?{...item,application_status:"consent-given"}:e)
+                  )
                 },
               })
                 setShowConsentModal(-1);
