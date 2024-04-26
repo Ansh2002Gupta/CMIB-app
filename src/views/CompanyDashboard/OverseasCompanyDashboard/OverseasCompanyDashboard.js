@@ -439,19 +439,21 @@ const OverseasCompanyDashboard = () => {
     !isLoading &&
     !error && (
       <ScrollView style={{ gap: 24 }}>
-        <BarChart
-          yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
-          domainPadding={20}
-          height={200}
-          label={intl.formatMessage({
-            id: "label.CTCOfferedDesignation",
-          })}
-          barColor={colors.green}
-          data={ctcOfferedData}
-          toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
-          yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
-          xAxisTickAngle={-20}
-        />
+        {ctcOfferedData?.length > 0 && (
+          <BarChart
+            yAxisLabel={intl.formatMessage({ id: "label.CTCOfferedINR" })}
+            domainPadding={20}
+            height={200}
+            label={intl.formatMessage({
+              id: "label.CTCOfferedDesignation",
+            })}
+            barColor={colors.green}
+            data={ctcOfferedData}
+            toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
+            yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
+            xAxisTickAngle={-20}
+          />
+        )}
 
         <View style={styles.pieChartContiner}>
           <View style={isWebView && { flex: 1 }}>
@@ -511,33 +513,37 @@ const OverseasCompanyDashboard = () => {
           </View>
         </View>
 
-        <BarChart
-          xAxisTickAngle={-20}
-          yAxisLabel={intl.formatMessage({
-            id: "label.candidates",
-          })}
-          domainPadding={20}
-          height={200}
-          label={intl.formatMessage({
-            id: "label.candidatesAcceptingOffersAreasWork",
-          })}
-          toolTipLabel={({ datum }) => datum.y}
-          barColor={colors.purple}
-          data={candidatesAcceptingData}
-        />
-        <BarChart
-          yAxisLabel={intl.formatMessage({
-            id: "label.numberJobsAccepted",
-          })}
-          domainPadding={20}
-          height={200}
-          label={intl.formatMessage({
-            id: "label.topCountriesHighestJobsAcceptedCandidates",
-          })}
-          toolTipLabel={({ datum }) => datum.y}
-          barColor={colors.babyPink}
-          data={topCountriesCandidatesAcceptingData}
-        />
+        {candidatesAcceptingData?.length > 0 && (
+          <BarChart
+            xAxisTickAngle={-20}
+            yAxisLabel={intl.formatMessage({
+              id: "label.candidates",
+            })}
+            domainPadding={20}
+            height={200}
+            label={intl.formatMessage({
+              id: "label.candidatesAcceptingOffersAreasWork",
+            })}
+            toolTipLabel={({ datum }) => datum.y}
+            barColor={colors.purple}
+            data={candidatesAcceptingData}
+          />
+        )}
+        {topCountriesCandidatesAcceptingData?.length > 0 && (
+          <BarChart
+            yAxisLabel={intl.formatMessage({
+              id: "label.numberJobsAccepted",
+            })}
+            domainPadding={20}
+            height={200}
+            label={intl.formatMessage({
+              id: "label.topCountriesHighestJobsAcceptedCandidates",
+            })}
+            toolTipLabel={({ datum }) => datum.y}
+            barColor={colors.babyPink}
+            data={topCountriesCandidatesAcceptingData}
+          />
+        )}
         <BarGroupChart
           domainPadding={20}
           barWidth={7}

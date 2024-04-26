@@ -279,9 +279,8 @@ const AddApplicationTemplate = ({
   };
 
   const onsubmit = () => {
-    const payload = hobbiesRef?.current?.getAllData();
     submit({
-      body: { data: payload },
+      body: { data: {} },
       onErrorCallback: (errorMessage) => {},
       onSuccessCallback: (data) => {
         onChangeStepper();
@@ -325,6 +324,7 @@ const AddApplicationTemplate = ({
         return;
       case 6:
         onJobPreferencesSave();
+        return
       case 7:
         onsubmit();
         return;

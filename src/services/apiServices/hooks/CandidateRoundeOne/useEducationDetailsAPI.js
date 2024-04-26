@@ -5,7 +5,7 @@ import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { MEMBER_PERSONAL_DETAILS } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
-const useEducationDetails = () => {
+const useEducationDetailsApi = () => {
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [educationFilledDetails, setEducationFilledDetails] = useState({});
   const [apiError, setApiError] = useState("");
@@ -17,7 +17,7 @@ const useEducationDetails = () => {
       setApiStatus(API_STATUS.LOADING);
       apiError && setApiError("");
       
-      const res = await Http.get(MEMBER_PERSONAL_DETAILS);
+      const res = await Http.get('member/nqca-placements/rounds/264/academics');
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
         res.code === STATUS_CODES.SUCCESS_STATUS
@@ -53,4 +53,4 @@ const useEducationDetails = () => {
   };
 };
 
-export default useEducationDetails;
+export default useEducationDetailsApi;

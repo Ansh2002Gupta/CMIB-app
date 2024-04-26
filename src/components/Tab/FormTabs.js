@@ -21,6 +21,7 @@ export const FormTabs = ({
   onEditClick,
   showWarningOnTabSwitch,
   tabs,
+  cleanupFuntion,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
@@ -41,6 +42,7 @@ export const FormTabs = ({
         });
         return;
       }
+      cleanupFuntion && cleanupFuntion(index);
       setActiveTabIndex(index);
     }
   };
@@ -129,6 +131,7 @@ export const FormTabs = ({
 };
 
 FormTabs.propTypes = {
+  cleanupFuntion: PropTypes.func,
   showWarningOnTabSwitch: PropTypes.bool,
   isEditButtonVisible: PropTypes.bool,
   onEditClick: PropTypes.func,

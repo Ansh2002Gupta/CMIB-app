@@ -43,10 +43,12 @@ import { navigations } from "../constants/routeNames";
 import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
+import ShortlistingConsentInterviewDiagram from "../containers/ShortlistingConsentInterviewDiagram/ShortlistingConsentInterviewDiagram";
 import AllJobs from "../views/AllJobs/AllJobs";
 import PreviousSubscriptionDetail from "../views/PreviousSubscriptionDetails";
 import OtherPackages from "../containers/OtherPackages";
 import ManageSubscription from "../views/ManageSubscription";
+import ShortListingConsentCandidate from "../views/ShortListingConsentCandidate";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -236,6 +238,10 @@ const config = [
         element: <CentreWiseCompanyListing />,
       },
       {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.SHORTLISTING_CONSENT}`,
+        element: <ShortListingConsentCandidate />,
+      },
+      {
         viewPath: `${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/:roundId/:centerId/:companyId`,
         element: <CompanyDetail />,
       },
@@ -270,6 +276,10 @@ const config = [
       {
         viewPath: navigations.ROUND_TWO,
         element: <RoundTwo />,
+      },
+      {
+        viewPath: navigations.DUMMY,
+        element: <ShortlistingConsentInterviewDiagram />,
       },
     ],
   },

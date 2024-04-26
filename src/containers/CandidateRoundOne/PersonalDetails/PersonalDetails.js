@@ -14,6 +14,7 @@ import styles from "./PersonalDetails.style";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import usePersonalDetailsAPI from "../../../services/apiServices/hooks/CandidateRoundeOne/usePersonalDetailsAPI";
+import { useParams } from "react-router";
 
 const PersonalDetails = (
   { countryCodeData, intl, isWebView, handleSave = () => {} },
@@ -27,11 +28,11 @@ const PersonalDetails = (
     useState(false);
   const [isCorresponAddCompleted, setIsCorresponAddCompleted] = useState(false);
   const [isPermanentAddCompleted, setIsPermanentAddCompleted] = useState(false);
-  const [isAllFieldsCompleted, setIsAllFieldsCompleted] = useState(false);
 
   const personalDetailsTemplateRef = useRef();
   const correspondanceAddRef = useRef();
   const permanentAddRef = useRef();
+  const { id } = useParams();
 
   useImperativeHandle(ref, () => ({
     getFilledData: () => {
@@ -68,7 +69,7 @@ const PersonalDetails = (
 
   useEffect(() => {
     handlePersonalDetails();
-    fetchFilledData();
+    fetchFilledData(id);
     //BUG: adding deps causes infinite loop
   }, []);
 

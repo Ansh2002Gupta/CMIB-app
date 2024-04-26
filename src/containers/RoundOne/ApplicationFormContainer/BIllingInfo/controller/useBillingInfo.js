@@ -71,7 +71,7 @@ const useBillingInfo = () => {
             totalPsychometricTestFee += convertStringtoNumber(
               item?.psychometric_test_fee
             );
-            totalAmount += convertStringtoNumber(item?.amount);
+            totalAmount += convertStringtoNumber(item?.final_amt);
             finalAmount = totalAmount + totalPsychometricTestFee;
           });
           setTotalAmount({
@@ -86,12 +86,7 @@ const useBillingInfo = () => {
     fetchBillingData();
   }, [currentModule, sessionId]);
 
-  const getColoumConfigs = (
-    item,
-    isHeading,
-    index,
-    isShowFinalAmount = false
-  ) => {
+  const getColoumConfigs = (item, isHeading, index, isFooterValues = false) => {
     const tableStyle = isHeading
       ? commonStyles.tableHeadingText
       : commonStyles.cellTextStyle();
@@ -100,7 +95,10 @@ const useBillingInfo = () => {
       currentModule === NEWLY_QUALIFIED
         ? {
             content: !!item.psychometric_test_fee && (
-              <CommonText customTextStyle={tableStyle}>
+              <CommonText
+                fontWeight={isFooterValues ? "600" : "500"}
+                customTextStyle={tableStyle}
+              >
                 {item.psychometric_test_fee}&nbsp;INR
               </CommonText>
             ),
@@ -159,18 +157,69 @@ const useBillingInfo = () => {
         isFillSpace: true,
       },
       {
-        content: isShowFinalAmount ? (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {intl.formatMessage({ id: "label.total_amount" })}
-            &#58;&nbsp;&nbsp;&nbsp;
-            {item.finalAmount}&nbsp;INR
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item.discount_rate}
           </CommonText>
-        ) : (
+        ),
+        style: {
+          ...commonStyles.columnStyle("10%"),
+        },
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>{item.sgst}</CommonText>
+        ),
+        style: {
+          ...commonStyles.columnStyle("10%"),
+        },
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>{item.cgst}</CommonText>
+        ),
+        style: {
+          ...commonStyles.columnStyle("10%"),
+        },
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>{item.igst}</CommonText>
+        ),
+        style: {
+          ...commonStyles.columnStyle("10%"),
+          ...(isHeading ? {} : styles.borderBottom),
+        },
+        isFillSpace: true,
+      },
+      {
+        content: !isFooterValues && (
           <CommonText customTextStyle={tableStyle}>
             {item.amount}&nbsp;INR
           </CommonText>
         ),
-        style: commonStyles.columnStyle("30%"),
+        style: {
+          ...commonStyles.columnStyle("15%"),
+          ...(isHeading ? {} : styles.borderBottom),
+        },
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText
+            fontWeight={isFooterValues ? "600" : "500"}
+            customTextStyle={tableStyle}
+          >
+            {item.final_amt}&nbsp;INR
+          </CommonText>
+        ),
+        style: {
+          ...commonStyles.columnStyle("30%"),
+          ...(isHeading ? {} : styles.borderBottom),
+        },
         isFillSpace: true,
       },
     ];
