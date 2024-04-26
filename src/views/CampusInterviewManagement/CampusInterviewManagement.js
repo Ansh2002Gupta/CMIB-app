@@ -1,7 +1,6 @@
 import React from "react";
 
 import CommonText from "../../components/CommonText";
-import styles from "./CampusInterviewManagement.styles";
 import CampusInterviewManagementTemplate from "./CampusInterviewManagementTemplate";
 import useCampusInterviewManagement from "./controller/useCampusInterviewManagement";
 

@@ -1,6 +1,6 @@
 import { Platform } from "@unthinkable/react-core-components";
 
-const styles = (theme) => {
+const getStyles = (theme) => {
   const { colors } = theme;
 
   return {
@@ -111,4 +111,4 @@ const styles = (theme) => {
   };
 };
 
-export default styles;
+export default getStyles;

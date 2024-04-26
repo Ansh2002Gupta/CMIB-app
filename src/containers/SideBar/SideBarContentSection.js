@@ -168,7 +168,8 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                   />
                 </View>
               ) : (
-                !!selectedModule?.label && (
+                !!selectedModule?.label &&
+                selectedModule.key !== CA_JOBS && (
                   <SideBarItemView
                     title={intl.formatMessage({ id: "label.session" })}
                     content={selectedSession?.label || ""}

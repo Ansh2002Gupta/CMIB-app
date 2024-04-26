@@ -7,7 +7,6 @@ import {
 } from "@unthinkable/react-core-components";
 import React from "react";
 import CustomModal from "../CustomModal";
-import styles from "./styles";
 import CommonText from "../CommonText";
 import SaveCancelButton from "../SaveCancelButton";
 import Spinner from "../Spinner";

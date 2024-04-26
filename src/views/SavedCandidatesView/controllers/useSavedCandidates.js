@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
-import styles from "../SavedCandidatesView.styles";
+import getStyles from "../SavedCandidatesView.styles";
 import {
   CANDIDATES,
   MARKED_PREFER,
@@ -35,6 +36,9 @@ const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useSavedCandidates = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);

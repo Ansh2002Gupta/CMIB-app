@@ -7,13 +7,21 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./JobPreferenceDetails.style";
 
 const CitySelection = (
-  { intl, isWebView, isViewMode = false, onValidationChange = () => {}, interviewCentreData, programeData },
+  {
+    intl,
+    isWebView,
+    isViewMode = false,
+    onValidationChange = () => {},
+    interviewCentreData,
+    programeData,
+    hasRoundOne,
+  },
   ref
 ) => {
   //states
   const [firstCenter, setFirstCenter] = useState("");
   const [secondCenter, setSeconCenter] = useState("");
-  const [orientationCenter, setOrientationCenter] = useState("");
+  const [orientationCenter, setOrientationCenter] = useState(null);
   const [bigCentreList, setBigCentreList] = useState([]);
   const [smallCentreList, setSmallCentreList] = useState([]);
   const [programs, setPrograms] = useState([]);
@@ -21,39 +29,37 @@ const CitySelection = (
 
   useEffect(() => {
     if (interviewCentreData) {
-      let bigCenters = []
-      let smallCenters = []
+      let bigCenters = [];
+      let smallCenters = [];
       interviewCentreData?.map((item, index) => {
-        if (item?.centre_size === 'big'){
+        if (item?.centre_size === "big") {
           bigCenters.push({
             label: item.name,
             value: item.id,
-          })
-          
+          });
         } else {
           smallCenters.push({
             label: item.name,
             value: item.id,
-          })
+          });
         }
-      })
+      });
       setBigCentreList(bigCenters);
       setSmallCentreList(smallCenters);
     }
-    
-  }, [interviewCentreData])
+  }, [interviewCentreData]);
 
   useEffect(() => {
     if (programeData) {
       let progs = programeData?.map((item, index) => {
         return {
           label: item?.centre_name,
-          value: item?.id
-        }
-      })
+          value: item?.id,
+        };
+      });
       setPrograms(progs);
     }
-  }, [programeData])
+  }, [programeData]);
 
   useImperativeHandle(ref, () => ({
     getState: () => {
@@ -63,7 +69,7 @@ const CitySelection = (
           small_centre_id: parseInt(secondCenter),
         },
         orientation_centre: {
-          orientation_centre_id: parseInt(orientationCenter)
+          orientation_centre_id: parseInt(orientationCenter),
         },
       };
     },
@@ -72,23 +78,23 @@ const CitySelection = (
   //Lifecycle
   useEffect(() => {
     onValidationChange(
-      firstCenter.length > 0 &&
-        secondCenter.length > 0 &&
-        orientationCenter.length > 0
+      hasRoundOne
+        ? firstCenter?.length > 0 &&
+            secondCenter?.length > 0 &&
+            orientationCenter?.length > 0
+        : firstCenter?.length > 0
     );
   }, [firstCenter, secondCenter, orientationCenter, onValidationChange]);
 
-
-const onSelectOrientation = (val) => {
-  setOrientationCenter(val);
-  if (programeData) {
-    let autoFillData = programeData?.filter((item, index) => item.id == val)
-    if (autoFillData.length > 0) {
-      setAutoFillDetails(autoFillData[0])
+  const onSelectOrientation = (val) => {
+    setOrientationCenter(val);
+    if (programeData) {
+      let autoFillData = programeData?.filter((item, index) => item.id == val);
+      if (autoFillData?.length > 0) {
+        setAutoFillDetails(autoFillData[0]);
+      }
     }
-
-  }
-}
+  };
 
   return (
     <CardComponent customStyle={styles.cardContainer}>
@@ -104,81 +110,87 @@ const onSelectOrientation = (val) => {
           isMandatory
           label={intl.formatMessage({ id: "label.firstCampusInterviewcentre" })}
           placeholder={intl.formatMessage({
-            id: "label.dateofOrientation",
+            id: "label.firstCampusInterviewcentre",
           })}
           isDropdown
           options={bigCentreList}
           value={firstCenter}
           onChangeValue={setFirstCenter}
         />
-        <CustomTextInput
-          isViewMode={isViewMode}
-          viewText={secondCenter}
-          customStyle={styles.textInputContainer(isWebView)}
-          isPaddingNotRequired
-          isMandatory
-          placeholder={intl.formatMessage({
-            id: "label.secondCampusInterviewCentre",
-          })}
-          label={intl.formatMessage({
-            id: "label.secondCampusInterviewCentre",
-          })}
-          isDropdown
-          options={smallCentreList}
-          value={secondCenter}
-          onChangeValue={setSeconCenter}
-        />
+        {hasRoundOne && (
+          <CustomTextInput
+            isViewMode={isViewMode}
+            viewText={secondCenter}
+            customStyle={styles.textInputContainer(isWebView)}
+            isPaddingNotRequired
+            isMandatory
+            placeholder={intl.formatMessage({
+              id: "label.secondCampusInterviewCentre",
+            })}
+            label={intl.formatMessage({
+              id: "label.secondCampusInterviewCentre",
+            })}
+            isDropdown
+            options={smallCentreList}
+            value={secondCenter}
+            onChangeValue={setSeconCenter}
+          />
+        )}
         <View></View>
       </View>
-      <View style={isWebView ? styles.twoColumnSingleElement : styles.gap}>
-        <CustomTextInput
-          isViewMode={isViewMode}
-          viewText={orientationCenter}
-          customStyle={styles.textInputContainer(isWebView)}
-          isPaddingNotRequired
-          isMandatory
-          placeholder={intl.formatMessage({
-            id: "label.select",
-          })}
-          label={intl.formatMessage({
-            id: "label.centreWantOrientationProgrammeBeforeInterviews",
-          })}
-          value={orientationCenter}
-          isDropdown
-          options={programs}
-          onChangeValue={onSelectOrientation}
-        />
-      </View>
-      <View style={isWebView ? styles.oneTwoColumnSingleElement : styles.gap}>
-        <CustomTextInput
-          isViewMode={isViewMode}
-          viewText={autoFillDetails?.created_at || new Date().toISOString()}
-          customStyle={styles.textInputContainer(isWebView)}
-          isPaddingNotRequired
-          isCalendar
-          isEditable={false}
-          label={intl.formatMessage({ id: "label.dateofOrientation" })}
-          placeholder={intl.formatMessage({
-            id: "label.dateofOrientation",
-          })}
-          format={"DD/MM/YYYY"}
-          value={autoFillDetails?.created_at || new Date().toISOString()}
-        />
-        <CustomTextInput
-          isViewMode={isViewMode}
-          viewText={autoFillDetails?.venue || ''}
-          customStyle={styles.textInputContainer(isWebView)}
-          isPaddingNotRequired
-          isEditable={false}
-          label={intl.formatMessage({
-            id: "label.venueofOrientation",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.venueofOrientation",
-          })}
-          value={autoFillDetails?.venue || ''}
-        />
-      </View>
+      {hasRoundOne && (
+        <View style={isWebView ? styles.twoColumnSingleElement : styles.gap}>
+          <CustomTextInput
+            isViewMode={isViewMode}
+            viewText={orientationCenter}
+            customStyle={styles.textInputContainer(isWebView)}
+            isPaddingNotRequired
+            isMandatory
+            placeholder={intl.formatMessage({
+              id: "label.select",
+            })}
+            label={intl.formatMessage({
+              id: "label.centreWantOrientationProgrammeBeforeInterviews",
+            })}
+            value={orientationCenter}
+            isDropdown
+            options={programs}
+            onChangeValue={onSelectOrientation}
+          />
+        </View>
+      )}
+      {hasRoundOne && (
+        <View style={isWebView ? styles.oneTwoColumnSingleElement : styles.gap}>
+          <CustomTextInput
+            isViewMode={isViewMode}
+            viewText={autoFillDetails?.created_at || new Date().toISOString()}
+            customStyle={styles.textInputContainer(isWebView)}
+            isPaddingNotRequired
+            isCalendar
+            isEditable={false}
+            label={intl.formatMessage({ id: "label.dateofOrientation" })}
+            placeholder={intl.formatMessage({
+              id: "label.dateofOrientation",
+            })}
+            format={"DD/MM/YYYY"}
+            value={autoFillDetails?.created_at || new Date().toISOString()}
+          />
+          <CustomTextInput
+            isViewMode={isViewMode}
+            viewText={autoFillDetails?.venue || ""}
+            customStyle={styles.textInputContainer(isWebView)}
+            isPaddingNotRequired
+            isEditable={false}
+            label={intl.formatMessage({
+              id: "label.venueofOrientation",
+            })}
+            placeholder={intl.formatMessage({
+              id: "label.venueofOrientation",
+            })}
+            value={autoFillDetails?.venue || ""}
+          />
+        </View>
+      )}
     </CardComponent>
   );
 };

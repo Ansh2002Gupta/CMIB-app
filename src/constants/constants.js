@@ -178,6 +178,12 @@ export const MODULE_OPTIONS = [
 
 export const COLOR_MODES = ["light", "dark"];
 
+export const USER_TYPE = {
+  MEMBER: "member",
+  COMPANY: "company",
+};
+export const USER_TYPE_QUERY_PARAM = "user";
+
 export const getCompanyRoundCards = ({ is_filled }) => {
   return [
     {
@@ -571,7 +577,7 @@ export const getCandidatesRoundCards = ({ hasRoundone }) => {
       image: "iconDownload",
       subTitle: "label.download_id_description",
     },
-    
+
     {
       title: "label.consent_marking_management",
       id: 4,
@@ -1268,31 +1274,31 @@ export const diagramSupportEnum = {
   LINE_CARD: "cardConfigOverLine",
 };
 
-export const CATEGORIES =  [
+export const CATEGORIES = [
   {
-    label: 'General',
-    value: 'general'
+    label: "General",
+    value: "general",
   },
   {
-    label: 'OBC',
-    value: 'obc'
+    label: "OBC",
+    value: "obc",
   },
   {
-    label: 'SC',
-    value: 'sc'
+    label: "SC",
+    value: "sc",
   },
   {
-    label: 'ST',
-    value: 'st'
+    label: "ST",
+    value: "st",
   },
   {
-    label: 'PH',
-    value: 'ph'
+    label: "PH",
+    value: "ph",
   },
   {
-    label: 'Others',
-    value: 'others'
-  }
+    label: "Others",
+    value: "others",
+  },
 ];
 
 export const returnColorArray = (key) => {

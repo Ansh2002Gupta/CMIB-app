@@ -7,7 +7,6 @@ import CommonText from "../CommonText";
 import CustomModal from "../CustomModal";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./PopupMessage.style";
 import Spinner from "../Spinner";
 import { useTheme } from "@unthinkable/react-theme";
 import getStyles from "./PopupMessage.style";
