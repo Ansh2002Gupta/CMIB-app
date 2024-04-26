@@ -3,37 +3,38 @@ import { useIntl } from "react-intl";
 
 function mapPosting(dataArray) {
   const groupedData = {};
-  dataArray.forEach((item) => {
-    if (!groupedData[item.cellID]) {
-      groupedData[item.cellID] = {};
-    }
-    switch (item.key) {
-      case "place_of_posting":
-        groupedData[item.cellID].place_of_posting = item.value;
-        break;
-      case "general":
-        groupedData[item.cellID].general = item.value;
-        break;
-      case "obc":
-        groupedData[item.cellID].obc = item.value;
-        break;
-      case "sc":
-        groupedData[item.cellID].sc = item.value;
-        break;
-      case "st":
-        groupedData[item.cellID].st = item.value;
-        break;
-      case "ph":
-        groupedData[item.cellID].ph = item.value;
-        break;
-      case "others":
-        groupedData[item.cellID].others = item.value;
-        break;
-      case "total":
-        groupedData[item.cellID].total = item.value;
-        break;
-    }
-  });
+  Array.isArray(dataArray) &&
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "place_of_posting":
+          groupedData[item.cellID].place_of_posting = item.value;
+          break;
+        case "general":
+          groupedData[item.cellID].general = item.value;
+          break;
+        case "obc":
+          groupedData[item.cellID].obc = item.value;
+          break;
+        case "sc":
+          groupedData[item.cellID].sc = item.value;
+          break;
+        case "st":
+          groupedData[item.cellID].st = item.value;
+          break;
+        case "ph":
+          groupedData[item.cellID].ph = item.value;
+          break;
+        case "others":
+          groupedData[item.cellID].others = item.value;
+          break;
+        case "total":
+          groupedData[item.cellID].total = item.value;
+          break;
+      }
+    });
   const result = Object.keys(groupedData).map((key) => {
     return groupedData[key];
   });

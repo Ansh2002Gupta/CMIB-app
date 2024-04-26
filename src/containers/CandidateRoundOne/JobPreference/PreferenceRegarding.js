@@ -5,7 +5,7 @@ import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./JobPreferenceDetails.style";
-import { BOOLEAN_OPTION } from "../../../constants/constants";
+import { BOOLEAN_OPTION, CATEGORIES } from "../../../constants/constants";
 import useFetch from "../../../hooks/useFetch";
 import CustomLabelView from "../../../components/CustomLabelView";
 import CustomToggleComponent from "../../../components/CustomToggleComponent";
@@ -278,7 +278,7 @@ const PreferenceRegarding = (
           placeholder={intl.formatMessage({ id: "label.category" })}
           value={category}
           isDropdown
-          options={BOOLEAN_OPTION}
+          options={CATEGORIES}
           onChangeValue={setCategory}
         />
         <View style={styles.textInputContainer(isWebView)}>

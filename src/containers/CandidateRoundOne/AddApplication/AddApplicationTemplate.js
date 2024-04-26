@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
+import { useParams } from "react-router";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CommonText from "../../../components/CommonText";
@@ -16,7 +17,21 @@ import TrainingDetails from "../TrainingDetails";
 import WorkExperienceDetails from "../WorkExperience";
 import HobbiesDetails from "../Hobbies";
 import JobPreferenceDetails from "../JobPreference";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import {
+  ACADEMICS,
+  ACTIVITIES,
+  APPLICATION,
+  JOB_PREFERENCES,
+  MEMBER_WORK_EXPERIENCE,
+  PERSONAL,
+  ROUNDS,
+  SUBMIT,
+  TRAINING_DETAILS,
+  USER_TYPE_MEMBER,
+} from "../../../services/apiServices/apiEndPoint";
 import { usePut } from "../../../hooks/useApiRequest";
+import { usePatch } from "../../../hooks/useApiRequest";
 import useFetch from "../../../hooks/useFetch";
 
 const AddApplicationTemplate = ({
@@ -30,6 +45,7 @@ const AddApplicationTemplate = ({
   stepperData,
 }) => {
   const [isSaveEnabled, setIsSaveEnaabled] = useState(false);
+  const { id } = useParams();
 
   const personalDetailsref = useRef();
   const edDetailsRef = useRef();
@@ -37,9 +53,14 @@ const AddApplicationTemplate = ({
   const trainingDetailRef = useRef();
   const jobPreferneceref = useRef();
   const hobbiesRef = useRef();
+  const { currentModule } = useGetCurrentUser();
 
   const { isLoading, makeRequest, error } = usePut({
-    url: "/member/nqca-placements/rounds/264/training-details",
+    url: `/${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${TRAINING_DETAILS}`,
+  });
+
+  const { makeRequest: submit } = usePatch({
+    url: `${USER_TYPE_MEMBER}/${currentModule}${APPLICATION}/${id}${SUBMIT}`,
   });
 
   const {
@@ -47,7 +68,7 @@ const AddApplicationTemplate = ({
     makeRequest: makeRequestHobbies,
     error: errorHobbies,
   } = usePut({
-    url: "/member/nqca-placements/rounds/264/activities",
+    url: `/${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${ACTIVITIES}`,
   });
 
   const {
@@ -56,7 +77,7 @@ const AddApplicationTemplate = ({
     error: errorWhileFetchingHobbies,
     fetchData: fetchHobbies,
   } = useFetch({
-    url: "/member/nqca-placements/rounds/264/activities",
+    url: `/${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${ACTIVITIES}`,
   });
 
   useEffect(() => {
@@ -178,7 +199,7 @@ const AddApplicationTemplate = ({
   const onPersonalDetailSave = () => {
     const payload = personalDetailsref?.current?.getFilledData();
     makeRequest({
-      overrideUrl: `/member/nqca-placements/rounds/264/personal`,
+      overrideUrl: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${PERSONAL}`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
@@ -193,7 +214,7 @@ const AddApplicationTemplate = ({
   const onEdDetailsSave = () => {
     const payload = edDetailsRef?.current?.getAllData();
     makeRequest({
-      overrideUrl: `/member/nqca-placements/rounds/264/academics`,
+      overrideUrl: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${ACADEMICS}`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
@@ -208,7 +229,7 @@ const AddApplicationTemplate = ({
   const onTrainingDetailsSave = () => {
     const payload = trainingDetailRef?.current?.getAllData();
     makeRequest({
-      overrideUrl: `/member/nqca-placements/rounds/264/training-details`,
+      overrideUrl: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${TRAINING_DETAILS}`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
@@ -223,7 +244,7 @@ const AddApplicationTemplate = ({
   const onExperienceDetailsSave = () => {
     const payload = workExperienceDetailsref?.current?.getAllData();
     makeRequest({
-      overrideUrl: `member/nqca-placements/rounds/264/work-experience`,
+      overrideUrl: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${MEMBER_WORK_EXPERIENCE}`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
@@ -238,12 +259,22 @@ const AddApplicationTemplate = ({
   const onJobPreferencesSave = () => {
     const payload = jobPreferneceref?.current?.getAllData();
     makeRequest({
-      overrideUrl: `member/nqca-placements/rounds/264/job-preferences`,
+      overrideUrl: `${USER_TYPE_MEMBER}/${currentModule}${ROUNDS}/${id}${JOB_PREFERENCES}`,
       body: payload,
       onErrorCallback: (errorMessage) => {
         //
         console.log("error");
       },
+      onSuccessCallback: (data) => {
+        onChangeStepper();
+      },
+    });
+  };
+
+  const onsubmit = () => {
+    submit({
+      body: { data: {} },
+      onErrorCallback: (errorMessage) => {},
       onSuccessCallback: (data) => {
         onChangeStepper();
       },
@@ -274,12 +305,15 @@ const AddApplicationTemplate = ({
         return;
       case 4:
         onExperienceDetailsSave();
-        return
+        return;
       case 5:
         onHobbiesDetailsSave();
         return;
       case 6:
         onJobPreferencesSave();
+        return
+      case 7:
+        onsubmit();
         return;
       default:
         return;
@@ -337,16 +371,20 @@ const AddApplicationTemplate = ({
                 ? "label.back"
                 : "label.cancel",
           })}
-          buttonTwoText={intl.formatMessage({ id: "label.next" })}
+          buttonTwoText={intl.formatMessage({
+            id: selectedStepper?.id === 7 ? "label.submit" : "label.next",
+          })}
           customStyles={{
             ...isWebProps,
             customContainerStyle: styles.customButtonContainer,
             buttonOneTextStyle: styles.buttonText,
             buttonTwoTextStyle: styles.buttonText,
           }}
-          iconRight={{
-            rightIconSource: images.iconArrowRightWhite,
-          }}
+          iconRight={
+            selectedStepper?.id !== 7 && {
+              rightIconSource: images.iconArrowRightWhite,
+            }
+          }
           iconLeft={
             !isWebView &&
             selectedStepper.id != 1 && {

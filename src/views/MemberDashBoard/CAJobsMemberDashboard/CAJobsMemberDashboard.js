@@ -135,7 +135,11 @@ const CAJobsMemberDashboard = () => {
     !error && (
       <ScrollView style={{ gap: 24 }} showsVerticalScrollIndicator={false}>
         <View style={styles.pieChartContiner}>
-          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
+          <View
+            style={
+              isWebView ? styles.webGraphContainer : styles.mobileGraphContainer
+            }
+          >
             <DonutChart
               colorScale={[
                 colors.disabledGrey,
@@ -156,7 +160,11 @@ const CAJobsMemberDashboard = () => {
               labelColor={colors.white}
             />
           </View>
-          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
+          <View
+            style={
+              isWebView ? styles.webGraphContainer : styles.mobileGraphContainer
+            }
+          >
             <PieChart
               colorScale={[
                 colors.greenBlue,
@@ -177,7 +185,11 @@ const CAJobsMemberDashboard = () => {
           </View>
         </View>
         <View style={styles.pieChartContiner}>
-          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
+          <View
+            style={
+              isWebView ? styles.webGraphContainer : styles.mobileGraphContainer
+            }
+          >
             <PieChart
               colorScale={[colors.errorRed, colors.grassGreen]}
               data={urgentChartData}
@@ -192,10 +204,14 @@ const CAJobsMemberDashboard = () => {
               // popupMessage={intl.formatMessage({
               //   id: "label.viewAllUrgentJobs",
               // })}
-              onPopupClick={() => { }}
+              onPopupClick={() => {}}
             />
           </View>
-          <View style={isWebView ? styles.webGraphContainer : styles.mobileGraphContainer}>
+          <View
+            style={
+              isWebView ? styles.webGraphContainer : styles.mobileGraphContainer
+            }
+          >
             <PieChart
               colorScale={[
                 colors.mustardYellow,
@@ -221,29 +237,33 @@ const CAJobsMemberDashboard = () => {
             />
           </View>
         </View>
-        <BarChart
-          yAxisLabel={intl.formatMessage({ id: "label.numberJobsOffered" })}
-          domainPadding={20}
-          height={200}
-          label={intl.formatMessage({
-            id: "label.topCompaniesHighestJobsOffered",
-          })}
-          toolTipLabel={({ datum }) => datum.y}
-          barColor={colors.purple}
-          data={highestOffetChartData}
-        />
-        <BarChart
-          yAxisLabel={intl.formatMessage({ id: "label.highestCTCinINR" })}
-          domainPadding={20}
-          height={200}
-          label={intl.formatMessage({
-            id: "label.topCompaniesHighestCTCs",
-          })}
-          barColor={colors.green}
-          data={hightCtcChartData}
-          toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
-          yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
-        />
+        {highestOffetChartData?.length > 0 && (
+          <BarChart
+            yAxisLabel={intl.formatMessage({ id: "label.numberJobsOffered" })}
+            domainPadding={20}
+            height={200}
+            label={intl.formatMessage({
+              id: "label.topCompaniesHighestJobsOffered",
+            })}
+            toolTipLabel={({ datum }) => datum.y}
+            barColor={colors.purple}
+            data={highestOffetChartData}
+          />
+        )}
+        {hightCtcChartData?.length > 0 && (
+          <BarChart
+            yAxisLabel={intl.formatMessage({ id: "label.highestCTCinINR" })}
+            domainPadding={20}
+            height={200}
+            label={intl.formatMessage({
+              id: "label.topCompaniesHighestCTCs",
+            })}
+            barColor={colors.green}
+            data={hightCtcChartData}
+            toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
+            yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
+          />
+        )}
       </ScrollView>
     )
   );

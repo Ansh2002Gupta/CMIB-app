@@ -14,6 +14,7 @@ import styles from "./PersonalDetails.style";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import usePersonalDetailsAPI from "../../../services/apiServices/hooks/CandidateRoundeOne/usePersonalDetailsAPI";
+import { useParams } from "react-router";
 
 const PersonalDetails = (
   { countryCodeData, intl, isWebView, handleSave = () => {} },
@@ -21,17 +22,17 @@ const PersonalDetails = (
 ) => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
-  const { handlePersonalDetails, personalDetails } = usePersonalDetailsAPI();
+  const { handlePersonalDetails, personalDetails, filledData, fetchFilledData } = usePersonalDetailsAPI();
 
   const [isPersonalDetailsCompleted, setisPersonalDetailsCompleted] =
     useState(false);
   const [isCorresponAddCompleted, setIsCorresponAddCompleted] = useState(false);
   const [isPermanentAddCompleted, setIsPermanentAddCompleted] = useState(false);
-  const [isAllFieldsCompleted, setIsAllFieldsCompleted] = useState(false);
 
   const personalDetailsTemplateRef = useRef();
   const correspondanceAddRef = useRef();
   const permanentAddRef = useRef();
+  const { id } = useParams();
 
   useImperativeHandle(ref, () => ({
     getFilledData: () => {
@@ -68,6 +69,7 @@ const PersonalDetails = (
 
   useEffect(() => {
     handlePersonalDetails();
+    fetchFilledData(id);
     //BUG: adding deps causes infinite loop
   }, []);
 
@@ -80,6 +82,7 @@ const PersonalDetails = (
           isWebView={isWebView}
           onValidationChange={handlePersonalDetailsFields}
           personalDetails={personalDetails}
+          filledData={filledData}
         />
       ),
     },
@@ -92,6 +95,7 @@ const PersonalDetails = (
           countryCodeData={countryCodeData}
           onValidationChange={handleCorresponAddFields}
           userProfileDetails={userProfileDetails}
+          filledData={filledData}
         />
       ),
     },
@@ -102,6 +106,7 @@ const PersonalDetails = (
           intl={intl}
           isWebView={isWebView}
           onValidationChange={handlePermanentAddFields}
+          filledData={filledData}
         />
       ),
     },

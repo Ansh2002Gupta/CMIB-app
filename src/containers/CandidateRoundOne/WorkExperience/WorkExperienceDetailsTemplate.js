@@ -180,9 +180,7 @@ const WorkExperienceDetailsTemplate = (
                         id: "label.organizationName",
                       })}
                       value={workExperiences[index]?.orgName}
-                      isDropdown
-                      options={YEARS}
-                      onChangeValue={(txt) =>
+                      onChangeText={(txt) =>
                         onDataChange(txt, index, "orgName")
                       }
                     />
@@ -197,9 +195,7 @@ const WorkExperienceDetailsTemplate = (
                         id: "label.designation",
                       })}
                       value={workExperiences[index]?.designation}
-                      isDropdown
-                      options={YEARS}
-                      onChangeValue={(txt) =>
+                      onChangeText={(txt) =>
                         onDataChange(txt, index, "designation")
                       }
                     />
@@ -212,9 +208,7 @@ const WorkExperienceDetailsTemplate = (
                       label={intl.formatMessage({ id: "label.location" })}
                       placeholder={intl.formatMessage({ id: "label.location" })}
                       value={workExperiences[index]?.location}
-                      isDropdown
-                      options={YEARS}
-                      onChangeValue={(txt) =>
+                      onChangeText={(txt) =>
                         onDataChange(txt, index, "location")
                       }
                     />
@@ -255,9 +249,7 @@ const WorkExperienceDetailsTemplate = (
                         id: "label.empStrength",
                       })}
                       value={workExperiences[index]?.empStrength}
-                      isDropdown
-                      options={YEARS}
-                      onChangeValue={(txt) =>
+                      onChangeText={(txt) =>
                         onDataChange(txt, index, "empStrength")
                       }
                     />
@@ -274,9 +266,7 @@ const WorkExperienceDetailsTemplate = (
                         id: "label.grossSalaryDrawnPa",
                       })}
                       value={workExperiences[index]?.grossSalary}
-                      isDropdown
-                      options={YEARS}
-                      onChangeValue={(txt) =>
+                      onChangeText={(txt) =>
                         onDataChange(txt, index, "grossSalary")
                       }
                     />
@@ -291,9 +281,7 @@ const WorkExperienceDetailsTemplate = (
                         id: "label.areasOfWork",
                       })}
                       value={workExperiences[index]?.workAreas}
-                      isDropdown
-                      options={YEARS}
-                      onChangeValue={(txt) =>
+                      onChangeText={(txt) =>
                         onDataChange(txt, index, "workAreas")
                       }
                     />

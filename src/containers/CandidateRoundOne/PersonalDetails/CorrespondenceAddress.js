@@ -14,7 +14,8 @@ const CorrespondenceAddress = ({
   isWebView,
   countryCodeData,
   onValidationChange = () => {},
-  userProfileDetails
+  userProfileDetails,
+  filledData
 }, ref) => {
   // Inside your component
   const [address1, setAddress1] = useState('');
@@ -66,6 +67,21 @@ const CorrespondenceAddress = ({
     let res = address1.length > 3 && city.length > 0 && country.length > 0 && countryCode.length > 0 && mobileNo.length > 4 && nationality.length > 0 && pincode.length > 0 && phoneNo.length > 0 && state.length > 3;
     onValidationChange(res);
   }, [address1, city, country, countryCode, mobileNo, nationality, onValidationChange, phoneNo, pincode, state]);
+
+  useEffect(() => {
+    let tempData = filledData?.addresses?.filter(item => item.type === "Correspondence");
+    if (tempData && tempData?.length > 0) {
+      let mainData = tempData[0];
+      mainData?.address_line_1 && setAddress1(mainData.address_line_1);
+      mainData?.address_line_2 && setAddress2(mainData.address_line_2);
+      mainData?.address_line_3 && setAddress3(mainData.address_line_3);
+      mainData?.city && setCity(mainData?.city);
+      mainData?.country && setCountry(mainData?.country);
+      mainData?.state && setState(mainData?.state);
+      mainData?.pincode && setPincode(mainData?.pincode);
+    }
+    filledData?.phone_number && setPhoneNo(filledData?.phone_number)
+  }, [filledData]);
 
   return (
     <CardComponent customStyle={styles.cardContainer}>
