@@ -32,7 +32,10 @@ const style = {
     paddingRight: 16,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "8px 8px 0 0",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
     cursor: "pointer",
   },
   editButtonViewStyle: {
