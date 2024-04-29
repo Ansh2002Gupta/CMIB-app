@@ -336,6 +336,7 @@ const CustomTextInput = (props) => {
       );
     }
     if (isTextInputWithChip) {
+      console.log("value:", value);
       return (
         <TextInputWithChip
           value={value}
@@ -506,7 +507,11 @@ const CustomTextInput = (props) => {
     >
       {!!label && showLabel && (
         <View style={style.innerLabelContainer}>
-          <CustomLabelView label={label} isMandatory={isMandatory} customLabelStyle={customLabelStyle} />
+          <CustomLabelView
+            label={label}
+            isMandatory={isMandatory}
+            customLabelStyle={customLabelStyle}
+          />
           {!!label2 && (
             <CommonText customContainerStyle={style.marginRight10}>
               {label2}
@@ -514,32 +519,36 @@ const CustomTextInput = (props) => {
           )}
         </View>
       )}
-      {isViewMode ? <CommonText>{viewText}</CommonText> : <>
-      {renderTextInput()}
-      {(isError || isMultiline) && (
-        <View
-          style={{
-            ...style.errorAndCountLimitBox,
-            ...customErrorViewStyle,
-            ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
-          }}
-        >
-          {isError && (
-            <CommonText
-              customTextStyle={[style.errorMsg, customErrorStyle]}
-              fontWeight={customErrorStyle?.fontWeight || "600"}
+      {isViewMode ? (
+        <CommonText>{viewText}</CommonText>
+      ) : (
+        <>
+          {renderTextInput()}
+          {(isError || isMultiline) && (
+            <View
+              style={{
+                ...style.errorAndCountLimitBox,
+                ...customErrorViewStyle,
+                ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
+              }}
             >
-              {errorMessage}
-            </CommonText>
+              {isError && (
+                <CommonText
+                  customTextStyle={[style.errorMsg, customErrorStyle]}
+                  fontWeight={customErrorStyle?.fontWeight || "600"}
+                >
+                  {errorMessage}
+                </CommonText>
+              )}
+              {isMultiline && (
+                <CommonText customTextStyle={style.limitStyle}>{`${
+                  value?.length ?? 0
+                }/${maxLength}`}</CommonText>
+              )}
+            </View>
           )}
-          {isMultiline && (
-            <CommonText customTextStyle={style.limitStyle}>{`${
-              value?.length ?? 0
-            }/${maxLength}`}</CommonText>
-          )}
-        </View>
+        </>
       )}
-      </>}
     </View>
   );
 };

@@ -157,6 +157,7 @@ const DetailComponent = ({
     }
 
     if (detail.isTextInputWithChip) {
+      console.log("detail:7777", detail);
       return (
         <View
           style={{
@@ -164,7 +165,7 @@ const DetailComponent = ({
             ...styles.chipDataContainer,
           }}
         >
-          {typeof detail?.value !== "string" ? (
+          {/* {typeof detail?.value !== "string" ? (
             detail?.value?.map((value, index) => (
               <CustomChipCard
                 key={index}
@@ -172,9 +173,9 @@ const DetailComponent = ({
                 isEditable={isEditable}
               />
             ))
-          ) : (
-            <CommonText>{detail.value}</CommonText>
-          )}
+          ) : ( */}
+          <CommonText>{detail?.value}</CommonText>
+          {/* )} */}
         </View>
       );
     }

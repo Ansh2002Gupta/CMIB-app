@@ -15,7 +15,6 @@ import ThemeSwitcher from "../../components/ThemeSwitcher";
 import UserAccountInfo from "../../components/UserAccountInfo";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { navigations } from "../../constants/routeNames";
-import styles from "./PrivateHeader.style";
 import { useTheme } from "@unthinkable/react-theme";
 import getStyles from "./PrivateHeader.style";
 
@@ -45,6 +44,7 @@ const PrivateHeader = ({
           onPressLeftIcon={onPressLeftIcon}
           isMdOrGreater={isMdOrGreater}
           leftIcon={leftIcon}
+          styles={styles}
         />
         {/*TODO: Right Now It's a static data, we will replace it by dynamic data as we get API */}
         {location?.pathname === navigations?.DASHBOARD && (
@@ -73,7 +73,7 @@ const PrivateHeader = ({
   );
 };
 
-const HeaderLeft = ({ onPressLeftIcon, isMdOrGreater, leftIcon }) => {
+const HeaderLeft = ({ onPressLeftIcon, isMdOrGreater, leftIcon, styles }) => {
   if (!isMdOrGreater) {
     return (
       <TouchableOpacity onPress={onPressLeftIcon}>

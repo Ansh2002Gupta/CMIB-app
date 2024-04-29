@@ -34,9 +34,13 @@ import CustomModal from "../../../components/CustomModal";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import { usePatch } from "../../../hooks/useApiRequest";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "../ConsentMarkingManagement.styles";
 
 const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const defaultCategory = "Experience";
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
@@ -76,7 +80,6 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
     },
   });
 
-
   const {
     makeRequest: updateCandidateConsent,
     error: errorWhileUpdatingCandidateConsent,
@@ -88,7 +91,9 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
     url:
       USER_TYPE_MEMBER +
       `/${currentModule}` +
-      '/application' + '/shortlist' + `/${companyId}`
+      "/application" +
+      "/shortlist" +
+      `/${companyId}`,
   });
 
   useEffect(() => {
@@ -309,7 +314,9 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
           </CustomTouchableOpacity>
         ) : (
           <CommonText fontWeight={"500"} customTextStyle={tableStyle}>
-            {!!item.selection_process ? JSON.parse(item.selection_process).join(', ') : "-"}
+            {!!item.selection_process
+              ? JSON.parse(item.selection_process).join(", ")
+              : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("10%"),
@@ -434,14 +441,20 @@ const useContentMarketingManagement = (onViewPress, centerId, roundId) => {
                 setShowConsentModal(-1);
               }}
               handleButtonTwoPress={() => {
-                updateCandidateConsent({body: {
-                  application_status: "consent-given"
-                },
-                onSuccessCallback: () => {
-                  setConsentData((prevData)=>prevData?.records?.map((e)=>e.id===item.id?{...item,application_status:"consent-given"}:e)
-                  )
-                },
-              })
+                updateCandidateConsent({
+                  body: {
+                    application_status: "consent-given",
+                  },
+                  onSuccessCallback: () => {
+                    setConsentData((prevData) =>
+                      prevData?.records?.map((e) =>
+                        e.id === item.id
+                          ? { ...item, application_status: "consent-given" }
+                          : e
+                      )
+                    );
+                  },
+                });
                 setShowConsentModal(-1);
               }}
             />

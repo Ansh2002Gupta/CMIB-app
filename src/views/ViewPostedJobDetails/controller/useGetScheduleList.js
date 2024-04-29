@@ -27,7 +27,8 @@ import {
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../ViewPostedJobDetails.styles";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "../ViewPostedJobDetails.styles";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -48,6 +49,8 @@ const useGetScheduleList = (id, onClickAction) => {
   useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
 
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const [filterOptions, setFilterOptions] = useState({
     status: "",

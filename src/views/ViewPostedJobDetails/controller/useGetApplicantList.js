@@ -15,7 +15,6 @@ import usePagination from "../../../hooks/usePagination";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../ViewPostedJobDetails.styles";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import { urlService } from "../../../services/urlService";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
@@ -23,11 +22,15 @@ import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
 import TouchableImage from "../../../components/TouchableImage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "../ViewPostedJobDetails.styles";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useGetApplicantList = (id, onEditPress) => {
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
