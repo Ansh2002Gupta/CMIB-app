@@ -15,8 +15,8 @@ import CommonText from "../../../../components/CommonText";
 import CustomButton from "../../../../components/CustomButton";
 import CustomMultiRowTextInput from "../../../../components/CustomMultiRowTextinput";
 import DetailCard from "../../../../components/DetailCard";
+import LoadingScreen from "../../../../components/LoadingScreen";
 import MultiRow from "../../../../core/layouts/MultiRow";
-import Spinner from "../../../../components/Spinner";
 import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../../../hooks/useFetch";
@@ -28,6 +28,8 @@ import {
   PRE_INTERVIEW,
   ROUNDS,
 } from "../../../../services/apiServices/apiEndPoint";
+import { headStartRowConfig } from "./config";
+import { COMPANY, HEAD_CONTACT } from "../../../../constants/constants";
 import { rowConfigs } from "./config";
 import {
   ADD_PREINTERVIEW_PREFERNCES_HEADING,
@@ -840,9 +842,7 @@ const PreInterviewPreferencesTemplate = ({
           <ToastComponent toastMessage={toastMsg} onDismiss={handleDismiss} />
         )}
         {isLoadingHeadContactData ? (
-          <View style={styles.loaderContainer}>
-            <LoadingScreen />
-          </View>
+          <LoadingScreen />
         ) : (
           <MultiRow rows={JobDetailsConfig} />
         )}
