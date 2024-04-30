@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { FlatList, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomImage from "../CustomImage";
-import styles from "./CustomDropdown.style";
+import getStyles from "./CustomDropdown.style";
 
 const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);

@@ -1,5 +1,6 @@
 import React from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { TwoColumn } from "../../core/layouts";
 
@@ -11,7 +12,7 @@ import {
   DATA_FORMATTER_OPTIONS,
 } from "../../constants/constants";
 import images from "../../images";
-import styles from "./TimeSlotLable.styles";
+import getStyles from "./TimeSlotLable.styles";
 
 const TimeSlotLabel = ({
   labelId,
@@ -20,6 +21,8 @@ const TimeSlotLabel = ({
   selectedDateLabel,
   showPrimary,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const isWeb = Platform.OS.toLowerCase() === "web";
 
   const getData = (dateType) => {

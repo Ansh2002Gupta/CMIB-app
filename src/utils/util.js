@@ -1,7 +1,14 @@
 import { Platform } from "@unthinkable/react-core-components";
-
 import dayjs from "dayjs";
+
 import { ANONYMOUS, jobType, questionType } from "../constants/constants";
+import {
+  DOCUMENT_ACCEPTABLE_FORMAT_REGEX,
+  DOCX_ACCEPTABLE_FORMAT_REGEX,
+  DOC_ACCEPTABLE_FORMAT_REGEX,
+  PPTX_ACCEPTABLE_FORMAT_REGEX,
+  PPT_ACCEPTABLE_FORMAT_REGEX,
+} from "../constants/Regex";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
@@ -145,6 +152,10 @@ export const extractFilename = (fileUri) => {
   const parts = fileUri.split("/");
   const filename = parts.pop() || "";
   return filename;
+};
+
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
 
 let lastFlagDate = null;
@@ -653,6 +664,31 @@ export const areAllValuesFilled = (objects) => {
   return Object.values(objects).some(isObjectFilled);
 };
 
+export const getFileExtension = ({ fileName }) => {
+  const fileExtensionArray = fileName?.split(".");
+  return fileExtensionArray?.[fileExtensionArray?.length - 1];
+};
+
+export const getDocumentMimeType = ({ extension }) => {
+  switch (extension) {
+    case "doc": {
+      return DOC_ACCEPTABLE_FORMAT_REGEX;
+    }
+    case "docx": {
+      return DOCX_ACCEPTABLE_FORMAT_REGEX;
+    }
+    case "ppt": {
+      return PPT_ACCEPTABLE_FORMAT_REGEX;
+    }
+    case "pptx": {
+      return PPTX_ACCEPTABLE_FORMAT_REGEX;
+    }
+    default: {
+      return DOCUMENT_ACCEPTABLE_FORMAT_REGEX;
+    }
+  }
+};
+
 export const capitalizePhrase = (sentence) => {
   if (!sentence.length) return "-";
   const words = sentence.split(" ");
@@ -697,7 +733,7 @@ export const formateErrors = (errorResponse) => {
       ([fieldName, messages]) => {
         const readableFieldName = fieldName.replace(/\./g, " ");
 
-        return `- ${readableFieldName}: ${messages.join(" ")}`;
+        return `- ${messages.join(" ")}`;
       }
     );
     return errorPoints.join("\n");
@@ -707,5 +743,93 @@ export const formateErrors = (errorResponse) => {
 };
 
 export const convertStringtoNumber = (val) => {
-  return +val;
+  return !!val ? +val : 0;
+};
+
+export const convertGraphData = (data) => {
+  const formattedData = data.map((item) => {
+    return {
+      x: item.label,
+      y: item.value,
+    };
+  });
+
+  return formattedData;
+};
+
+export const convertMobileGraphData = (data, colors) => {
+  const formattedData = data.map((item, index) => {
+    return {
+      name: item.label,
+      value: item.value,
+      color: colors[index],
+    };
+  });
+
+  return formattedData;
+};
+
+export const convertDonutChartData = (data) => {
+  let convertedArray = [];
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      convertedArray.push({ x: key, y: data[key] });
+    }
+  }
+  return convertedArray;
+};
+
+export const convertMobileDonutChartData = (data, colors) => {
+  let convertedArray = [];
+  const keys = Object.keys(data);
+  keys.forEach((key, index) => {
+    const colorIndex = index % colors.length;
+    convertedArray.push({
+      name: key,
+      value: data[key],
+      color: colors[colorIndex],
+    });
+  });
+
+  return convertedArray;
+};
+
+export const convertMobileBarData = (data) => {
+  const chartData = {
+    labels: [],
+    datasets: [{ data: [] }],
+  };
+  const sumsByLabel = data.reduce((sums, entry) => {
+    sums[entry.label] = (sums[entry.label] || 0) + entry.value;
+    return sums;
+  }, {});
+  for (const [label, value] of Object.entries(sumsByLabel)) {
+    chartData.labels.push(label);
+    chartData.datasets[0].data.push(value);
+  }
+
+  return chartData;
+};
+
+export const formatText = (text, delimitter = "-") => {
+  const words = text.split(delimitter);
+  const newWordList = words.map((word) => {
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+  });
+  return newWordList.join(" ");
+};
+
+export const changeBooltoBinary = (value) => {
+  if (value === "true") {
+    return 1;
+  } else {
+    return 0;
+  }
+};
+
+export const extractValueDropdown = (item) => {
+  if (item?.isDropdown) {
+    return item?.options?.find((val) => val?.id == item?.value)?.label;
+  }
+  return item?.value;
 };

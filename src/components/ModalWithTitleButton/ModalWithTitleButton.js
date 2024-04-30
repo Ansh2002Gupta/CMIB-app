@@ -1,9 +1,10 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CustomModal from "../../components/CustomModal";
 import TwoRowButton from "../../components/TwoRowButton";
-import styles from "./ModalWithTitleButton.style";
+import getStyles from "./ModalWithTitleButton.style";
 
 const ModalWithTitleButton = ({
   children,
@@ -19,7 +20,10 @@ const ModalWithTitleButton = ({
   rightButtonLeftImage,
   rightButtonRightImage,
   rightLabelTxt,
+  headerTextStyle,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const {
     containerStyle = {},
     leftButtonStyle = {},
@@ -35,6 +39,7 @@ const ModalWithTitleButton = ({
         ...styles.containerStyle,
         ...containerStyle,
       }}
+      headerTextStyle={headerTextStyle}
     >
       {children}
       {enableBottomButton && (
@@ -68,7 +73,7 @@ ModalWithTitleButton.defaultProps = {
   customStyles: {},
   heading: "",
   enableBottomButton: false,
-  isRightDisabled: PropTypes.bool,
+  isRightDisabled: false,
   leftLabelTxt: "",
   leftButtonLeftImage: null,
   leftButtonRightImage: null,
@@ -88,6 +93,7 @@ ModalWithTitleButton.propTypes = {
     rightButtonStyle: PropTypes.object,
     rightTextStyle: PropTypes.object,
   }),
+  isRightDisabled: PropTypes.bool,
   enableBottomButton: PropTypes.bool,
   heading: PropTypes.string,
   leftLabelTxt: PropTypes.string,

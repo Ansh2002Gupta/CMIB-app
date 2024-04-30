@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
-import styles from "../SavedCandidatesView.styles";
+import getStyles from "../SavedCandidatesView.styles";
 import {
   CANDIDATES,
   MARKED_PREFER,
@@ -14,8 +15,7 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import useIsWebView from "../../../hooks/useIsWebView";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
@@ -30,13 +30,15 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePost } from "../../../hooks/useApiRequest";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import { urlService } from "../../../services/urlService";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useSavedCandidates = () => {
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);
@@ -51,11 +53,11 @@ const useSavedCandidates = () => {
     searchData: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
   const [removedCandidates, setRemovedCandidates] = useState([]);
 
@@ -76,7 +78,7 @@ const useSavedCandidates = () => {
   const formatConfig = {
     experience: {
       prefix: `${intl.formatMessage({ id: "label.experience" })}${" : "}`,
-      suffix: `${" "}${intl.formatMessage({ id: "label.years" })}`,
+      suffix: `${" "}${intl.formatMessage({ id: "label.year" })}`,
     },
   };
   const {
@@ -364,7 +366,7 @@ const useSavedCandidates = () => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item?.experience} {intl.formatMessage({ id: "label.years" })}
+            {item?.experience} {intl.formatMessage({ id: "label.year" })}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -453,7 +455,7 @@ const useSavedCandidates = () => {
               }}
               source={images.iconMore}
               imageStyle={styles.iconTicket}
-              isSvg={true}
+              isSvg
             />
             {showCurrentPopupmessage === index && (
               <View ref={popMessageRef}>

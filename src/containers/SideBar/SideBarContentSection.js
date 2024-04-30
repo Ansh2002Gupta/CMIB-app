@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
@@ -21,24 +22,39 @@ import useGlobalSessionListApi from "../../services/apiServices/hooks/useGlobalS
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
+import {
+  setRoundsData,
+  setSelectedModule,
+} from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
-import { COMPANY } from "../../constants/constants";
+import { CA_JOBS, COMPANY } from "../../constants/constants";
 import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
-import styles from "./SideBar.style";
+import getStyles from "./SideBar.style";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const [userProfileDetails] = useContext(UserProfileContext);
-  const { getGlobalSessionList } = useGlobalSessionListApi();
+  const {
+    getGlobalSessionList,
+    error,
+    isError,
+    isLoadingSession,
+    setErrorGettingGlobalSession,
+    setErrorGettingSession,
+  } = useGlobalSessionListApi();
   const { selectedModule, selectedSession } = sideBarState;
   const { navigateScreen } = useNavigateScreen();
   const navigate = useNavigate();
   const location = useLocation();
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [sideBarContent, setSideBarSubMenu] = useState(SideBarContentEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
     getSelectedSubModuleFromRoute({
@@ -56,20 +72,15 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     }
   }, [isWebView, sideBarContent]);
 
-  useEffect(() => {
-    const getSessions = async () => {
-      if (selectedModule.key) {
-        await getGlobalSessionList(selectedModule.key);
-      }
-    };
-    getSessions();
-  }, [selectedModule.key]);
-
-  const handleOnSelectModuleItem = (item) => {
+  const handleOnSelectModuleItem = async (item) => {
     setActiveMenuItem(item?.children?.[0]?.key);
     navigateScreen(`/${item.key}/${item?.children?.[0]?.key}`);
     if (item.key !== selectedModule.key) {
       sideBarDispatch(setSelectedModule(item));
+      if (item.key !== CA_JOBS) {
+        await getGlobalSessionList(item.key);
+        sideBarDispatch(setRoundsData({}));
+      }
     }
     setSideBarSubMenu(SideBarContentEnum.NONE);
   };
@@ -157,7 +168,8 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                   />
                 </View>
               ) : (
-                !!selectedModule?.label && (
+                !!selectedModule?.label &&
+                selectedModule.key !== CA_JOBS && (
                   <SideBarItemView
                     title={intl.formatMessage({ id: "label.session" })}
                     content={selectedSession?.label || ""}
@@ -193,6 +205,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             modules={getAppModules({ isMember: isMemberOrCandidate })}
             onSelectItem={handleOnSelectModuleItem}
             selectedModule={selectedModule}
+            isLoadingSession={isLoadingSession}
           />
         </>
       )}
@@ -236,6 +249,15 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           />
         </CustomTouchableOpacity>
       </View>
+      {isError && (
+        <ToastComponent
+          toastMessage={error?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE}
+          onDismiss={() => {
+            setErrorGettingGlobalSession(null);
+            setErrorGettingSession(null);
+          }}
+        />
+      )}
     </View>
   );
 };

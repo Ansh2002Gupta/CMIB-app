@@ -11,10 +11,12 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import Breadcrumbs from "../../components/BreadCrumbs/Breadcrumbs";
 import CommonText from "../../components/CommonText";
+import ThemeSwitcher from "../../components/ThemeSwitcher";
 import UserAccountInfo from "../../components/UserAccountInfo";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { navigations } from "../../constants/routeNames";
-import styles from "./PrivateHeader.style";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./PrivateHeader.style";
 
 const PrivateHeader = ({
   onPressLeftIcon = () => {},
@@ -23,6 +25,8 @@ const PrivateHeader = ({
   rightIcon,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const location = useLocation();
   const windowDimensions = useWindowDimensions();
   const [userProfileState] = useContext(UserProfileContext);
@@ -40,6 +44,7 @@ const PrivateHeader = ({
           onPressLeftIcon={onPressLeftIcon}
           isMdOrGreater={isMdOrGreater}
           leftIcon={leftIcon}
+          styles={styles}
         />
         {/*TODO: Right Now It's a static data, we will replace it by dynamic data as we get API */}
         {location?.pathname === navigations?.DASHBOARD && (
@@ -56,16 +61,19 @@ const PrivateHeader = ({
         )}
         <Breadcrumbs />
       </View>
-      <UserAccountInfo
-        onPressRightIcon={onPressRightIcon}
-        rightIcon={rightIcon}
-        isMdOrGreater={isMdOrGreater}
-      />
+      <View style={styles.themeAndAccountBox}>
+        <ThemeSwitcher />
+        <UserAccountInfo
+          onPressRightIcon={onPressRightIcon}
+          rightIcon={rightIcon}
+          isMdOrGreater={isMdOrGreater}
+        />
+      </View>
     </View>
   );
 };
 
-const HeaderLeft = ({ onPressLeftIcon, isMdOrGreater, leftIcon }) => {
+const HeaderLeft = ({ onPressLeftIcon, isMdOrGreater, leftIcon, styles }) => {
   if (!isMdOrGreater) {
     return (
       <TouchableOpacity onPress={onPressLeftIcon}>

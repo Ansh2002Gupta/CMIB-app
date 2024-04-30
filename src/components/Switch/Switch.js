@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
-import { styles } from "./Switch.style";
+import getStyles from "./Switch.style";
 
 const Switch = ({ disabled, isToggled, onChange }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [isToggledOn, setIsToggleOn] = useState(false);
   useEffect(() => {
     setIsToggleOn(isToggled);

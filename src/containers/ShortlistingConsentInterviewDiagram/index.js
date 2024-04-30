@@ -1,0 +1,3 @@
+import ShortlistingConsentInterviewDiagram from "./ShortlistingConsentInterviewDiagram";
+
+export default ShortlistingConsentInterviewDiagram;

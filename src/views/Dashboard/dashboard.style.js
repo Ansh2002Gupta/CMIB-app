@@ -1,10 +1,16 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-  },
-});
+  return {
+    container: {
+      flex: 1,
+      justifyContent: "flex-start",
+      backgroundColor: colors.backgroundGrey,
+    },
+    innerContainer: {
+      padding: 24,
+    },
+  };
+};
 
-export default styles;
+export default getStyles;

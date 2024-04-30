@@ -5,7 +5,7 @@ import { getCandidatesRoundCards } from "../../../../constants/constants";
 import { navigations } from "../../../../constants/routeNames";
 import images from "../../../../images";
 
-const useCandidateRoundOneCards = ({ hasRoundone }) => {
+const useCandidateRoundOneCards = ({ hasRoundone, savedRoundId }) => {
   const intl = useIntl();
   const navigate = useNavigate();
 
@@ -21,11 +21,19 @@ const useCandidateRoundOneCards = ({ hasRoundone }) => {
   const onPressCard = (id) => {
     switch (id) {
       case 1:
-        navigate(`/${navigations.APPLICATION_FORM}`);
+        navigate(`${navigations.CENTRE_WISE_COMPANY}/${savedRoundId}`);
         break;
       case 2:
+        navigate(`${navigations.APPLICATION_FORM_SUBROUTE}${savedRoundId}`);
         break;
       case 3:
+        break;
+      case 4:
+        navigate(`${navigations.CONSENT_MARKING_MANAGEMENT}/${savedRoundId}`);
+        break;
+      case 5:
+        navigate(`${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`);
+        break;
       default:
         break;
     }

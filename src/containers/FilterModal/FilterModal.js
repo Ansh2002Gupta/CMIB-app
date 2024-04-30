@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, ScrollView, Platform } from "@unthinkable/react-core-components";
 
 import { ThreeRow, TwoColumn } from "../../core/layouts";
@@ -19,7 +20,7 @@ import classes from "../../theme/styles/CssClassProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import commonStyles from "../../theme/styles/commonStyles";
 import images from "../../images";
-import styles from "./FilterModal.style";
+import getStyles from "./FilterModal.style";
 
 const FilterModal = ({
   defaultCategory,
@@ -33,6 +34,8 @@ const FilterModal = ({
   setShowFilterOptions,
   unit,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const {
     currentCategory,
     handleCategoryChange,
@@ -164,10 +167,10 @@ const FilterModal = ({
         <View style={styles.customExperienceContainer}>
           <CommonText customTextStyle={styles.customExperience}>
             {`${
-              !!filterState?.selectedExperience
-                ? filterState?.selectedExperience
+              !!filterState[`selected${filterObj?.name}`]
+                ? filterState[`selected${filterObj?.name}`]
                 : 0
-            } ${unit}`}
+            } ${filterObj?.unit ?? "Years"}`}
           </CommonText>
         </View>
         <Slider
@@ -176,20 +179,24 @@ const FilterModal = ({
           minimumValue={filterObj?.minimumSliderLimit}
           step={1}
           onChange={(val) =>
-            filterObj?.handler({ value: val }, "Experience", "value")
+            filterObj?.handler(
+              { value: val },
+              filterObj?.name ?? "Experience",
+              "value"
+            )
           }
           value={
-            !!filterState?.selectedExperience
-              ? filterState?.selectedExperience
+            !!filterState[`selected${filterObj?.name}`]
+              ? filterState[`selected${filterObj?.name}`]
               : 0
           }
         />
         <View style={styles.limitsContainer}>
           <CommonText customTextStyle={styles.sliderLimitLabel}>
-            {`${filterObj?.minimumSliderLimit} ${unit}`}
+            {`${filterObj?.minimumSliderLimit} ${filterObj?.unit ?? "Years"}`}
           </CommonText>
           <CommonText customTextStyle={styles.sliderLimitLabel}>
-            {`${filterObj?.maximumSliderLimit} ${unit}`}
+            {`${filterObj?.maximumSliderLimit} ${filterObj?.unit ?? "Years"}`}
           </CommonText>
         </View>
       </View>

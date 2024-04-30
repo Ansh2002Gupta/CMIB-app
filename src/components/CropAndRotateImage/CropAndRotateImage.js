@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Cropper from "react-easy-crop";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
@@ -11,7 +12,7 @@ import ZoomSliderWithInfo from "../ZoomSliderWithInfo";
 import getCroppedImg from "../../utils/cropImage";
 import { getImageSource } from "../../utils/util";
 import { ZOOM_CONSTANT } from "../../constants/constants";
-import styles from "./CropAndRotateImage.style";
+import getStyles from "./CropAndRotateImage.style";
 
 const CropAndRotateImage = ({
   file,
@@ -28,7 +29,8 @@ const CropAndRotateImage = ({
   shouldOpenInModal,
 }) => {
   const intl = useIntl();
-
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(ZOOM_CONSTANT.MIN_ZOOM);
   const [rotation, setRotation] = useState(0);

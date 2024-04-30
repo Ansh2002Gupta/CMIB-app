@@ -9,10 +9,17 @@ import {
   mapMonthyApiToUI,
   mapYearlyApiToUI,
 } from "../MappedData";
-import { document_keys } from "../../../../../constants/constants";
+import {
+  API_VERSION_QUERY_PARAM,
+  NEWLY_QUALIFIED,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+  document_keys,
+} from "../../../../../constants/constants";
 import { useDelete, usePost, usePut } from "../../../../../hooks/useApiRequest";
 import {
   APPLICATION,
+  CORE,
   JOB_DETAILS,
   ROUNDS,
   USER_TYPE_COMPANY,
@@ -20,6 +27,8 @@ import {
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
 import { useParams } from "react-router";
 import useFetch from "../../../../../hooks/useFetch";
+import { areAllValuesEmpty } from "../../../../../utils/util";
+import useIsWebView from "../../../../../hooks/useIsWebView";
 
 const addDocumentField = () => [
   {
@@ -72,15 +81,18 @@ const initialState = {
   job_type: "",
   flexi_hours: "",
   work_exp_range_id: "",
+  errors: "",
 };
 
-const useJobDetailForm = ({ tabHandler }) => {
+const useJobDetailForm = ({ isEditable, tabHandler }) => {
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
   const [documentState, setDocumentState] = useState([addDocumentField()]);
 
   const [startingSalary, setStartingSalary] = useState(null);
   const currentModule = sideBarState?.selectedModule?.key;
+  const sessionId = sideBarState?.selectedSession?.value;
+
   const { id } = useParams();
 
   const [isAddNewJob, setIsAddNewJob] = useState(false);
@@ -94,10 +106,16 @@ const useJobDetailForm = ({ tabHandler }) => {
   const [desginationItems, setDesginationItems] = useState([]);
   const [deleteDesginationId, setDeleteDesginationId] = useState(null);
   const [currentDesginationID, setCurrentDesginationID] = useState(null);
+  const [workExperienceOptions, setWorkExperienceOptions] = useState([]);
+  const [validateError, setValidateError] = useState(initialState);
   const [modalDetails, setModalDetails] = useState({
     isShown: false,
+    isDeleteModal: false,
+    isChangeTabModal: false,
     modalMessage: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const { isWebView } = useIsWebView();
 
   const renderJobDetails = isAddNewJob ? addNewJobDetails : editJobDetails;
   const setRenderJobDetails = isAddNewJob
@@ -116,9 +134,34 @@ const useJobDetailForm = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      JOB_DETAILS,
+      `${JOB_DETAILS}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
+  });
+
+  const {
+    fetchData: fetchingWorkExperience,
+    isLoading: isLoadingWorkExperience,
+    error: errorInWorkExperience,
+  } = useFetch({
+    url:
+      CORE +
+      `/${currentModule}` +
+      ROUNDS +
+      `/${id}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
 
@@ -134,13 +177,17 @@ const useJobDetailForm = ({ tabHandler }) => {
       `/${id}` +
       APPLICATION +
       JOB_DETAILS +
-      `/${currentDesginationID}`,
+      `/${currentDesginationID}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
-  const isLoading = isFetchingJobDetailsData || isDisagnationListLoading;
   const error = errorWhileFetchingData || errorInDesginationList;
 
   const { makeRequest, isLoading: isLoadingOnAddJob } = usePost({
@@ -150,7 +197,12 @@ const useJobDetailForm = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      JOB_DETAILS,
+      `${JOB_DETAILS}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const {
@@ -164,7 +216,12 @@ const useJobDetailForm = ({ tabHandler }) => {
       `/${id}` +
       APPLICATION +
       JOB_DETAILS +
-      `/${deleteDesginationId}`,
+      `/${deleteDesginationId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const { makeRequest: handleUpdateDetails, isLoading: isLoadingOnUpdating } =
@@ -176,24 +233,41 @@ const useJobDetailForm = ({ tabHandler }) => {
         `/${id}` +
         APPLICATION +
         JOB_DETAILS +
-        `/${currentDesginationID}`,
+        `/${currentDesginationID}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+      apiOptions: {
+        headers: {
+          [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+        },
+      },
     });
+
+  const isButtonLoading =
+    currentDesginationID === null ? isLoadingOnAddJob : isLoadingOnUpdating;
 
   useEffect(() => {
     const fetchListing = async () => {
-      if (currentModule) {
+      if (currentModule && sessionId) {
         const newList = await fetchDesginationList();
-
+        if (currentModule !== NEWLY_QUALIFIED) {
+          const workExperienceOptions = await fetchingWorkExperience({});
+          setWorkExperienceOptions([...workExperienceOptions?.experiences]);
+        }
         if (!!newList?.length) {
           setDesginationItems([...newList]);
           setSelectedOptions([String(newList[0]?.id)]);
           setCurrentDesginationID(newList[0]?.id);
+          setIsLoading(false);
+        } else {
+          setIsAddNewJob(true);
+          setIsLoading(false);
         }
       }
     };
-
     fetchListing();
-  }, [currentModule]);
+    if (!!error) {
+      setIsLoading(false);
+    }
+  }, [currentModule, sessionId, isEditable]);
 
   useEffect(() => {
     setRenderJobDetails((prev) => ({
@@ -203,7 +277,7 @@ const useJobDetailForm = ({ tabHandler }) => {
       required_docs: getDocumentField(),
       posting_details: getPlaceOfPostingDetails(),
     }));
-  }, [isAddNewJob]);
+  }, [isAddNewJob, isEditable]);
 
   useEffect(() => {
     if (deleteDesginationId) {
@@ -213,18 +287,21 @@ const useJobDetailForm = ({ tabHandler }) => {
         },
       });
     }
-  }, [deleteDesginationId]);
+  }, [deleteDesginationId, isEditable]);
 
   useEffect(() => {
     const fetchProfileData = async () => {
-      if (currentDesginationID) {
+      if (!!currentDesginationID) {
         const newProfileData = await fetchJobDetailsData({});
-        setEditJobDetails(mapDataToUI(newProfileData));
+        setEditJobDetails(mapDataToUI(newProfileData, isWebView));
+        setIsLoading(false);
       }
     };
-
     fetchProfileData();
-  }, [currentDesginationID]);
+    if (!!error) {
+      setIsLoading(false);
+    }
+  }, [currentDesginationID, isEditable]);
 
   const handleInputChange = (fieldName, value, subFieldName) => {
     if (fieldName === "bond_details") {
@@ -244,9 +321,20 @@ const useJobDetailForm = ({ tabHandler }) => {
   };
 
   const handleMonthlyData = (fieldName, value) => {
-    let updatedMonthly = renderJobDetails.monthly.map((detail) =>
-      detail.label === fieldName ? { ...detail, value: value } : detail
-    );
+    let updatedMonthly = renderJobDetails.monthly.map((detail) => {
+      if (!value && detail.label === fieldName) {
+        return {
+          ...detail,
+          value: value,
+          isError: true,
+          error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+        };
+      } else {
+        return detail.label === fieldName
+          ? { ...detail, value: value, isError: null, error: null }
+          : detail;
+      }
+    });
     let updatedYearly = [...renderJobDetails.yearly];
     if (
       [
@@ -304,27 +392,40 @@ const useJobDetailForm = ({ tabHandler }) => {
   };
 
   const handleYearlyData = (fieldName, value) => {
-    let updatedYearly = renderJobDetails.yearly.map((detail) =>
-      detail.label === fieldName ? { ...detail, value: value } : detail
-    );
-    const monthlyGrossSalary = getMonthlyGrossSalary();
-    updatedYearly = updatedYearly.map((detail) =>
-      detail.key === "yearly_total_gross_salary"
-        ? { ...detail, value: monthlyGrossSalary.toString() }
-        : detail
-    );
-    if (
-      fieldName === "label.oneTimePayment" ||
-      fieldName === "label.totalGrossSalary"
-    ) {
-      const oneTimePayment =
-        updatedYearly.find((detail) => detail.key === "yearly_one_time_payment")
-          .value || "0";
-      const ctc = +monthlyGrossSalary + +oneTimePayment;
-      updatedYearly = updatedYearly.map((detail) =>
-        detail.key === "ctc" ? { ...detail, value: ctc.toString() } : detail
+    let updatedYearly = renderJobDetails.yearly.map((detail) => {
+      if (!value && detail.label === fieldName) {
+        return {
+          ...detail,
+          value: value,
+          isError: true,
+          error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+        };
+      } else {
+        return detail.label === fieldName
+          ? { ...detail, value: value, isError: null, error: null }
+          : detail;
+      }
+    });
+    if (fieldName === "label.oneTimePayment") {
+      const totalGrossSalaryDetail = updatedYearly.find(
+        (detail) => detail.key === "yearly_total_gross_salary"
       );
+      const totalGrossSalary = totalGrossSalaryDetail
+        ? parseFloat(totalGrossSalaryDetail.value) || 0
+        : 0;
+
+      const oneTimePayment = parseFloat(value) || 0;
+
+      const newCtc = totalGrossSalary + oneTimePayment;
+
+      updatedYearly = updatedYearly.map((detail) => {
+        if (detail.key === "yearly_ctc") {
+          return { ...detail, value: newCtc.toString() };
+        }
+        return detail;
+      });
     }
+
     setRenderJobDetails({
       ...renderJobDetails,
       yearly: updatedYearly,
@@ -338,7 +439,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     return monthlyDetail ? monthlyDetail.value : "0";
   }
 
-  const handleDelete = ({ itemToBeDeletedId, prevState }) => {
+  const deleteDesignationFromList = ({ itemToBeDeletedId, prevState }) => {
     if (currentDesginationID !== null) {
       setDeleteDesginationId(itemToBeDeletedId);
     }
@@ -356,10 +457,29 @@ const useJobDetailForm = ({ tabHandler }) => {
     } else {
       setMenuOptions([...prevState.current]);
     }
+    setRenderJobDetails(initialState);
+  };
+
+  const handleDelete = ({ itemToBeDeletedId, prevState }) => {
+    setModalDetails((prev) => ({
+      ...prev,
+      isDeleteModal: true,
+      deleteDetails: { itemToBeDeletedId, prevState },
+      modalMessage: intl.formatMessage({
+        id: "label.tabs_removed_data",
+      }),
+    }));
   };
 
   const handlePress = (selectedItemID) => {
-    setIsAddNewJob(false);
+    if (selectedItemID === currentDesginationID) {
+      return;
+    }
+    if (selectedItemID === null) {
+      setIsAddNewJob(true);
+    } else {
+      setIsAddNewJob(false);
+    }
     setCurrentDesginationID(selectedItemID);
     if (isMultiSelect) {
       if (selectedOptions.includes(selectedItemID)) {
@@ -391,7 +511,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     }
   };
 
-  const handleBlur = (fieldName, value) => {
+  const handleBlur = (fieldName) => {
     if (fieldName === "designation") {
       setMenuOptions((prevOptions) => {
         return prevOptions.map((option) => {
@@ -402,10 +522,23 @@ const useJobDetailForm = ({ tabHandler }) => {
         });
       });
     }
+    const value = renderJobDetails[fieldName];
+    if (value == null || value == "") {
+      setValidateError((prev) => ({
+        ...prev,
+        [fieldName]: intl.formatMessage({
+          id: "label.error.cannot_be_empty",
+        }),
+      }));
+    } else
+      setValidateError((prev) => ({
+        ...prev,
+        [fieldName]: "",
+      }));
   };
 
   const handleSaveAndNext = () => {
-    const mappedPayload = mapDataToPayload(renderJobDetails);
+    const mappedPayload = mapDataToPayload(renderJobDetails, currentModule);
     if (currentDesginationID !== null) {
       handleUpdateDetails({
         body: mappedPayload,
@@ -430,7 +563,6 @@ const useJobDetailForm = ({ tabHandler }) => {
             });
           });
           setCurrentDesginationID(newId);
-          tabHandler("next");
         },
         onErrorCallback: (errorMessage) => {
           setCurrentError(errorMessage);
@@ -439,7 +571,70 @@ const useJobDetailForm = ({ tabHandler }) => {
     }
   };
 
+  function isFormComplete(data) {
+    let isComplete = true;
+
+    function checkMandatoryFields(fieldsArray) {
+      for (let field of fieldsArray) {
+        if (field.isMandatory && (field.value === "" || field.value == null)) {
+          isComplete = false;
+          return; // Exit as soon as an empty mandatory field is found
+        }
+      }
+    }
+
+    function checkSimpleField(field) {
+      if (field === "" || field == null) {
+        isComplete = false;
+      }
+    }
+
+    // Check mandatory fields in the monthly, yearly, posting_details, and required_docs arrays
+    if (data.monthly) checkMandatoryFields(data.monthly);
+    if (isComplete && data.yearly) checkMandatoryFields(data.yearly);
+    if (isComplete && data.posting_details)
+      checkMandatoryFields(data.posting_details);
+    if (isComplete && data.required_docs)
+      checkMandatoryFields(data.required_docs);
+
+    // Check other fields to ensure they are not empty
+    if (isComplete) checkSimpleField(data.designation);
+    if (isComplete) checkSimpleField(data.compensation);
+    if (isComplete) checkSimpleField(data.starting_salary);
+    if (isComplete) checkSimpleField(data.role_responsibility);
+    if (isComplete) checkSimpleField(data.ctc_details);
+    if (isComplete) checkSimpleField(data.otherInfo);
+    if (currentModule !== NEWLY_QUALIFIED) {
+      if (isComplete) checkSimpleField(data.job_type);
+      if (isComplete) checkSimpleField(data.flexi_hours);
+      if (isComplete) checkSimpleField(data.work_exp_range_id);
+    }
+
+    // Special check for bond_details if is_bond_included is truthy
+    if (
+      isComplete &&
+      data.bond_details &&
+      data.bond_details.is_bond_included === 0
+    ) {
+      if (
+        data.bond_details.bond_period_in_mm === "" ||
+        data.bond_details.bond_period_in_mm == null ||
+        data.bond_details.exit_amount === "" ||
+        data.bond_details.exit_amount == null
+      ) {
+        isComplete = false;
+      }
+    }
+
+    return isComplete;
+  }
+
+  const isDisabled = !isFormComplete(renderJobDetails);
+
   return {
+    isButtonLoading,
+    isDisabled,
+    validateError,
     renderJobDetails,
     setRenderJobDetails,
     handlePress,
@@ -448,6 +643,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     setSelectedOptions,
     modalDetails,
     setModalDetails,
+    deleteDesignationFromList,
     desginationItems,
     handleBlur,
     isLoading,
@@ -460,6 +656,7 @@ const useJobDetailForm = ({ tabHandler }) => {
     menuOptions,
     setMenuOptions,
     handleMonthlyData,
+    workExperienceOptions,
     handleYearlyData,
     handleSaveAndNext,
     currentError,

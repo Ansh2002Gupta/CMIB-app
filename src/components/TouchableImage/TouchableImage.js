@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
-import styles from "./TouchableImage.style";
+import getStyles from "./TouchableImage.style";
 
 const TouchableImage = ({
   disabled = true,
@@ -18,6 +18,8 @@ const TouchableImage = ({
   style,
   width,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
@@ -39,16 +41,14 @@ const TouchableImage = ({
       onPress={isSelector ? handlePress : onPress}
       disabled={disabled}
     >
-      <View>
-        <CustomImage
-          height={height}
-          Icon={source}
-          isSvg={isSvg}
-          style={{ ...imageStyle, ...style }}
-          source={source}
-          width={width}
-        />
-      </View>
+      <CustomImage
+        height={height}
+        Icon={source}
+        isSvg={isSvg}
+        style={{ ...imageStyle, ...style }}
+        source={source}
+        width={width}
+      />
     </CustomTouchableOpacity>
   );
 };

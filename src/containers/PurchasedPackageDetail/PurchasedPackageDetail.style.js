@@ -1,12 +1,9 @@
-import {
-    StyleSheet,
-    Platform,
-  } from "@unthinkable/react-core-components";
-  
-  import colors from "../../assets/colors";
-  
-  
-  const styles = StyleSheet.create({
+import { Platform } from "@unthinkable/react-core-components";
+
+const getStyles = (theme) => {
+  const { colors } = theme;
+
+  return {
     cellTextStyle: (fontSize = 14) => ({
       fontSize,
       ...Platform.select({
@@ -19,8 +16,8 @@ import {
       }),
     }),
     container: {
-       flex:1,
-       marginTop: 24,
+      flex: 1,
+      marginTop: 24,
     },
     borderStyle: {
       borderWidth: 1,
@@ -43,10 +40,10 @@ import {
     packageNameText: {
       fontSize: 24,
       color: colors.black,
-      flexWrap: 'wrap',
+      flexWrap: "wrap",
       overFlow: "hidden",
       whiteSpace: "break-space",
-      wordBreak: 'break-word',
+      wordBreak: "break-word",
     },
     packagePriceText: {
       fontSize: 32,
@@ -61,22 +58,22 @@ import {
       fontSize: 14,
       color: colors.black,
       lineHeight: 20,
-      flexWrap: 'wrap',
+      flexWrap: "wrap",
       marginTop: 16,
       marginBottom: 16,
     },
     badgeLabelContainer: {
       flex: 1,
       marginBottom: 24,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
     badgeLabelContainerMob: {
       flex: 1,
       marginBottom: 24,
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+      flexDirection: "column",
+      justifyContent: "space-between",
     },
     viewOtherText: {
       fontSize: 14,
@@ -92,6 +89,7 @@ import {
       fontWeight: "600",
       color: colors.darkGrey,
     },
-  });
-  
-  export default styles;
+  };
+};
+
+export default getStyles;

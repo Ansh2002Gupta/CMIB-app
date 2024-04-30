@@ -1,14 +1,15 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = StyleSheet.create({
-  headerContainer: {
-    paddingBottom: 8,
-  },
-  titleText: {
-    fontSize: 20,
-  },
-  tabContainer: { backgroundColor: colors.white },
-});
+  return {
+    headerContainer: {
+      paddingBottom: 8,
+    },
+    titleText: {
+      fontSize: 20,
+    },
+    tabContainer: { backgroundColor: colors.white },
+  };
+};
 
-export default styles;
+export default getStyles;

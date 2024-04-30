@@ -1,15 +1,15 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import DetailCard from "../../components/DetailCard";
-import useIsWebView from "../../hooks/useIsWebView";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import UploadPhotoVideo from "./UploadPhotoVideo";
-import style from "./JobPreference.style";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { STATUS_CODES } from "../../constants/constants";
+import getStyles from "./JobPreference.style";
 
 const JobPreferenceTemplate = ({
   isEditable,
@@ -29,6 +29,8 @@ const JobPreferenceTemplate = ({
   imageDetails,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   if (isPageLoading) {
     return (

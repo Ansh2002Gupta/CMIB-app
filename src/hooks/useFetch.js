@@ -39,7 +39,9 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
     try {
       let modifiedURL = overrideUrl || url; // Use overrideUrl if provided, otherwise use the default url
       if (queryParamsObject && objectToQueryString(queryParamsObject)) {
-        modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;
+        modifiedURL = `${modifiedURL}?${objectToQueryString(
+          queryParamsObject
+        )}`;
       }
       setApiStatus(API_STATUS.LOADING);
       error && setError("");
@@ -49,8 +51,8 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
         res.status === STATUS_CODES.SUCCESS_STATUS
       ) {
         setApiStatus(API_STATUS.SUCCESS);
-        setData(res.data);
-        return res.data;
+        setData(res?.data);
+        return res?.data;
       }
       setApiStatus(API_STATUS.ERROR);
       setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);

@@ -1,9 +1,12 @@
-import { View } from "@unthinkable/react-core-components";
 import React from "react";
-import styles from "./styles";
-import colors from "../../assets/colors";
+import { View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
+
+import getStyles from "./styles";
 
 const CircularProgress = ({ size, strokeWidth, progress, containerStyle }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const svgProgress = progress * circumference;
@@ -13,7 +16,7 @@ const CircularProgress = ({ size, strokeWidth, progress, containerStyle }) => {
       <svg width={size} height={size}>
         {/* Background Circle */}
         <circle
-          stroke={colors.lightGrey}
+          stroke={theme.colors.lightGrey}
           fill="none"
           cx={size / 2}
           cy={size / 2}
@@ -22,7 +25,7 @@ const CircularProgress = ({ size, strokeWidth, progress, containerStyle }) => {
         />
         {/* Progress Circle */}
         <circle
-          stroke={colors.green}
+          stroke={theme.colors.green}
           fill="none"
           cx={size / 2}
           cy={size / 2}

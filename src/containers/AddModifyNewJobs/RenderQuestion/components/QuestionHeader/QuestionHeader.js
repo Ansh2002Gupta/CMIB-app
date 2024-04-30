@@ -1,10 +1,13 @@
 import React from "react";
+import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
+
 import CommonText from "../../../../../components/CommonText";
 import CustomTextInput from "../../../../../components/CustomTextInput";
-import { useIntl } from "react-intl";
-import stylesForMobile from "./QuestionHeader.styles";
-import styles from "../../RenderQuestion.styles";
+import getStyles from "../../RenderQuestion.styles";
+import getStylesForMobile from "./QuestionHeader.styles";
+
 const QuestionHeader = (props) => {
   const {
     handleChange,
@@ -15,6 +18,10 @@ const QuestionHeader = (props) => {
     questionaireTypeFormatted,
   } = props;
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+  const stylesForMobile = getStylesForMobile(theme);
+
   return (
     <View>
       {isWebView ? (

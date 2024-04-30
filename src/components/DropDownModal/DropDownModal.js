@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   FlatList,
   Keyboard,
@@ -20,7 +21,7 @@ import SvgUri from "../SvgUri";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./DropDownModal.style";
+import getStyles from "./DropDownModal.style";
 
 const DropDownModal = ({
   customHeading,
@@ -48,6 +49,9 @@ const DropDownModal = ({
 }) => {
   const intl = useIntl();
   const flatListRef = useRef();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const isFirstTimeRef = useRef(true);
   const [modalStyle, setModalStyle] = useState({});
 

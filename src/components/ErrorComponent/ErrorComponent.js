@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
 import CustomImage from "../CustomImage";
 import images from "../../images";
-import styles from "./ErrorComponent.style";
+import getStyles from "./ErrorComponent.style";
 
 const ErrorComponent = ({
   errorHeading,
@@ -15,6 +16,9 @@ const ErrorComponent = ({
   retryButtonText,
   disableRetryBtn,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <View style={styles.containerStyle}>
       <View style={styles.innerContainer}>

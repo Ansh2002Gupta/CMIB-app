@@ -10,22 +10,29 @@ const blackWithMinorOpacity = "rgba(0, 0, 0, 0.85)";
 /* Blues */
 const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
 const darkBlue = "#00137E";
+const blue = "#04AF55";
 const darkBlueShade = "#000833";
 const lightBlue = "#269AD4";
 const skyBlueDark = "#0099CA";
+const medicineBlue = "#2FA5CB";
 const skyBlueLight = "#E8FCFF";
 const skyBlueLightSecond = "#E7EAFC";
+const greenBlue = "#2FA5CB";
 
 /* Greens */
 const darkGreen = "#00873E";
 const green = "#04AF55";
+const greenAccepted = "#04AF55";
 const greenOne = "#04af55";
-const lightGreen = "#DFFFDC";
 const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
 const lightGreen2 = "#E6F9EF";
+const lightGreen = "#DFFFDC";
+const grassGreen = "#2CA900";
+const yellowGreen = "#CDDC39";
 
 /* Greys */
+const init_background = "#DBDBDB";
 const backgroundGrey = "#F6F8F9";
 const backgroundSecondGrey = "#E5E7F2";
 const darkGrey = "#616C82";
@@ -49,6 +56,8 @@ const disabledTextFieldColor = "#F2F2F2";
 const neutralGrey = "#0F172A";
 const greyFive = "#E7E7F1";
 const greySix = "#808080";
+const graphiteGray = "#607D8B";
+const lightGreyThird = "#FCFCFD";
 
 /* Reds */
 const errorBackground = "#ffeded"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -61,18 +70,37 @@ const offWhite = "#FFFFFF14";
 
 /* Yellows */
 const yellow = "#FABB00";
+const paleYellow = "#C7A705";
+const mustardYellow = "#FFD54F";
 
 /* Oranges */
 const orange = "#D76200";
+const ambientOrange = "#E88532";
 const lightOrange = "#FFEFE5";
 const lightOrangeSecond = "#F9DED6";
 const lightOrangeThird = "#FFF2EF";
+const darkOrange = "#E88532";
 
 /* Purple */
+const originalPurple = "#9C27B0";
+const purple = "#4B1FAA";
 const lightPurple = "#E3E2F5";
 const darkPurple = "#6F6AC4";
+const glowingPurple = "#A126A1";
+const extraDarkPurple = "#4B1FAA";
+
+/* Pink */
+const hotPink = "#FB5581";
+
+/* Pink */
+const babyPink = "#FB5581";
+
+const menuItem = "#fff";
+const menuItemActive = "#000833";
+const menuItemActiveBg = "#fff";
 
 const colors = {
+  greenAccepted,
   darkBlueShade,
   disabledBtn,
   backgroundColor,
@@ -114,7 +142,6 @@ const colors = {
   yellow,
   backgroundGrey,
   orange,
-  shallowGreen,
   lightOrange,
   lightGreen,
   darkSecondGreen,
@@ -129,6 +156,26 @@ const colors = {
   greySix,
   lightOrangeSecond,
   skyBlueLightSecond,
+  extraDarkPurple,
+  glowingPurple,
+  medicineBlue,
+  hotPink,
+  ambientOrange,
+  paleYellow,
   lightOrangeThird,
+  purple,
+  grassGreen,
+  mustardYellow,
+  graphiteGray,
+  yellowGreen,
+  originalPurple,
+  babyPink,
+  greenBlue,
+  darkOrange,
+  lightGreyThird,
+  menuItem,
+  menuItemActive,
+  menuItemActiveBg,
+  blue,
 };
 export default colors;

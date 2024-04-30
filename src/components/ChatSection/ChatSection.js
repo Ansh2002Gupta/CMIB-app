@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
@@ -20,7 +21,7 @@ import {
   getTime,
 } from "../../utils/util";
 import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
-import styles from "./ChatSection.style";
+import getStyles from "./ChatSection.style";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -42,6 +43,8 @@ const ChatSection = ({
   setErrorWhileSendingMessages,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");
   const [file, setFile] = useState(null);

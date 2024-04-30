@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ColorModeContext, useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
-import styles from "./CheckBoxSelection.style";
 import { Text, View } from "@unthinkable/react-core-components";
 import CheckBox from "../CheckBox/CheckBox";
 import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import CommonText from "../CommonText";
+import getStyles from "./CheckBoxSelection.style";
 
 const CheckBoxSelection = ({
   isEditable,
@@ -20,12 +21,27 @@ const CheckBoxSelection = ({
   value,
   checkBoxTextStyle,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
-  const iconCheck = isEditable
-    ? isSingleSelection
-      ? images.iconCheckBoxRound
-      : images.iconCheckbox
-    : images.iconTickGreen;
+  const colorMode = useContext(ColorModeContext).colorMode;
+
+  const iconCheck = () => {
+    if (isEditable) {
+      if (isSingleSelection) {
+        if (colorMode === "dark") {
+          return images.iconCheckBoxRoundRed;
+        }
+        return images.iconCheckBoxRound;
+      }
+      if (colorMode === "dark") {
+        return images.checkboxRed;
+      }
+      return images.iconCheckbox;
+    }
+    return images.iconTickGreen;
+  };
+
   const iconUnCheck = isEditable
     ? isSingleSelection
       ? images.iconUnCheckBoxRound
@@ -88,7 +104,7 @@ const CheckBoxSelection = ({
                 isSelected={checkBox.isSelected}
                 handleCheckbox={(id) => handleCheckBoxSelection(id)}
                 id={checkBox.value}
-                iconCheck={iconCheck}
+                iconCheck={iconCheck()}
                 iconUnCheck={iconUnCheck}
                 checkBoxTextStyle={checkBoxTextStyle}
               />
@@ -117,7 +133,7 @@ const CheckBoxSelection = ({
               <CheckBox
                 title={checkBox.value}
                 isSelected={checkBox.isSelected}
-                iconCheck={iconCheck}
+                iconCheck={iconCheck()}
                 iconUnCheck={iconUnCheck}
                 handleCheckbox={() => {}}
                 checkBoxTextStyle={checkBoxTextStyle}

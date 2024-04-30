@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import {
   ScrollView,
   TouchableOpacity,
@@ -31,7 +31,7 @@ import {
   STATUS_CODES,
 } from "../../constants/constants";
 import { gridStyles } from "../../theme/styles/commonStyles";
-import style from "./CompanyProfile.style";
+import getStyles from "./CompanyProfile.style";
 
 const CompanyProfileUI = (props) => {
   const {
@@ -71,6 +71,9 @@ const CompanyProfileUI = (props) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const isWebProps = isWebView
     ? {
         buttonOneStyle: style.customButtonStyle,
@@ -338,9 +341,7 @@ const CompanyProfileUI = (props) => {
               details={profileResult?.companyDetail}
               handleBlur={handleBlur}
               handleChange={handleCompanyDetailChange}
-              headerId={intl.formatMessage({
-                id: "label.company_details",
-              })}
+              headerId={"label.company_details"}
               isEditProfile={isEditProfile}
             />
             <CardComponent customStyle={style.cardStyle}>

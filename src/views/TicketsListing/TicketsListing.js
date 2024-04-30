@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
+import { useTheme } from "@unthinkable/react-theme";
 
 import AddTicketModal from "../../components/AddTicketModal/AddTicketModal";
 import CustomTable from "../../components/CustomTable";
@@ -15,7 +16,7 @@ import {
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
 import images from "../../images";
-import styles from "./TicketsListing.style";
+import getStyles from "./TicketsListing.style";
 
 const TicketsListing = () => {
   const {
@@ -59,6 +60,9 @@ const TicketsListing = () => {
 
   const intl = useIntl();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [addNewTicket, setAddNewTicket] = useState(false);
 
   const handleTicketModal = () => {

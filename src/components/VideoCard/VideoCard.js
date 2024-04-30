@@ -1,13 +1,17 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { Linking, View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import images from "../../images";
 import { getValidUrl } from "../../utils/util";
-import styles from "./VideoCard.styles";
+import getStyles from "./VideoCard.styles";
 
 const VideoCard = ({ url }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <CustomTouchableOpacity
       style={styles.container}

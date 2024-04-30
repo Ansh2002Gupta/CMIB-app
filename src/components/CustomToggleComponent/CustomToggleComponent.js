@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import { RADIO_BUTTON_OPTIONS } from "../../constants/constants";
-import styles from "./CustomToggleComponent.style";
+import getStyles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = ({
   customLabelStyle,
@@ -21,6 +22,9 @@ const CustomToggleComponent = ({
   options,
   value,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
   useEffect(() => {
     if (typeof value !== "undefined") {
@@ -127,7 +131,7 @@ CustomToggleComponent.propTypes = {
   label: PropTypes.string,
   onValueChange: PropTypes.func,
   options: PropTypes.array,
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
 };
 
 export default CustomToggleComponent;

@@ -1,10 +1,10 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
-import colors from "../../assets/colors";
-import styles from "./Chip.style";
+import getStyles from "./Chip.style";
 
 const Chip = ({
   bgColor,
@@ -14,6 +14,8 @@ const Chip = ({
   customContainerStyle,
   isBackground,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
 
   return (
@@ -21,8 +23,11 @@ const Chip = ({
       customContainerStyle={customContainerStyle}
       customTextStyle={{
         ...(isWebView || isBackground
-          ? styles.chipStyleWeb(textColor, bgColor)
-          : styles.chipStyle(textColor)),
+          ? styles.chipStyleWeb(
+              textColor || theme.colors.orange,
+              bgColor || theme.colors.lightOrange
+            )
+          : styles.chipStyle(textColor || theme.colors.orange)),
         ...style,
       }}
     >
@@ -32,9 +37,7 @@ const Chip = ({
 };
 
 Chip.defaultProps = {
-  bgColor: colors.lightOrange,
   style: {},
-  textColor: colors.orange,
   customContainerStyle: {},
   isBackground: false,
 };

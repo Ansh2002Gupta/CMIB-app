@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 
-import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import styles from "./CustomCell.style";
+import getStyles from "./CustomCell.style";
 
 const CustomCell = ({
   disabled,
@@ -16,6 +17,9 @@ const CustomCell = ({
   textStyle,
   title,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <CustomTouchableOpacity
       onPress={onPress}

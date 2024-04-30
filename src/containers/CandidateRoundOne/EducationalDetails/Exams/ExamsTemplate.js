@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../../../components/CardComponent";
@@ -6,7 +7,7 @@ import CommonText from "../../../../components/CommonText";
 import CustomTextInput from "../../../../components/CustomTextInput";
 import MultiRow from "../../../../core/layouts/MultiRow";
 import { ATTEMPTS, MONTHS, YEARS } from "../../../../constants/constants";
-import styles from "./Exams.style";
+import getStyles from "./Exams.style";
 
 const ExamsTemplate = ({
   finalGroup1Attempt,
@@ -72,6 +73,8 @@ const ExamsTemplate = ({
   onChangeInterRank,
   onChangeInterYear,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const examDetailsConfig = [
     {
       content: (
@@ -315,7 +318,6 @@ const ExamsTemplate = ({
                 placeholder={intl.formatMessage({ id: "label.month" })}
                 isDropdown
                 noOfRows={2}
-                isEditable={false}
                 value={finalMonth}
                 options={MONTHS}
                 onChangeValue={onChangeFinalMonth}
@@ -327,7 +329,6 @@ const ExamsTemplate = ({
                 placeholder={intl.formatMessage({ id: "label.year" })}
                 isDropdown
                 value={finalYear}
-                isEditable={false}
                 options={YEARS}
                 onChangeValue={onChangeFinalYear}
               />
@@ -339,7 +340,6 @@ const ExamsTemplate = ({
                   id: "label.mark_in_percent",
                 })}
                 value={finalMark}
-                isEditable={false}
                 onChangeText={onChangeFinalMark}
               />
               <CustomTextInput
@@ -369,7 +369,7 @@ const ExamsTemplate = ({
                   isDropdown
                   noOfRows={2}
                   value={finalGroup1Month}
-                  isEditable={false}
+                   
                   options={MONTHS}
                   onChangeValue={onChangeFinalGroup1Month}
                 />
@@ -380,7 +380,7 @@ const ExamsTemplate = ({
                   placeholder={intl.formatMessage({ id: "label.year" })}
                   isDropdown
                   value={finalGroup1Year}
-                  isEditable={false}
+                   
                   options={YEARS}
                   onChangeValue={onChangeFinalGroup1Year}
                 />
@@ -391,7 +391,7 @@ const ExamsTemplate = ({
                   placeholder={intl.formatMessage({ id: "label.attempt" })}
                   isDropdown
                   value={finalGroup1Attempt}
-                  isEditable={false}
+                   
                   options={ATTEMPTS}
                   onChangeValue={onChangeFinalGroup1Attempt}
                 />
@@ -424,7 +424,6 @@ const ExamsTemplate = ({
                   isDropdown
                   noOfRows={2}
                   value={finalGroup2Month}
-                  isEditable={false}
                   options={MONTHS}
                   onChangeValue={onChangeFinalGroup2Month}
                 />
@@ -435,7 +434,6 @@ const ExamsTemplate = ({
                   placeholder={intl.formatMessage({ id: "label.year" })}
                   isDropdown
                   value={finalGroup2Year}
-                  isEditable={false}
                   options={YEARS}
                   onChangeValue={onChangeFinalGroup2Year}
                 />
@@ -446,7 +444,6 @@ const ExamsTemplate = ({
                   placeholder={intl.formatMessage({ id: "label.attempt" })}
                   isDropdown
                   value={finalGroup2Attempt}
-                  isEditable={false}
                   options={ATTEMPTS}
                   onChangeText={onChangeFinalGroup2Attempt}
                 />

@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
+import { useLocation } from "../../../routes";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import { TwoColumn } from "../../../core/layouts";
@@ -8,8 +10,9 @@ import { TwoColumn } from "../../../core/layouts";
 import CommonText from "../../../components/CommonText";
 import Stepper from "../../../components/Stepper";
 import StepperTabs from "../../../components/StepperTabs";
+import useIsWebView from "../../../hooks/useIsWebView";
 import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
-import styles from "./ApplicationFormStepper.style";
+import getStyles from "./ApplicationFormStepper.style";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
@@ -21,28 +24,39 @@ const ApplicationFormStepper = ({
   webActionButton,
 }) => {
   const intl = useIntl();
-  const steps = APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
+  const theme = useTheme();
+  const styles = getStyles(theme);
+  const location = useLocation();
+  const hasRoundTwo = location?.pathname.includes("round-two");
+
+  const steps = APPLICATION_FORM_STEPPER_OPTIONS(hasRoundTwo).map((step) =>
     intl.formatMessage({ id: step.title })
   );
+
+  const { isWebView } = useIsWebView();
 
   return (
     <>
       {isWeb ? (
         <View style={styles.stepperContainer}>
-          <View style={styles.headingContainerWeb}>
+          <View style={isWebView ? styles.headingContainerWeb : {}}>
             {!!headingText && (
               <TwoColumn
+                style={!isWebView ? styles.mainContainerMob : {}}
                 leftSection={
                   <CommonText
                     fontWeight={"600"}
                     customTextStyle={{
-                      ...styles.headingtextWeb,
-                      customMobHeadingText,
+                      ...(isWebView
+                        ? styles.headingtextWeb
+                        : styles.headingtextWebMobView),
+                      ...customMobHeadingText,
                     }}
                   >
                     {headingText}
                   </CommonText>
                 }
+                isLeftFillSpace
                 rightSection={!!webActionButton && webActionButton}
               />
             )}
@@ -59,12 +73,13 @@ const ApplicationFormStepper = ({
           {!!headingText && (
             <TwoColumn
               style={styles.headingContainer}
+              isLeftFillSpace
               leftSection={
                 <CommonText
                   fontWeight={"600"}
                   customTextStyle={{
                     ...styles.headingtext,
-                    customMobHeadingText,
+                    ...customMobHeadingText,
                   }}
                 >
                   {headingText}
@@ -76,9 +91,7 @@ const ApplicationFormStepper = ({
           <Stepper
             {...{
               activeStep: activeStep,
-              steps: APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
-                intl.formatMessage({ id: step.title })
-              ),
+              steps,
             }}
           />
         </View>

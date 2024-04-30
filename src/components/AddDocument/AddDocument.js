@@ -7,8 +7,10 @@ const AddDocument = ({
   requiredDocumentDetails,
   setRenderJobDetails,
   addDocumentField,
+  isEditable,
 }) => {
   const {
+    nonEditableData,
     addDocumentModal,
     documentDetail,
     editDocumentModal,
@@ -23,11 +25,13 @@ const AddDocument = ({
   } = useAddDocument({
     requiredDocumentDetails,
     setRenderJobDetails,
+    addDocumentField,
   });
 
   return (
     <AddDocumentTemplate
       {...{
+        nonEditableData,
         addDocumentField,
         addDocumentModal,
         documentDetail,
@@ -35,6 +39,7 @@ const AddDocument = ({
         handleDocumentDetailChange,
         handleMultiRowDocumentDetails,
         isFormValid,
+        isEditable,
         onClickAddDocument,
         onClickAddDocumentCancelButton,
         onClickAddDocumentSaveButton,

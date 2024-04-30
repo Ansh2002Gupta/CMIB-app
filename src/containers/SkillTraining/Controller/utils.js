@@ -72,6 +72,13 @@ function capitalizeFirstLetter(string) {
 }
 
 const updateSkillLevel = (skillLevelOptions, value) => {
+  if (typeof value === "string") {
+    const updatedSkillLevelOptions = skillLevelOptions.map((level) => {
+      const isSelected = level.value === value || level.name === value;
+      return { ...level, isSelected };
+    });
+    return updatedSkillLevelOptions;
+  }
   const updatedSkillLevelOptions = skillLevelOptions.map((level) => {
     const isSelected = value.some((v) => level.value === v || level.name === v);
     return { ...level, isSelected };

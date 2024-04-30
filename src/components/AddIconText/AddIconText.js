@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 
 import { TouchableOpacity } from "@unthinkable/react-core-components";
 
@@ -7,9 +8,11 @@ import CardComponent from "../CardComponent/CardComponent";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import images from "../../images";
-import styles from "./AddIconText.style";
+import getStyles from "./AddIconText.style";
 
 const AddIconText = ({ customViewStyle, label, onPress }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <TouchableOpacity onPress={onPress} style={customViewStyle}>
       <CardComponent customStyle={styles.customCardComponentStyle}>

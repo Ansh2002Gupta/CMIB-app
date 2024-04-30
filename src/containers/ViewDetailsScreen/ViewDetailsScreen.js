@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   Col,
   Platform,
@@ -8,7 +8,7 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -37,9 +37,8 @@ import {
   UNMARK_PREFER,
 } from "../../services/apiServices/apiEndPoint";
 import { COMPANY, MODULES } from "../../constants/constants";
-import colors from "../../assets/colors";
 import images from "../../images";
-import style, { getResponsiveStyles } from "./ViewDetailsScreen.style";
+import getStyles, { getResponsiveStyles } from "./ViewDetailsScreen.style";
 
 const SaveButton = ({
   errorInSaving,
@@ -50,10 +49,13 @@ const SaveButton = ({
   onSave,
   onUnSave,
   setToastMsg,
-  isSaveDefault = true,
+  isSaveDefault,
 }) => {
   const intl = useIntl();
   const isWebView = useIsWebView();
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const isMob = Platform.OS.toLowerCase() !== "web";
   const webProps = !isMob ? { size: "xs" } : {};
   const [isSaveButton, setIsSaveButton] = useState(isSaveDefault);
@@ -101,7 +103,7 @@ const SaveButton = ({
             width={20}
           />
         ) : (
-          <Spinner color={colors.lightGrey} thickness={1} {...webProps} />
+          <Spinner color={theme.colors.lightGrey} thickness={1} {...webProps} />
         )}
         {(currentBreakpoint === "md" || currentBreakpoint === "lg") && (
           <CommonText customTextStyle={style.textStyle} fontWeight="600">
@@ -129,8 +131,8 @@ const ViewDetailsScreen = () => {
   const [toastMsg, setToastMsg] = useState("");
   const [candidateProfile, setCandidateProfile] = useState();
 
-  const location = useLocation();
-  const { showSaveButton } = location.state ?? {};
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   const returnModuleWiseUrl = (module) => {
     switch (module) {
@@ -173,9 +175,17 @@ const ViewDetailsScreen = () => {
     navigate(-1);
   };
 
-  const getShortProfileDetails = ({ candidate_name, candidate_id }) => {
+  const getShortProfileDetails = ({
+    candidate_name,
+    candidate_id,
+    is_save,
+  }) => {
     candidate_name = capitalizePhrase(candidate_name);
-    setCandidateProfile({ name: candidate_name, id: candidate_id });
+    setCandidateProfile({
+      name: candidate_name,
+      id: candidate_id,
+      is_save: is_save,
+    });
   };
 
   return (
@@ -197,6 +207,7 @@ const ViewDetailsScreen = () => {
                       customTextStyle={getResponsiveStyles({
                         str: "titleText",
                         currentBreakpoint: currentBreakpoint,
+                        theme,
                       })}
                     >
                       {intl.formatMessage({ id: "label.candidate_details" })}
@@ -233,17 +244,19 @@ const ViewDetailsScreen = () => {
                   }
                   leftSectionStyle={style.shortProfileOuterContainer}
                   rightSection={
-                    <SaveButton
-                      id={params?.id}
-                      onSave={saveCandidateDetails}
-                      onUnSave={unSaveCandidateDetails}
-                      isSaving={isSavingCandidateDetails}
-                      isUnsaving={isUnSavingCandidateDetails}
-                      errorInSaving={errorInSavingCandidateDetails}
-                      errorInUnSaving={errorInUnSavingCandidateDetails}
-                      isSaveDefault={showSaveButton}
-                      {...{ setToastMsg }}
-                    />
+                    candidateProfile && (
+                      <SaveButton
+                        id={params?.id}
+                        onSave={saveCandidateDetails}
+                        onUnSave={unSaveCandidateDetails}
+                        isSaving={isSavingCandidateDetails}
+                        isUnsaving={isUnSavingCandidateDetails}
+                        errorInSaving={errorInSavingCandidateDetails}
+                        errorInUnSaving={errorInUnSavingCandidateDetails}
+                        isSaveDefault={!candidateProfile?.is_save}
+                        {...{ setToastMsg }}
+                      />
+                    )
                   }
                   rightSectionStyle={style.saveButtonContainer}
                 ></TwoColumn>

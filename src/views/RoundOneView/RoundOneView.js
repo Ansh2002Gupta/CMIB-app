@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 
 import { Base } from "../../core/layouts";
 
@@ -7,19 +8,25 @@ import RoundOneContainer from "../../containers/RoundOne/MainContainer";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { API_STATUS, USER_TYPE_CANDIDATE } from "../../constants/constants";
+import {
+  API_STATUS,
+  API_VERSION_QUERY_PARAM,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+  USER_TYPE_CANDIDATE,
+} from "../../constants/constants";
 import useFetch from "../../hooks/useFetch";
 import {
   CORE,
   GLOBAL_SESSIONS,
   ROUNDS,
-  ROUND_ONE_DASHBOARD,
+  ROUND_ONE_BOARD,
   USER_TYPE_COMPANY,
 } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { setRoundsData } from "../../globalContext/sidebar/sidebarActions";
 import { isObjectFilled } from "../../utils/util";
-import styles from "./RoundOneView.style";
+import getStyles from "./RoundOneView.style";
 
 const RoundOneView = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -31,6 +38,9 @@ const RoundOneView = () => {
   const selectedModule = sideBarState?.selectedModule?.key;
   const sessionId = sideBarState?.selectedSession?.value;
   const savedRoundsData = sideBarState?.roundsData;
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const { data, fetchData } = useFetch({
     url: CORE + `/${selectedModule}` + GLOBAL_SESSIONS + `/${sessionId}`,
@@ -52,7 +62,12 @@ const RoundOneView = () => {
       `/${selectedModule}` +
       ROUNDS +
       `/${roundOneId}` +
-      ROUND_ONE_DASHBOARD,
+      `${ROUND_ONE_BOARD}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -92,7 +107,7 @@ const RoundOneView = () => {
     <Base style={styles.containerViewStyle}>
       {userProfileDetails?.userDetails?.user_type?.toLowerCase() ===
       USER_TYPE_CANDIDATE ? (
-        <CandidateRoundOneContainer hasRoundone />
+        <CandidateRoundOneContainer hasRoundone savedRoundId={savedRoundId} />
       ) : (
         <>
           {(isCardsDataLoading || cardsApiStatus === API_STATUS.IDLE) && (
@@ -100,7 +115,7 @@ const RoundOneView = () => {
           )}
           {!isCardsDataLoading && !isErrorOnCardsData && !!cardsData && (
             <RoundOneContainer
-              cardsData={cardsData}
+              cardsData={cardsData?.application_form}
               hasRoundone
               roundId={roundOneId}
             />

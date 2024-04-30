@@ -1,13 +1,13 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-import colors from "../../assets/colors";
+  return {
+    borderStyle: {
+      borderBottomWidth: 1,
+      borderColor: colors.lightGrey,
+      margin: 0,
+    },
+  };
+};
 
-const styles = StyleSheet.create({
-  borderStyle: {
-    borderBottomWidth: 1,
-    borderColor: colors.lightGrey,
-    margin: 0,
-  },
-});
-
-export default styles;
+export default getStyles;

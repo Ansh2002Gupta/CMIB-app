@@ -1,16 +1,19 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Row } from "@unthinkable/react-core-components";
 
 import { CustomTabs } from "../../components/Tab/CustomTabs";
 import CommonText from "../../components/CommonText";
 import JobApplicants from "../JobApplicantsView/JobApplicantsView";
 import SavedCandidates from "../SavedCandidatesView";
-import styles from "./Candidates.style";
 import JobSeekers from "../JobSeekers";
+import getStyles from "./Candidates.style";
 
 const Candidates = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <CustomTabs

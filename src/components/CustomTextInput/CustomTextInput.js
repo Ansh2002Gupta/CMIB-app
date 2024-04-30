@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   Platform,
@@ -23,9 +24,8 @@ import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getImageSource, yesNoToBoolean } from "../../utils/util";
 import images from "../../images";
-import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
-import style from "./CustomTextInput.style";
+import getStyles from "./CustomTextInput.style";
 import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 import TextInputWithChip from "../TextInputWithChip/TextInputWithChip";
@@ -109,15 +109,22 @@ const CustomTextInput = (props) => {
     isSingleSelection,
     isTextInputWithChip,
     onChipUpdate,
+    useExactToggleValue,
     showMonthYearPicker,
     datePickerContainer,
     checkBoxTextStyle,
+    isViewMode = false,
+    viewText,
+    customErrorViewStyle,
     ...remainingProps
   } = props;
 
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWebPlatform = Platform.OS === "web";
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
 
@@ -137,7 +144,7 @@ const CustomTextInput = (props) => {
   const platformSpecificProps = Platform.select({
     web: {},
     default: {
-      placeholderTextColor: colors.darkGrey,
+      placeholderTextColor: theme.colors.darkGrey,
     },
   });
 
@@ -156,7 +163,7 @@ const CustomTextInput = (props) => {
   };
 
   const webProps = isWebPlatform
-    ? { size: "xs", thickness: 3, color: colors.white }
+    ? { size: "xs", thickness: 3, color: theme.colors.white }
     : {};
 
   const textInputWebProps = isWebPlatform
@@ -302,7 +309,13 @@ const CustomTextInput = (props) => {
           onValueChange={(item) => {
             onChangeValue(item);
           }}
-          value={typeof value === "boolean" && value === true ? 0 : 1}
+          value={
+            useExactToggleValue
+              ? value
+              : typeof value === "boolean" && value === true
+              ? 0
+              : 1
+          }
         />
       );
     }
@@ -323,6 +336,7 @@ const CustomTextInput = (props) => {
       );
     }
     if (isTextInputWithChip) {
+      console.log("value:", value);
       return (
         <TextInputWithChip
           value={value}
@@ -493,7 +507,11 @@ const CustomTextInput = (props) => {
     >
       {!!label && showLabel && (
         <View style={style.innerLabelContainer}>
-          <CustomLabelView label={label} isMandatory={isMandatory} />
+          <CustomLabelView
+            label={label}
+            isMandatory={isMandatory}
+            customLabelStyle={customLabelStyle}
+          />
           {!!label2 && (
             <CommonText customContainerStyle={style.marginRight10}>
               {label2}
@@ -501,28 +519,35 @@ const CustomTextInput = (props) => {
           )}
         </View>
       )}
-      {renderTextInput()}
-      {(isError || isMultiline) && (
-        <View
-          style={{
-            ...style.errorAndCountLimitBox,
-            ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
-          }}
-        >
-          {isError && (
-            <CommonText
-              customTextStyle={[style.errorMsg, customErrorStyle]}
-              fontWeight={customErrorStyle?.fontWeight || "600"}
+      {isViewMode ? (
+        <CommonText>{viewText}</CommonText>
+      ) : (
+        <>
+          {renderTextInput()}
+          {(isError || isMultiline) && (
+            <View
+              style={{
+                ...style.errorAndCountLimitBox,
+                ...customErrorViewStyle,
+                ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
+              }}
             >
-              {errorMessage}
-            </CommonText>
+              {isError && (
+                <CommonText
+                  customTextStyle={[style.errorMsg, customErrorStyle]}
+                  fontWeight={customErrorStyle?.fontWeight || "600"}
+                >
+                  {errorMessage}
+                </CommonText>
+              )}
+              {isMultiline && (
+                <CommonText customTextStyle={style.limitStyle}>{`${
+                  value?.length ?? 0
+                }/${maxLength}`}</CommonText>
+              )}
+            </View>
           )}
-          {isMultiline && (
-            <CommonText customTextStyle={style.limitStyle}>{`${
-              value?.length ?? 0
-            }/${maxLength}`}</CommonText>
-          )}
-        </View>
+        </>
       )}
     </View>
   );
@@ -665,6 +690,8 @@ CustomTextInput.propTypes = {
   isTextInputWithChip: PropTypes.bool,
   showLabel: PropTypes.bool,
   onChipUpdate: PropTypes.func,
+  isViewMode: PropTypes.bool,
+  viewText: PropTypes.string,
 };
 
 export default CustomTextInput;

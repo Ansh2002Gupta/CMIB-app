@@ -1,23 +1,19 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import {
-  FlatList,
-  Platform,
-  Row,
-  View,
-} from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
+import { Platform, Row, View } from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
+import CustomFlatList from "../CustomFlatList";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
-import PopupMessage from "../PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
@@ -25,7 +21,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
-import styles from "./CustomTable.style";
+import getStyles from "./CustomTable.style";
 
 const CustomTable = ({
   addNewTicket,
@@ -46,14 +42,13 @@ const CustomTable = ({
   getStatusStyle,
   handleLoadMore,
   handlePageChange,
-  handleTicketModal,
   handleRowPerPageChange,
   handleSearchResults,
   headingTexts,
-  handleSaveAddTicket,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
+  isShowPagination,
   isTicketListingLoading,
   isGeetingJobbSeekers,
   isFirstPageReceived,
@@ -61,6 +56,8 @@ const CustomTable = ({
   loadingMore,
   onIconPress,
   placeholder,
+  isRenderFooterComponent,
+  renderFooterComponenet,
   rowsLimit,
   rowsPerPage,
   showSearchBar,
@@ -68,12 +65,7 @@ const CustomTable = ({
   showInterviewTimeModal,
   statusText,
   subHeadingText,
-  statusLabels,
-  showPopUpWithID,
   setShowPopUpWithID,
-  setModalData,
-  setShowJobOfferResponseModal,
-  setShowInterviewTimeModal,
   tableHeading,
   tableIcon,
   totalcards,
@@ -81,15 +73,21 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
-  statusData,
-  queryTypeData,
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
+  isStatusTextBoolean,
+  popUpMessage,
+  selectedTabs,
+  customTableTopSectionStyle,
+  totalCardHeading,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const popUpRef = useRef(null);
 
@@ -130,7 +128,12 @@ const CustomTable = ({
   };
 
   return (
-    <View style={{...(isWebView ? styles.container : styles.mobileMainContainer), ...customTableStyle}}>
+    <View
+      style={{
+        ...(isWebView ? styles.container : styles.mobileMainContainer),
+        ...customTableStyle,
+      }}
+    >
       <TwoRow
         topSection={
           <>
@@ -189,7 +192,9 @@ const CustomTable = ({
                     ...styles.textSize,
                   }}
                 >
-                  {intl.formatMessage({ id: "label.tickets" })}
+                  {totalCardHeading
+                    ? totalCardHeading
+                    : intl.formatMessage({ id: "label.tickets" })}
                   &nbsp;&#58;&nbsp;
                 </CommonText>
 
@@ -207,7 +212,7 @@ const CustomTable = ({
         isBottomFillSpace
         bottomSection={
           <TwoRow
-            style={styles.tableTopSection}
+            style={{ ...styles.tableTopSection, ...customTableTopSectionStyle }}
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
@@ -221,144 +226,154 @@ const CustomTable = ({
                       ...containerStyle,
                     }}
                   >
-                    {isWebView && (
-                      <MultiColumn
-                        columns={getColoumConfigs(tableHeading, isHeading)}
-                        style={
-                          !!data
-                            ? styles.columnHeaderStyle
-                            : styles.columnHeaderStyleWithBorder
-                        }
-                      />
-                    )}
-                    <FlatList
-                      data={data || []}
-                      showsVerticalScrollIndicator={false}
-                      style={styles.flatListStyle}
-                      keyExtractor={(item, index) => index?.toString()}
-                      renderItem={({ item, index }) => {
-                        const statusRenderText = getRenderText(
-                          item,
-                          statusText,
-                          formatConfig
-                        );
-                        return (
-                          <>
-                            {isWebView ? (
-                              <MultiColumn
-                                columns={getColoumConfigs(
-                                  item,
-                                  !isHeading,
-                                  index
-                                )}
-                                style={styles.columnStyleBorder}
-                              />
-                            ) : (
-                              <>
-                                {mobileComponentToRender ? (
-                                  mobileComponentToRender(item, index)
-                                ) : (
-                                  <View style={styles.mobileContainer}>
-                                    <View style={styles.mobileDetailRow}>
-                                      <CommonText
-                                        fontWeight={"600"}
-                                        customTextStyle={styles.cellTextStyle()}
-                                      >
-                                        {getRenderText(item, headingTexts) ||
-                                          "-"}
-                                      </CommonText>
-                                      <Row style={styles.rowStyling}>
+                    <View style={isWebView ? styles.tableSectionForweb : {}}>
+                      {isWebView && tableHeading && (
+                        <MultiColumn
+                          columns={getColoumConfigs(
+                            tableHeading,
+                            isHeading,
+                            0,
+                            selectedTabs
+                          )}
+                          style={
+                            !!data
+                              ? styles.columnHeaderStyle
+                              : styles.columnHeaderStyleWithBorder
+                          }
+                        />
+                      )}
+                      <CustomFlatList
+                        data={data || []}
+                        showsVerticalScrollIndicator={false}
+                        style={styles.flatListStyle}
+                        keyExtractor={(item, index) => index?.toString()}
+                        renderItem={({ item, index }) => {
+                          return (
+                            <>
+                              {isWebView ? (
+                                <MultiColumn
+                                  columns={getColoumConfigs(
+                                    item,
+                                    !isHeading,
+                                    index,
+                                    selectedTabs
+                                  )}
+                                  style={{
+                                    ...((tableHeading || index > 0) &&
+                                      styles.columnStyleBorder),
+                                  }}
+                                />
+                              ) : (
+                                <>
+                                  {mobileComponentToRender ? (
+                                    mobileComponentToRender(item, index)
+                                  ) : (
+                                    <View style={styles.mobileContainer}>
+                                      <View style={styles.mobileDetailRow}>
                                         <CommonText
-                                          customTextStyle={
-                                            styles.tableQueryText
-                                          }
+                                          fontWeight={"600"}
+                                          customTextStyle={styles.cellTextStyle()}
                                         >
-                                          {getRenderText(
-                                            item,
-                                            subHeadingText,
-                                            formatConfig
-                                          )}
+                                          {getRenderText(item, headingTexts) ||
+                                            "-"}
                                         </CommonText>
-                                        {!!extraDetailsText && (
-                                          <>
-                                            <View style={styles.dot} />
-                                            <CommonText
-                                              customTextStyle={
-                                                styles.tableQueryText
-                                              }
-                                            >
-                                              {extraDetailsText +
-                                                ": " +
-                                                getRenderText(
-                                                  item,
-                                                  extraDetailsKey
-                                                )}
-                                            </CommonText>
-                                          </>
+                                        <Row style={styles.rowStyling}>
+                                          <CommonText
+                                            customTextStyle={
+                                              styles.tableQueryText
+                                            }
+                                          >
+                                            {getRenderText(
+                                              item,
+                                              subHeadingText
+                                            ) || "-"}
+                                          </CommonText>
+                                          {!!extraDetailsText && (
+                                            <>
+                                              <View style={styles.dot} />
+                                              <CommonText
+                                                customTextStyle={
+                                                  styles.tableQueryText
+                                                }
+                                              >
+                                                {extraDetailsText +
+                                                  ": " +
+                                                  getRenderText(
+                                                    item,
+                                                    extraDetailsKey
+                                                  )}
+                                              </CommonText>
+                                            </>
+                                          )}
+                                        </Row>
+                                      </View>
+                                      <View style={styles.rowsPerPageWeb}>
+                                        {!!item.status && (
+                                          <Chip
+                                            label={getRenderText(
+                                              item,
+                                              statusText
+                                            )}
+                                            style={getStatusStyle(
+                                              !!item?.active
+                                                ? item.active
+                                                : item.status
+                                            )}
+                                          />
                                         )}
-                                      </Row>
-                                    </View>
-                                    <View style={styles.rowsPerPageWeb}>
-                                      {!!item.status && (
-                                        <Chip
-                                          label={getRenderText(
-                                            item,
-                                            statusText
-                                          )}
-                                          style={getStatusStyle(
-                                            !!item?.active
-                                              ? item.active
-                                              : item.status
-                                          )}
+                                        <TouchableImage
+                                          onPress={() => {
+                                            onIconPress(item);
+                                          }}
+                                          source={tableIcon}
+                                          style={styles.iconTicket}
                                         />
-                                      )}
-                                      <TouchableImage
-                                        onPress={() => {
-                                          onIconPress(item);
-                                        }}
-                                        source={tableIcon}
-                                        style={styles.iconTicket}
-                                      />
+                                      </View>
                                     </View>
-                                  </View>
-                                )}
-                              </>
-                            )}
-                          </>
-                        );
-                      }}
-                      {...flatlistProps}
-                      ListFooterComponent={() => {
-                        if ((!data || !!data) && !data?.length)
-                          return (
-                            <CommonText
-                              customContainerStyle={styles.loadingStyleNoData}
-                              customTextStyle={styles.noMoreData}
-                            >
-                              {intl.formatMessage({ id: "label.no_data" })}
-                            </CommonText>
+                                  )}
+                                </>
+                              )}
+                            </>
                           );
-                        if (loadingMore && !isFirstPageReceived) {
-                          return (
-                            <View style={styles.loadingStyle}>
-                              <Spinner thickness={2} {...webProps} />
-                            </View>
-                          );
-                        }
-                        if (allDataLoaded) {
-                          return (
-                            <CommonText
-                              customContainerStyle={styles.loadingStyle}
-                              customTextStyle={styles.noMoreData}
-                            >
-                              {intl.formatMessage({ id: "label.no_more_data" })}
-                            </CommonText>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    {isWebView && (
+                        }}
+                        {...flatlistProps}
+                        ListFooterComponent={() => {
+                          if ((!data || !!data) && !data?.length)
+                            return (
+                              <CommonText
+                                customContainerStyle={styles.loadingStyleNoData}
+                                customTextStyle={styles.noMoreData}
+                              >
+                                {intl.formatMessage({ id: "label.no_data" })}
+                              </CommonText>
+                            );
+                          if (isRenderFooterComponent) {
+                            return renderFooterComponenet();
+                          }
+                          if (loadingMore && !isFirstPageReceived) {
+                            return (
+                              <View style={styles.loadingStyle}>
+                                <Spinner thickness={2} {...webProps} />
+                              </View>
+                            );
+                          }
+                          if (allDataLoaded) {
+                            return (
+                              <CommonText
+                                customContainerStyle={styles.loadingStyle}
+                                customTextStyle={styles.noMoreData}
+                              >
+                                {intl.formatMessage({
+                                  id: "label.no_more_data",
+                                })}
+                              </CommonText>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                    </View>
+                    {isWebView && isShowPagination && (
                       <PaginationFooter
                         {...{
                           currentPage,
@@ -379,7 +394,8 @@ const CustomTable = ({
             isBottomFillSpace={false}
             bottomSection={
               isWeb &&
-              !isWebView && (
+              !isWebView &&
+              isShowPagination && (
                 <PaginationFooter
                   {...{
                     currentPage,
@@ -422,6 +438,8 @@ const CustomTable = ({
 };
 
 CustomTable.defaultProps = {
+  isRenderFooterComponent: false,
+  renderFooterComponenet: () => {},
   addNewTicket: false,
   data: [],
   formatConfig: {},
@@ -432,9 +450,10 @@ CustomTable.defaultProps = {
   subHeadingText: "",
   selectedFilterOptions: [],
   totalcards: 0,
+  isShowPagination: true,
   onIconPress: () => {},
   placeholder: "Search",
-  getStatusStyle: ()=>{},
+  getStatusStyle: () => {},
   isTotalCardVisible: true,
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,
@@ -442,30 +461,33 @@ CustomTable.defaultProps = {
 
 CustomTable.propTypes = {
   addNewTicket: PropTypes.bool,
-  allDataLoaded: PropTypes.bool.isRequired,
-  currentPage: PropTypes.number.isRequired,
+  allDataLoaded: PropTypes.bool,
+  currentPage: PropTypes.number,
   data: PropTypes.array,
   formatConfig: PropTypes.object,
-  filterCategory: PropTypes.array.isRequired,
-  getColoumConfigs: PropTypes.func.isRequired,
+  filterCategory: PropTypes.array,
+  getColoumConfigs: PropTypes.func,
   getStatusStyle: PropTypes.func,
+  isShowPagination: PropTypes.bool,
   filterApplyHandler: PropTypes.func,
-  handlePageChange: PropTypes.func.isRequired,
-  handleRowPerPageChange: PropTypes.func.isRequired,
-  handleSearchResults: PropTypes.func.isRequired,
-  handleLoadMore: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func,
+  handleRowPerPageChange: PropTypes.func,
+  handleSearchResults: PropTypes.func,
+  handleLoadMore: PropTypes.func,
   handleTicketModal: PropTypes.func,
   headingTexts: PropTypes.array,
-  isHeading: PropTypes.bool.isRequired,
+  isHeading: PropTypes.bool,
   isTicketListingLoading: PropTypes.bool,
   isGeetingJobbSeekers: PropTypes.bool,
   indexOfFirstRecord: PropTypes.number,
   indexOfLastRecord: PropTypes.number,
-  loadingMore: PropTypes.bool.isRequired,
+  loadingMore: PropTypes.bool,
   onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
-  rowsLimit: PropTypes.array.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
+  isRenderFooterComponent: PropTypes.bool,
+  renderFooterComponenet: PropTypes.func,
+  rowsLimit: PropTypes.array,
+  rowsPerPage: PropTypes.number,
   showSearchBar: PropTypes.bool,
   statusData: PropTypes.array,
   workModeData: PropTypes.array,
@@ -480,9 +502,9 @@ CustomTable.propTypes = {
   industryData: PropTypes.array,
   statusText: PropTypes.string,
   selectedFilterOptions: PropTypes.array,
-  subHeadingText: PropTypes.array,
-  tableHeading: PropTypes.object.isRequired,
-  tableIcon: PropTypes.any.isRequired,
+  subHeadingText: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  tableHeading: PropTypes.object,
+  tableIcon: PropTypes.any,
   totalcards: PropTypes.number,
   placeholder: PropTypes.string,
 };

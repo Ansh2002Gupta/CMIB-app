@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { View, TextInput, Platform } from "@unthinkable/react-core-components";
 
@@ -9,7 +10,7 @@ import MultiRow from "../../core/layouts/MultiRow";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
-import styles from "./CounterInput.style";
+import getStyles from "./CounterInput.style";
 
 const CounterInput = ({
   customErrorStyle,
@@ -24,6 +25,8 @@ const CounterInput = ({
   label,
   selectedValue,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [count, setCount] = useState(selectedValue || 0);
   const textInputRef = useRef(null);
   const ArrowUp = images.iconArrowUp;

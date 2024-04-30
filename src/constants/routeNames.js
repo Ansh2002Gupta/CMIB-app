@@ -23,9 +23,15 @@ export const navigations = {
   //sub routes
   ALL_JOBS: "all-jobs",
   APPLIED_JOBS_REDIRECT: "/ca-jobs/job-detail",
+  APPLICATION_FORM_SUBROUTE: "application-form/",
   APPLICATION_FORM: "application-form/:id",
+  CAMPUS_INTERVIEW_MANAGEMENT: "campus-interview-management",
   CANDIDATE_DETAILS_SUBROUTE: "candidate-details",
   CANDIDATE_DETAILS: "/candidate-details/:id",
+  CENTRE_WISE_COMPANY: "centre-wise-company",
+  SHORTLISTING_CONSENT: "shortlisting-candidate/:id",
+  COMPANY_DETAILS: "company-details",
+  CONSENT_MARKING_MANAGEMENT: "consent-marking-management",
   APPLIED_JOBS: "applied-jobs",
   CANDIDATES: "candidates",
   JOB_APPLICANTS: "job-applicants",
@@ -42,6 +48,9 @@ export const navigations = {
   ADD_NEW_JOBS: "add-new-jobs",
   DETAILS_JOBS: "posted-jobs/:id",
   EDIT_JOB: "edit-job",
+
+  //dummy route
+  DUMMY: "dummy",
   JOB_DETAIL: "job-detail",
   JOB_PROFILE: "/job-profile",
   VIEW_JOB_DETAILS: "applicant-job-details",
@@ -50,7 +59,4 @@ export const navigations = {
   OTHER_PACKAGES: "other-packages",
   MANAGE_SUBSCRIPTION: "manage-subscriptions",
   CANDIDATE_DETAIL: "candidate-details",
-
-  //dummy routes
-  CONFIGURABLE_LIST: "dummy/configurable-list",
 };

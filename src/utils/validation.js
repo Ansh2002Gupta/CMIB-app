@@ -1,10 +1,20 @@
-import { alphaNumericRegex, numRegex, VALID_EMAIL, VALID_GSTIN, VALID_OTP } from "../constants/constants";
+import {
+  alphaNumericRegex,
+  FORM_STATES,
+  numRegex,
+  VALID_EMAIL,
+  VALID_GSTIN,
+  VALID_OTP,
+  VALID_PAN,
+  VALID_TAN,
+} from "../constants/constants";
 import {
   gstNumberRegex,
   mailformat,
   NEW_PASSWORD_VALIDATIONS,
   otpRegex,
   panNumberRegex,
+  tanNumberRegex,
 } from "../constants/Regex";
 
 export const isStringContainsNumber = (string) =>
@@ -32,8 +42,8 @@ export const numericValidator = (val) => {
 };
 
 export const alphaNumericValidator = (val) => {
- return val === "" || alphaNumericRegex.test(String(val));
-}
+  return val === "" || alphaNumericRegex.test(String(val));
+};
 
 export const validateEmail = (userEmail) => {
   if (!userEmail.toLowerCase().match(mailformat)) {
@@ -44,14 +54,21 @@ export const validateEmail = (userEmail) => {
 
 export const validatePAN = (pan) => {
   if (!pan.match(panNumberRegex)) {
-    return VALID_EMAIL;
+    return VALID_PAN;
   }
   return "";
-}
+};
 
 export const validateGSTIN = (gstNumber) => {
   if (!gstNumber.match(gstNumberRegex)) {
     return VALID_GSTIN;
+  }
+  return "";
+};
+
+export const validateTAN = (tanNumber) => {
+  if (!tanNumber.match(tanNumberRegex)) {
+    return VALID_TAN;
   }
   return "";
 };
@@ -101,4 +118,14 @@ export const handleNewPasswordChange = ({
   if (!!confirmNewPassword && !!val && confirmNewPassword === val) {
     setError("");
   }
+};
+
+export const getValidMode = (mode) => {
+  if (
+    mode?.toLowerCase() === FORM_STATES.EDITABLE ||
+    mode?.toLowerCase() === FORM_STATES.VIEW_ONLY
+  ) {
+    return true;
+  }
+  return false;
 };

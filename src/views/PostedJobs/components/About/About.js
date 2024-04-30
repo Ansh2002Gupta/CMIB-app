@@ -1,6 +1,6 @@
 import React from "react";
+
 import DetailCard from "../../../../components/DetailCard";
-import { View } from "@unthinkable/react-core-components";
 
 const About = ({ details = [], style = {} }) => {
   return (

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   TouchableOpacity,
@@ -19,6 +20,7 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
+import { urlService } from "../../../services/urlService";
 import { COMPANY_LISTING } from "../../../services/apiServices/apiEndPoint";
 import {
   FILTER_TYPE_ENUM,
@@ -28,7 +30,7 @@ import {
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
-import styles from "../JobSeekers.style";
+import getStyles from "../JobSeekers.style";
 import TouchableImage from "../../../components/TouchableImage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 
@@ -40,9 +42,11 @@ const initialFilterState = {
 };
 
 const useJobSeekers = () => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const isMob = Platform.OS.toLowerCase() !== "web";
   const defaultCategory = "Experience";
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -67,11 +71,11 @@ const useJobSeekers = () => {
   });
 
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const {

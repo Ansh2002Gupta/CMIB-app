@@ -1,4 +1,8 @@
-import { DOCUMENT_TYPE, document_keys } from "../../../../constants/constants";
+import {
+  DOCUMENT_TYPE,
+  NEWLY_QUALIFIED,
+  document_keys,
+} from "../../../../constants/constants";
 import { convertStringtoNumber } from "../../../../utils/util";
 
 export const mapMonthyApiToUI = () => {
@@ -169,7 +173,7 @@ export const mapPostedPlaceApiToUI = () => {
   ];
 };
 
-export const mapDataToUI = (data) => {
+export const mapDataToUI = (data, isWebView) => {
   return {
     designation: data?.designation || "-",
     compensation: convertStringtoNumber(data?.compensation) || "-",
@@ -177,6 +181,9 @@ export const mapDataToUI = (data) => {
     role_responsibility: data?.role_responsibility || "-",
     ctc_details: data?.ctc_details || "-",
     otherInfo: data?.other_details || "-",
+    job_type: data?.job_type || "-",
+    flexi_hours: data?.flexi_hours === "yes" ? 0 : 1 || "-",
+    work_exp_range_id: data?.work_exp_range_id || "-",
     monthly: [
       {
         key: "monthly_basic",
@@ -184,7 +191,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_basic) || "-",
         placeholder: "label.basic",
         isMandatory: true,
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -195,7 +202,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_hra) || "-",
         isMandatory: true,
         placeholder: "label.hra",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -206,7 +213,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_other) || "-",
         isMandatory: true,
         placeholder: "label.others",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -217,7 +224,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_fixed_pay) || "-",
         isMandatory: true,
         placeholder: "label.fixedPay",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -229,7 +236,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.monthly?.monthly_variable_pay) || "-",
         isMandatory: true,
         placeholder: "label.variablePay",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -241,7 +248,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.monthly?.monthly_semi_variable) || "-",
         isMandatory: true,
         placeholder: "label.semiVariable",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -252,7 +259,7 @@ export const mapDataToUI = (data) => {
         value: convertStringtoNumber(data?.monthly?.monthly_take_home) || "-",
         isMandatory: true,
         placeholder: "label.takeHome",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -264,7 +271,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.monthly?.monthly_gross_salary) || "-",
         isMandatory: true,
         placeholder: "label.enter_gross_Salary",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isEditable: false,
@@ -279,7 +286,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.yearly?.yearly_one_time_payment) || "-",
         isMandatory: true,
         placeholder: "label.oneTimePayment",
-        isRow: true,
+        isRow: isWebView,
         maxLength: 9,
         isRupee: true,
         isNumeric: true,
@@ -291,7 +298,7 @@ export const mapDataToUI = (data) => {
           convertStringtoNumber(data?.yearly?.yearly_total_gross_salary) || "-",
         isMandatory: true,
         placeholder: "label.totalGrossSalary",
-        isRow: true,
+        isRow: isWebView,
         isEditable: false,
         maxLength: 9,
         isRupee: true,
@@ -325,7 +332,16 @@ export const mapDataToUI = (data) => {
 };
 
 export const mapDocsToUI = (data) => {
+  if (!data.length) {
+    return getDocumentField();
+  }
+
   const newDocsArray = data.map((docs, index) => {
+    const idObject = docs?.id
+      ? {
+          id: docs?.id,
+        }
+      : {};
     return [
       {
         cellID: index + 1,
@@ -336,7 +352,6 @@ export const mapDocsToUI = (data) => {
       },
       {
         cellID: index + 1,
-        id: 1,
         includeAllKeys: true,
         key: document_keys.DOCUMENT_TYPE,
         label: "label.document_type",
@@ -348,12 +363,14 @@ export const mapDocsToUI = (data) => {
         value: docs?.doc_type,
       },
       {
+        ...idObject,
         cellID: index + 1,
         key: document_keys.NUMBER_OF_COPIES,
         label: "label.no_of_copies",
         placeholder: "label.select_no_of_copies",
         value: docs?.no_of_photocopies,
         isNumeric: true,
+        isEditable: true,
       },
       {
         cellID: index + 1,
@@ -377,7 +394,6 @@ export const getDocumentField = () => {
     },
     {
       cellID: 1,
-      id: 1,
       includeAllKeys: true,
       key: document_keys.DOCUMENT_TYPE,
       label: "label.document_type",
@@ -395,6 +411,7 @@ export const getDocumentField = () => {
       placeholder: "label.select_no_of_copies",
       value: "",
       isNumeric: true,
+      isEditable: true,
     },
     {
       cellID: 1,
@@ -405,10 +422,12 @@ export const getDocumentField = () => {
 };
 
 export const mapPostingDetailsToUI = (data) => {
+  if (!data.length) {
+    return getPlaceOfPostingDetails();
+  }
   const newDocsArray = data.map((docs, index) => {
     const location = Object.keys(docs)[0];
     const details = docs[location];
-
     return [
       {
         cellID: index + 1,
@@ -416,6 +435,7 @@ export const mapPostingDetailsToUI = (data) => {
         label: "label.place_of_posting",
         placeholder: "label.select_place_of_posting",
         value: location,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -424,6 +444,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.general",
         value: details.general,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -432,6 +453,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.obc",
         value: details.obc,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -440,6 +462,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.sc",
         value: details.sc,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -448,6 +471,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.st",
         value: details.st,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -456,6 +480,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.ph",
         value: details.ph,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -464,6 +489,7 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.others",
         value: details.others,
         isNumeric: true,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -472,6 +498,8 @@ export const mapPostingDetailsToUI = (data) => {
         placeholder: "label.total",
         value: details.total,
         isNumeric: true,
+        isEditable: false,
+        width: 4,
       },
       {
         cellID: index + 1,
@@ -492,6 +520,7 @@ export const getPlaceOfPostingDetails = () => {
       label: "label.place_of_posting",
       placeholder: "label.select_place_of_posting",
       value: "",
+      width: 4,
     },
     {
       cellID: 1,
@@ -500,6 +529,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.general",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -508,6 +538,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.obc",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -516,6 +547,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.sc",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -524,6 +556,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.st",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -532,6 +565,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.ph",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -540,6 +574,7 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.others",
       value: "",
       isNumeric: true,
+      width: 4,
     },
     {
       cellID: 1,
@@ -548,6 +583,8 @@ export const getPlaceOfPostingDetails = () => {
       placeholder: "label.total",
       value: "",
       isNumeric: true,
+      isEditable: false,
+      width: 4,
     },
     {
       cellID: 1,
@@ -586,7 +623,23 @@ const mapPostingDetailsToPayload = (fieldsArray) => {
   return { posting_details: postingDetails };
 };
 
-export const mapDataToPayload = (data) => {
+export const mapDataToPayload = (data, currentModule) => {
+  const overSeasProps =
+    currentModule !== NEWLY_QUALIFIED
+      ? {
+          job_type: data?.job_type,
+          flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",
+          work_exp_range_id: data?.work_exp_range_id,
+        }
+      : {};
+
+  const bond_details_paylaod =
+    data?.bond_details?.is_bond_included === 0
+      ? {
+          bond_period_in_mm: data?.bond_details?.bond_period_in_mm,
+          exit_amount: data?.bond_details?.exit_amount,
+        }
+      : {};
   const payload = {
     designation: data?.designation,
     compensation: data?.compensation,
@@ -600,15 +653,12 @@ export const mapDataToPayload = (data) => {
     bond_details: {
       is_bond_included:
         data?.bond_details?.is_bond_included === 0 ? "yes" : "no",
-      bond_period_in_mm: data?.bond_details?.bond_period_in_mm,
-      exit_amount: data?.bond_details?.exit_amount,
+      ...bond_details_paylaod,
     },
     specific_performa_required:
       data?.specific_performa_required === 0 ? "yes" : "no",
     other_details: data?.otherInfo,
-    job_type: "WFH",
-    flexi_hours: data?.flexi_hours === 0 ? "yes" : "no",
-    work_exp_range_id: "30",
+    ...overSeasProps,
   };
 
   // Map monthly data
@@ -633,13 +683,14 @@ export const mapDataToPayload = (data) => {
     } else if (item.key === "document_type") {
       acc[cellID].doc_type = item.value;
     } else if (item.key === "no_of_copies") {
-      acc[cellID].no_of_photocopies = parseInt(item.value, 10);
+      acc[cellID].no_of_photocopies = item.value || 0;
     }
-    acc[cellID].id = cellID; // Assuming cellID is the document's ID
+    if (!!item.id) {
+      acc[cellID].id = item?.id;
+    }
     return acc;
   }, {});
 
-  // Convert the grouped data into an array of document objects
   payload.required_docs = Object.values(docsByCellID);
 
   return payload;

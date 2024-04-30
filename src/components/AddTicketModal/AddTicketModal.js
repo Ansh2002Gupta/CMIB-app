@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { Platform, View } from "@unthinkable/react-core-components";
 
@@ -7,7 +8,7 @@ import ActionPairButton from "../ActionPairButton";
 import CustomModal from "../CustomModal";
 import CustomTextInput from "../CustomTextInput";
 import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
-import styles from "./AddTicketModal.style";
+import getStyles from "./AddTicketModal.style";
 
 const isIos = Platform.OS.toLowerCase() === "ios";
 
@@ -17,6 +18,8 @@ const AddTicketModal = ({
   queryTypeData,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [enterQuery, setEnterQuery] = useState("");
   const [queryType, setQueryType] = useState();
 

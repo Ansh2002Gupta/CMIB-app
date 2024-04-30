@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import DatePicker from "react-native-date-picker";
-import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { TouchableOpacity, View } from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import images from "../../images";
 import { useIntl } from "react-intl";
 import { convertToTime, formatDate } from "../../utils/util";
-import styles from "./DatePickerModal.style";
+import getStyles from "./DatePickerModal.style";
 
 const DatePickerModal = ({
   customTextInputOuterContainer,
@@ -28,7 +29,11 @@ const DatePickerModal = ({
     setOpen(true);
   };
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const errorStyle = isError ? styles.invalidInput : {};
+
   return (
     <>
       <View

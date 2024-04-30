@@ -1,8 +1,9 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
-import styles from "./Button.style";
+import getStyles from "./Button.style";
 
 const Button = ({
   children,
@@ -13,6 +14,8 @@ const Button = ({
   style,
   type,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const buttonComponentProp = shouldShowHover
     ? { className: classes["account-dropdown__base"] }
     : {};

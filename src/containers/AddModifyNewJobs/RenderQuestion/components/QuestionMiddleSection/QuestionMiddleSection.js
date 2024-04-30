@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../../../../components/CommonText";
 import CustomTextInput from "../../../../../components/CustomTextInput";
@@ -6,8 +7,8 @@ import TouchableImage from "../../../../../components/TouchableImage";
 import CustomButton from "../../../../../components/CustomButton";
 import { useIntl } from "react-intl";
 import images from "../../../../../images";
-import stylesForMobile from "./QuestionMiddleSection.styles";
 import styles from "../../RenderQuestion.styles";
+import getStyles from "./QuestionMiddleSection.styles";
 
 const QuestionMiddleSection = ({
   addNewQuestion,
@@ -23,6 +24,8 @@ const QuestionMiddleSection = ({
   setoptionData,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const stylesForMobile = getStyles(theme);
   function onAddPress() {
     if (isWebView) {
       addNewQuestion(true, item.id, {

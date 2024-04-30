@@ -1,11 +1,14 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 
 import CustomImage from "../../components/CustomImage/CustomImage";
 import images from "../../images";
-import styles from "./Footer.style";
+import getStyles from "./Footer.style";
 
 const Footer = () => {
   const FooterIcon = images.iconFooter;
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <CustomImage

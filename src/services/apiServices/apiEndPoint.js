@@ -35,14 +35,18 @@ export const COMPANY_INACTIVE_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/inact
 export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`;
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
-export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
 export const DETAIL = `/detail`;
+export const CENTRES = "/centres";
+export const STATUS_UPDATE = "/status-update";
 
 //sub routes
 export const ACADEMICS = "/academics";
+export const APPLICANTS = "/applicants";
 export const ACTIVITIES = "/activities";
 export const APPLICANT = "/applicant";
 export const APPLICATION = "/application";
+export const BILLING_INFO = "/billing-info";
+export const DECLARATION_FORM = "/declaration-form";
 export const FILTERS = "/filters";
 export const INTERVIEWS = "/interviews";
 export const INTERVIEW = "/interview";
@@ -53,19 +57,26 @@ export const JOB_SKILLS = "/skills";
 export const JOB_PREFERENCES = "/job-preferences";
 export const MEMBERS = "/members";
 export const MEMBERSHIP = "/membership";
+export const MEMBER_WORK_EXPERIENCE = "/work-experience";
 export const MARK_PREFER = "/mark-prefer";
+export const PAY = "/pay";
 export const PERSONAL = "/personal";
+export const PAYMENT_INFO = "/payment-info";
 export const PROFILE = "/profile";
 export const ROUNDS = "/rounds";
+export const ROUND = "/round";
 export const STATUS = "/status";
+export const SUBMIT = "/submit";
+export const TRAINING_DETAILS = "/training-details";
 export const JOB_DETAILS = "/job-detail";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const TRANSACTIONS = "/transactions";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
-export const ROUND_ONE_DASHBOARD = `/board`;
+export const ROUND_ONE_DASHBOARD = `/dashboard`;
+export const ROUND_ONE_BOARD = `/board`;
 export const GLOBAL_SESSIONS = `/sessions`;
-export const APPLICANTS = "/applicants";
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -137,3 +148,10 @@ export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;
 
 //api endpoint: Round-1>NQCA Placements>Pre-Interview Placements
 export const PRE_INTERVIEW = `/pre-interview`;
+
+export const SHORTLISTS = `/shortlists`;
+export const CONSENT = `/consent`;
+export const COMPANIES = `/companies`;
+export const CONSENT_CENTRES = `/centres`;
+//API endpoint for NQCA Shortlisting, Consent and Interview module.
+export const OVERVIEW_DATA = "overview-data";

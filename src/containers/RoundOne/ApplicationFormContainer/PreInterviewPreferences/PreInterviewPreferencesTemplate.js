@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   ScrollView,
@@ -29,42 +30,70 @@ import {
 } from "../../../../services/apiServices/apiEndPoint";
 import { headStartRowConfig } from "./config";
 import { COMPANY, HEAD_CONTACT } from "../../../../constants/constants";
+import { rowConfigs } from "./config";
+import {
+  ADD_PREINTERVIEW_PREFERNCES_HEADING,
+  API_VERSION_QUERY_PARAM,
+  COMPANY,
+  HEAD_CONTACT,
+  NEWLY_QUALIFIED,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
+} from "../../../../constants/constants";
+import LoadingScreen from "../../../../components/LoadingScreen";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
-import styles from "./PreInterviewPreferences.style";
+import useGetCurrentUser from "../../../../hooks/useGetCurrentUser";
+import useIsWebView from "../../../../hooks/useIsWebView";
+import CardComponent from "../../../../components/CardComponent";
+import getStyles from "./PreInterviewPreferences.style";
+import EditDeleteAction from "../../../../components/EditDeleteAction/EditDeleteAction";
+import AddIconText from "../../../../components/AddIconText";
+import ModalWithTitleButton from "../../../../components/ModalWithTitleButton";
 
 const PreInterviewPreferencesTemplate = ({
+  isEditable,
   tabHandler,
   handleInterviewPreferences,
   preInterviewDetails,
+  setIsEditable,
 }) => {
   let options_object = [];
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const params = useParams();
   const navigate = useNavigate();
+  const { currentModule } = useGetCurrentUser();
   const windowWidth = useWindowDimensions()?.width;
+  const { isWebView } = useIsWebView();
   const round_id = params?.id;
   const isMob = Platform.OS.toLowerCase() !== "web";
   const webProps = !isMob ? { size: "xs" } : {};
+  const headStartRowConfig = rowConfigs(isWebView);
+
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
+  const sessionId = sideBarState?.selectedSession?.value;
+  const [toastMsg, setToastMsg] = useState();
+  const [errorOnPage, setErrorOnPage] = useState(false);
+  const startRowTemplateConfig = useRef([...headStartRowConfig]);
+  const [headContactDetails, setHeadContactDetails] = useState([
+    ...headStartRowConfig,
+  ]);
+
+  const [contactDetails, setContactDetails] = useState(null);
+  const [addDetailsModal, setAddDetailsModal] = useState(false);
+
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
           buttonOneStyle: styles.buttonStyle,
-          buttonTwoStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonTwoStyle,
           buttonOneContainerStyle: styles.buttonStyle,
-          buttonTwoContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyle,
         }
       : {};
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState;
-  const [toastMsg, setToastMsg] = useState();
-  const [errorOnPage, setErrorOnPage] = useState(false);
-  const [startRowTemplateConfig, setStartRowTemplateConfig] = useState([
-    ...headStartRowConfig,
-  ]);
-  const [headContactDetails, setHeadContactDetails] = useState([
-    ...headStartRowConfig,
-  ]);
 
   const {
     data: fetchedHeadContactDetails,
@@ -72,7 +101,12 @@ const PreInterviewPreferencesTemplate = ({
     isError: isErrorHeadContactData,
     isLoading: isLoadingHeadContactData,
   } = useFetch({
-    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}`,
+    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -84,7 +118,12 @@ const PreInterviewPreferencesTemplate = ({
     setError: setErrorUpdateHeadContactData,
     isLoading: isLoadingUpdateContactData,
   } = usePut({
-    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}`,
+    url: `${COMPANY}/${selectedModule?.key}${ROUNDS}/${round_id}${APPLICATION}${PRE_INTERVIEW}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const {
@@ -125,18 +164,30 @@ const PreInterviewPreferencesTemplate = ({
         return { ...object, options: options_object };
       return { ...object };
     });
-    setStartRowTemplateConfig(newData);
+    startRowTemplateConfig.current = newData;
+    setHeadContactDetails(newData);
   };
-
   useEffect(() => {
     const fetchData = async () => {
       const apiData = await fetchHeadContactData();
       const mobile_code = await getCountryCodes();
       setOptions({
-        data: startRowTemplateConfig,
+        data: startRowTemplateConfig.current,
         options: mobile_code,
         key: HEAD_CONTACT.MOBILE_COUNTRY_CODE,
       });
+      handleInterviewPreferences(
+        "label.participating",
+        !!apiData?.["participating_for_first_time"]
+          ? apiData?.["participating_for_first_time"].toLowerCase() === "yes"
+            ? isEditable
+              ? 0
+              : "Yes"
+            : isEditable
+            ? 1
+            : "No"
+          : false
+      );
       handleInterviewPreferences(
         "label.short_listing_criteria",
         !!apiData?.["shortlisting_criteria"]
@@ -163,6 +214,8 @@ const PreInterviewPreferencesTemplate = ({
                     label: "label.designation",
                     placeholder: "label.enter_designation",
                     value: contact.designation,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -171,6 +224,8 @@ const PreInterviewPreferencesTemplate = ({
                     label: "label.name",
                     placeholder: "label.enter_name",
                     value: contact.name,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -179,6 +234,8 @@ const PreInterviewPreferencesTemplate = ({
                     label: "label.email",
                     placeholder: "label.enter_email",
                     value: contact.email,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -191,6 +248,8 @@ const PreInterviewPreferencesTemplate = ({
                     labelField: "label",
                     valueField: "value",
                     options: options_object,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -200,6 +259,8 @@ const PreInterviewPreferencesTemplate = ({
                     placeholder: "label.mobile_number",
                     value: contact.mobile_number,
                     isNumeric: true,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -209,6 +270,8 @@ const PreInterviewPreferencesTemplate = ({
                     placeholder: "label.select_area_code",
                     value: contact.std_country_code,
                     isNumeric: true,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -218,6 +281,8 @@ const PreInterviewPreferencesTemplate = ({
                     placeholder: "label.enter_telephone_number",
                     value: contact.telephone_number,
                     isNumeric: true,
+                    width: 5,
+                    customWidthValue: 150,
                   },
                   {
                     db_row_id: contact.id,
@@ -230,12 +295,12 @@ const PreInterviewPreferencesTemplate = ({
               .flat();
       !!pre_interview_preference_data
         ? setHeadContactDetails([...pre_interview_preference_data])
-        : setHeadContactDetails([...headStartRowConfig]);
+        : setHeadContactDetails([...startRowTemplateConfig.current]);
     };
     if (!!selectedModule?.key) {
       fetchData();
     }
-  }, [selectedModule?.key]);
+  }, [selectedModule?.key, isEditable]);
 
   const getRowData = ({ data }) => {
     const groupedData = data?.reduce((acc, item) => {
@@ -280,17 +345,35 @@ const PreInterviewPreferencesTemplate = ({
   };
 
   const createPayload = ({ data }) => {
+    const shortlistingCriteria =
+      data?.preInterviewDetails?.preInterviewPrefrences?.find(
+        (pref) => pref.key === "short_listing_criteria"
+      )?.value;
+    const otherDetails =
+      data?.preInterviewDetails?.preInterviewPrefrences?.find(
+        (pref) => pref.key === "any_other_information"
+      )?.value;
+    const optionalPayload =
+      currentModule !== NEWLY_QUALIFIED
+        ? {
+            participating_for_first_time:
+              data?.preInterviewDetails?.preInterviewPrefrences?.find(
+                (pref) => pref.key === "participating"
+              )?.value
+                ? "no"
+                : "yes",
+          }
+        : {};
     const payload = {
       ps_round_id: round_id,
-      shortlisting_criteria:
-        data?.preInterviewDetails?.preInterviewPrefrences?.[0]?.value,
-      other_details:
-        data?.preInterviewDetails?.preInterviewPrefrences?.[1]?.value,
+      ...optionalPayload,
+      shortlisting_criteria: shortlistingCriteria,
+      other_details: otherDetails,
       contact_details: getRowData({ data: data?.headContactDetails }),
     };
+
     return payload;
   };
-
   const handleSaveAndNext = () => {
     const payload = createPayload({
       data: { ...{ headContactDetails, preInterviewDetails } },
@@ -349,43 +432,405 @@ const PreInterviewPreferencesTemplate = ({
     setErrorUpdateHeadContactData(null);
   };
 
+  function mapDocuments(dataArray) {
+    const groupedData = {};
+    dataArray.forEach((item) => {
+      if (!groupedData[item.cellID]) {
+        groupedData[item.cellID] = {};
+      }
+      switch (item.key) {
+        case "designation":
+          groupedData[item.cellID].designation = item.value;
+          break;
+        case "name":
+          groupedData[item.cellID].name = item.value;
+          break;
+        case "email":
+          groupedData[item.cellID].email = item.value;
+          break;
+        case "mobile_country_code":
+          groupedData[item.cellID].mobile_country_code = item.value;
+          break;
+        case "mobile_number":
+          groupedData[item.cellID].mobile_number = item.value;
+          break;
+        case "std_country_code":
+          groupedData[item.cellID].std_country_code = item.value;
+          break;
+        case "telephone_number":
+          groupedData[item.cellID].telephone_number = item.value;
+          break;
+      }
+    });
+    const result = Object.keys(groupedData).map((key) => {
+      return groupedData[key];
+    });
+    return result;
+  }
+  const nonEditableData = mapDocuments(headContactDetails);
+
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.designation || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.name || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.email || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("25%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.mobile_country_code || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.std_country_code || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.telephone_number || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+    ];
+  };
+
+  const dataArr = Object.values(
+    headContactDetails.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+
+      if (item.key === "designation") {
+        group.designation = item.value;
+      } else if (item.key === "name") {
+        group.name = item.value;
+      } else if (item.key === "email") {
+        group.email = item.value;
+      } else if (item.key === "mobile_country_code") {
+        group.mobile_country_code = item.value;
+      } else if (item.key === "mobile_number") {
+        group.mobile_number = item.value;
+      } else if (item.key === "std_country_code") {
+        group.std_country_code = item.value;
+      } else if (item.key === "telephone_number") {
+        group.telephone_number = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
+
+  const onClickAddPlace = (cellID) => {
+    setAddDetailsModal(true);
+    setContactDetails((prev) => ({
+      ...prev,
+      cellID: cellID,
+    }));
+  };
+
+  const onClickDeletePlace = (cellID) => {
+    setHeadContactDetails((prevDetail) => {
+      const filteredDocs = prevDetail?.filter((doc) => doc.cellID !== cellID);
+      return [...filteredDocs];
+    });
+  };
+  const onCLickEditPlace = (cellID) => {
+    const documentToEdit = headContactDetails.find(
+      (doc) => doc.cellID === cellID
+    );
+
+    if (documentToEdit) {
+      setContactDetails({
+        designation:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "designation"
+          )?.value || "",
+        name:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "name"
+          )?.value || "",
+        email:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "email"
+          )?.value || "",
+        mobile_country_code:
+          headContactDetails.find(
+            (item) =>
+              item.cellID === cellID && item.key === "mobile_country_code"
+          )?.value || "",
+        mobile_number:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "mobile_number"
+          )?.value || "",
+        std_country_code:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "std_country_code"
+          )?.value || "",
+        telephone_number:
+          headContactDetails.find(
+            (item) => item.cellID === cellID && item.key === "telephone_number"
+          )?.value || "",
+        cellID: cellID,
+      });
+    }
+  };
+  const onClickAddPlaceCancelButton = () => {
+    setAddDetailsModal(false);
+    setContactDetails(null);
+  };
+
+  const onClickAddPlaceSaveButton = () => {
+    const {
+      designation,
+      name,
+      email,
+      mobile_country_code,
+      mobile_number,
+      std_country_code,
+      telephone_number,
+      cellID,
+    } = contactDetails;
+
+    let newData = headStartRowConfig?.map((doc) => {
+      let val;
+      if (doc?.key === "designation") {
+        val = designation;
+      } else if (doc.key === "name") {
+        val = name;
+      } else if (doc.key === "email") {
+        val = email;
+      } else if (doc.key === "mobile_country_code") {
+        val = mobile_country_code;
+      } else if (doc.key === "mobile_number") {
+        val = mobile_number;
+      } else if (doc.key === "std_country_code") {
+        val = std_country_code;
+      } else {
+        val = telephone_number;
+      }
+      return {
+        ...doc,
+        cellID,
+        value: val,
+      };
+    });
+
+    const updatedDocumentDetails = headContactDetails.map((item) => {
+      if (item.cellID === cellID) {
+        switch (item.key) {
+          case "designation":
+            return { ...item, value: designation };
+          case "name":
+            return { ...item, value: name };
+          case "email":
+            return { ...item, value: email };
+          case "mobile_country_code":
+            return { ...item, value: mobile_country_code };
+          case "mobile_number":
+            return { ...item, value: mobile_number };
+          case "std_country_code":
+            return { ...item, value: std_country_code };
+          default:
+            return item;
+        }
+      }
+      return item;
+    });
+
+    setHeadContactDetails([...updatedDocumentDetails, ...newData]);
+    setAddDetailsModal(false);
+    setContactDetails(null);
+  };
+
+  const renderAddContactDetailsMob = () => {
+    return (
+      <>
+        {dataArr.map((item, index) => {
+          return (
+            <View>
+              <View
+                style={
+                  index !== 0
+                    ? { ...styles.documentBorderStyle }
+                    : { ...styles.bottomMargin }
+                }
+              ></View>
+              <EditDeleteAction
+                topText={item?.name}
+                bottomLeftText={item?.designation}
+                onDeleteDocument={() => {
+                  onClickDeletePlace(item.cellID);
+                }}
+                onEditDocument={() => {
+                  onCLickEditPlace(item.cellID);
+                }}
+                categoriesText={intl.formatMessage({
+                  id: "label.contact_details",
+                })}
+                isCategory
+                requiredPostingPlaceDetail={dataArr[index]}
+              />
+            </View>
+          );
+        })}
+        <AddIconText
+          customViewStyle={styles.customAddIconStyle}
+          label={intl.formatMessage({
+            id: "label.add_place",
+          })}
+          onPress={() => onClickAddPlace(dataArr?.length + 1)}
+        />
+        <CommonText customTextStyle={styles.mandatoryTextStyle}>
+          {intl.formatMessage({
+            id: "label.one_mandatory",
+          })}
+        </CommonText>
+      </>
+    );
+  };
+
+  const renderCustomMultiRowComponent = () => {
+    return (
+      <CustomMultiRowTextInput
+        customCardStyle={{
+          ...styles.multiRowTextStyle,
+        }}
+        customTableStyle={styles.tableStyle}
+        customWebContainerStyle={
+          isEditable
+            ? styles.customWebContainerStyle
+            : styles.customViewModeStyle
+        }
+        startRowTemplate={[...startRowTemplateConfig.current]}
+        gridTemplate={headContactDetails}
+        setGridTemplate={setHeadContactDetails}
+        numColsInARow={9}
+        isEditProfile={isEditable}
+        handleValueChange={({ propertyName, value, id, cellID }) => {
+          handleHeadContactDetails({
+            propertyName,
+            value,
+            id,
+            cellID,
+          });
+        }}
+        getColoumConfigs={getColoumConfigs}
+        tableData={nonEditableData}
+        tableHeading={ADD_PREINTERVIEW_PREFERNCES_HEADING}
+        isHeading
+        headerId={"label.head_contacts"}
+        footerId={"label.at_least_one_mandatory_with_star"}
+      />
+    );
+  };
+
   const JobDetailsConfig = [
     {
       content: (
         <DetailCard
-          headerId={intl.formatMessage({
-            id: "label.pre_interview_prefrences",
-          })}
+          headerId={"label.pre_interview_prefrences"}
           details={preInterviewDetails?.preInterviewPrefrences}
           handleChange={handleInterviewPreferences}
-          isEditProfile
+          isEditProfile={isEditable}
           customCardStyle={styles.cardStyle}
           customContainerStyle={styles.customContainerStyle(windowWidth)}
         />
       ),
     },
     {
-      content: (
-        <CustomMultiRowTextInput
-          customCardStyle={{
-            ...styles.multiRowTextStyle,
-          }}
-          customWebContainerStyle={styles.customWebContainerStyle}
-          startRowTemplate={startRowTemplateConfig}
-          gridTemplate={headContactDetails}
-          setGridTemplate={setHeadContactDetails}
-          numColsInARow={9}
-          handleValueChange={({ propertyName, value, id, cellID }) => {
-            handleHeadContactDetails({
-              propertyName,
-              value,
-              id,
-              cellID,
-            });
-          }}
-          headerId={"label.head_contacts"}
-          footerId={"label.at_least_one_mandatory_with_star"}
-        />
+      content: isEditable ? (
+        isWebView ? (
+          renderCustomMultiRowComponent()
+        ) : (
+          <CardComponent customStyle={styles.CardComponentStyle}>
+            {renderAddContactDetailsMob()}
+          </CardComponent>
+        )
+      ) : (
+        <>
+          <CardComponent customStyle={styles.CardComponentStyle}>
+            <CommonText customTextStyle={commonStyles.headingStyle}>
+              {intl.formatMessage({ id: "label.head_contacts" })}
+            </CommonText>
+            {isWebView
+              ? renderCustomMultiRowComponent()
+              : renderAddContactDetailsMob()}
+          </CardComponent>
+          {(addDetailsModal || contactDetails) && (
+            <ModalWithTitleButton
+              enableBottomButton
+              heading={intl.formatMessage({
+                id: "label.add_contact",
+              })}
+              leftLabelTxt={intl.formatMessage({
+                id: "label.cancel",
+              })}
+              rightLabelTxt={intl.formatMessage({
+                id: "label.add",
+              })}
+              customStyles={styles.customModalStyle}
+              onClickLeftButton={onClickAddPlaceCancelButton}
+              onClickRightButton={onClickAddPlaceSaveButton}
+            >
+              <ScrollView style={styles.ctcTextInputStyle}>
+                <DetailCard
+                  details={headContactDetails}
+                  handleChange={(label, inputValue, index, id, changedCellID) =>
+                    handleHeadContactDetails({
+                      propertyName: label,
+                      value: inputValue,
+                      id,
+                      cellID: changedCellID,
+                    })
+                  }
+                  isEditProfile
+                  customCardStyle={styles.modalCardStyle}
+                  // customContainerStyle={styles.customContainerStyle(
+                  //   windowWidth
+                  // )}
+                />
+              </ScrollView>
+            </ModalWithTitleButton>
+          )}
+        </>
       ),
     },
   ];
@@ -418,24 +863,43 @@ const PreInterviewPreferencesTemplate = ({
               {intl.formatMessage({ id: "label.back" })}
             </CommonText>
           </CustomButton>
-          <ActionPairButton
-            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            buttonTwoText={intl.formatMessage({ id: "label.save" })}
-            onPressButtonOne={() => navigate(-1)}
-            onPressButtonTwo={() => {
-              handleSaveAndNext();
-              tabHandler("next");
-            }}
-            customStyles={{
-              ...isWebProps,
-              customContainerStyle: commonStyles.customContainerStyle,
-              buttonTwoStyle: styles.saveAndNextButton,
-            }}
-            displayLoader={isLoadingUpdateContactData}
-            isDisabled={errorOnPage || isLoadingUpdateContactData}
-            isLoading={isLoadingUpdateContactData}
-            isButtonTwoGreen
-          />
+          {isEditable ? (
+            <ActionPairButton
+              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+              buttonTwoText={intl.formatMessage({
+                id: "label.save_and_next",
+              })}
+              onPressButtonOne={() => {
+                isEditable ? setIsEditable(false) : navigate(-1);
+              }}
+              onPressButtonTwo={() => {
+                handleSaveAndNext();
+              }}
+              customStyles={{
+                ...isWebProps,
+                customContainerStyle: commonStyles.customContainerStyle,
+              }}
+              displayLoader={isLoadingUpdateContactData}
+              isButtonTwoGreen
+              isLoading={isLoadingUpdateContactData}
+              isDisabled={errorOnPage || isLoadingUpdateContactData}
+            />
+          ) : (
+            <CustomButton
+              withGreenBackground
+              style={styles.buttonStyle}
+              onPress={() => {
+                tabHandler("next");
+              }}
+            >
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={commonStyles.nextButtonStyle}
+              >
+                {intl.formatMessage({ id: "label.next" })}
+              </CommonText>
+            </CustomButton>
+          )}
         </View>
       </ScrollView>
     </>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import { ScrollView, View, Linking } from "@unthinkable/react-core-components";
 
@@ -16,31 +17,100 @@ import {
   REMOTE,
   TELEPHONIC,
 } from "./ViewInterviewFieldDetails";
-import { formatDate, formatTime, getValidUrl } from "../../utils/util";
+import {
+  formatDate,
+  formatText,
+  formatTime,
+  getValidUrl,
+} from "../../utils/util";
 import useFetch from "../../hooks/useFetch";
 import {
   JOB_APPLICANTS,
   INTERVIEW,
   USER_TYPE_COMPANY,
+  USER_TYPE_MEMBER,
+  JOBS,
+  INTERVIEWS,
+  APPLICANT,
 } from "../../services/apiServices/apiEndPoint";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./ViewInterviewDetails.style";
+import { getModalInnerContainerHeight } from "./ViewInterviewDetails.style";
+import getStyles from "./ViewInterviewDetails.style";
 
-const ViewInterviewDetails = ({ onClose, applicant_id }) => {
+const ViewInterviewDetails = ({ applicant_id, onClose, interview_id }) => {
   const intl = useIntl();
-
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [interviewData, setInterviewData] = useState();
-  const { data, isLoading, fetchData, isError, error } = useFetch({
+
+  const { data, setData, isLoading, fetchData, isError, error } = useFetch({
     url: USER_TYPE_COMPANY + JOB_APPLICANTS + INTERVIEW + `/${applicant_id}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
-  useEffect(async () => {
-    const newData = await fetchData();
-    setInterviewData(newData);
-  }, []);
+  const {
+    data: interviewDatesData,
+    fetchData: fetchInterviewDates,
+    isLoading: isGettingDatesData,
+    isError: isErrorInDatesData,
+  } = useFetch({
+    url: USER_TYPE_MEMBER + `/${JOBS}` + `/${applicant_id}` + INTERVIEWS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  useEffect(() => {
+    if (!!interview_id) runGetInterviewDates();
+    else runFetchData();
+  }, [interview_id]);
+
+  const runFetchData = async () => {
+    if (!interview_id) {
+      const newData = await fetchData();
+      setInterviewData(newData);
+    }
+  };
+
+  const runGetInterviewDates = async () => {
+    const newData = await getInterviewDates();
+    restructureData(newData);
+  };
+
+  const getInterviewDates = async () => {
+    const newData = await fetchInterviewDates({
+      overrideUrl:
+        USER_TYPE_MEMBER +
+        `/${JOBS}` +
+        `/${applicant_id}` +
+        `${APPLICANT}` +
+        `/${interview_id}` +
+        INTERVIEWS,
+    });
+    return newData;
+  };
+
+  const restructureData = (data) => {
+    const restructuredData = {
+      type: data?.[0]?.primary?.type,
+      venue_address: data?.[0]?.primary?.venue,
+      primary_schedule: data?.[0]?.primary?.schedule,
+      primary_isAccepted: data?.[0]?.primary?.is_accepted,
+      remote_meeting_link: data?.[0]?.primary?.meeting_link,
+      alternate_type: data?.[0]?.alternate?.type,
+      alternate_venue_address: data?.[0]?.alternate?.venue,
+      alternate_schedule: data?.[0]?.alternate?.schedule,
+      alternate_remote_meeting_link: data?.[0]?.alternate?.meeting_link,
+      alternate_isAccepted: data?.[0]?.alternate?.is_accepted,
+    };
+    setInterviewData({ ...restructuredData });
+    setData({
+      type: data?.[0]?.primary?.type,
+      alternate_type: data?.[0]?.alternate?.type,
+    });
+  };
 
   const handlePressLink = (url) => {
     Linking.openURL(getValidUrl(url), "_blank");
@@ -85,8 +155,8 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
     interviewData?.alternate_remote_meeting_link || "-"
   );
 
-  const currentPrimaryType = data?.type.toLowerCase();
-  const currentAlternateType = data?.alternate_type.toLowerCase();
+  const currentPrimaryType = data?.type?.toLowerCase();
+  const currentAlternateType = data?.alternate_type?.toLowerCase();
 
   const currentPrimaryDetails =
     currentPrimaryType === "face-to-face"
@@ -122,7 +192,7 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
           </View>
         }
         bottomSection={
-          label === "link" ? (
+          label === "link" && value !== "-" ? (
             <CustomTouchableOpacity onPress={() => handlePressLink(value)}>
               <CommonText customTextStyle={styles.linkText}>{value}</CommonText>
             </CustomTouchableOpacity>
@@ -142,11 +212,11 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
             <>
               {renderHeadingAndValue({
                 heading: intl.formatMessage({
-                  id: `label.${item.headingIntl}`,
+                  id: `label.${item?.headingIntl}`,
                 }),
-                value: item.value,
+                value: item?.value,
                 isMandatory: isMandatory,
-                label: item.label,
+                label: item?.label,
               })}
             </>
           );
@@ -165,79 +235,108 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={styles.modalInnerContainer}
+        style={{
+          ...getModalInnerContainerHeight(!!interview_id ? 0.2 : 0.6),
+          ...styles.marginTop,
+        }}
       >
-        {isLoading && !isError && <LoadingScreen />}
-        {!isLoading && !isError && (
+        {(isLoading || isGettingDatesData) && !isError && <LoadingScreen />}
+        {!isLoading && !isGettingDatesData && !isError && (
           <>
-            <View style={styles.detailsSection}>
-              {interviewDetails.map((item) => {
-                return (
-                  <>
+            {!interview_id && (
+              <>
+                <View style={styles.detailsSection}>
+                  {interviewDetails.map((item) => {
+                    return (
+                      <>
+                        {renderHeadingAndValue({
+                          heading: intl.formatMessage({
+                            id: `label.${item?.headingIntl}`,
+                          }),
+                          value: item?.value,
+                          isMandatory: true,
+                        })}
+                      </>
+                    );
+                  })}
+                </View>
+                <View style={commonStyles.horizontalLine} />
+              </>
+            )}
+            {!!interviewData?.primary_isAccepted && (
+              <TwoRow
+                topSection={
+                  <View>
+                    <CommonText
+                      fontWeight={"600"}
+                      customTextStyle={styles.headingText}
+                    >
+                      {intl.formatMessage({ id: "label.primary_interview" })}
+                    </CommonText>
                     {renderHeadingAndValue({
                       heading: intl.formatMessage({
-                        id: `label.${item.headingIntl}`,
+                        id: "label.interview_type",
                       }),
-                      value: item.value,
+                      value: !!data?.type
+                        ? formatText(currentPrimaryType)
+                        : "-",
                       isMandatory: true,
                     })}
-                  </>
-                );
-              })}
-            </View>
-            <View style={commonStyles.horizontalLine} />
-            <TwoRow
-              topSection={
-                <View>
-                  <CommonText
-                    fontWeight={"600"}
-                    customTextStyle={styles.headingText}
-                  >
-                    {intl.formatMessage({ id: "label.primary_interview" })}
-                  </CommonText>
-                  {renderHeadingAndValue({
-                    heading: intl.formatMessage({
-                      id: "label.interview_type",
-                    }),
-                    value: currentPrimaryType,
-                    isMandatory: true,
-                  })}
-                </View>
-              }
-              bottomSection={renderInterviewDetails(
-                currentPrimaryDetails,
-                true
+                  </View>
+                }
+                bottomSection={renderInterviewDetails(
+                  currentPrimaryDetails,
+                  true
+                )}
+              />
+            )}
+            {!!interviewData?.primary_isAccepted &&
+              !!interviewData?.alternate_isAccepted && (
+                <View style={commonStyles.horizontalLine} />
               )}
-            />
-            <TwoRow
-              topSection={
-                <View>
-                  <CommonText
-                    fontWeight={"600"}
-                    customTextStyle={styles.headingText}
-                  >
-                    {intl.formatMessage({ id: "label.alternate_interview" })}
-                  </CommonText>
-                  {renderHeadingAndValue({
-                    heading: intl.formatMessage({
-                      id: "label.interview_type",
-                    }),
-                    value: currentAlternateType,
-                    isMandatory: false,
-                  })}
-                </View>
-              }
-              bottomSection={renderInterviewDetails(
-                currentAlternateDetails,
-                false
+            {!interviewData?.primary_isAccepted &&
+              !interviewData?.alternate_isAccepted && (
+                <CommonText
+                  fontWeight={"500"}
+                  customContainerStyle={styles.loadingStyleNoData}
+                  customTextStyle={styles.noMoreData}
+                >
+                  {intl.formatMessage({ id: "label.no_data" })}
+                </CommonText>
               )}
-            />
+            {!!interviewData?.alternate_isAccepted && (
+              <TwoRow
+                topSection={
+                  <View>
+                    <CommonText
+                      fontWeight={"600"}
+                      customTextStyle={styles.headingText}
+                    >
+                      {intl.formatMessage({ id: "label.alternate_interview" })}
+                    </CommonText>
+                    {renderHeadingAndValue({
+                      heading: intl.formatMessage({
+                        id: "label.interview_type",
+                      }),
+                      value: !!data?.alternate_type
+                        ? formatText(currentAlternateType)
+                        : "-",
+                      isMandatory: false,
+                    })}
+                  </View>
+                }
+                bottomSection={renderInterviewDetails(
+                  currentAlternateDetails,
+                  false
+                )}
+              />
+            )}
           </>
         )}
         {isError && (
           <ErrorComponent
             errorMsg={error?.data?.message}
-            onRetry={() => fetchData()}
+            onRetry={() => (!!interview_id ? getInterviewDates() : fetchData())}
           />
         )}
       </ScrollView>
@@ -247,10 +346,12 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
 
 ViewInterviewDetails.defaultProps = {
   onClose: () => {},
+  interview_id: null,
 };
 
 ViewInterviewDetails.propTypes = {
   onClose: PropTypes.func,
+  interview_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default ViewInterviewDetails;

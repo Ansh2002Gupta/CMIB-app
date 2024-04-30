@@ -1,16 +1,20 @@
-import { Image, View } from "@unthinkable/react-core-components";
 import React from "react";
-import styles from "./styles";
+import { useTheme } from "@unthinkable/react-theme";
+import { Image, View } from "@unthinkable/react-core-components";
+
 import CommonText from "../../../../components/CommonText";
 import useIsWebView from "../../../../hooks/useIsWebView";
-import colors from "../../../../assets/colors";
 import images from "../../../../images";
 import Chip from "../../../../components/Chip";
 import { useIntl } from "react-intl";
+import getStyles from "./styles";
 
 const JobDetailHeader = ({ actionButtons, data }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const theme = useTheme()
+
+  const styles = getStyles(theme)
 
   const {
     logoUrl,

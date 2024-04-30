@@ -1,10 +1,11 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 
-import style from "./UploadCVPhotoTemplate.style";
 import CommonText from "../../components/CommonText";
 import UploadCVPhotoUI from "./UploadCVPhotoTemplate";
+import getStyles from "./UploadPhotoVideo.style";
 
 const UploadPhotoVideo = ({
   isEditable,
@@ -19,6 +20,8 @@ const UploadPhotoVideo = ({
   imageDetails,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   return (
     <View>

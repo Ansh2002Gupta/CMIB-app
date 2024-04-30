@@ -1,6 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   Platform,
@@ -13,7 +14,7 @@ import CommonText from "../CommonText";
 import Spinner from "../Spinner";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./DragAndDropCard.style";
+import getStyles from "./DragAndDropCard.style";
 
 const DragAndDropCard = ({
   errorMessage,
@@ -27,8 +28,13 @@ const DragAndDropCard = ({
   isLoading,
   uploadPercentage,
   customContentContainerStyle,
+  fileTypes,
+  fileLabel,
 }) => {
   const isPlatformWeb = Platform.OS.toLowerCase() === "web";
+  const theme = useTheme();
+
+  const styles = getStyles(theme);
 
   const webProps = isPlatformWeb
     ? {
@@ -50,8 +56,11 @@ const DragAndDropCard = ({
   }
 
   const getAcceptedFiles = () => {
+    if (fileTypes) {
+      return fileTypes;
+    }
     if (isDocumentUpload) {
-      return ".pdf";
+      return ".pdf, .ppt, .pptx, .doc, .docx";
     }
     if (isVideoUpload) {
       return ".mp4";
@@ -60,8 +69,15 @@ const DragAndDropCard = ({
   };
 
   const getSupportedFilesLabel = () => {
-    if (isDocumentUpload)
-      return intl.formatMessage({ id: "label.supported_document" });
+    if (fileLabel) {
+      return intl.formatMessage({ id: fileLabel });
+    }
+    if (isDocumentUpload) {
+      if (isPlatformWeb) {
+        return intl.formatMessage({ id: "label.supported_document" });
+      }
+      return intl.formatMessage({ id: "label.supported_document_mobile" });
+    }
     if (isVideoUpload)
       return intl.formatMessage({ id: "label.supported_video" });
 
@@ -120,7 +136,7 @@ const DragAndDropCard = ({
               type="file"
               ref={fileInputRef}
               name="fileUpload"
-              accept={getAcceptedFiles()}
+              accept={fileTypes ?? getAcceptedFiles()}
               onChange={(event) => fileUploadHandler(event)}
               style={styles.hideRawInputField}
             />

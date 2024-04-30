@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   TouchableOpacity,
@@ -16,8 +17,7 @@ import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, formatSalaryRange, timeAgo } from "../../utils/util";
 import images from "../../images";
-import style from "./SavedJobComponent.style";
-import colors from "../../assets/colors";
+import getStyles from "./SavedJobComponent.style";
 
 const JobCardMobile = ({
   cardDetails,
@@ -30,6 +30,9 @@ const JobCardMobile = ({
   onPress,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const {
     companyName,
     company_logo,
@@ -76,8 +79,8 @@ const JobCardMobile = ({
             id: "label.vacancies",
           })}`}
           isBackground
-          bgColor={colors.lightGray}
-          textColor={colors.black}
+          bgColor={theme.colors.lightGray}
+          textColor={theme.colors.black}
         />
       ),
       style: style.mobileChipStyle,

@@ -9,7 +9,8 @@ import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import styles from "./CustomTextEditor.style";
+import getStyles from "./CustomTextEditor.style";
+import { useTheme } from "@unthinkable/react-theme";
 
 const CustomTextEditor = ({
   customErrorStyle,
@@ -25,6 +26,8 @@ const CustomTextEditor = ({
 }) => {
   const richText = useRef(null);
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const handleHead = () => (
     <CommonText customTextStyle={styles.headingStyle}>

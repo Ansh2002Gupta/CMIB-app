@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useRef } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import classes from "./RangeSlider.module.css";
-import { styles } from "./RangeSlider.styles";
+import getStyles from "./RangeSlider.styles";
 
 const RangeSlider = ({
   isDisabled,
@@ -16,6 +17,8 @@ const RangeSlider = ({
   setRange,
   step,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const minValRef = useRef(null);
   const maxValRef = useRef(null);
   const rangeRef = useRef(null);

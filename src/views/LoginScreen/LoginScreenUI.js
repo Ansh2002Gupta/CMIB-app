@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import {
   View,
   TouchableOpacity,
@@ -15,8 +15,9 @@ import FormWrapper from "../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
+import { USER_TYPE } from "../../constants/constants";
 import commonStyles from "../../theme/styles/commonStyles";
-import styles from "./Loginscreen.style";
+import getStyles from "./Loginscreen.style";
 
 const LoginScreenUI = (props) => {
   const {
@@ -43,6 +44,9 @@ const LoginScreenUI = (props) => {
   } = props;
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const isWebView = currentBreakpoint !== "xs";
   const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =
@@ -134,7 +138,7 @@ const LoginScreenUI = (props) => {
             >
               <TouchableOpacity
                 style={styles.topTabs}
-                onPress={() => toggleUser(false)}
+                onPress={() => toggleUser(false, USER_TYPE.MEMBER)}
                 disabled={isLoading}
               >
                 <CommonText
@@ -162,7 +166,7 @@ const LoginScreenUI = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.topTabs}
-                onPress={() => toggleUser(true)}
+                onPress={() => toggleUser(true, USER_TYPE.COMPANY)}
                 disabled={isLoading}
               >
                 <View>
@@ -343,9 +347,9 @@ const LoginScreenUI = (props) => {
                   }}
                 >
                   <CustomTextInput
-                    label={intl.formatMessage({ id: "label.srn" })}
+                    label={intl.formatMessage({ id: "label.srnMRN" })}
                     placeholder={intl.formatMessage({
-                      id: "label.srn_placeholder",
+                      id: "label.srn_mrn_placeholder",
                     })}
                     value={srn}
                     onChangeText={(val) => onChangeSRNNumber(val)}

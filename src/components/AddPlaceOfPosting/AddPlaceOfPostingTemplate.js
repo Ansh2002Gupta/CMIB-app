@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
+import { View, ScrollView } from "@unthinkable/react-core-components";
 
 import AddIconText from "../../components/AddIconText";
 import CardComponent from "../../components/CardComponent/CardComponent";
@@ -13,18 +14,24 @@ import EditDeleteAction from "../../components/EditDeleteAction/EditDeleteAction
 import ModalWithTitleButton from "../../components/ModalWithTitleButton";
 import { numericValidator } from "../../utils/validation";
 import {
+  ADD_PLACE_OF_POSTING_HEADING,
   OTHER_INFO_MAX_LENGTH,
   PLACE_OF_POSTING,
 } from "../../constants/constants";
-import styles from "./AddPlaceOfPosting.style";
 import useIsWebView from "../../hooks/useIsWebView";
 import CustomMultiRowTextInput from "../CustomMultiRowTextinput";
+import RenderHeadingAndValue from "../RenderHeadingAndValue/RenderHeadingAndValue";
+import MultiRow from "../../core/layouts/MultiRow";
+import commonStyles from "../../theme/styles/commonStyles";
+import getStyles from "./AddPlaceOfPosting.style";
 
 const AddPlaceOfPostingTemplate = ({
+  isEditable,
   addPostingDetailsField,
   isSpecificPerformaRequired,
   handleInputChange,
   addPlaceModal,
+  nonEditableData,
   editPlaceModal,
   handlePostingPlaceChange,
   handleMultiRowDocumentDetails,
@@ -42,6 +49,8 @@ const AddPlaceOfPostingTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const setObjectGridTemplate = (updatedDocs) => {
     setRenderJobDetails((prev) => ({
@@ -50,20 +59,203 @@ const AddPlaceOfPostingTemplate = ({
     }));
   };
 
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.place_of_posting || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.general || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.obc || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.sc || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.st || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.ph || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.others || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText customTextStyle={tableStyle}>
+            {item?.total || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("10%"),
+        isFillSpace: true,
+      },
+    ];
+  };
+
+  const dataArr = Object.values(
+    requiredPostingPlaceDetail.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+
+      if (item.key === "place_of_posting") {
+        group.place_of_posting = item.value;
+      } else if (item.key === "general") {
+        group.general = item.value;
+      } else if (item.key === "obc") {
+        group.obc = item.value;
+      } else if (item.key === "sc") {
+        group.sc = item.value;
+      } else if (item.key === "st") {
+        group.st = item.value;
+      } else if (item.key === "ph") {
+        group.ph = item.value;
+      } else if (item.key === "others") {
+        group.others = item.value;
+      } else if (item.key === "total") {
+        group.total = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
+
+  const categoriesRow = [
+    {
+      content: (
+        <View>
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.general",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("general", val)}
+          />
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.obc",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("obc", val)}
+          />
+        </View>
+      ),
+    },
+    {
+      content: (
+        <View>
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.sc",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("sc", val)}
+          />
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.st",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("st", val)}
+          />
+        </View>
+      ),
+    },
+    {
+      content: (
+        <View>
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.ph",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("ph", val)}
+          />
+          <CounterInput
+            label={intl.formatMessage({
+              id: "label.others",
+            })}
+            isMandatory
+            onCountChange={(val) => handlePostingPlaceChange("others", val)}
+          />
+        </View>
+      ),
+    },
+  ];
+
   return (
     <View>
       <CardComponent customStyle={styles.bottomMargin}>
-        <CustomToggleComponent
-          label={intl.formatMessage({
-            id: "label.company_require_any_other_perfoma",
-          })}
-          customToggleStyle={styles.companyRequireToggleStyle}
-          customLabelViewStyle={styles.toggleLabelViewStyle}
-          value={isSpecificPerformaRequired}
-          onValueChange={(val) => {
-            handleInputChange("specific_performa_required", val);
-          }}
-        />
+        {isEditable ? (
+          <CustomToggleComponent
+            label={intl.formatMessage({
+              id: "label.company_require_any_other_perfoma",
+            })}
+            customToggleStyle={styles.companyRequireToggleStyle}
+            customLabelViewStyle={styles.toggleLabelViewStyle}
+            value={isSpecificPerformaRequired}
+            onValueChange={(val) => {
+              handleInputChange("specific_performa_required", val);
+            }}
+          />
+        ) : (
+          <RenderHeadingAndValue
+            label={intl.formatMessage({
+              id: "label.company_require_any_other_perfoma",
+            })}
+            value={isSpecificPerformaRequired === 0 ? "Yes" : "No"}
+            isMandatory={true}
+          />
+        )}
+
         <CommonText
           fontWeight="600"
           customTextStyle={styles.otherInformationTextStyle}
@@ -72,17 +264,28 @@ const AddPlaceOfPostingTemplate = ({
             id: "label.any_other_information",
           })}
         </CommonText>
-        <CustomTextInput
-          placeholder={intl.formatMessage({
-            id: "label.enter_your_info",
-          })}
-          isMandatory
-          isMultiline
-          maxLength={OTHER_INFO_MAX_LENGTH}
-          value={otherInfo}
-          onChangeText={(val) => handleInputChange("otherInfo", val)}
-          customHandleBlur={(val) => {}}
-        />
+        {isEditable ? (
+          <CustomTextInput
+            placeholder={intl.formatMessage({
+              id: "label.enter_your_info",
+            })}
+            isMandatory
+            isMultiline
+            maxLength={OTHER_INFO_MAX_LENGTH}
+            value={otherInfo}
+            onChangeText={(val) => handleInputChange("otherInfo", val)}
+            customHandleBlur={(val) => {}}
+          />
+        ) : (
+          <RenderHeadingAndValue
+            label={intl.formatMessage({
+              id: "label.enter_your_info",
+            })}
+            value={otherInfo}
+            isMandatory={true}
+          />
+        )}
+
         <CommonText
           fontWeight="600"
           customTextStyle={styles.postingPlaceTextStyle}
@@ -97,14 +300,19 @@ const AddPlaceOfPostingTemplate = ({
             customCardStyle={styles.multiRowTextStyle}
             startRowTemplate={addPostingDetailsField}
             gridTemplate={requiredPostingPlaceDetail}
+            isEditProfile={isEditable}
             setObjectGridTemplate={setObjectGridTemplate}
             handleValueChange={(type, inputValue, cellId) => {
               handleMultiRowDocumentDetails(type, inputValue, cellId);
             }}
+            getColoumConfigs={getColoumConfigs}
+            tableData={nonEditableData}
+            tableHeading={ADD_PLACE_OF_POSTING_HEADING}
+            isHeading
           />
         ) : (
           <>
-            {requiredPostingPlaceDetail.map((item, index) => {
+            {dataArr.map((item, index) => {
               return (
                 <View>
                   <View
@@ -115,18 +323,16 @@ const AddPlaceOfPostingTemplate = ({
                     }
                   ></View>
                   <EditDeleteAction
-                    topText={item?.postingPlace}
+                    topText={item?.place_of_posting}
                     bottomLeftText={`Total Postings: ${item?.total || "0"}`}
                     onDeleteDocument={() => {
-                      onClickDeletePlace(index);
+                      onClickDeletePlace(item.cellID);
                     }}
                     onEditDocument={() => {
-                      onCLickEditPlace(index);
+                      onCLickEditPlace(item.cellID);
                     }}
                     isCategory
-                    requiredPostingPlaceDetail={
-                      requiredPostingPlaceDetail[index]
-                    }
+                    requiredPostingPlaceDetail={dataArr[index]}
                   />
                 </View>
               );
@@ -136,7 +342,7 @@ const AddPlaceOfPostingTemplate = ({
               label={intl.formatMessage({
                 id: "label.add_place",
               })}
-              onPress={onClickAddPlace}
+              onPress={() => onClickAddPlace(dataArr?.length + 1)}
             />
             <CommonText customTextStyle={styles.mandatoryTextStyle}>
               {intl.formatMessage({
@@ -148,7 +354,6 @@ const AddPlaceOfPostingTemplate = ({
       </CardComponent>
       {(addPlaceModal || editPlaceModal) && (
         <ModalWithTitleButton
-          isRightDisabled={!isFormValid}
           enableBottomButton
           heading={intl.formatMessage({
             id: "label.add_place_of_posting",
@@ -163,7 +368,7 @@ const AddPlaceOfPostingTemplate = ({
           onClickLeftButton={onClickAddPlaceCancelButton}
           onClickRightButton={onClickAddPlaceSaveButton}
         >
-          <View style={styles.ctcTextInputStyle}>
+          <ScrollView style={styles.ctcTextInputStyle}>
             <CustomTextInput
               label={intl.formatMessage({
                 id: "label.place_posting",
@@ -172,26 +377,15 @@ const AddPlaceOfPostingTemplate = ({
                 id: "label.enter_place_posting",
               })}
               isMandatory
-              value={postingPlaceDetail?.postingPlace}
+              value={postingPlaceDetail?.place_of_posting}
               onChangeText={(val) =>
                 handlePostingPlaceChange(PLACE_OF_POSTING.POSTING_PLACE, val)
               }
             />
             <View style={styles.postingPlaceView}>
-              {!!jobDetailData?.Posting_Place?.length &&
-                jobDetailData?.Posting_Place.map((detail, index) => {
-                  return (
-                    <View key={index} style={styles.postingPlaceMapView}>
-                      <CounterInput
-                        label={intl.formatMessage({ id: detail.label })}
-                        isMandatory
-                        onCountChange={(val) =>
-                          handlePostingPlaceChange(detail.key, val)
-                        }
-                      />
-                    </View>
-                  );
-                })}
+              <View style={styles.postingPlaceMapView}>
+                <MultiRow rows={categoriesRow} />
+              </View>
             </View>
             <CustomTextInput
               label={intl.formatMessage({
@@ -207,7 +401,7 @@ const AddPlaceOfPostingTemplate = ({
                 handlePostingPlaceChange(PLACE_OF_POSTING.TOTAL, val)
               }
             />
-          </View>
+          </ScrollView>
         </ModalWithTitleButton>
       )}
     </View>
@@ -237,7 +431,7 @@ AddPlaceOfPostingTemplate.propTypes = {
   editPlaceModal: PropTypes.bool.isRequired,
   handlePostingPlaceChange: PropTypes.func.isRequired,
   isFormValid: PropTypes.bool,
-  jobDetailData: PropTypes.object,
+  jobDetailData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onClickAddPlace: PropTypes.func.isRequired,
   onClickAddPlaceCancelButton: PropTypes.func.isRequired,
   onClickAddPlaceSaveButton: PropTypes.func.isRequired,

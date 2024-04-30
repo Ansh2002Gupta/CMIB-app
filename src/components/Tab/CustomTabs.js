@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Row,
   ScrollView,
@@ -10,7 +11,7 @@ import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
-import styles from "./CustomTabs.style.js";
+import getStyles from "./CustomTabs.style.js";
 
 export const CustomTabs = ({
   containerStyle,
@@ -21,8 +22,11 @@ export const CustomTabs = ({
   setSelectedTab,
   tabs,
   intialActiveTab = 0,
+  container
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [alertOnTabSwitch, setAlertOnTabSwitch] = useState({
@@ -46,7 +50,7 @@ export const CustomTabs = ({
         });
         return;
       }
-      cleanupFuntion && cleanupFuntion();
+      cleanupFuntion && cleanupFuntion(index);
       setActiveTabIndex(index);
     }
   };
@@ -61,7 +65,7 @@ export const CustomTabs = ({
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={{ ...styles.container, ...(container ?? {}) }}>
         <View style={{ ...styles.headerContainer, ...containerStyle }}>
           {renderHeader && renderHeader()}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>

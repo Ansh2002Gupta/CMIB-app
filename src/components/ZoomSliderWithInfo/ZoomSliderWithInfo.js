@@ -1,14 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Image, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import Slider from "../Slider";
 import images from "../../images";
 import { ZOOM_CONSTANT } from "../../constants/constants";
-import styles from "./ZoomSliderWithInfo.style";
+import getStyles from "./ZoomSliderWithInfo.style";
 
 const ZoomSliderWithInfo = ({ setZoom, setRotation, zoom }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const zoomPercentage = Math.floor(
     ((zoom - ZOOM_CONSTANT.MIN_ZOOM) /
       (ZOOM_CONSTANT.MAX_ZOOM - ZOOM_CONSTANT.MIN_ZOOM)) *
@@ -35,9 +39,9 @@ const ZoomSliderWithInfo = ({ setZoom, setRotation, zoom }) => {
     <View style={styles.zoomInfoContainer}>
       <View style={styles.sliderBox}>
         <Image
-         source={
-          zoomPercentage === 0 ? images.iconDisabledMinus : images.minusCirlce
-        }
+          source={
+            zoomPercentage === 0 ? images.iconDisabledMinus : images.minusCirlce
+          }
           alt="Zoom out"
           width={20}
           height={20}

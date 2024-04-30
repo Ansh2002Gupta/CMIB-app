@@ -1,4 +1,3 @@
-import colors from "../../../assets/colors";
 import { about } from "./constants";
 
 export const getAboutData = (data) => {
@@ -59,7 +58,7 @@ const getLocationString = (locationArr, key, separator = "/") => {
   return locationArr.map((loc) => loc[key]).join(separator);
 };
 
-const getHeaderChipData = (noOfVacancy, isUrgent, intl) => {
+const getHeaderChipData = (noOfVacancy, isUrgent, intl, colors) => {
   let chipData = [];
 
   if (noOfVacancy !== null || noOfVacancy !== undefined) {
@@ -139,7 +138,9 @@ function formatExperience(minExperience, maxExperience, intl) {
   return formatted_string;
 }
 
-export const jobDetailModel = (data = {}, intl) => {
+export const jobDetailModel = (data = {}, intl, theme) => {
+  const { colors } = theme;
+
   const {
     detail,
     designation,
@@ -182,7 +183,7 @@ export const jobDetailModel = (data = {}, intl) => {
     location: companyLocation ? companyLocation : "--",
   });
 
-  const chipData = getHeaderChipData(vacancy, isUrgent, intl);
+  const chipData = getHeaderChipData(vacancy, isUrgent, intl, theme.colors);
 
   const salaryText = formatSalaryRange(min_salary, max_salary, intl);
   const experienceText = formatExperience(min_experience, max_experience, intl);

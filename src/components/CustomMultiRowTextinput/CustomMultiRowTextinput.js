@@ -1,30 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 
+import CustomTable from "../CustomTable";
 import DetailCard from "../DetailCard/DetailCard";
-import styles from "./CustomMultiRowTextinput.style";
+import getStyles from "./CustomMultiRowTextinput.style";
 
 const CustomMultiRowTextInput = ({
   customWebContainerStyle,
   customCardStyle,
+  isEditable,
+  customTableStyle,
   startRowHeaderList,
   startRowTemplate,
   gridTemplate,
   setGridTemplate,
+  isEditProfile = true,
   setObjectGridTemplate,
+  tableData,
+  getColoumConfigs,
+  renderFooterComponenet,
+  tableHeading,
   headerId,
   footerId,
   handleValueChange,
   numColsInARow = 4,
+  customContainerStyle,
 }) => {
   const intl = useIntl();
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const handleChange = (label, inputValue, index, id, changedCellID) => {
     handleValueChange({
       propertyName: label,
       value: inputValue,
       id,
       cellID: changedCellID,
+      index,
     });
   };
 
@@ -50,7 +65,7 @@ const CustomMultiRowTextInput = ({
   const handleAddNewRow = (cellID) => {
     if (isEmptyCellPresent()) return;
     const newRowID = cellID + 1;
-    const newRowTemplate = startRowTemplate.map((cell, index) => {
+    const newRowTemplate = startRowTemplate?.map((cell, index) => {
       return {
         ...cell,
         cellID: newRowID,
@@ -75,35 +90,60 @@ const CustomMultiRowTextInput = ({
       : setGridTemplate([...newGridTemplate]);
   };
 
-  return (
+  return isEditProfile ? (
     <DetailCard
       customCardStyle={customCardStyle}
       cols={numColsInARow}
       details={gridTemplate}
-      footerId={footerId ?? "label.mandatory"}
+      footerId={footerId ?? "label.one_mandatory"}
       handleChange={handleChange}
       headerId={headerId}
       isRow={false}
-      isEditProfile={true}
+      isEditProfile={isEditProfile}
       onAdd={handleAddNewRow}
+      customErrorViewStyle={styles.detailErrorViewStyle}
       onDelete={handleDeleteRow}
       tableHeaderList={startRowHeaderList}
-      customContainerStyle={{ flexDirection: "row", flexWrap: "unwrap" }}
+      customContainerStyle={{
+        ...styles.customContainerStyle,
+        ...customContainerStyle,
+      }}
       customWebContainerStyle={{
         ...styles.customWebContainerStyle,
         ...customWebContainerStyle,
       }}
     />
+  ) : (
+    <CustomTable
+      {...{
+        customTableStyle: { ...styles.customTableStyle, ...customTableStyle },
+        showSearchBar: false,
+        currentRecords: tableData,
+        data: tableData,
+        getColoumConfigs,
+        isShowPagination: false,
+        isHeading: true,
+        tableHeading: tableHeading,
+        isRenderFooterComponent: true,
+        renderFooterComponenet,
+      }}
+    />
   );
 };
 CustomMultiRowTextInput.defaultProps = {
+  isEditable: true,
   startRowHeaderList: [],
   startRowTemplate: [],
   headerId: "",
+  getColoumConfigs: () => {},
+  customTableStyle: {},
 };
 CustomMultiRowTextInput.propTypes = {
+  isEditable: PropTypes.bool,
   startRowHeaderList: PropTypes.array,
-  startRowTemplate: PropTypes.array,
+  startRowTemplate: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   headerId: PropTypes.string,
+  getColoumConfigs: PropTypes.func,
+  customTableStyle: PropTypes.object,
 };
 export default CustomMultiRowTextInput;

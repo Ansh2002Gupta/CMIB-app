@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
@@ -22,7 +22,7 @@ import {
   NATURE_OF_SUPPLIER,
 } from "../../../constants/constants";
 import commonStyles from "../../../theme/styles/commonStyles";
-import { getResponsiveStyles, style } from "./SignUpLastScreen.style";
+import { getResponsiveStyles, getStyles } from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = ({
   allFieldsFilled,
@@ -55,6 +55,9 @@ const SignUpLastScreenUI = ({
 }) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const theme = useTheme();
+  const style = getStyles(theme);
+
   const showContentHeader =
     currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 

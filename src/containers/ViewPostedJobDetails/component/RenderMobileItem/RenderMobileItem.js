@@ -1,13 +1,17 @@
 import { View } from "@unthinkable/react-core-components";
 import React, { useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import CommonText from "../../../../components/CommonText";
 import TouchableImage from "../../../../components/TouchableImage";
 import images from "../../../../images";
-import styles from "./RenderMobileItem.styles";
 import PopupMessage from "../../../../components/PopupMessage/PopupMessage";
 import { useIntl } from "react-intl";
+import getStyles from "./RenderMobileItem.styles";
+
 const RenderMobileItem = ({ item, lastElement, onPress }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const onIconPress = (item) => {
     setCurrentPopupMessage(item.application_id);

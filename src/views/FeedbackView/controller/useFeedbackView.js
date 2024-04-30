@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSearchParams } from "../../../routes";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
@@ -11,6 +11,7 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
+import { urlService } from "../../../services/urlService";
 import {
   DEFAULT_CATEGORY_FOR_FILTER_MODAL,
   FILTER_TYPE_ENUM,
@@ -19,7 +20,7 @@ import {
 import { feedbackData } from "../constant";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../FeedbackView.style";
+import getStyles from "../FeedbackView.style";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -28,11 +29,13 @@ const initialFilterState = {
 
 const useFeedbackView = () => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [filterState, setFilterState] = useState(initialFilterState);
@@ -42,7 +45,7 @@ const useFeedbackView = () => {
   });
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.Feedback;
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const [currentRecords, setCurrentRecords] = useState(
@@ -118,7 +121,7 @@ const useFeedbackView = () => {
   let headingTexts = ["id"];
   let subHeadingText = ["created_at"];
   let statusText = ["status"];
-  let tableIcon = images.iconEye;
+  let tableIcon = images.iconEyeSvg;
   let filterCategory = ["Status", "Role"];
   let isHeading = true;
 

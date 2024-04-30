@@ -1,14 +1,11 @@
-import {
-    StyleSheet,
-    Platform,
-    Dimensions,
-  } from "@unthinkable/react-core-components";
-  
-  import colors from "../../assets/colors";
-  
-  const { height: HEIGHT } = Dimensions.get("window");
-  
-  const styles = StyleSheet.create({
+import { Platform, Dimensions } from "@unthinkable/react-core-components";
+
+const { height: HEIGHT } = Dimensions.get("window");
+
+const getStyles = (theme) => {
+  const { colors } = theme;
+
+  return {
     modalWebViewContainer: {
       ...Platform.select({
         ios: {
@@ -37,7 +34,7 @@ import {
       paddingLeft: 16,
       paddingRight: 16,
     },
-  
+
     subscribePackagesButtonMob: {
       alignItems: "center",
       justifyContent: "center",
@@ -54,7 +51,7 @@ import {
       lineHeight: 44,
       color: colors.black,
     },
-  });
-  
-  export default styles;
-  
+  };
+};
+
+export default getStyles;

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { Image, View } from "@unthinkable/react-core-components";
 
@@ -7,7 +8,7 @@ import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import images from "../../images";
 import { getInitialsFromName } from "../../utils/util";
-import styles from "./ProfileIcon.style";
+import getStyles from "./ProfileIcon.style";
 
 const ProfileIcon = ({
   customContainerStyle,
@@ -19,6 +20,8 @@ const ProfileIcon = ({
   profileImage,
   showEditIcon,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const renderEditIcon = () => (
     <CustomTouchableOpacity
       style={styles.editOuterContainer}

@@ -1,10 +1,13 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
-import styles from "./Backdrop.style";
+import getStyles from "./Backdrop.style";
 
 const Backdrop = ({ onClose, preventCloseOnBackdropClick }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <View
       style={styles.backdrop}

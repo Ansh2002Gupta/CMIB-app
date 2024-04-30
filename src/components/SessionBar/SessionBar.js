@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef } from "react";
 import { useIntl } from "react-intl";
 import Storage from "../../services/cookie-and-storage-service";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
@@ -10,15 +10,21 @@ import SessionDropdown from "../SessionDropdown";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { setSelectedSession } from "../../globalContext/sidebar/sidebarActions";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { SESSION_KEY } from "../../constants/constants";
+import {
+  CA_JOBS,
+  NEWLY_QUALIFIED,
+  SESSION_KEY,
+} from "../../constants/constants";
 import images from "../../images";
-import styles from "./SessionBar.style";
+import getStyles from "./SessionBar.style";
 
 const SessionBar = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
-  const { globalSessionList, selectedSession } = sideBarState;
+  const { globalSessionList, selectedSession, selectedModule } = sideBarState;
   const [showDropdown, setShowDropdown] = useState(false);
   const sessionRef = useRef(null);
   useOutsideClick(sessionRef, () => setShowDropdown(false));
@@ -34,35 +40,44 @@ const SessionBar = () => {
   };
 
   return (
-    <CustomTouchableOpacity style={styles.container} onPress={handleDropdown}>
-      <CommonText customTextStyle={styles.sessionBarText}>
-        {intl.formatMessage({ id: "label.sessions" })}&nbsp;&#58;&nbsp;
-      </CommonText>
-      <CommonText
-        customTextStyle={styles.sessionText(currentBreakpoint)}
-        fontWeight="600"
-      >
-        {selectedSession?.label ||
-          intl.formatMessage({ id: "label.select_session" })}
-      </CommonText>
-      <CustomImage
-        source={images.iconArrowDown}
-        style={styles.iconDown}
-        isSvg={true}
-        alt={"Arrow Down"}
-      />
-      {showDropdown && (
-        <SessionDropdown
-          options={globalSessionList}
-          onSelect={handleSelect}
-          sessionRef={sessionRef}
-          selectedItem={selectedSession?.label}
-          valueField={"id"}
-          labelField={"name"}
-          includeAllKeys
-        />
-      )}
-    </CustomTouchableOpacity>
+    <>
+      {selectedModule.key !== CA_JOBS ? (
+        <CustomTouchableOpacity
+          style={styles.container}
+          onPress={handleDropdown}
+        >
+          <CommonText customTextStyle={styles.sessionBarText}>
+            {intl.formatMessage({ id: "label.sessions" })}&nbsp;&#58;&nbsp;
+          </CommonText>
+          <CommonText
+            customTextStyle={styles.sessionText(currentBreakpoint)}
+            fontWeight="600"
+          >
+            {selectedSession?.label ||
+              intl.formatMessage({ id: "label.select_session" })}
+          </CommonText>
+          {selectedModule.key !== NEWLY_QUALIFIED && (
+            <CustomImage
+              source={images.iconArrowDown}
+              style={styles.iconDown}
+              isSvg={true}
+              alt={"Arrow Down"}
+            />
+          )}
+          {showDropdown && selectedModule.key !== NEWLY_QUALIFIED && (
+            <SessionDropdown
+              options={globalSessionList}
+              onSelect={handleSelect}
+              sessionRef={sessionRef}
+              selectedItem={selectedSession?.label}
+              valueField={"id"}
+              labelField={"name"}
+              includeAllKeys
+            />
+          )}
+        </CustomTouchableOpacity>
+      ) : null}
+    </>
   );
 };
 

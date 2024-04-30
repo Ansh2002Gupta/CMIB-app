@@ -1,6 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
 
@@ -12,7 +13,7 @@ import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
 import useEscKeyListener from "../../hooks/useEscKeyListener";
 import images from "../../images";
-import style from "./CustomModal.style";
+import getStyles from "./CustomModal.style";
 
 const CustomModal = ({
   buttonTitle,
@@ -37,10 +38,15 @@ const CustomModal = ({
   secondaryText,
   showActionButtonOnSuccess,
   topLeftIcon,
+  buttonLeftTitle,
+  buttonRightTitle,
 }) => {
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
   const webProps = isWeb ? { maxWidth } : { onBackdropPress };
+
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   useEscKeyListener(onPressIconCross);
 
@@ -59,8 +65,8 @@ const CustomModal = ({
           <>
             <CustomImage
               alt={"Success Icon"}
-              source={images.iconSuccess || imageOnSuccess}
-              Icon={images.iconSuccess || imageOnSuccess}
+              source={imageOnSuccess || images.iconSuccess}
+              Icon={imageOnSuccess || images.iconSuccess}
               isSvg
               style={style.iconStyle}
             />
@@ -80,8 +86,14 @@ const CustomModal = ({
             )}
             {showActionButtonOnSuccess ? (
               <ActionPairButton
-                buttonOneText={intl.formatMessage({ id: "label.no_need_time" })}
-                buttonTwoText={intl.formatMessage({ id: "label.yes_pass_on" })}
+                buttonOneText={
+                  buttonLeftTitle ??
+                  intl.formatMessage({ id: "label.no_need_time" })
+                }
+                buttonTwoText={
+                  buttonRightTitle ??
+                  intl.formatMessage({ id: "label.yes_pass_on" })
+                }
                 isButtonTwoGreen
                 onPressButtonOne={handleButtonOnePress}
                 onPressButtonTwo={handleButtonTwoPress}

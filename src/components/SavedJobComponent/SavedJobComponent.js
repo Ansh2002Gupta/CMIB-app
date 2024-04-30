@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -8,10 +9,9 @@ import CommonText from "../CommonText";
 import JobCardMobile from "./JobCardMobile";
 import JobCardWeb from "./JobCardWeb";
 import useIsWebView from "../../hooks/useIsWebView";
-import style from "./SavedJobComponent.style";
-import { usePost } from "../../hooks/useApiRequest";
 import ToastComponent from "../ToastComponent/ToastComponent";
 import useSaveAndRemoveJob from "../../services/apiServices/hooks/useSaveAndRemoveJob";
+import getStyles from "./SavedJobComponent.style";
 
 const SavedJobComponent = ({
   details,
@@ -22,6 +22,8 @@ const SavedJobComponent = ({
   handleOpenModal,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   const { isWebView } = useIsWebView();
   const { id } = details;

@@ -1,7 +1,8 @@
 import { navigations } from "./routeNames";
 
 const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
-  const { job_id, id } = params;
+  const { job_id, id, centerId, companyId, roundId } = params;
+
   switch (path) {
     case `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}`: {
       return [
@@ -27,8 +28,70 @@ const getBreadCrumbDetails = ({ path, isEditMode, params, currentModule }) => {
         },
       ];
     }
+    case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}`: {
+      return [
+        { path: navigations.ROUND_ONE, label: "Round 1" },
+        {
+          path: `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`,
+          label: "Centre wise Company detail",
+        },
+      ];
+    }
+    case `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}`: {
+      return [
+        { path: navigations.ROUND_TWO, label: "Round 2" },
+        {
+          path: `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`,
+          label: "Centre wise Company detail",
+        },
+      ];
+    }
+    case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}`: {
+      return [
+        { path: navigations.ROUND_ONE, label: "Round 1" },
+        {
+          path: `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`,
+          label: "Centre wise Company detail",
+        },
+        {
+          path: navigations.COMPANY_DETAILS,
+          label: "View Company detail",
+        },
+      ];
+    }
+    case `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${navigations.COMPANY_DETAILS}/${roundId}/${centerId}/${companyId}`: {
+      return [
+        { path: navigations.ROUND_TWO, label: "Round 2" },
+        {
+          path: `/${currentModule}/${navigations.ROUND_TWO}/${navigations.CENTRE_WISE_COMPANY}/${roundId}`,
+          label: "Centre wise Company detail",
+        },
+        {
+          path: navigations.COMPANY_DETAILS,
+          label: "View Company detail",
+        },
+      ];
+    }
+    case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CAMPUS_INTERVIEW_MANAGEMENT}`: {
+      return [
+        { path: navigations.ROUND_ONE, label: "Round 1" },
+        {
+          path: navigations.CAMPUS_INTERVIEW_MANAGEMENT,
+          label: "Campus Interview Management",
+        },
+      ];
+    }
+    case `/${currentModule}/${navigations.ROUND_ONE}/${navigations.CONSENT_MARKING_MANAGEMENT}`: {
+      return [
+        { path: navigations.ROUND_ONE, label: "Round 1" },
+        {
+          path: navigations.CAMPUS_INTERVIEW_MANAGEMENT,
+          label: "Concent Marking Management",
+        },
+      ];
+    }
+
     default:
-      return [];
   }
 };
 

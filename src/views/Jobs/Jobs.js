@@ -1,23 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
-import { CustomTabs } from "../../components/Tab/CustomTabs";
+import { useTheme } from "@unthinkable/react-theme";
 
-import styles from "./Jobs.styles";
-import CommonText from "../../components/CommonText";
-import { Row, View } from "@unthinkable/react-core-components";
 import AllJobs from "../AllJobs/AllJobs";
 import AppliedJobsView from "../AppliedJobsView";
+import CommonText from "../../components/CommonText";
 import SavedJobs from "../SavedJobs";
-import useIsWebView from "../../hooks/useIsWebView";
-import { navigations } from "../../constants/routeNames";
+import { CustomTabs } from "../../components/Tab/CustomTabs";
+import { Row } from "@unthinkable/react-core-components";
+import getStyles from "./Jobs.styles";
 
 const Jobs = () => {
   const intl = useIntl();
-  const isEditable = false;
-  const { isWebView } = useIsWebView();
-  const handleEdit = () => {};
-  const navigate = useNavigate();
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <CustomTabs

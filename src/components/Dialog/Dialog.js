@@ -15,6 +15,7 @@ const Dialog = ({
   omitCloseBtn,
   maxWidth,
   modalContainerStyle,
+  modalContentStyles,
   onClose,
   preventCloseOnBackdropClick,
 }) => {
@@ -46,7 +47,9 @@ const Dialog = ({
           )}
         </View>
       </View>
-      <View style={styles.content}>{children}</View>
+      <View style={{ ...styles.content, ...modalContentStyles }}>
+        {children}
+      </View>
     </Modal>
   );
 };
@@ -59,6 +62,7 @@ Dialog.defaultProps = {
   onClose: () => {},
   maxWidth: "",
   modalContainerStyle: {},
+  modalContentStyles: {},
   preventCloseOnBackdropClick: false,
 };
 
@@ -69,6 +73,7 @@ Dialog.propTypes = {
   omitCloseBtn: PropTypes.bool,
   maxWidth: PropTypes.string,
   modalContainerStyle: PropTypes.object,
+  modalContentStyles: PropTypes.object,
   onClose: PropTypes.func,
   preventCloseOnBackdropClick: PropTypes.bool,
 };

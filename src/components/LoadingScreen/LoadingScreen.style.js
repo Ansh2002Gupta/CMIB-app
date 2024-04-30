@@ -1,10 +1,12 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+const getStyles = (theme) => {
+  const { colors } = theme;
 
-const styles = StyleSheet.create({
-  loadingContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+  return {
+    loadingContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  };
+};
 
-export default styles;
+export default getStyles;

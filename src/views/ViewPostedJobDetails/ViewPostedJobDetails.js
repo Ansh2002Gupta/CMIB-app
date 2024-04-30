@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "../../routes";
 import dayjs from "dayjs";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
+
 import CustomTextEditor from "../../components/CustomTextEditor";
-import { FormTabs } from "../../components/Tab/FormTabs";
-import { CustomTabs } from "../../components/Tab";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
+import EditJobDetails from "../EditJobDetails/EditJobDetails";
+import LoadingScreen from "../../components/LoadingScreen";
+import ViewJobApplicants from "../../containers/ViewPostedJobDetails/ViewJobApplicants/ViewJobApplicants";
 import ViewJobs from "../../containers/ViewPostedJobDetails/ViewJobs";
 import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
-import LoadingScreen from "../../components/LoadingScreen";
+import ViewScheduleInterview from "../../containers/ViewPostedJobDetails/ViewScheduleInterview";
+import { FormTabs } from "../../components/Tab/FormTabs";
+import { CustomTabs } from "../../components/Tab";
+import useGetEditJobs from "../../services/apiServices/hooks/EditJobs/useGetEditJobs";
+import useChangeJobStatusApi from "../../services/apiServices/hooks/useChangeJobStatusApi";
+import { urlService } from "../../services/urlService";
 import { jobType } from "../../constants/constants";
 import { useIntl } from "react-intl";
 import { getDecryptApiData } from "../../utils/util";
-import styles from "./ViewPostedJobDetails.styles";
-import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import { useSearchParams } from "../../routes";
-import ViewJobApplicants from "../../containers/ViewPostedJobDetails/ViewJobApplicants/ViewJobApplicants";
-import colors from "../../assets/colors";
-import ViewScheduleInterview from "../../containers/ViewPostedJobDetails/ViewScheduleInterview";
-import { useParams } from "react-router";
-import EditJobDetails from "../EditJobDetails/EditJobDetails";
-import useGetEditJobs from "../../services/apiServices/hooks/EditJobs/useGetEditJobs";
-import useChangeJobStatusApi from "../../services/apiServices/hooks/useChangeJobStatusApi";
+import getStyles from "./ViewPostedJobDetails.styles";
 
 const ViewPostedJobDetails = () => {
   const { id } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const {
     isLoading: isConstantLoading,
     stateResult: apiData,
@@ -41,7 +44,9 @@ const ViewPostedJobDetails = () => {
   const [loading, setLoading] = useState(false);
   const [isActive, setActive] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
-  const [activeTab] = useState(Number(searchParams.get("activeTab")));
+  const [activeTab] = useState(
+    Number(urlService.getQueryStringValue("activeTab"))
+  );
   const {
     handleUseChangeJob,
     isError: ischangeJobStatusError,
@@ -50,17 +55,18 @@ const ViewPostedJobDetails = () => {
   const intl = useIntl();
 
   useEffect(() => {
-    if (searchParams.get("mode") === "edit") {
+    if (urlService.getQueryStringValue("mode") === "edit") {
       setIsEditable(true);
     }
     getPostedData();
   }, []);
+
   useEffect(() => {
-    if (searchParams.get("mode") === "view" && isEditable) {
+    if (urlService.getQueryStringValue("mode") === "view" && isEditable) {
       setIsEditable(false);
       getPostedData();
     }
-  }, [searchParams]);
+  }, [urlService.getQueryStringValue("mode")]);
 
   useEffect(() => {
     if (isSuccess && apiData) {
@@ -284,10 +290,7 @@ const ViewPostedJobDetails = () => {
   const onCancelPress = (shouldApiBeCalled = false) => {
     if (isEditable) {
       setIsEditable(false);
-      setSearchParams((prev) => {
-        prev.set("mode", "view");
-        return prev;
-      });
+      urlService.setQueryStringValue("mode", "view");
       if (shouldApiBeCalled) {
         getPostedData();
       }
@@ -323,12 +326,9 @@ const ViewPostedJobDetails = () => {
               />
               <View style={styles.container}>
                 <CustomTabs
-                  containerStyle={{ backgroundColor: colors.white }}
+                  containerStyle={{ backgroundColor: theme.colors.white }}
                   setSelectedTab={(item) => {
-                    setSearchParams((prev) => {
-                      prev.set("activeTab", `${item}`);
-                      return prev;
-                    });
+                    urlService.setQueryStringValue("activeTab", `${item}`);
                   }}
                   tabs={[
                     {
@@ -345,10 +345,10 @@ const ViewPostedJobDetails = () => {
                                 <FormTabs
                                   onEditClick={() => {
                                     setIsEditable(true);
-                                    setSearchParams((prev) => {
-                                      prev.set("mode", "edit");
-                                      return prev;
-                                    });
+                                    urlService.setQueryStringValue(
+                                      "mode",
+                                      "edit"
+                                    );
                                   }}
                                   tabs={[
                                     {

@@ -1,9 +1,9 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { Text, View } from "@unthinkable/react-core-components";
 
-import colors from "../../assets/colors";
-import styles from "./CommonText.style";
+import getStyles from "./CommonText.style";
 
 const CommonText = ({
   children,
@@ -16,6 +16,8 @@ const CommonText = ({
   underLinecolor,
   underLineStyle,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const styleArray = Array.isArray(customTextStyle)
     ? customTextStyle
     : [customTextStyle];
@@ -36,7 +38,7 @@ const CommonText = ({
       {isunderLine && (
         <View
           style={{
-            ...styles.horizontalLine(underLinecolor),
+            ...styles.horizontalLine(underLinecolor || theme.colors.back),
             ...underLineStyle,
           }}
         />
@@ -52,7 +54,6 @@ CommonText.defaultProps = {
   customTextStyle: {},
   fontWeight: "500",
   isunderLine: false,
-  underLinecolor: colors.black,
   underLineStyle: {},
 };
 

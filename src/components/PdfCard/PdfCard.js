@@ -1,25 +1,52 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Linking, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import images from "../../images";
-import { getValidUrl } from "../../utils/util";
-import styles from "./PdfCard.styles";
+import { getFileExtension, getValidUrl } from "../../utils/util";
+import getStyles from "./PdfCard.styles";
+
+const getFileTypeLabel = (ext) => {
+  let extObj = {
+    doc: "label.viewDoc",
+    docx: "label.viewDoc",
+    ppt: "label.viewPPT",
+    pptx: "label.viewPPT",
+    pdf: "label.viewPdf",
+  };
+
+  return extObj[ext] ? extObj[ext] : "label.view";
+};
+
+const getDocIcon = (ext) => {
+  let extObj = {
+    doc: images.iconDoc,
+    docx: images.iconDoc,
+    ppt: images.iconPPT,
+    pptx: images.iconPPT,
+    pdf: images.iconPDF,
+  };
+  return extObj[ext] ? extObj[ext] : images.iconDocument;
+};
 
 const PdfCard = ({ pdfUrl }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+  const icon = getDocIcon(getFileExtension({ fileName: pdfUrl }));
 
   return (
     <View style={styles.container}>
       <CustomImage
         alt="Pdf"
         height={50}
-        Icon={images.pdfIcon}
+        Icon={icon}
         isSvg
-        source={images.pdfIcon}
+        source={icon}
         style={styles.pdfImage}
         width={50}
       />
@@ -30,7 +57,9 @@ const PdfCard = ({ pdfUrl }) => {
         style={styles.linkBtn}
       >
         <CommonText customTextStyle={styles.pdfLink} fontWeight="600">
-          {intl.formatMessage({ id: "label.viewPdf" })}
+          {intl.formatMessage({
+            id: getFileTypeLabel(getFileExtension({ fileName: pdfUrl })) ?? "",
+          })}
         </CommonText>
         <CustomImage
           alt="Right diagonal arrow"

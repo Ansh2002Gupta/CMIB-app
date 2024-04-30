@@ -1,13 +1,14 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import SvgUri from "../SvgUri";
 import { MOBILE_NUMBER_MAX_LENGTH } from "../../constants/constants";
-import { styles } from "./MobileNumberInput.style";
+import { getStyles } from "./MobileNumberInput.style";
 
 const MobileNumberInput = ({
   codeError,
@@ -25,9 +26,12 @@ const MobileNumberInput = ({
   options,
   urlField,
   valueField,
+  isMandatory = true,
 }) => {
   const isWeb = Platform.OS === "web";
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const getLabel = (option) => {
     if (isWeb) {
@@ -72,7 +76,7 @@ const MobileNumberInput = ({
                 id: "label.country_code",
               })}
               isDropdown
-              isMandatory
+              isMandatory={isMandatory}
               isEditable={isEditable}
               onChangeValue={(val) => onChangeCode(val)}
               placeholder={intl.formatMessage({
@@ -98,7 +102,7 @@ const MobileNumberInput = ({
               isEditable={isEditable}
               isNumeric
               onChangeText={(val) => onChangeMobNumber(val)}
-              isMandatory
+              isMandatory={isMandatory}
               {...{ fieldRef }}
             />
           </View>
@@ -122,7 +126,7 @@ const MobileNumberInput = ({
           isEditable={isEditable}
           errorMessage={mobNumberError}
           isError={!!mobNumberError}
-          isMandatory
+          isMandatory={isMandatory}
           onChangeValue={(val) => onChangeCode(val)}
           labelField="dial_code"
           valueField="dial_code"

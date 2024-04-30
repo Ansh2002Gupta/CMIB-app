@@ -19,11 +19,14 @@ import {
   JOB_APPLICANTS_HEADING,
   ROWS_PER_PAGE_ARRAY,
 } from "../../constants/constants";
-import styles from "./JobApplicantsView.style";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "./JobApplicantsView.style";
 
 const JobApplicants = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const {
     allDataLoaded,

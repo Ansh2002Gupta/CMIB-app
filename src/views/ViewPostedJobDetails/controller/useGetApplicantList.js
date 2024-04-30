@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
@@ -15,19 +15,22 @@ import usePagination from "../../../hooks/usePagination";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../ViewPostedJobDetails.styles";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import { urlService } from "../../../services/urlService";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
 import TouchableImage from "../../../components/TouchableImage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "../ViewPostedJobDetails.styles";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useGetApplicantList = (id, onEditPress) => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -42,11 +45,11 @@ const useGetApplicantList = (id, onEditPress) => {
 
   const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
 
   const navigate = useNavigate();
@@ -100,6 +103,9 @@ const useGetApplicantList = (id, onEditPress) => {
       });
       if (initialData && initialData?.records?.length > 0) {
         setCurrentRecords(initialData?.records);
+        if (initialData?.meta?.currentPage === initialData?.meta?.lastPage) {
+          setAllDataLoaded(true);
+        }
       }
       setIsFirstPageReceived(false);
     };
@@ -307,7 +313,7 @@ const useGetApplicantList = (id, onEditPress) => {
                   }}
                   source={images.iconMore}
                   imageStyle={{ height: 20, width: 20 }}
-                  isSvg={true}
+                  isSvg
                 />
                 {currentPopUpMessage === item.id && (
                   <View ref={popupRef}>

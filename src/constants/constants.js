@@ -4,6 +4,7 @@ export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
 export const VALID_PAN = "Not a valid PAN, Please enter again";
+export const VALID_TAN = "Not a valid TAN, Please enter again";
 export const VALID_GSTIN = "Not a valid GSTIN, Please enter again";
 
 export const numRegex = /^\d+$/;
@@ -13,6 +14,9 @@ export const urlRegex =
 
 export const TOAST_TIMEOUT = 5000;
 export const API_VERSION_NUMBER = "1.0.0";
+export const UPDATED_API_VERSION = "1.0.1";
+export const API_VERSION_QUERY_PARAM = "api-version";
+export const SESSION_ID_QUERY_PARAM = "session-id";
 export const FIELD_MIN_LENGTH = 6;
 export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
@@ -117,6 +121,16 @@ export const COMPANY_TYPE_OPTIONS = [
   { label: "Taxable", value: "taxable" },
 ];
 
+export const COMPANY_TYPE_OPTIONS_KEYS = {
+  exempt: "Exempt",
+  "nil rated": "Nil Rated",
+  "bill of supply": "Bill of Supply",
+  export: "Export",
+  sez: "SEZ",
+  "deemed export": "Deemed Export",
+  taxable: "Taxable",
+};
+
 export const NATURE_OF_SUPPLIER = [
   { label: "Registered", value: "Registered" },
   { label: "Unregistered", value: "Unregistered" },
@@ -163,6 +177,12 @@ export const MODULE_OPTIONS = [
 ];
 
 export const COLOR_MODES = ["light", "dark"];
+
+export const USER_TYPE = {
+  MEMBER: "member",
+  COMPANY: "company",
+};
+export const USER_TYPE_QUERY_PARAM = "user";
 
 export const getCompanyRoundCards = ({ is_filled }) => {
   return [
@@ -214,6 +234,34 @@ export const DOCUMENT_TYPE = [
   },
 ];
 
+export const DOCUMENT_TYPE_KEYS = {
+  photocopies: "Photocopies",
+  original: "Original",
+  both: "Both",
+};
+
+export const EXEPERIENCE_RANGE = [
+  { label: "1-5", value: "1-5" },
+  { label: "5-10", value: "5-10" },
+  {
+    label: "10-20",
+    value: "10-20",
+  },
+  {
+    label: "20 years and above",
+    value: "20 years and above",
+  },
+];
+
+export const JOB_TYPE = [
+  { label: "WFH", value: "WFH" },
+  { label: "Hybrid", value: "Hybrid" },
+  {
+    label: "On-Site",
+    value: "On-Site",
+  },
+];
+
 export const AREA_CODES = [
   { label: "+01", value: "+01" },
   { label: "+02", value: "+02" },
@@ -233,17 +281,17 @@ export const MOBILE_CODES = [
 ];
 
 export const ADD_DOCUMENT = {
-  BOTH: "Both",
-  PHOTOCOPIES: "Photocopies",
+  BOTH: "both",
+  PHOTOCOPIES: "photocopies",
   DOCUMENT_NAME: "documentName",
   DOCUMENT_TYPE: "documentType",
   COPIESNUMBER: "copiesNumber",
-  ORIGINAL: "Original",
+  ORIGINAL: "original",
 };
 
 export const PLACE_OF_POSTING = {
   TOTAL: "total",
-  POSTING_PLACE: "postingPlace",
+  POSTING_PLACE: "place_of_posting",
 };
 
 export const SIGN_UP_STEPPER_OPTION = [
@@ -297,23 +345,81 @@ export const SCREEN_NAMES = {
   ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
 };
 
-export const APPLICATION_FORM_STEPPER_OPTIONS = [
-  {
-    title: "label.company_profile",
-  },
-  {
-    title: "label.job_details",
-  },
-  {
-    title: "label.pre_interview_preferences",
-  },
-  {
-    title: "label.centre_details",
-  },
-  {
-    title: "label.payment",
-  },
-];
+export const ADD_DOCUMENT_HEADING = {
+  doc_name: "Document Name",
+  doc_type: "Document Type",
+  no_of_copies: "Number of Copies",
+};
+
+export const ADD_DESIGNATION_HEADING = {
+  designation_details: "Designation",
+  number_of_vacancies: "No. of Vacancy",
+};
+
+export const OTHER_BENEFIT_HEADING = {
+  benefits_details: "Benefits Details",
+  benefits_amount: "Amount",
+};
+
+export const ADD_PLACE_OF_POSTING_HEADING = {
+  place_of_posting: "Place of Posting",
+  general: "General",
+  obc: "OBC",
+  sc: "SC",
+  st: "ST",
+  ph: "PH",
+  others: "Others",
+  total: "Total",
+};
+export const totalCardHeading = {
+  1: "Available for Round 1",
+  2: "Available for Round 2",
+  3: "Round 1 Shortlist",
+  4: "Round 2 Shortlist",
+  5: "Final Consent Marked List",
+  6: "Interview Shortlist",
+  7: "Offered Candidates",
+  8: "Offer Accepted by Candidates",
+};
+
+export const APPLICATION_FORM_STEPPER_OPTIONS = (hasRoundTwo) => {
+  const roundOneSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+    {
+      title: "label.billing_info",
+    },
+    {
+      title: "label.payment",
+    },
+  ];
+  const roundTwoSteps = [
+    {
+      title: "label.company_profile",
+    },
+    {
+      title: "label.job_details",
+    },
+    {
+      title: "label.pre_interview_preferences",
+    },
+    {
+      title: "label.centre_details",
+    },
+  ];
+
+  return hasRoundTwo ? roundTwoSteps : roundOneSteps;
+};
 
 export const ROWS_PER_PAGE_ARRAY = [
   { value: 10, label: "10" },
@@ -350,6 +456,9 @@ export const POSTED_JOB_LISTING = {
   number_of_applications: "Applicants",
   approve: "Approved/Not Approved by Admin",
 };
+export const COMPANY_NAME_LISTING = {
+  name: "Company",
+};
 export const APPLICANT_LISTING = {
   name: "Applicant Name",
   applicant_id: "Applicant ID",
@@ -363,6 +472,82 @@ export const SCHEDULE_LISTING = {
   primary_interview_time: "Primary Interview Time",
   status: "Status",
 };
+export const SHORTLISTING_TABLE_HEADING = (centerSelected) => {
+  let additionalColumn;
+  if (centerSelected == 3 || centerSelected == 4) {
+    additionalColumn = {
+      consent: "Consent Given",
+    };
+  } else if (centerSelected == 5) {
+    additionalColumn = {
+      test_result: "Written Test",
+    };
+  } else if (centerSelected == 6) {
+    additionalColumn = {
+      job_offered: "Offered",
+    };
+  } else if (centerSelected == 7) {
+    additionalColumn = {
+      offered_status: "Offer Status",
+    };
+  } else {
+    additionalColumn = {};
+  }
+
+  return {
+    application_number: "Registration Number",
+    name: "Name",
+    gender: "Gender",
+    age: "Age",
+    city: "City",
+    country: "Country",
+    ca_inter_rank: "CA Inter %",
+    ca_final_rank: "CA Final %",
+    ca_experience_rank: "Experience (Years)",
+    rank: "Rank",
+    category: "Category",
+    expected_salary: "Expected Salary",
+    ...additionalColumn,
+  };
+};
+export const getPassRejected = {
+  pass: "Pass",
+  reject: "Reject",
+};
+export const yesOrNot = {
+  yes: "Yes",
+  no: "No",
+};
+export const BILLING_INFO_HEADING_FOR_NQCA = (currentModule) => {
+  const currentModules =
+    currentModule === NEWLY_QUALIFIED
+      ? {
+          psychometric_test_fee: "Psychometric/ Written Test Fee",
+        }
+      : {};
+  return {
+    centre_name: "Centre Name",
+    total_vacancies: "Vacancy",
+    interview_dates: "Interview Dates",
+    amount: "Amount",
+    final_amt: "Final Amount",
+    discount_rate: "Discount",
+    sgst: "SGST",
+    cgst: "CGST",
+    igst: "IGST",
+    ...currentModules,
+  };
+};
+
+export const TRANSACTION_LIST_HEADING_FOR_NQCA = () => {
+  return {
+    txn_id: "Transaction ID",
+    payment_type: "Offline/Online Transaction",
+    created_at: "Payment Date & Time",
+    payment_mode: "Payment Mode",
+    payment_status: "Payment Status",
+  };
+};
 
 export const FEEDBACK_TABLE_HEADING = {
   id: "Feedback ID",
@@ -373,8 +558,14 @@ export const FEEDBACK_TABLE_HEADING = {
 export const getCandidatesRoundCards = ({ hasRoundone }) => {
   return [
     {
-      title: "label.application",
+      title: "label.centre_wise_company_detail",
       id: 1,
+      image: "iconDiscover",
+      subTitle: "label.centre_wise_company_detail_description",
+    },
+    {
+      title: "label.application",
+      id: 2,
       image: "iconApplication",
       subTitle: "label.application_description",
     },
@@ -382,16 +573,11 @@ export const getCandidatesRoundCards = ({ hasRoundone }) => {
       title: hasRoundone
         ? "label.download_id"
         : "label.download_id_and_print_id",
-      id: 2,
+      id: 3,
       image: "iconDownload",
       subTitle: "label.download_id_description",
     },
-    {
-      title: "label.centre_wise_company_detail",
-      id: 3,
-      image: "iconDiscover",
-      subTitle: "label.centre_wise_company_detail_description",
-    },
+
     {
       title: "label.consent_marking_management",
       id: 4,
@@ -644,6 +830,17 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
+export const PAYMENT_MODE_OPTIONS = [
+  {
+    label: "Online",
+    value: "online",
+  },
+  {
+    label: "Offline",
+    value: "offline",
+  },
+];
+
 export const PREVIEWED_LENGTH = 100;
 export const COMPANY_QUERY_TYPE_TICKET = "/";
 
@@ -788,6 +985,35 @@ export const INACTIVE_PACKAGE_TABLE_HEADING = {
   start_date: "Start Date",
   validity_date: "Validity Date",
 };
+
+export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT = {
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  center_name: "Center Name",
+  interview_dates: "Interview Dates",
+  shortlisting_round: "Shortlisting Round",
+  written_test: "Written Test",
+};
+
+export const ROUND_ONE_CONSENT_MARKETING_MANAGEMENT_CAMPUS = {
+  center_name: "Center Name",
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  interview_dates_time: "Interview Dates & Time",
+  offer_provided: "Offer Provided",
+  offer_acceptance_deadline: "Offer Acceptance Deadline",
+};
+
+export const ROUND_ONE_CAMPUS_INTERVIEW_MANAGEMENT = {
+  employer_name: "Employer Name",
+  interview_type: "Interview Type",
+  mode: "Mode",
+  interview_dates: "Interview dates",
+  shortlisting_round: "Shortlisting round",
+};
+
 export const JOB_STATUS_RESPONSE_CODE = {
   "Shortlist Candidate": 3,
   "Reject Candidate": 2,
@@ -797,6 +1023,93 @@ export const JOB_STATUS_RESPONSE_CODE = {
   "Offer Rejected": 8,
   "Job Not Offered": 9,
 };
+
+export const cardConfigOverRectangle = [
+  {
+    data: { count: 500, textId: "label.available_round_1" },
+    position: { top: "-15%", left: "-15%" },
+    refKey: "round_1_available",
+  },
+  {
+    data: { count: 120, textId: "label.round_1_shortlist" },
+    position: { top: "-15%", right: "25%" },
+    refKey: "round_1_shortlist",
+  },
+  {
+    data: { count: 90, textId: "label.available_round_2" },
+    position: { bottom: "-15%", left: "-15%" },
+    refKey: "round_2_available",
+  },
+  {
+    data: { count: 10, textId: "label.round_2_shortlist" },
+    position: { bottom: "-15%", right: "25%" },
+    refKey: "round_2_shortlist",
+  },
+];
+
+export const cardConfigOverRectangleColorArray = [
+  colors.darkBlue,
+  colors.glowingPurple,
+  colors.extraDarkPurple,
+  colors.extraDarkPurple,
+  colors.medicineBlue,
+];
+
+export const cardConfigOverLine = [
+  {
+    data: { count: 500, textId: "label.final_consent_marked_list" },
+    position: { top: -65, left: -75 },
+    refKey: "final_concent",
+  },
+  {
+    data: { count: 120, textId: "label.interview_shortlist" },
+    position: { top: -65, left: "24%" },
+    refKey: "nterview_shortlist",
+  },
+  {
+    data: { count: 90, textId: "label.offered_candidates" },
+    position: { top: -65, left: "60%" },
+    refKey: "job_offered",
+  },
+  {
+    data: { count: 10, textId: "label.offer_accepted_by_candidates" },
+    position: { top: -65, left: "96%" },
+    refKey: "offer_accepted",
+  },
+];
+
+export const cardConfigOverLineColorArray = [
+  colors.hotPink,
+  colors.ambientOrange,
+  colors.paleYellow,
+  colors.green,
+];
+
+export const lineSegmentStylesForRectangle = [
+  "topFirstHalf",
+  "bottomFirstHalf",
+  "leftFirstHalf",
+  "leftSecondHalf",
+];
+
+export const lineSegmentStylesForLine = [
+  "firstLineSegment",
+  "secondLineSegment",
+  "thirdLineSegment",
+];
+
+export let dataCircleConfig = [
+  {
+    data: 10,
+    refKey: "round_1_consent",
+    styleKey: "dataCircle1",
+  },
+  {
+    data: 11,
+    refKey: "round_2_consent",
+    styleKey: "dataCircle2",
+  },
+];
 
 export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];
 export const GET_INTERVIEW_TYPE = {
@@ -895,4 +1208,106 @@ export const SAVED_CANDIDATES_TABLE_HEADING = {
   experience: "Total Experience",
   functional_areas: ["Functional Area"],
   designation_applied_for: ["Designation Applied For"],
+};
+
+const interviewMode = {
+  online: "online",
+  offline: "offline",
+};
+
+export const interviewTypeOptions = [
+  { label: "Virtual Interview", value: interviewMode.online },
+  { label: "Face to Face", value: interviewMode.offline },
+];
+
+export const INTERVIEW_TYPE = {
+  [interviewMode.online]: "Virtual Interview",
+  [interviewMode.offline]: "Face to Face",
+};
+
+export const benefits_key = {
+  BENEFITS_DETAILS: "benefits_details",
+  BENEFITS_AMOUNT: "benefits_amount",
+};
+
+export const designation_key = {
+  DESIGNATION_DETAILS: "designation_details",
+  NUMBER_OF_VACANCIES: "number_of_vacancies",
+};
+
+export const CHART_DATA_TYPE = {
+  JOBS_BY_TYPES: "JOBS_BY_TYPES",
+  URGENT_JOBS: "URGENT_JOBS",
+  INTERVIEW_SCHEDULED: "INTERVIEW_SCHEDULED",
+  SELECTED_FUNCTION_AREAS: "SELECTED_FUNCTION_AREAS",
+  TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED:
+    "TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED",
+  TOP_COMPANIES_WITH_HIGHEST_CTC: "TOP_COMPANIES_WITH_HIGHEST_CTC",
+};
+
+export const PAGINATION_PROPERTIES = {
+  CURRENT_PAGE: "current-page",
+  ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
+  FILTER: "filter",
+  MODE: "mode",
+};
+
+export const ADD_PREINTERVIEW_PREFERNCES_HEADING = {
+  designation: "Desgination",
+  name: "Name",
+  email: "Email",
+  mobile_country_code: "Mobile Country Code",
+  mobile_number: "Mobile Number",
+  std_country_code: "Area Code",
+  telephone_number: "Telephone Number",
+};
+
+export const FORM_STATES = {
+  VIEW_ONLY: "view",
+  EDITABLE: "edit",
+  EMPTY: "empty",
+};
+
+export const diagramSupportEnum = {
+  RECTANGLE_CARD: "cardConfigOverRectangle",
+  LINE_CARD: "cardConfigOverLine",
+};
+
+export const CATEGORIES = [
+  {
+    label: "General",
+    value: "general",
+  },
+  {
+    label: "OBC",
+    value: "obc",
+  },
+  {
+    label: "SC",
+    value: "sc",
+  },
+  {
+    label: "ST",
+    value: "st",
+  },
+  {
+    label: "PH",
+    value: "ph",
+  },
+  {
+    label: "Others",
+    value: "others",
+  },
+];
+
+export const returnColorArray = (key) => {
+  switch (key) {
+    case diagramSupportEnum.RECTANGLE_CARD:
+      return cardConfigOverRectangleColorArray;
+    case diagramSupportEnum.LINE_CARD:
+      return cardConfigOverLineColorArray;
+    default:
+      return cardConfigOverRectangleColorArray;
+  }
 };

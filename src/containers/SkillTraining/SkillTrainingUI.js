@@ -1,5 +1,6 @@
 import React from "react";
 import { View, ScrollView } from "@unthinkable/react-core-components";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import style from "./SkillTraining.style";
 import DetailCard from "../../components/DetailCard";
@@ -9,6 +10,7 @@ import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { STATUS_CODES } from "../../constants/constants";
+import getStyles from "./SkillTraining.style";
 
 const SkillTrainingUI = ({
   isEditable,
@@ -31,6 +33,8 @@ const SkillTrainingUI = ({
   isErrorLoadingPage,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   const onDismiss = () => {
     setError("");

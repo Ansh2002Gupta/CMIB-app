@@ -1,11 +1,12 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { ScrollView, Text, View } from "@unthinkable/react-core-components";
 import ChipSection from "./components/chipSection";
 import Description from "./components/description";
 import About from "./components/About";
 import useIsWebView from "../../hooks/useIsWebView";
 import JobDetailHeader from "./components/JobDetailHeader/JobDetailHeader";
-import styles from "./styles";
+import getStyles from "./styles";
 import CustomButton from "../../components/CustomButton";
 import { useIntl } from "react-intl";
 import images from "../../images";
@@ -20,6 +21,9 @@ const PostedJobsTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const {
     jobDescription: { summary = "", data = [] },
     functionalAreas,

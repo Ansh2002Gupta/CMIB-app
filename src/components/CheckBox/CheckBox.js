@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ColorModeContext, useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
-import styles from "./CheckBox.style";
 import { View } from "@unthinkable/react-core-components";
 import TouchableImage from "../TouchableImage";
+import getStyles from "./CheckBox.style";
 
 const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
 
@@ -15,6 +16,7 @@ const CheckBox = ({
   handleCheckbox,
   id,
   isDisabled,
+  isEditable,
   isPartial,
   isSelected,
   title,
@@ -22,10 +24,30 @@ const CheckBox = ({
   iconUnCheck,
   checkBoxTextStyle,
   style,
+  isFillSpace,
 }) => {
-  const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
+  const theme = useTheme();
+  const styles = getStyles(theme);
+  const colorMode = useContext(ColorModeContext).colorMode;
+
+  const CheckIcon = () => {
+    if (iconCheck) {
+      return iconCheck;
+    }
+    if (colorMode === "dark") {
+      return Images.checkboxRed;
+    }
+    return Images.iconCheckbox;
+  };
+
+  const PartialIcon = () => {
+    if (colorMode === "dark") {
+      return Images.partialSelectIcon;
+    }
+    return Images.iconPartial;
+  };
+
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
-  const PartialIcon = Images.iconPartial;
   const DisabledCheckBoxIcon = Images.iconDisabledCheck;
 
   const getCheckBoxIcon = () => {
@@ -33,22 +55,23 @@ const CheckBox = ({
       return DisabledCheckBoxIcon;
     }
     if (isPartial) {
-      return PartialIcon;
+      return PartialIcon();
     }
     if (isSelected) {
-      return CheckIcon;
+      return CheckIcon();
     }
     return UncheckIcon;
   };
 
   const rowCheckBox = [
     {
+      isFillSpace,
       content: (
-        <View style={{...styles.containerStyle,...customTextStyle }}>
+        <View style={{ ...styles.containerStyle, ...customTextStyle }}>
           <TouchableImage
-          hitSlop={hitSlop}
+            hitSlop={hitSlop}
             Icon={getCheckBoxIcon()}
-            style={styles.iconStyle}
+            style={isEditable ? styles.iconStyle : styles.disabledIconStyle}
             source={getCheckBoxIcon()}
             isSvg
             disabled={isDisabled}
@@ -81,10 +104,9 @@ const CheckBox = ({
 CheckBox.defaultProps = {
   customTextStyle: {},
   isDisabled: false,
+  isEditable: true,
   isPartial: false,
   isSelected: false,
-  iconCheck: Images.iconCheckbox,
-  iconUnCheck: Images.iconUnCheckbox,
   style: {},
 };
 
@@ -93,6 +115,7 @@ CheckBox.propTypes = {
   handleCheckbox: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isDisabled: PropTypes.bool,
+  isEditable: PropTypes.bool,
   isPartial: PropTypes.bool,
   isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,

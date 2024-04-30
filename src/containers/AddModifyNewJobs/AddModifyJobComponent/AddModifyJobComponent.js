@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { Animated, ScrollView } from "@unthinkable/react-core-components";
 import CardComponent from "../../../components/CardComponent";
 import HeaderComponent from "../HeaderComponent";
@@ -13,7 +14,7 @@ import PersonalDetails from "../PersonalDetails";
 import BottomSection from "../BottomSection";
 import { useIntl } from "react-intl";
 import { progressData } from "../../../constants/constants";
-import styles from "./AddModifyJobComponent.styles";
+import getStyles from "./AddModifyJobComponent.styles";
 
 const AddModifyJobComponent = forwardRef(
   (
@@ -30,6 +31,9 @@ const AddModifyJobComponent = forwardRef(
     ref
   ) => {
     const intl = useIntl();
+    const theme = useTheme();
+    const styles = getStyles(theme);
+
     const [jobProgress, setJobProgress] = useState(0);
 
     useEffect(() => {

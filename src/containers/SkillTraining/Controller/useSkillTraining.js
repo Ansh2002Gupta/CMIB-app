@@ -9,7 +9,8 @@ import {
   updateItemToAdd,
   updateState,
 } from "./utils";
-import styles from "../SkillTraining.style";
+import { useTheme } from "@unthinkable/react-theme";
+import getStyles from "../SkillTraining.style";
 
 const languageSkill = [
   {
@@ -58,7 +59,7 @@ const skillLevel = [
     value: "Low",
   },
 ];
-const languagesKnownField = (options) => [
+const languagesKnownField = ({ options, styles }) => [
   {
     key: SkillTraining_keys.LANGUAGE_KNOWN,
     label: "label.languages_known",
@@ -77,7 +78,7 @@ const languagesKnownField = (options) => [
     checkBoxTextStyle: styles.checkBoxItem,
   },
 ];
-const ITSkillField = (options) => [
+const ITSkillField = ({ options, styles }) => [
   {
     key: SkillTraining_keys.IT_SKIILS,
     label: "label.it_skills",
@@ -96,7 +97,7 @@ const ITSkillField = (options) => [
   },
 ];
 
-const softSkillField = (options) => [
+const softSkillField = ({ options, styles }) => [
   {
     key: SkillTraining_keys.SOFT_SKILLS,
     label: "label.soft_skills",
@@ -129,11 +130,17 @@ const otherSkillField = (value) => [
 
 export const useSkillTraining = ({ state, isEditable }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const [languagesKnownState, setLanguagesKnownState] = useState([
-    languagesKnownField(),
+    languagesKnownField({ styles }),
   ]);
-  const [ITSkillsState, setITSkillsState] = useState([ITSkillField()]);
-  const [softSkillsState, setSoftSkillsState] = useState([softSkillField()]);
+  const [ITSkillsState, setITSkillsState] = useState([
+    ITSkillField({ styles }),
+  ]);
+  const [softSkillsState, setSoftSkillsState] = useState([
+    softSkillField({ styles }),
+  ]);
   const [otherSkillsState, setOtherSkillsState] = useState(otherSkillField());
 
   const { data: languagesData } = useFetch({ url: LANGUAGES });
@@ -150,7 +157,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
         updateState(
           languages_known,
           getDropDownList(
-            [languagesKnownField()],
+            [languagesKnownField({ styles })],
             SkillTraining_keys.LANGUAGE_KNOWN,
             languagesData
           )[0],
@@ -163,7 +170,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
         updateState(
           it_skills,
           getDropDownList(
-            [ITSkillField()],
+            [ITSkillField({ styles })],
             SkillTraining_keys.IT_SKIILS,
             getSkills(skillsData)[0]
           )[0],
@@ -176,7 +183,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
         updateState(
           soft_skills,
           getDropDownList(
-            [softSkillField()],
+            [softSkillField({ styles })],
             SkillTraining_keys.SOFT_SKILLS,
             getSkills(skillsData)[1]
           )[0],
@@ -220,15 +227,15 @@ export const useSkillTraining = ({ state, isEditable }) => {
     if (type === SkillTraining_keys.ITSKILL_LEVEL) {
       dataToPerformAction = ITSkillsState;
       stateToPerformAction = setITSkillsState;
-      itemToAdd = ITSkillField(getSkills(skillsData)[0]);
+      itemToAdd = ITSkillField({ options: getSkills(skillsData)[0], styles });
     } else if (type === SkillTraining_keys.SOFTSKILL_LEVEL) {
       dataToPerformAction = softSkillsState;
       stateToPerformAction = setSoftSkillsState;
-      itemToAdd = softSkillField(getSkills(skillsData)[1]);
+      itemToAdd = softSkillField({ options: getSkills(skillsData)[1], styles });
     } else {
       dataToPerformAction = languagesKnownState;
       stateToPerformAction = setLanguagesKnownState;
-      itemToAdd = languagesKnownField(languagesData);
+      itemToAdd = languagesKnownField({ options: languagesData, styles });
     }
 
     if (isActionToAdd) {
@@ -320,15 +327,15 @@ export const useSkillTraining = ({ state, isEditable }) => {
     if (type === SkillTraining_keys.IT_SKIILS) {
       dataToPerformAction = ITSkillsState;
       stateToPerformAction = setITSkillsState;
-      itemToAdd = ITSkillField();
+      itemToAdd = ITSkillField({ styles });
     } else if (type === SkillTraining_keys.SOFT_SKILLS) {
       dataToPerformAction = softSkillsState;
       stateToPerformAction = setSoftSkillsState;
-      itemToAdd = softSkillField();
+      itemToAdd = softSkillField({ styles });
     } else {
       dataToPerformAction = languagesKnownState;
       stateToPerformAction = setLanguagesKnownState;
-      itemToAdd = languagesKnownField();
+      itemToAdd = languagesKnownField({ styles });
     }
     const { key } = findKeyByLabel(label, itemToAdd);
     let currentState = [...dataToPerformAction];

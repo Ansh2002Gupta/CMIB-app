@@ -1,22 +1,28 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { TwoRow } from "../../core/layouts";
 import { useNavigate } from "react-router";
 
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./OtherPackages.style";
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import { COMPANY_SUBSCRIPTION_LISTING } from "../../services/apiServices/apiEndPoint";
+import {
+  COMPANY_SUBSCRIPTION_LISTING,
+  COMPANY_SUBSCRIPTION_STATUS,
+} from "../../services/apiServices/apiEndPoint";
 import useFetch from "../../hooks/useFetch";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import CaJobsPackagesListing from "../CAJobsPackgesListing/CaJobsPackagesListing";
 import images from "../../images";
 import { navigations } from "../../constants/routeNames";
+import getStyles from "./OtherPackages.style";
 
 const OtherPackages = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
 
@@ -27,6 +33,15 @@ const OtherPackages = () => {
     error: errorSubscriptionListing,
   } = useFetch({
     url: COMPANY_SUBSCRIPTION_LISTING,
+  });
+
+  const {
+    data: subscribedPackageData,
+    isLoading: isPackageSubscribedLoading,
+    isError: isPackageSubscribedError,
+    error: errorPackageSubscribed,
+  } = useFetch({
+    url: `${COMPANY_SUBSCRIPTION_STATUS}`,
   });
 
   return (
@@ -71,6 +86,10 @@ const OtherPackages = () => {
                   <ScrollView style={styles.container}>
                     <CaJobsPackagesListing
                       subscriptionListingData={subscriptionListingData}
+                      isExpired={
+                        subscribedPackageData?.status.toLowerCase() ===
+                        "inactive"
+                      }
                     />
                   </ScrollView>
                 )}

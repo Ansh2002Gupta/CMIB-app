@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
@@ -9,9 +10,10 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import TouchableImage from "../TouchableImage";
 import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
-import styles from "./ConfigurableListStyle";
+import getStyles from "./ConfigurableListStyle";
 
 const ConfigurableList = ({
+  isEditable,
   options,
   customOuterContianer,
   menuOptions,
@@ -25,18 +27,29 @@ const ConfigurableList = ({
   title,
   idField = "id",
   nameField = "name",
+  outerContainer = {},
+  componentContainer = {},
+  handlePressCustom,
+  optionFormatter,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const allOptions = useRef([]);
-  const items = options?.map((option) => ({
+
+  const defaultOptionFormatter = (option) => ({
     id: String(option[idField]),
     name: String(option[nameField]),
-  }));
+  });
+
+  const items = options?.map(
+    optionFormatter ? optionFormatter : defaultOptionFormatter
+  );
 
   useEffect(() => {
     allOptions.current = items;
     setMenuOptions(items);
-  }, []);
+  }, [options]);
 
   const handleSearch = (query, keyName) => {
     const queryList = fetchData(query, keyName);
@@ -61,14 +74,19 @@ const ConfigurableList = ({
 
   return (
     <View style={{ ...styles.outerContainer, ...customOuterContianer }}>
-      <View style={styles.componentContainer}>
+      <View style={{ ...styles.componentContainer, ...componentContainer }}>
         <View style={styles.header}>
-          <CommonText customTextStyle={styles.titleStyles}>{title}</CommonText>
-          <TouchableImage
-            onPress={onAdd}
-            parentStyle={styles.iconAdd}
-            source={images.iconAdd}
-          />
+          <CommonText customTextStyle={styles.titleStyles} fontWeight={"600"}>
+            {title}
+          </CommonText>
+          {isEditable && (
+            <TouchableImage
+              onPress={onAdd}
+              parentStyle={styles.iconAdd}
+              source={images.iconAdd}
+              isSvg={false}
+            />
+          )}
         </View>
         <View style={styles.outerSearchWrapper}>
           <CustomImage style={styles.iconSearch} source={images.iconSearch} />
@@ -84,14 +102,21 @@ const ConfigurableList = ({
         <View style={styles.section}>
           <View style={styles.itemsWrapper}>
             {menuOptions?.length > 0 &&
-              menuOptions.map((item) => (
+              menuOptions.map((item, index) => (
                 <CustomTouchableOpacity
+                  key={index}
                   className={
                     selectedOptions.includes(item.id)
                       ? `${classes["configurableList__item--green"]}`
                       : ``
                   }
-                  onPress={() => onPress(item.id)}
+                  onPress={() => {
+                    if (handlePressCustom) {
+                      handlePressCustom(item);
+                    } else {
+                      onPress(item.id);
+                    }
+                  }}
                   style={[
                     styles.itemContainer,
                     selectedOptions.includes(item.id)
@@ -100,17 +125,18 @@ const ConfigurableList = ({
                   ]}
                 >
                   <CommonText
-                    customTextStyle={[
-                      styles.item,
-                      selectedOptions.includes(item.id)
+                    fontWeight={"500"}
+                    customTextStyle={{
+                      ...styles.item,
+                      ...(selectedOptions.includes(item.id)
                         ? styles.selectedTextColor
-                        : styles.unselectedTextColor,
-                    ]}
-                    customTextProps={{ className: classes["item--black"] }}
+                        : styles.unselectedTextColor),
+                    }}
+                    className={{ className: classes["item--black"] }}
                   >
                     {item.name}
                   </CommonText>
-                  {selectedOptions.includes(item.id) && (
+                  {selectedOptions.includes(item.id) && isEditable && (
                     <TouchableImage
                       className={classes["iconTrash"]}
                       onPress={() =>
@@ -119,6 +145,7 @@ const ConfigurableList = ({
                           prevState: allOptions,
                         })
                       }
+                      isSvg={false}
                       source={images.iconTrashBlack}
                       style={styles.iconTrash}
                     />
@@ -126,7 +153,7 @@ const ConfigurableList = ({
                 </CustomTouchableOpacity>
               ))}
             {!menuOptions?.length && (
-              <CommonText customTextStyle={styles.message}>
+              <CommonText customTextStyle={styles.message} fontWeight={"500"}>
                 {intl.formatMessage({ id: "label.noResultFound" })}
               </CommonText>
             )}
@@ -138,6 +165,7 @@ const ConfigurableList = ({
 };
 
 ConfigurableList.defaultProps = {
+  isEditable: true,
   onAdd: () => {},
   onDelete: () => {},
   onPress: () => {},
@@ -152,6 +180,7 @@ ConfigurableList.defaultProps = {
 };
 
 ConfigurableList.protoTypes = {
+  isEditable: PropTypes.bool,
   onAdd: PropTypes.func,
   onDelete: PropTypes.func,
   onPress: PropTypes.func,

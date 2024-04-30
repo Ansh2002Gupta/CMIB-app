@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
+
 import CommonText from "../../../components/CommonText";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import Switch from "../../../components/Switch";
 import TouchableImage from "../../../components/TouchableImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
@@ -19,19 +23,16 @@ import {
   POSTED_JOB_LISTING_ENUM,
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
-import usePagination from "../../../hooks/usePagination";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
-import images from "../../../images";
-import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../PostedJobsView.styles";
-import colors from "../../../assets/colors";
-import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import { navigations } from "../../../constants/routeNames";
-import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-import CustomToggleComponent from "../../../components/CustomToggleComponent";
-import Switch from "../../../components/Switch";
 import useChangeJobStatusApi from "../../../services/apiServices/hooks/useChangeJobStatusApi";
+import usePagination from "../../../hooks/usePagination";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import { urlService } from "../../../services/urlService";
+import images from "../../../images";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { navigations } from "../../../constants/routeNames";
+import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
+import commonStyles from "../../../theme/styles/commonStyles";
+import getStyles from "../PostedJobsView.styles";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -42,8 +43,10 @@ const initialFilterState = {
 
 const usePostedJobListing = (onViewPress, onEditPress) => {
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);
@@ -58,11 +61,11 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   });
 
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.PostedJobs;
 
@@ -201,6 +204,9 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       });
       if (initialData && initialData?.records?.length > 0) {
         setCurrentRecords(initialData?.records);
+        if (initialData?.meta?.currentPage === initialData?.meta?.lastPage) {
+          setAllDataLoaded(true);
+        }
       }
       setIsFirstPageReceived(false);
     };
@@ -447,7 +453,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 <CommonText
                   customTextStyle={{
                     ...tableStyle,
-                    ...(!isHeading && { color: colors.darkBlue }),
+                    ...(!isHeading && { color: theme.colors.darkBlue }),
                   }}
                   fontWeight={!isHeading && 600}
                 >
@@ -489,7 +495,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 <CommonText
                   customTextStyle={{
                     ...tableStyle,
-                    ...(!isHeading && { color: colors.darkBlue }),
+                    ...(!isHeading && { color: theme.colors.darkBlue }),
                   }}
                   fontWeight={!isHeading && 600}
                 >

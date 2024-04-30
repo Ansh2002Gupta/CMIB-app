@@ -1,10 +1,11 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
-import style from "./PersonalDetails.style";
+import getStyles from "./PersonalDetails.style";
 
 const PersonalDetailsUI = ({
   isEditable,
@@ -23,6 +24,8 @@ const PersonalDetailsUI = ({
   isValidAllFields,
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const style = getStyles(theme);
 
   return (
     <ScrollView

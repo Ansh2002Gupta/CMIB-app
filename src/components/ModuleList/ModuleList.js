@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   FlatList,
   Platform,
@@ -12,15 +13,23 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import Dialog from "../Dialog";
+import LoadingScreen from "../LoadingScreen";
 import Divider from "../Divider";
 import images from "../../images";
 import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getAccessibleModulesList } from "../../constants/sideBarHelpers";
 import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
-import styles from "./ModuleList.style";
+import getStyles from "./ModuleList.style";
 
-const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
+const ModuleList = ({
+  modules,
+  onSelectItem,
+  selectedModule,
+  isLoadingSession,
+}) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const windowDimensions = useWindowDimensions();
@@ -93,66 +102,74 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
           onClose={() =>
             !module.sectionHeading ? onSelectItem(selectedModule) : () => {}
           }
+          modalContentStyles={styles.modalContentStyles}
         >
-          <Divider />
-          <View style={{ ...styles.mainViewStyle, ...containerStyle }}>
-            {renderrableModules.map((item, index) => {
-              if (!item.sectionHeading && item.visible) {
-                return (
-                  <CustomTouchableOpacity
-                    key={index}
-                    onPress={() =>
-                      !module.sectionHeading ? onSelectItem(item) : () => {}
-                    }
-                    style={{
-                      ...styles.moduleTabStyle,
-                      ...(item?.key === selectedModule.key
-                        ? styles.activeTabStyle
-                        : {}),
-                    }}
-                    className={classes["module-box_outline--darkBlue"]}
-                  >
-                    <View style={styles.moduleImageAndTextBox}>
-                      <CustomImage
-                        source={item.image}
-                        style={styles.moduleImageStyle}
-                      />
-                      <View style={styles.containerTextStyle}>
-                        <CommonText
-                          customTextStyle={{
-                            ...styles.moduleTextStyle,
-                            ...(item?.key === selectedModule.key
-                              ? styles.activeModuleTextStyle
-                              : {}),
-                          }}
-                          fontWeight="600"
-                        >
-                          {item.label}
-                        </CommonText>
-                        {item?.isExperiencedMember && (
-                          <CommonText
-                            customTextStyle={styles.experienceMemberTextStyle}
-                          >
-                            {intl.formatMessage({
-                              id: "label.experiencedMember",
-                            })}
-                          </CommonText>
-                        )}
-                      </View>
-                    </View>
-                    <View style={styles.textView}>
-                      {item?.key === selectedModule.key && (
-                        <CustomImage
-                          source={images.iconTickBlue}
-                          style={styles.tickImageStyle}
-                        />
-                      )}
-                    </View>
-                  </CustomTouchableOpacity>
-                );
-              }
-            })}
-          </View>
+          {isLoadingSession && <LoadingScreen />}
+          {!isLoadingSession && (
+            <>
+              <Divider />
+              <View style={{ ...styles.mainViewStyle, ...containerStyle }}>
+                {renderrableModules.map((item, index) => {
+                  if (!item.sectionHeading && item.visible) {
+                    return (
+                      <CustomTouchableOpacity
+                        key={index}
+                        onPress={() =>
+                          !module.sectionHeading ? onSelectItem(item) : () => {}
+                        }
+                        style={{
+                          ...styles.moduleTabStyle,
+                          ...(item?.key === selectedModule.key
+                            ? styles.activeTabStyle
+                            : {}),
+                        }}
+                        className={classes["module-box_outline--darkBlue"]}
+                      >
+                        <View style={styles.moduleImageAndTextBox}>
+                          <CustomImage
+                            source={item.image}
+                            style={styles.moduleImageStyle}
+                          />
+                          <View style={styles.containerTextStyle}>
+                            <CommonText
+                              customTextStyle={{
+                                ...styles.moduleTextStyle,
+                                ...(item?.key === selectedModule.key
+                                  ? styles.activeModuleTextStyle
+                                  : {}),
+                              }}
+                              fontWeight="600"
+                            >
+                              {item.label}
+                            </CommonText>
+                            {item?.isExperiencedMember && (
+                              <CommonText
+                                customTextStyle={
+                                  styles.experienceMemberTextStyle
+                                }
+                              >
+                                {intl.formatMessage({
+                                  id: "label.experiencedMember",
+                                })}
+                              </CommonText>
+                            )}
+                          </View>
+                        </View>
+                        <View style={styles.textView}>
+                          {item?.key === selectedModule.key && (
+                            <CustomImage
+                              source={images.iconTickBlue}
+                              style={styles.tickImageStyle}
+                            />
+                          )}
+                        </View>
+                      </CustomTouchableOpacity>
+                    );
+                  }
+                })}
+              </View>
+            </>
+          )}
         </Dialog>
       ) : (
         <FlatList

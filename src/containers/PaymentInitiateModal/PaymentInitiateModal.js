@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import FiveColumn from "../../core/layouts/FiveColumn";
@@ -10,7 +10,6 @@ import ActionPairButton from "../../components/ActionPairButton/ActionPairButton
 import CustomTextInput from "../../components/CustomTextInput";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./PaymentInitiateModal.style";
 import CommonText from "../../components/CommonText";
 import { usePost } from "../../hooks/useApiRequest";
 import { COMPANY_INIT_PAYMENT } from "../../services/apiServices/apiEndPoint";
@@ -22,9 +21,17 @@ import {
   PAN_MAX_LENGTH,
 } from "../../constants/constants";
 import { validateGSTIN, validatePAN } from "../../utils/validation";
+import getStyles from "./PaymentInitiateModal.style";
 
-const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId, setCcAvenueUrl }) => {
+const PaymentInitiateModal = ({
+  onPressCancel,
+  amount,
+  subscriptionId,
+  setCcAvenueUrl,
+}) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const [errors, setErrors] = useState({
     panNumber: "",
@@ -35,7 +42,6 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId, setCcAven
   const [gstNumber, setGstNumber] = useState("");
   const [PONumber, setPONumber] = useState("");
   const [address, setAddress] = useState("");
-  
 
   const {
     isLoading: isPaymentInitializedLoading,

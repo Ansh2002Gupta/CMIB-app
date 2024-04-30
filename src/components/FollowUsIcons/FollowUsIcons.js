@@ -12,7 +12,7 @@ import {
 import CommonText from "../CommonText";
 import socialMediaConfig from "../../constants/socialMediaConfig";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./FollowUsIcons.style";
+import getStyles from "./FollowUsIcons.style";
 
 const mobileProps =
   Platform.OS.toLowerCase() === "web"
@@ -25,6 +25,8 @@ const FollowUsIcons = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const icons = useTheme("icons");
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <View style={styles.containerStyle}>

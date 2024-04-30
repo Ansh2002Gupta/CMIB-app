@@ -1,10 +1,13 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import PropTypes from "prop-types";
 import { TouchableOpacity } from "@unthinkable/react-core-components";
 
-import styles from "./Button.style";
+import getStyles from "./Button.style";
 
 const Button = ({ children, disabled, disabledStyle, onPress, style }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <TouchableOpacity
       {...{ disabled, onPress }}

@@ -11,15 +11,19 @@ import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo
 import {
   APPLICATION,
   CORE_INDUSTRY_TYPE,
+  CORE_STATE,
   COUNTRY_CODE,
   PROFILE,
   ROUNDS,
   USER_TYPE_COMPANY,
 } from "../../../../../services/apiServices/apiEndPoint";
 import {
+  API_VERSION_QUERY_PARAM,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   INTEREST_OPTIONS,
   NUMBER_OF_PARTNERS_LENGTH,
+  SESSION_ID_QUERY_PARAM,
+  UPDATED_API_VERSION,
 } from "../../../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
 import { gridStyles } from "../../../../../theme/styles/commonStyles";
@@ -27,12 +31,13 @@ import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProv
 import { useParams } from "react-router";
 import { usePatch } from "../../../../../hooks/useApiRequest";
 
-const useCompanyProfile = ({ tabHandler }) => {
+const useCompanyProfile = ({ isEditable, tabHandler }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [sideBarState] = useContext(SideBarContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const { id } = useParams();
+  const sessionId = sideBarState?.selectedSession?.value;
 
   const [formDetails, setFormDetails] = useState();
   const [options, setOptions] = useState(
@@ -45,12 +50,12 @@ const useCompanyProfile = ({ tabHandler }) => {
 
   const isEditProfile = true;
   const currentModule = sideBarState?.selectedModule?.key;
+  const [isLoading, setIsLoading] = useState(true);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
   const {
     data: countryCodes,
-    isLoading: isCountryCodeLoading,
     isError: isErrorGettingCountryCodes,
     error: errorGettingCountryCodes,
     fetchData: getCountryCodes,
@@ -62,12 +67,23 @@ const useCompanyProfile = ({ tabHandler }) => {
   });
   const {
     data: industryOptions,
-    isLoading: isIndustryTypeLoading,
     isError: isErrorGettingIndustries,
     error: errorGettingIndustries,
     fetchData: getIndustryType,
   } = useFetch({
     url: CORE_INDUSTRY_TYPE,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const {
+    data: stateOptions,
+    isError: isErrorStateOptionsLoading,
+    error: errorWhileGettingStateOptions,
+    fetchData: getStateOptions,
+  } = useFetch({
+    url: CORE_STATE,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -86,9 +102,14 @@ const useCompanyProfile = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      PROFILE,
+      `${PROFILE}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
     },
   });
   const {
@@ -104,7 +125,12 @@ const useCompanyProfile = ({ tabHandler }) => {
       ROUNDS +
       `/${id}` +
       APPLICATION +
-      PROFILE,
+      `${PROFILE}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: {
+      headers: {
+        [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION,
+      },
+    },
   });
 
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
@@ -124,9 +150,11 @@ const useCompanyProfile = ({ tabHandler }) => {
       const newCountryCode = await getCountryCodes();
       const newIndustryType = await getIndustryType();
       const newProfileData = await getProfileData();
+      const newStateOptions = await getStateOptions();
       setFormDetails(
         mapApiDataToUI({
           apiData: newProfileData,
+          stateOptions: newStateOptions,
           industryOptions: newIndustryType,
           intl,
           countryCodes: newCountryCode,
@@ -141,11 +169,12 @@ const useCompanyProfile = ({ tabHandler }) => {
         ),
       }));
       setOptions(updatedInfoOptions);
+      setIsLoading(false);
     };
-    if (currentModule) {
+    if (currentModule && sessionId) {
       fetchPersonalData();
     }
-  }, [currentModule]);
+  }, [currentModule, sessionId, isEditable]);
 
   const handleInputChange = (fieldName, value) => {
     if (fieldName === "label.entity") {
@@ -292,27 +321,39 @@ const useCompanyProfile = ({ tabHandler }) => {
     });
   };
 
-  const isLoading = isCountryCodeLoading || isIndustryTypeLoading;
-
   const getErrorDetails = () => {
-    if (isErrorGettingIndustries && isErrorGettingCountryCodes) {
+    if (
+      isErrorGettingIndustries &&
+      isErrorGettingCountryCodes &&
+      isProfileDataLoading &&
+      isErrorStateOptionsLoading
+    ) {
       let errorMessage = "";
       if (
         errorGettingIndustries === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
-        errorGettingCountryCodes === GENERIC_GET_API_FAILED_ERROR_MESSAGE
+        errorGettingCountryCodes === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
+        errorWhileGettingProfileData === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
+        errorWhileGettingStateOptions === GENERIC_GET_API_FAILED_ERROR_MESSAGE
       ) {
         errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       } else {
-        errorMessage = `${errorGettingIndustries} , ${errorGettingCountryCodes}`;
+        errorMessage = `${errorGettingIndustries} , ${errorGettingCountryCodes} ,${errorWhileGettingProfileData},${errorWhileGettingStateOptions}`;
       }
       return {
         errorMessage,
         onRetry: () => {
           getCountryCodes();
           getIndustryType();
+          getProfileData();
+          getStateOptions();
         },
       };
     }
+    if (isErrorStateOptionsLoading)
+      return {
+        errorMessage: errorWhileGettingStateOptions?.data?.message,
+        onRetry: getStateOptions,
+      };
     if (isErrorGettingIndustries)
       return {
         errorMessage: errorGettingIndustries?.data?.message,
@@ -322,6 +363,11 @@ const useCompanyProfile = ({ tabHandler }) => {
       return {
         errorMessage: errorGettingCountryCodes?.data?.message,
         onRetry: getCountryCodes,
+      };
+    if (isProfileDataLoading)
+      return {
+        errorMessage: errorWhileGettingProfileData?.data?.message,
+        onRetry: getProfileData,
       };
     return {
       errorMessage: "",
@@ -376,6 +422,8 @@ const useCompanyProfile = ({ tabHandler }) => {
             break;
           case "noOfPartners":
             acc.number_of_partners = detail.value;
+          case "state":
+            acc.state_code = detail.value;
             break;
           default:
             break;

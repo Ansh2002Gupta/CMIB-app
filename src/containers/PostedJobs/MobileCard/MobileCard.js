@@ -1,10 +1,11 @@
 import React from "react";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
 import images from "../../../images";
 import TouchableImage from "../../../components/TouchableImage";
-import styles from "./MobileCard.styles";
+import getStyles from "./MobileCard.styles";
 
 const MobileCard = ({
   item,
@@ -19,6 +20,8 @@ const MobileCard = ({
   lastElement,
   statusData,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
   return (
     <View
       style={{
@@ -86,7 +89,7 @@ const MobileCard = ({
           onViewPress && onViewPress(item);
         }}
         source={images.iconEye}
-        isSvg={false}
+        isSvg
         style={{ ...styles.tableStyle, ...styles.marginRight16 }}
       />
       <TouchableImage

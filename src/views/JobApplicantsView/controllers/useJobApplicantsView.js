@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useNavigate } from "../../../routes";
 import { View, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
@@ -10,7 +10,6 @@ import Chip from "../../../components/Chip";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../JobApplicantsView.style";
 import {
   FILTERS,
   JOBS,
@@ -34,6 +33,9 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePatch } from "../../../hooks/useApiRequest";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import { urlService } from "../../../services/urlService";
+import getStyles from "../JobApplicantsView.style";
+import { useTheme } from "@unthinkable/react-theme";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -44,18 +46,17 @@ const initialFilterState = {
 const useJobApplicants = () => {
   const [sideBarState] = useContext(SideBarContext);
   const { isWebView } = useIsWebView();
-  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+    getValidRowPerPage(urlService.getQueryStringValue("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
+    getValidCurrentPage(urlService.getQueryStringValue("page"))
   );
   const [filterOptions, setFilterOptions] = useState({
     status: "",
@@ -72,6 +73,8 @@ const useJobApplicants = () => {
   const navigate = useNavigate();
 
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const popMessageRef = useRef(null);
   useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
@@ -476,7 +479,7 @@ const useJobApplicants = () => {
               }}
               source={images.iconMore}
               imageStyle={styles.iconTicket}
-              isSvg={true}
+              isSvg
             />
 
             {showCurrentPopupmessage === item?.job_applicantion_id && (

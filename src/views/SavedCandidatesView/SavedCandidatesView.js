@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -12,10 +13,9 @@ import {
   SAVED_CANDIDATES_TABLE_HEADING,
 } from "../../constants/constants";
 import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
-import images from "../../images";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-import styles from "./SavedCandidatesView.styles";
+import getStyles from "./SavedCandidatesView.styles";
 import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../components/CommonText";
 import TouchableImage from "../../components/TouchableImage";
@@ -24,6 +24,9 @@ import PopupMessage from "../../components/PopupMessage/PopupMessage";
 const SavedCandidatesView = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const {
     data,
@@ -78,7 +81,7 @@ const SavedCandidatesView = () => {
               {}
               {`${intl.formatMessage({ id: "label.experience" })} ${
                 item?.experience
-              } ${intl.formatMessage({ id: "label.years" })}`}
+              } ${intl.formatMessage({ id: "label.year" })}`}
             </CommonText>
           </View>
         </View>

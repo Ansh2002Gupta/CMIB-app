@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../../components/ActionPairButton";
@@ -16,10 +17,13 @@ import useIsWebView from "../../../../hooks/useIsWebView";
 import useCompanyProfile from "./controllers/useCompanyProfileForm";
 import { DEFAULT_BALANCE_CREDIT } from "../../../../constants/constants";
 import commonStyles from "../../../../theme/styles/commonStyles";
-import styles from "./CompanyProfileForm.style";
 import { useNavigate } from "../../../../routes";
+import CustomButton from "../../../../components/CustomButton";
+import CustomImage from "../../../../components/CustomImage";
+import images from "../../../../images";
+import getStyles from "./CompanyProfileForm.style";
 
-const CompanyProfileForm = ({ tabHandler }) => {
+const CompanyProfileForm = ({ tabHandler, isEditable, setIsEditable }) => {
   const {
     columnCount,
     errorWhileUpload,
@@ -40,8 +44,10 @@ const CompanyProfileForm = ({ tabHandler }) => {
     onDeleteImage,
     options,
     uploadImageToServerUtils,
-  } = useCompanyProfile({ tabHandler });
+  } = useCompanyProfile({ isEditable, tabHandler });
   const intl = useIntl();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
   const {
@@ -61,7 +67,7 @@ const CompanyProfileForm = ({ tabHandler }) => {
       }
     : null;
 
-  const updatedFileUploadResult = isEditProfile
+  const updatedFileUploadResult = isEditable
     ? fileUploadResult || defaultUploadResult
     : defaultUploadResult;
 
@@ -86,127 +92,148 @@ const CompanyProfileForm = ({ tabHandler }) => {
           <LoadingScreen />
         </View>
       )}
-      {!isLoading && !getErrorDetails().errorMessage && (
-        <View>
-          <DetailCard
-            details={formDetails?.companyDetail}
-            handleBlur={handleBlur}
-            headerId={intl.formatMessage({
-              id: "label.company_details",
+      {!isLoading &&
+        !getErrorDetails().errorMessage &&
+        !!formDetails?.companyDetail.length && (
+          <View>
+            <DetailCard
+              details={formDetails?.companyDetail}
+              handleBlur={handleBlur}
+              headerId={"label.company_details"}
+              handleChange={(fieldName, value) => {
+                handleInputChange(fieldName, value);
+              }}
+              isEditProfile={isEditable}
+            />
+            {formDetails?.contactPersonInfo.map((details, index) => {
+              return (
+                <DetailCard
+                  key={index}
+                  customCardStyle={styles.customCardStyle}
+                  customContainerStyle={styles.customContainerStyle}
+                  headerId={"label.contact_person_info"}
+                  handleChange={(detailKey, value, isCode) =>
+                    handleContactPersonInfo(index, detailKey, value, isCode)
+                  }
+                  handleBlur={handleBlur}
+                  index={index}
+                  isEditProfile={isEditable}
+                  otherDetails={details?.contactInfo}
+                />
+              );
             })}
-            handleChange={(fieldName, value) => {
-              handleInputChange(fieldName, value);
-            }}
-            isEditProfile={isEditProfile}
-          />
-          {formDetails?.contactPersonInfo.map((details, index) => {
-            return (
-              <DetailCard
-                key={index}
-                customCardStyle={styles.customCardStyle}
-                customContainerStyle={styles.customContainerStyle}
-                headerId={intl.formatMessage({
-                  id: "label.contact_person_info",
-                })}
-                handleChange={(detailKey, value, isCode) =>
-                  handleContactPersonInfo(index, detailKey, value, isCode)
-                }
-                handleBlur={handleBlur}
-                index={index}
-                isEditProfile={isEditProfile}
-                otherDetails={details?.contactInfo}
+            <DetailCard
+              handleBlur={handleBlur}
+              handleChange={handleCompanyProfile}
+              headerId={"label.other_details"}
+              isRow
+              details={formDetails?.companyProfile}
+              otherDetails={formDetails?.otherDetails}
+              isEditProfile={isEditable}
+            />
+            <CardComponent customStyle={styles.cardStyle}>
+              <DetailComponent
+                headerText={intl.formatMessage({ id: "label.source_of_info" })}
+                isMandatory
               />
-            );
-          })}
-          <DetailCard
-            handleBlur={handleBlur}
-            handleChange={handleCompanyProfile}
-            headerId={intl.formatMessage({
-              id: "label.other_details",
-            })}
-            isRow
-            details={formDetails?.companyProfile}
-            otherDetails={formDetails?.otherDetails}
-            isEditProfile={isEditProfile}
-          />
-          <CardComponent customStyle={styles.cardStyle}>
-            <DetailComponent
-              headerText={intl.formatMessage({
-                id: "label.source_of_info",
-              })}
-              isMandatory
-            />
-            <RenderSourceOfInfo
-              badgeStyle={styles.badgeContainer}
-              isEditProfile
-              options={options}
-              containerStyle={containerStyle}
-              handleToggle={handleToggle}
-              profileResult={formDetails?.sourceOfInfo}
-            />
-          </CardComponent>
-
-          <CardComponent customStyle={styles.cardStyle}>
-            <DetailComponent
-              headerText={intl.formatMessage({
-                id: "label.company_logo",
-              })}
-              headerTextCustomStyles={styles.headerTextStyle}
-            />
-            <CommonText customTextStyle={styles.infoStyle}>
-              {intl.formatMessage({
-                id: "label.logo_info",
-              })}
-            </CommonText>
-            <View style={styles.imageContainer}>
-              <UploadImage
-                {...{
-                  onDeleteImage,
-                  errorWhileUpload,
-                  fileUploadResult: updatedFileUploadResult,
-                  handleFileUpload,
-                  isUploadingImageToServer,
-                  setFileUploadResult,
-                  uploadPercentage,
-                  hideIconDelete: false,
-                }}
+              <RenderSourceOfInfo
+                badgeStyle={styles.badgeContainer}
+                isEditProfile={isEditable}
+                options={options}
+                containerStyle={containerStyle}
+                handleToggle={handleToggle}
+                profileResult={formDetails?.sourceOfInfo}
               />
-            </View>
-          </CardComponent>
-
-          <CardComponent customStyle={styles.cardStyle}>
-            <View style={styles.textContainer}>
-              <CommonText customTextStyle={styles.headingText}>
-                {intl.formatMessage({ id: "label.balance_credit" })}:
+            </CardComponent>
+            <CardComponent customStyle={styles.cardStyle}>
+              <DetailComponent
+                headerText={intl.formatMessage({ id: "label.company_logo" })}
+                headerTextCustomStyles={styles.headerTextStyle}
+              />
+              <CommonText customTextStyle={styles.infoStyle}>
+                {intl.formatMessage({ id: "label.logo_info" })}
               </CommonText>
-              <CommonText
-                customTextStyle={styles.valueStyle}
-                fontWeight="600"
-              >{`${intl.formatMessage({
-                id: "label.rupee",
-              })} ${
-                formDetails?.balanceCredit || DEFAULT_BALANCE_CREDIT
-              }`}</CommonText>
+              <View style={styles.imageContainer}>
+                {isEditable ? (
+                  <UploadImage
+                    {...{
+                      onDeleteImage,
+                      errorWhileUpload,
+                      fileUploadResult: updatedFileUploadResult,
+                      handleFileUpload,
+                      isUploadingImageToServer,
+                      setFileUploadResult,
+                      uploadPercentage,
+                      hideIconDelete: false,
+                    }}
+                  />
+                ) : (
+                  <CustomImage
+                    source={
+                      !!formDetails?.companyLogo
+                        ? { uri: formDetails?.companyLogo }
+                        : images.defaultImage
+                    }
+                    style={styles.companyLogoStyle}
+                  />
+                )}
+              </View>
+            </CardComponent>
+
+            <CardComponent customStyle={styles.cardStyle}>
+              <View style={styles.textContainer}>
+                <CommonText customTextStyle={styles.headingText}>
+                  {intl.formatMessage({ id: "label.balance_credit" })}:
+                </CommonText>
+                <CommonText
+                  customTextStyle={styles.valueStyle}
+                  fontWeight="600"
+                >{`${intl.formatMessage({
+                  id: "label.rupee",
+                })} ${
+                  formDetails?.balanceCredit || DEFAULT_BALANCE_CREDIT
+                }`}</CommonText>
+              </View>
+            </CardComponent>
+            <View style={styles.actionBtnContainer}>
+              {isEditable ? (
+                <ActionPairButton
+                  buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+                  buttonTwoText={intl.formatMessage({
+                    id: "label.save_and_next",
+                  })}
+                  onPressButtonOne={() => {
+                    isEditable ? setIsEditable(false) : navigate(-1);
+                  }}
+                  onPressButtonTwo={() => {
+                    handleSaveAndNext();
+                  }}
+                  displayLoader={isProfileUpdating}
+                  customStyles={{
+                    ...isWebProps,
+                    customContainerStyle: commonStyles.customContainerStyle,
+                  }}
+                  isButtonTwoGreen
+                />
+              ) : (
+                <CustomButton
+                  withGreenBackground
+                  style={isWebView ? styles.buttonStyle : {}}
+                  onPress={() => {
+                    tabHandler("next");
+                  }}
+                >
+                  <CommonText
+                    fontWeight={"600"}
+                    customTextStyle={styles.nextButtonStyle}
+                  >
+                    {intl.formatMessage({ id: "label.next" })}
+                  </CommonText>
+                </CustomButton>
+              )}
             </View>
-          </CardComponent>
-          <View style={styles.actionBtnContainer}>
-            <ActionPairButton
-              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-              buttonTwoText={intl.formatMessage({ id: "label.save" })}
-              onPressButtonOne={() => navigate(-1)}
-              onPressButtonTwo={() => {
-                handleSaveAndNext();
-              }}
-              displayLoader={isProfileUpdating}
-              customStyles={{
-                ...isWebProps,
-                customContainerStyle: commonStyles.customContainerStyle,
-              }}
-              isButtonTwoGreen
-            />
           </View>
-        </View>
-      )}
+        )}
       {!isLoading && !!getErrorDetails().errorMessage && (
         <ErrorComponent
           errorHeading={intl.formatMessage({ id: "label.error" })}

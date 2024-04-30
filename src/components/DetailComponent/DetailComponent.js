@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { Linking, View } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../BadgeLabel/BadgeLabel";
@@ -16,13 +16,13 @@ import { getValidUrl } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
 import images from "../../images";
 import { gridStyles } from "../../theme/styles/commonStyles";
-import styles, {
+import getStyles, {
   getContainerStyles,
   getRowStyle,
 } from "./DetailComponent.style";
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
-import colors from "../../assets/colors";
+import CustomTextEditor from "../CustomTextEditor";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -51,10 +51,13 @@ const DetailComponent = ({
   handleAddRemoveRow,
   handleCheckBoxSelection,
   datePickerContainer,
+  customErrorViewStyle,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
@@ -62,6 +65,7 @@ const DetailComponent = ({
     columnCount,
     isColumnVariableWidth,
     isWebView,
+    theme,
   });
 
   const renderSwitch = () => (
@@ -153,6 +157,7 @@ const DetailComponent = ({
     }
 
     if (detail.isTextInputWithChip) {
+      console.log("detail:7777", detail);
       return (
         <View
           style={{
@@ -160,7 +165,7 @@ const DetailComponent = ({
             ...styles.chipDataContainer,
           }}
         >
-          {typeof detail?.value !== "string" ? (
+          {/* {typeof detail?.value !== "string" ? (
             detail?.value?.map((value, index) => (
               <CustomChipCard
                 key={index}
@@ -168,9 +173,9 @@ const DetailComponent = ({
                 isEditable={isEditable}
               />
             ))
-          ) : (
-            <CommonText>{detail.value}</CommonText>
-          )}
+          ) : ( */}
+          <CommonText>{detail?.value}</CommonText>
+          {/* )} */}
         </View>
       );
     }
@@ -184,6 +189,17 @@ const DetailComponent = ({
           isSingleSelection={detail?.isSingleSelection}
           value={detail?.value}
           checkBoxTextStyle={detail?.checkBoxTextStyle}
+        />
+      );
+    }
+    if (detail?.isHtmlDescription) {
+      return (
+        <CustomTextEditor
+          value={detail?.value}
+          disabled
+          quilStyle={styles.quilStyle}
+          removePadding={detail?.removePadding}
+          quillContainerStyle={styles.quillContainerStyle}
         />
       );
     }
@@ -204,7 +220,7 @@ const DetailComponent = ({
   const renderEditableContent = (detail, index) => {
     if (detail?.isEmptyField) return <></>;
 
-    if (detail.isMobileNumber) {
+    if (detail?.isMobileNumber) {
       return (
         <MobileNumberInput
           mobNumberValue={detail.value}
@@ -215,6 +231,7 @@ const DetailComponent = ({
           onChangeCode={(val) => handleChange(detail.label, val, true)}
           onChangeMobNumber={(val) => handleChange(detail.label, val)}
           mobNumberError={detail.error}
+          isMandatory={detail?.isMandatory}
         />
       );
     }
@@ -239,7 +256,11 @@ const DetailComponent = ({
           customHandleBlur={() => handleBlur(detail.key, index)}
           customStyle={{
             ...styles.inputStyle,
-            ...styles.getFieldWidth(detail.width, !isWebView),
+            ...styles.getFieldWidth(
+              detail.width,
+              !isWebView,
+              detail?.customWidthValue
+            ),
           }}
           datePickerContainer={datePickerContainer}
           label={detail?.label && intl.formatMessage({ id: detail.label })}
@@ -273,6 +294,7 @@ const DetailComponent = ({
           maxLength={detail.maxLength}
           isNumeric={detail.isNumeric}
           isToggle={detail.isToggle}
+          useExactToggleValue={detail.useExactToggleValue}
           isTextInputWithChip={detail?.isTextInputWithChip}
           onChipUpdate={(chipData) =>
             handleChange(detail.label, chipData, index, detail)
@@ -314,6 +336,7 @@ const DetailComponent = ({
           isSingleMutliSelect={detail.isSingleMutliSelect}
           showMonthYearPicker={detail?.showMonthYearPicker}
           checkBoxTextStyle={detail?.checkBoxTextStyle}
+          customErrorViewStyle={customErrorViewStyle}
         />
         {!!footerText && (
           <CommonText customTextStyle={styles.footerText} fontWeight="500">
@@ -354,7 +377,7 @@ const DetailComponent = ({
             <CommonText
               customTextStyle={{
                 ...styles.containerStyle,
-                color: colors.darkGrey,
+                color: theme.colors.darkGrey,
                 fontSize: 12,
               }}
               fontWeight={500}
@@ -365,7 +388,8 @@ const DetailComponent = ({
           ))}
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
         {details?.map((detail, idx) => {
-          if (isEditable && detail.viewOnlyField) {
+          console.log("detail, idx:", detail, idx);
+          if (isEditable && detail?.viewOnlyField) {
             return null;
           }
           if (isColumnVariableWidth) {
@@ -385,7 +409,7 @@ const DetailComponent = ({
                           ...(columns.width === 3 ? styles.oneThirdWidth : {}),
                           ...(isWebView
                             ? styles.webContainer
-                            : getRowStyle(detail)),
+                            : getRowStyle(detail, theme)),
                         }}
                       >
                         {renderEditableContent(columns, idx)}
@@ -395,7 +419,7 @@ const DetailComponent = ({
                         style={{
                           ...(isWebView
                             ? styles.webContainer
-                            : getRowStyle(detail)),
+                            : getRowStyle(detail, theme)),
                         }}
                       >
                         <View style={styles.titleContainer}>
@@ -423,10 +447,12 @@ const DetailComponent = ({
           return (
             <View
               key={idx}
-              style={isWebView ? styles.webContainer : getRowStyle(detail)}
+              style={
+                isWebView ? styles.webContainer : getRowStyle(detail, theme)
+              }
             >
               {isEditable ? (
-                renderEditableContent(detail)
+                renderEditableContent(detail, idx)
               ) : (
                 <>
                   <View style={styles.titleContainer}>

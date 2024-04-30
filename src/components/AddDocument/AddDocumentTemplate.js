@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import AddIconText from "../../components/AddIconText";
@@ -11,11 +12,18 @@ import CustomTextInput from "../CustomTextInput";
 import EditDeleteAction from "../../components/EditDeleteAction/EditDeleteAction";
 import useIsWebView from "../../hooks/useIsWebView";
 import ModalWithTitleButton from "../ModalWithTitleButton";
-import { ADD_DOCUMENT, DOCUMENT_TYPE } from "../../constants/constants";
+import {
+  ADD_DOCUMENT,
+  ADD_DOCUMENT_HEADING,
+  DOCUMENT_TYPE,
+} from "../../constants/constants";
 import { numericValidator } from "../../utils/validation";
-import styles from "./AddDocument.style";
+import commonStyles from "../../theme/styles/commonStyles";
+import { mappedPayload } from "../../containers/RoundOne/ApplicationFormContainer/PaymentForm/mappedData";
+import getStyles from "./AddDocument.style";
 
 const AddDocumentTemplate = ({
+  nonEditableData,
   addDocumentField,
   addDocumentModal,
   documentDetail,
@@ -23,6 +31,7 @@ const AddDocumentTemplate = ({
   handleDocumentDetailChange,
   handleMultiRowDocumentDetails,
   isFormValid,
+  isEditable,
   onClickAddDocument,
   onClickAddDocumentCancelButton,
   onClickAddDocumentSaveButton,
@@ -33,6 +42,8 @@ const AddDocumentTemplate = ({
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const setObjectGridTemplate = (updatedDocs) => {
     setRenderJobDetails((prev) => ({
@@ -40,6 +51,59 @@ const AddDocumentTemplate = ({
       required_docs: [...updatedDocs],
     }));
   };
+
+  const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? commonStyles.tableHeadingText
+      : commonStyles.cellTextStyle();
+    return [
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.doc_name || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.doc_type || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+      {
+        content: (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {item?.no_of_copies || "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("15%"),
+        isFillSpace: true,
+      },
+    ];
+  };
+  const dataArr = Object.values(
+    requiredDocumentDetails.reduce((acc, item) => {
+      if (!acc[item.cellID]) acc[item.cellID] = {};
+      const group = acc[item.cellID];
+
+      if (item.key === "document_name") {
+        group.doc_name = item.value;
+      } else if (item.key === "document_type") {
+        group.doc_type = item.value;
+      } else if (item.key === "no_of_copies") {
+        group.no_of_copies = item.value;
+      } else {
+        group.cellID = item.cellID;
+      }
+
+      return acc;
+    }, {})
+  );
 
   return (
     <View>
@@ -55,23 +119,28 @@ const AddDocumentTemplate = ({
         {isWebView ? (
           <CustomMultiRowTextInput
             customCardStyle={styles.multiRowTextStyle}
-            customWebContainerStyle={{ overflow: "visible" }}
+            customWebContainerStyle={styles.customWebContainerStyle}
             startRowTemplate={addDocumentField}
             gridTemplate={requiredDocumentDetails}
             setObjectGridTemplate={setObjectGridTemplate}
+            isEditProfile={isEditable}
             numColsInARow={4}
             handleValueChange={(type, inputValue, cellId) => {
               handleMultiRowDocumentDetails(type, inputValue, cellId);
             }}
+            getColoumConfigs={getColoumConfigs}
+            tableData={nonEditableData}
+            tableHeading={ADD_DOCUMENT_HEADING}
+            isHeading
           />
         ) : (
           <>
-            {requiredDocumentDetails.map((item, index) => {
-              const isOriginal = item?.documentType === ADD_DOCUMENT.ORIGINAL;
-              const isBoth = item?.documentType === ADD_DOCUMENT.BOTH;
-              const copiesNumber = item?.copiesNumber || "0";
+            {dataArr.map((item, index) => {
+              const isOriginal = item.doc_type === ADD_DOCUMENT.ORIGINAL;
+              const isBoth = item.doc_type === ADD_DOCUMENT.BOTH;
+              const copiesNumber = item.no_of_copies || "0";
               return (
-                <View>
+                <View key={index}>
                   <View
                     style={
                       index !== 0
@@ -80,7 +149,7 @@ const AddDocumentTemplate = ({
                     }
                   ></View>
                   <EditDeleteAction
-                    topText={item?.documentName}
+                    topText={item.doc_name}
                     bottomLeftText={
                       isOriginal || isBoth
                         ? intl.formatMessage({
@@ -94,10 +163,10 @@ const AddDocumentTemplate = ({
                       id: "label.photocopies",
                     })} `}
                     onDeleteDocument={() => {
-                      onClickDeleteDocument(index);
+                      onClickDeleteDocument(item.cellID);
                     }}
                     onEditDocument={() => {
-                      onCLickEditDocument(index);
+                      onCLickEditDocument(item.cellID);
                     }}
                   />
                 </View>
@@ -108,7 +177,7 @@ const AddDocumentTemplate = ({
               label={intl.formatMessage({
                 id: "label.add_document",
               })}
-              onPress={onClickAddDocument}
+              onPress={() => onClickAddDocument(dataArr?.length + 1)}
             />
           </>
         )}
@@ -116,7 +185,6 @@ const AddDocumentTemplate = ({
       {(addDocumentModal || editDocumentModal) && (
         <ModalWithTitleButton
           enableBottomButton
-          isRightDisabled={!isFormValid}
           heading={
             addDocumentModal
               ? intl.formatMessage({
@@ -152,9 +220,9 @@ const AddDocumentTemplate = ({
                 id: "label.required_document_name",
               })}
               isMandatory
-              value={documentDetail?.documentName || ""}
+              value={documentDetail?.doc_name || ""}
               onChangeText={(val) =>
-                handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_NAME, val)
+                handleDocumentDetailChange("doc_name", val)
               }
             ></CustomTextInput>
             <View style={styles.inputView}>
@@ -169,14 +237,14 @@ const AddDocumentTemplate = ({
                 isMandatory
                 isDropdown
                 options={DOCUMENT_TYPE}
-                value={documentDetail?.documentType || ""}
+                value={documentDetail?.doc_type || ""}
                 onChangeValue={(val) =>
-                  handleDocumentDetailChange(ADD_DOCUMENT.DOCUMENT_TYPE, val)
+                  handleDocumentDetailChange("doc_type", val)
                 }
                 search={false}
               ></CustomTextInput>
-              {documentDetail?.documentType === ADD_DOCUMENT.BOTH ||
-              documentDetail?.documentType === ADD_DOCUMENT.PHOTOCOPIES ? (
+              {documentDetail?.doc_type === ADD_DOCUMENT.BOTH ||
+              documentDetail?.doc_type === ADD_DOCUMENT.PHOTOCOPIES ? (
                 <View style={styles.copiesInputStyle}>
                   <CustomTextInput
                     label={intl.formatMessage({
@@ -186,10 +254,10 @@ const AddDocumentTemplate = ({
                       id: "label.enter_no_of_copies",
                     })}
                     isMandatory
-                    value={documentDetail?.copiesNumber || null}
+                    value={documentDetail?.no_of_copies || null}
                     onChangeText={(val) =>
                       numericValidator(val) &&
-                      handleDocumentDetailChange(ADD_DOCUMENT.COPIESNUMBER, val)
+                      handleDocumentDetailChange("no_of_copies", val)
                     }
                     maxLength={7}
                   ></CustomTextInput>

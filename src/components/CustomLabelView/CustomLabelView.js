@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import styles from "./CustomLabelView.style";
+import getStyles from "./CustomLabelView.style";
 
 const CustomLabelView = ({
   children,
@@ -12,6 +13,9 @@ const CustomLabelView = ({
   label,
   style,
 }) => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   return (
     <View style={[styles.parentContainer, style]}>
       <View style={styles.labelContainer}>

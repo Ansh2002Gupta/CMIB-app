@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
@@ -8,7 +9,7 @@ import CustomButton from "../CustomButton";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SearchView from "../SearchView";
 import images from "../../images";
-import styles from "./SessionList.style";
+import getStyles from "./SessionList.style";
 
 const SessionList = ({
   onPressBack,
@@ -17,6 +18,8 @@ const SessionList = ({
   sessionList,
 }) => {
   const [searchList, setSearchList] = useState(sessionList);
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const intl = useIntl();
   const platformSpecificProps = Platform.select({
     web: {},
@@ -71,7 +74,7 @@ const SessionList = ({
           customSearchCriteria={handleSearching}
         />
       </View>
-      {!!searchList.length ? (
+      {!!searchList?.length ? (
         <FlatList
           data={searchList}
           keyExtractor={(session) => session.id}

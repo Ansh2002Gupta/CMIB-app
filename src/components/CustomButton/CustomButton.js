@@ -1,17 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import Button from "../Button";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import Spinner from "../Spinner";
-import colors from "../../assets/colors";
-import styles from "./CustomButton.style";
+import getStyles from "./CustomButton.style";
 
 const CustomButton = ({
   children,
+  color,
   customStyle,
+  customLoadingStyle,
   disabled,
   disabledStyle,
   iconRight,
@@ -23,8 +25,13 @@ const CustomButton = ({
   type,
   withGreenBackground,
 }) => {
-  const webProps = Platform.OS === "web" ? { size: "xs" } : {};
+  const webProps =
+    Platform.OS === "web"
+      ? { size: "xs", customStyle: customLoadingStyle }
+      : {};
   const { customTextStyle, textFontWeight } = customStyle || {};
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   return (
     <Button
@@ -42,7 +49,13 @@ const CustomButton = ({
       {isLoading ? (
         <Spinner
           thickness={3}
-          color={withGreenBackground || isLoading ? colors.white : ""}
+          color={
+            color
+              ? color
+              : withGreenBackground || isLoading
+              ? theme.colors.white
+              : ""
+          }
           {...webProps}
         />
       ) : (
@@ -86,6 +99,7 @@ CustomButton.defaultProps = {
   customStyle: { customTextStyle: {}, textFontWeight: "" },
   disabled: false,
   disabledStyle: {},
+  color: "",
   iconLeft: {
     isLeftIconNotSvg: false,
     leftIconAlt: "",
@@ -97,6 +111,7 @@ CustomButton.defaultProps = {
     rightIconSource: "",
   },
   isLoading: false,
+  customLoadingStyle: {},
   onPress: () => {},
   style: {},
   type: "button",
@@ -105,6 +120,7 @@ CustomButton.defaultProps = {
 
 CustomButton.propTypes = {
   children: PropTypes.node,
+  color: PropTypes.string,
   customStyle: PropTypes.object,
   disabled: PropTypes.bool,
   disabledStyle: PropTypes.object,
@@ -112,6 +128,7 @@ CustomButton.propTypes = {
   iconRight: PropTypes.object,
   isLeftIconNotSvg: PropTypes.bool,
   isLoading: PropTypes.bool,
+  customLoadingStyle: PropTypes.object,
   isRightIconNotSvg: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
